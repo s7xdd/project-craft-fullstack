@@ -340,8 +340,8 @@
   width: 250px;
   height: 250px;
   border-radius: 50%;
-  border: dashed;
-  border-width: 2px;
+  /* border: solid;
+  border-width: 2px; */
   margin-bottom: 20px;
   overflow: hidden;
 }
