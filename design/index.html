@@ -49,6 +49,11 @@
         <link href="assets/css/module-css/subscribe.css" rel="stylesheet" />
         <link href="assets/css/module-css/footer.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
     </head>
 
     <!-- page wrapper -->
@@ -104,99 +109,8 @@
             </div>
             <!-- preloader end -->
 
-            <!-- page-direction -->
-            <div class="page_direction">
-                <div class="demo-rtl direction_switch">
-                    <button class="rtl">RTL</button>
-                </div>
-                <div class="demo-ltr direction_switch">
-                    <button class="ltr">LTR</button>
-                </div>
-            </div>
-            <!-- page-direction end -->
-
-            <div class="cart-toggle-icon cart-toggler">
-                <div class="inner-box">
-                    <div class="icon-box">
-                        <i class="far fa-shopping-cart"></i>
-                    </div>
-                    <span>3 Item</span>
-                </div>
-            </div>
 
             <!--cart popup-->
-            <div id="cart-popup" class="cart-popup">
-                <div class="popup-inner">
-                    <div class="close-cart"><i class="fal fa-times"></i></div>
-                    <div class="cart-inner">
-                        <h4 class="title-text"><span>3</span>Cart Items</h4>
-                        <div class="single-cart-box">
-                            <figure class="image-box">
-                                <img
-                                    src="assets/images/resource/cart-1.png"
-                                    alt=""
-                                />
-                            </figure>
-                            <h5>
-                                <a href="shop-details.html"
-                                    >Avenger Action Figure figurine Thano</a
-                                >
-                            </h5>
-                            <h4>$02.99 <span>x 1</span></h4>
-                            <button type="button">
-                                <i class="fal fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="single-cart-box">
-                            <figure class="image-box">
-                                <img
-                                    src="assets/images/resource/cart-2.png"
-                                    alt=""
-                                />
-                            </figure>
-                            <h5>
-                                <a href="shop-details.html"
-                                    >Cart- Limited 100 Anniversary</a
-                                >
-                            </h5>
-                            <h4>$01.99 <span>x 1</span></h4>
-                            <button type="button">
-                                <i class="fal fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="single-cart-box">
-                            <figure class="image-box">
-                                <img
-                                    src="assets/images/resource/cart-3.png"
-                                    alt=""
-                                />
-                            </figure>
-                            <h5>
-                                <a href="shop-details.html"
-                                    >Ultrasoft Stuff Animal Plush Bunny</a
-                                >
-                            </h5>
-                            <h4>$02.99 <span>x 1</span></h4>
-                            <button type="button">
-                                <i class="fal fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="text-box">
-                            <h5>Subtotal</h5>
-                            <span>$07.97</span>
-                        </div>
-                        <div class="btn-box">
-                            <a href="cart.html" class="theme-btn btn-one"
-                                >View Cart</a
-                            >
-                            <a href="checkout.html" class="theme-btn btn-one"
-                                >Checkout</a
-                            >
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <header class="main-header header-style-two">
                 <!-- header-top -->
                 <div class="header-top">
@@ -219,60 +133,7 @@
                                     <span>Save more with coupons 2BD30X</span>
                                 </p>
                             </div>
-                            <div class="right-column">
-                                <div
-                                    class="language-picker js-language-picker"
-                                    data-trigger-class="btn btn--subtle"
-                                >
-                                    <form
-                                        action="index-2.html"
-                                        class="language-picker__form"
-                                    >
-                                        <label for="language-picker-select"
-                                            >Select your language</label
-                                        >
-                                        <select
-                                            name="language-picker-select"
-                                            id="language-picker-select"
-                                        >
-                                            <option lang="de" value="deutsch">
-                                                DE
-                                            </option>
-                                            <option
-                                                lang="en"
-                                                value="english"
-                                                selected
-                                            >
-                                                EN
-                                            </option>
-                                            <option lang="fr" value="francais">
-                                                FR
-                                            </option>
-                                            <option lang="it" value="italiano">
-                                                IT
-                                            </option>
-                                        </select>
-                                    </form>
-                                </div>
-                                <div class="currency-box">
-                                    <div class="icon-box">
-                                        <img
-                                            src="assets/images/icons/icon-1.png"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div class="select-box">
-                                        <select class="wide">
-                                            <option data-display="usd">
-                                                usd
-                                            </option>
-                                            <option value="1">uad</option>
-                                            <option value="2">rm</option>
-                                            <option value="3">gbd</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -310,13 +171,17 @@
                                         id="navbarSupportedContent"
                                     >
                                         <ul class="navigation clearfix">
-                                             <li>
-                                                <a href="index.html"
-                                                    >Home</a
-                                                >
+                                            <li>
+                                                <a href="index.html">Home</a>
+                                            </li>
+                                              <li>
+                                                <a href="shop.html">Kits</a>
+                                            </li>
+                                              <li>
+                                                <a href="shop.html">Offers</a>
                                             </li>
                                             <li class="dropdown">
-                                                <a href="blog.html">Shop</a>
+                                                <a href="">Shop</a>
                                                 <div class="megamenu">
                                                     <div class="row clearfix">
                                                         <div
@@ -332,43 +197,9 @@
                                                                 <li>
                                                                     <a
                                                                         href="shop.html"
-                                                                        >Shop
-                                                                        One</a
-                                                                    >
-                                                                </li>
-                                                                <li>
-                                                                    <a
-                                                                        href="shop-2.html"
-                                                                        >Shop
-                                                                        Two</a
-                                                                    >
-                                                                </li>
-                                                                <li>
-                                                                    <a
-                                                                        href="shop-3.html"
-                                                                        >Shop
-                                                                        Three</a
-                                                                    >
-                                                                </li>
-                                                                <li>
-                                                                    <a
-                                                                        href="shop-4.html"
-                                                                        >Shop
-                                                                        Four</a
-                                                                    >
-                                                                </li>
-                                                                <li>
-                                                                    <a
-                                                                        href="shop-5.html"
-                                                                        >Shop
-                                                                        Five</a
-                                                                    >
-                                                                </li>
-                                                                <li>
-                                                                    <a
-                                                                        href="shop-6.html"
-                                                                        >Shop
-                                                                        Six</a
+                                                                        >
+                                                                        Product Listing
+                                                                        </a
                                                                     >
                                                                 </li>
                                                             </ul>
@@ -388,33 +219,10 @@
                                                                         href="shop-details.html"
                                                                         >Shop
                                                                         Details
-                                                                        One</a
+                                                                        </a
                                                                     >
                                                                 </li>
-                                                                <li>
-                                                                    <a
-                                                                        href="shop-details-2.html"
-                                                                        >Shop
-                                                                        Details
-                                                                        Two</a
-                                                                    >
-                                                                </li>
-                                                                <li>
-                                                                    <a
-                                                                        href="shop-details-3.html"
-                                                                        >Shop
-                                                                        Details
-                                                                        Three</a
-                                                                    >
-                                                                </li>
-                                                                <li>
-                                                                    <a
-                                                                        href="shop-details-4.html"
-                                                                        >Shop
-                                                                        Details
-                                                                        Four</a
-                                                                    >
-                                                                </li>
+                                                               
                                                             </ul>
                                                         </div>
                                                         <div
@@ -429,38 +237,23 @@
                                                                 </li>
                                                                 <li>
                                                                     <a
-                                                                        href="shop.html"
-                                                                        >Simple
-                                                                        Product</a
+                                                                        href=""
+                                                                        >Category 1
+                                                                        </a
                                                                     >
                                                                 </li>
                                                                 <li>
                                                                     <a
-                                                                        href="shop-2.html"
-                                                                        >Variable
-                                                                        Product</a
+                                                                        href=""
+                                                                        >Category 2
+                                                                        </a
                                                                     >
                                                                 </li>
                                                                 <li>
                                                                     <a
-                                                                        href="shop-3.html"
-                                                                        >Group
-                                                                        Product</a
-                                                                    >
-                                                                </li>
-                                                                <li>
-                                                                    <a
-                                                                        href="shop-4.html"
-                                                                        >Affiliate
-                                                                        Product</a
-                                                                    >
-                                                                </li>
-                                                                <li>
-                                                                    <a
-                                                                        href="shop-details.html"
-                                                                        >Single
-                                                                        Product
-                                                                        Style</a
+                                                                        href=""
+                                                                        >Category 3
+                                                                        </a
                                                                     >
                                                                 </li>
                                                             </ul>
@@ -535,9 +328,7 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li>
-                                                <a href="shop.html">Sale</a>
-                                            </li>
+                                           
                                             <li class="logo-box">
                                                 <figure class="logo">
                                                     <a href="index.html"
@@ -547,62 +338,11 @@
                                                     /></a>
                                                 </figure>
                                             </li>
-                                            <li class="dropdown">
-                                                <a href="index.html">Pages</a>
-                                                <ul>
-                                                    <li>
-                                                        <a href="about.html"
-                                                            >About Us</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a href="account.html"
-                                                            >Account</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a href="login.html"
-                                                            >Login</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a href="signup.html"
-                                                            >Signup</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a href="search.html"
-                                                            >Search Result</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a href="error.html"
-                                                            >404</a
-                                                        >
-                                                    </li>
-                                                </ul>
+                                        
+                                             <li>
+                                                <a href="about.html">About us</a>
                                             </li>
-                                            <li class="dropdown">
-                                                <a href="index.html">Blog</a>
-                                                <ul>
-                                                    <li>
-                                                        <a href="blog.html"
-                                                            >Blog Grid</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a href="blog-2.html"
-                                                            >Blog Standard</a
-                                                        >
-                                                    </li>
-                                                    <li>
-                                                        <a
-                                                            href="blog-details.html"
-                                                            >Blog Details</a
-                                                        >
-                                                    </li>
-                                                </ul>
-                                            </li>
+                                            
                                             <li>
                                                 <a href="contact.html"
                                                     >Contact</a
@@ -616,9 +356,11 @@
                                 <ul class="option-list">
                                     <li class="shop-cart">
                                         <button type="button">
-                                        <a href="cart.html">
-                                            <i class="far fa-shopping-bag"></i
-                                            ><span>3</span>
+                                            <a href="cart.html">
+                                                <i
+                                                    class="far fa-shopping-bag"
+                                                ></i
+                                                ><span>3</span>
                                             </a>
                                         </button>
                                     </li>
@@ -1548,9 +1290,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="slide-item" style="
-                    background-image: url('assets/images/banner/banner-img-2.png');
-                ">
+                                <div
+                                    class="slide-item"
+                                    style="
+                                        background-image: url('assets/images/banner/banner-img-2.png');
+                                    "
+                                >
                                     <div class="bg-color-2"></div>
                                     <span class="big-text">Balloon</span>
                                     <div class="anim-icon">
@@ -4559,7 +4304,6 @@
                 </div>
             </section>
 
-
             <!-- subscribe-section -->
             <section class="subscribe-section">
                 <div class="bg-color"></div>
@@ -4570,32 +4314,27 @@
                                 class="col-lg-6 col-md-12 col-sm-12 text-column"
                             >
                                 <div class="text-box">
-                                    <h2>Get Discount on First Subscribe</h2>
+                                    <h2>Order With WhatsApp</h2>
                                 </div>
                             </div>
                             <div
                                 class="col-lg-6 col-md-12 col-sm-12 form-column"
                             >
                                 <div class="form-inner ml_130">
-                                    <form action="contact.html" method="post">
-                                        <div class="form-group">
-                                            <input
-                                                type="email"
-                                                name="email"
-                                                placeholder="Email Address"
-                                                required
-                                            />
-                                            <button type="submit">
-                                                <i class="icon-18"></i>
-                                            </button>
-                                        </div>
-                                    </form>
+                                    <button
+                                        class="whatsapp-btn"
+                                        onclick="window.open('https://wa.me/1234567890?text=Hello,%20I%20would%20like%20to%20place%20an%20order!','_blank')"
+                                    >
+                                        <i class="fab fa-whatsapp"></i> Order
+                                        Now!
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
             <!-- subscribe-section end -->
 
             <!-- main-footer -->
@@ -4661,7 +4400,8 @@
                                     <div class="widget-content">
                                         <ul class="info-list clearfix">
                                             <li>
-                                              We are a crafting company based in India ..
+                                                We are a crafting company based
+                                                in India ..
                                             </li>
                                         </ul>
                                     </div>
@@ -4908,6 +4648,33 @@
 
         <!-- main-js -->
         <script src="assets/js/script.js"></script>
+
+        <style>
+            .whatsapp-btn {
+                background-color: #25d366;
+                color: white;
+                border: none;
+                border-radius: 30px;
+                padding: 20px 50px; /* Increased padding */
+                font-size: 24px; /* Increased font size */
+                font-weight: 600;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                box-shadow: 0 6px 14px rgba(37, 211, 102, 0.4);
+                transition: background-color 0.3s ease, box-shadow 0.3s ease;
+                min-width: 250px; /* Optional fixed minimum width */
+                min-height: 70px; /* Optional fixed minimum height */
+            }
+            .whatsapp-btn i {
+                margin-right: 16px;
+                font-size: 32px; /* Larger icon */
+            }
+            .whatsapp-btn:hover {
+                background-color: #128c7e;
+                box-shadow: 0 8px 20px rgba(18, 140, 126, 0.6);
+            }
+        </style>
     </body>
     <!-- End of .page_wrapper -->
 </html>
