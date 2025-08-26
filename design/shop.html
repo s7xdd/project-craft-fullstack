@@ -625,7 +625,15 @@
                                             <span>Price:</span>
                                             <input type="text" id="amount" readonly>
                                         </p>
-                                        <button type="button" class="theme-btn btn-one filter-btn">Filter</button>
+
+                                        <div class="btn-box pt_30">
+                                        <button
+                                        class="pink-button"
+                                        type="button"
+                                        >
+                                        Filter
+                                    </button>
+                                </div>
                                     </div>
                                 </div>
                             </div>
@@ -1671,6 +1679,23 @@
 
     <!-- main-js -->
     <script src="assets/js/script.js"></script>
+
+     <style>
+            .pink-button {
+                background-color: #e91e63; /* Pink color */
+                color: white; /* White text */
+                border: none;
+                padding: 8px 16px; /* Moderate padding */
+                border-radius: 4px; /* Small border radius */
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s ease;
+            }
+
+            .pink-button:hover {
+                background-color: #c2185b; /* Darker pink on hover */
+            }
+        </style>
 
 </body><!-- End of .page_wrapper -->
 </html>
