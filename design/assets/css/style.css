@@ -461,7 +461,7 @@ img {
   width: 50px;
   line-height: 50px;
   background: #ffffff;
-  border: 1px dashed #D8D8D8;
+  border: 1px solid #D8D8D8;
   text-align: center;
   border-radius: 50%;
   z-index: 1;
