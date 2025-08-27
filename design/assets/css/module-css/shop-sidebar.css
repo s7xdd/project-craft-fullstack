@@ -8,7 +8,6 @@
 .shop-sidebar .sidebar-widget{
   position: relative;
   display: block;
-  border: dashed;
   border-width: 1px;
   border-color: #D8D8D8;
   border-radius: 10px;
@@ -34,7 +33,6 @@
   display: block;
   width: 100%;
   height: 50px;
-  border: dashed;
   border-width: 1px;
   border-radius: 50px;
   padding: 10px 70px 10px 20px;
