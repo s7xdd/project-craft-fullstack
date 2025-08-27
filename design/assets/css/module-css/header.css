@@ -158,7 +158,7 @@
   display: block;
   width: 100%;
   height: 50px;
-  background: #F8EDF0;
+  background: #eeeded;
   border: dashed;
   border-width: 1px;
   border-radius: 50px;
@@ -1016,7 +1016,7 @@ div#mCSB_1_container{
   border: dashed;
   border-width: 2px;
   border-radius: 50px;
-  background: #F8EDF0;
+  background: #eeeded;
   font-size: 15px;
   color: #111111;
   padding: 10px 60px 10px 20px;

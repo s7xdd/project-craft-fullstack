@@ -9,9 +9,9 @@
 .highlights-section .inner-container{
   position: relative;
   display: block;
-  background: #FFE8EE;
+  background: white;
   border-radius: 20px;
-  border: solid;
+  border: dashed;
   border-width: 1px;
   padding: 34px 50px;
   padding-bottom: 19px;
