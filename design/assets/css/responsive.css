@@ -38,7 +38,6 @@
   .megamenu ul li:first-child,
   .mobile-menu .navigation > li.dropdown > .megamenu .advice-box{
     display: none;
-    max-width: 50px;
   }
 
   .related-product .shop-block-one{
