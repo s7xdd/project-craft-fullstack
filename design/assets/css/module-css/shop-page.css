@@ -574,7 +574,7 @@
     position: absolute;
     top: 16px;
     left: 16px;
-    background: #6366f1;
+    background: #db3f54;
     color: white;
     font-size: 12px;
     font-weight: 600;
@@ -592,8 +592,8 @@
 }
 
 .shop-block-one .lower-content h4 {
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 17px;
+    font-weight: 550;
     margin: 4px 0;
     font-family: Arial, sans-serif;
 }
@@ -631,7 +631,7 @@
 }
 
 .shop-block-one .price .current-price {
-    color: #6366f1;
+    color: #e04f67;
     font-weight: bold;
     font-size: 24px;
 }
@@ -643,7 +643,8 @@
 }
 
 .shop-page-section .shop-block-one .inner-box .lower-content {
-    padding: 16px !important;
+    padding: 12px !important;
+    padding-bottom: 5px !important;
     margin: 0 !important;
     background: transparent !important;
 }

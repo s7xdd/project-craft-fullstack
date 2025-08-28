@@ -84,9 +84,9 @@
   display: block;
   overflow: hidden;
   border-radius: 10px;
-  border: dashed;
+  border: solid 1px #D8D8D8 !important;
   border-width: 1px;
-  background: #FDF7F9;
+  background: #fafafa;
 }
 
 .contact-section .map-inner{
@@ -136,7 +136,7 @@
   font-size: 16px;
   color: var(--text-color);
   padding: 10px 20px;
-  border-radius: 50px;
+  border-radius: 5px;
   background: #fff;
   border: 1px dashed #D8D8D8;
   transition: all 500ms ease;
