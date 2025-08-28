@@ -140,7 +140,6 @@
 
 .main-header .logo-box{
   position: relative;
-  padding: 15px 0px;
 }
 
 .main-header .search-box{
@@ -250,6 +249,17 @@
 
 .main-menu .navigation{
   margin:0px;
+}
+
+@media (min-width: 768px) {
+    .navigation {
+        display: flex;
+        align-items: center;
+    }
+    .navigation li {
+        display: inline-block;
+        margin: 0 12px;
+    }
 }
 
 .main-menu .navigation > li{
@@ -928,10 +938,6 @@ div#mCSB_1_container{
   text-transform: uppercase;
 }
 
-.header-style-two .logo-box{
-  padding: 25.5px 20px;
-}
-
 .main-header .search-inner{
   position: relative;
   width: 300px;
@@ -1242,8 +1248,8 @@ div#mCSB_1_container{
 }
 
 .navbar-logo {
-    width: 120px;
-    height: 30px;
+    width: 237px;
+    height: 65px;
     overflow: hidden;
     display: inline-block;
 }
