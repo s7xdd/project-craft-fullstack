@@ -11,7 +11,7 @@
   display: block;
   background: white;
   border-radius: 20px;
-  border: dashed;
+  border: 1px solid #D8D8D8 !important;
   border-width: 1px;
   padding: 34px 50px;
   padding-bottom: 19px;
@@ -43,7 +43,7 @@
   text-align: center;
   background: #fff;
   border-radius: 50%;
-  border: solid;
+  border: dashed;
   border-width: 1px;
 }
 
