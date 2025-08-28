@@ -308,7 +308,7 @@
   float: left;
   padding: 0px 40px;
   margin-left: 0px;
-  border: dashed;
+  border: solid 1px;
   border-width: 1px;
   border-color: #D8D8D8;
   border-radius: 30px;
@@ -505,9 +505,9 @@
   align-items: center;
   justify-content: center;
   margin-bottom: -30px;
-  border: dashed;
+  border: solid 1px;
   border-width: 1px;
-  border-radius: 100px;
+  border-radius: 10px;
   background: #fff;
   padding: 5px;
   z-index: 2;
@@ -525,7 +525,7 @@
   position: relative;
   display: block;
   background: #fafafa;
-  border: dashed;
+  border: solid 1px #D8D8D8 !important;
   border-width: 1px;
   border-radius: 10px;
   padding: 63px 40px 51px 40px;
@@ -556,7 +556,7 @@
   color: var(--title-color);
   cursor: pointer;
   padding: 12px 30px;
-  border-radius: 40px;
+  border-radius: 10px;
   transition: all 500ms ease;
 }
 

@@ -1,11 +1,25 @@
 
 /** popular-product **/
 
-
 .product-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px; /* space between grid items */
+    min-width: 0;
+    /* Ensure min 2 columns */
+}
+
+@media (min-width: 560px) { /* 280px * 2 columns */
+    .product-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Above 2-column forced at min width, it can expand to more columns for wider screens */
+@media (min-width: 840px) {
+    .product-list {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
 }
 
 
