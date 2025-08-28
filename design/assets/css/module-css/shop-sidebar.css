@@ -37,7 +37,7 @@
   border-radius: 50px;
   padding: 10px 70px 10px 20px;
   font-size: 15px;
-  background: #F8EDF0;
+  background: #eeeded;
   color: var(--title-color);
   transition: all 500ms ease;
 }
