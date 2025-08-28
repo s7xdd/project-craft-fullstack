@@ -83,7 +83,7 @@
   position: relative;
   font-size: 16px;
   line-height: 20px;
-  color: #E92530;
+  color: black;
   text-align: center;
   font-weight: 700;
 }
@@ -314,15 +314,15 @@
 }
 
 .cart-section .total-cart h4{
-  font-size: 20px;
+  font-size: 18px;
   line-height: 30px;
   font-family: var(--title-font);
 }
 
 .cart-section .total-cart h5{
-  font-size: 20px;
+  font-size: 18px;
   line-height: 30px;
-  color: rgba(233, 37, 48, 1);
+  color: black;
 }
 
 .cart-section .total-cart .shipping-cost h4{
