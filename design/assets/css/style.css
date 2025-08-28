@@ -2162,7 +2162,7 @@ button.ltr {
   display: block;
   font-size: 16px;
   line-height: 20px;
-  color: rgba(233, 37, 48, 1);
+  color: black;
 }
 
 .cart-popup .popup-inner .single-cart-box h4 span{
@@ -2245,7 +2245,7 @@ button.ltr {
   display: block;
   font-size: 18px;
   line-height: 26px;
-  color: rgba(233, 37, 48, 1);
+  color: black;
   font-weight: 700;
 }
 
