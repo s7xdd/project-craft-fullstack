@@ -23,7 +23,6 @@ class RoleController extends Controller
     {
         $this->middleware('auth');
        
-        $this->middleware('permission:manage_roles', ['only' => ['index','create','store','edit','update','destroy']]);
     }
     
     public function index(Request $request)

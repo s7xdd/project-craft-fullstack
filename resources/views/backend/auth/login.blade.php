@@ -9,7 +9,7 @@
                     <div class="card text-left">
                         <div class="card-body">
                             <div class="mb-5 text-center">
-                                <img src="{{ asset('assets/img/logo.png') }}" class="mw-100 mb-4" >
+                                <img  src="{{uploaded_asset(get_setting('site_icon'))}}" class="mw-100 mb-4" >
                                 <h1 class="h3 text-primary mb-0">{{  trans('messages.login') }} </h1>
                                 {{-- <p>{{  trans('messages.Login to your account.') }}</p> --}}
                             </div>

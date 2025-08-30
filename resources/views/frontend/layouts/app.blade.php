@@ -10,12 +10,42 @@
     {!! SEO::generate() !!}
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/theme.css?v=4') }}" rel="stylesheet" type="text/css" />
-    <!-- For Js Library -->
     <script src="{{ asset('assets/js/vendor.js') }}"></script>
     <script src="{{ asset('assets/js/theme.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('assets/css/lineicons-regular.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/icon-font.min.css') }}">
     <link href="{{ asset('assets/css/custom-style.css') }}" rel="stylesheet" type="text/css" />
+
+    <link href="assets/css/font-awesome-all.css" rel="stylesheet" />
+    <link href="assets/css/flaticon.css" rel="stylesheet" />
+    <link href="assets/css/owl.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/jquery.fancybox.min.css" rel="stylesheet" />
+    <link href="assets/css/animate.css" rel="stylesheet" />
+    <link href="assets/css/nice-select.css" rel="stylesheet" />
+    <link href="assets/css/elpath.css" rel="stylesheet" />
+    <link href="assets/css/color.css" id="jssDefault" rel="stylesheet" />
+    <link href="assets/css/rtl.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/module-css/header.css" rel="stylesheet" />
+    <link href="assets/css/module-css/banner.css" rel="stylesheet" />
+    <link href="assets/css/module-css/shop.css" rel="stylesheet" />
+    <link href="assets/css/module-css/featured.css" rel="stylesheet" />
+    <link href="assets/css/module-css/category.css" rel="stylesheet" />
+    <link href="assets/css/module-css/ads.css" rel="stylesheet" />
+    <link href="assets/css/module-css/popular-product.css" rel="stylesheet" />
+    <link href="assets/css/module-css/highlights.css" rel="stylesheet" />
+    <link href="assets/css/module-css/collection.css" rel="stylesheet" />
+    <link href="assets/css/module-css/fluid.css" rel="stylesheet" />
+    <link href="assets/css/module-css/deals.css" rel="stylesheet" />
+    <link href="assets/css/module-css/news.css" rel="stylesheet" />
+    <link href="assets/css/module-css/subscribe.css" rel="stylesheet" />
+    <link href="assets/css/module-css/footer.css" rel="stylesheet" />
+    <link href="assets/css/responsive.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+
     @yield('header')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -23,174 +53,19 @@
 
 <body>
     <div id="main">
-        <!-- Header -->
         @include('frontend.parts.header')
-        <!-- End header -->
-
-        <!-- Canvas menu -->
-        @include('frontend.parts.canvas')
-        <!-- End canvas menu -->
-
-        <!-- Canvas cart -->
-        @include('frontend.parts.canvas_cart')
-        <!-- End canvas cart -->
 
         @yield('content')
 
-        <!-- Footer collection -->
         @include('frontend.parts.footer')
-        <!-- End footer collection -->
-
-        <div class="search-popup js-search-popup">
-            <!-- Search close -->
-            <div class="search-popup__close">
-                <a href="#" class="js-close-search-popup"><i class="lnr lnr-cross"></i></a>
-            </div>
-            <!-- End search close -->
-            <!-- Container -->
-            <div class="container container--type-2">
-                <!-- Search title -->
-                {{-- <h5 class="search-popup__title">Search</h5>
-                <!-- End search title -->
-                <!-- Search categories -->
-                <ul class="search-popup__categories">
-                    <li><a href="#" class="active">All</a></li>
-                    <li><a href="#">Rings</a></li>
-                    <li><a href="#">Bracelets</a></li>
-                    <li><a href="#">Bangles</a></li>
-                    <li><a href="#">Necklaces</a></li>
-                </ul> --}}
-                <!-- End search categories -->
-                <!-- Search form -->
-                <form class="search-popup__form" action="{{ route('products.index') }}" method="get">
-                    <!-- Search input -->
-                    <input type="text" class="search-popup__input" name="search" placeholder="Search here..." />
-                    <!-- End search input -->
-                </form>
-                <!-- End search form -->
-                <!-- Search results -->
-                {{-- <div class="search-popups__results">
-                    <!-- Results heading -->
-                    <h6 class="search-popup__results-heading">Search results</h6>
-                    <!-- End results heading -->
-                    <!-- Results -->
-                    <div class="search-popups__results-products d-flex">
-                        <!-- Product -->
-                        <div class="result-product">
-                            <!-- Image -->
-                            <div class="result-product__image">
-                                <a href="product.html">
-                                    <img src="assets/images/products/image2.jpg" alt="Product image" />
-                                </a>
-                            </div>
-                            <!-- End image -->
-                            <!-- Product name -->
-                            <div class="result-product__name"><a href="product.html">18K Red & Black Gold Diamond
-                                    Mismatched Earrings</a></div>
-                            <!-- End product name -->
-                            <!-- Product price -->
-                            <div class="result-product__price">AED 2500.00</div>
-                            <!-- End product price -->
-                        </div>
-                        <!-- End product -->
-                        <!-- Product -->
-                        <div class="result-product">
-                            <!-- Image -->
-                            <div class="result-product__image">
-                                <a href="product.html">
-                                    <img src="assets/images/products/image1.jpg" alt="Product image" />
-                                </a>
-                            </div>
-                            <!-- End image -->
-                            <!-- Product name -->
-                            <div class="result-product__name"><a href="product.html">18K Yellow & White Gold Diamond
-                                    Ring</a></div>
-                            <!-- End product name -->
-                            <!-- Product price -->
-                            <div class="result-product__price">AED 6500.00</div>
-                            <!-- End product price -->
-                        </div>
-                        <!-- End product -->
-                        <!-- Product -->
-                        <div class="result-product">
-                            <!-- Image -->
-                            <div class="result-product__image">
-                                <a href="product.html">
-                                    <img src="assets/images/products/image3.jpg" alt="Product image" />
-                                </a>
-                            </div>
-                            <!-- End image -->
-                            <!-- Product name -->
-                            <div class="result-product__name"><a href="product.html">Black Diamond Necklace</a></div>
-                            <!-- End product name -->
-                            <!-- Product price -->
-                            <div class="result-product__price">AED 3500.00</div>
-                            <!-- End product price -->
-                        </div>
-                        <!-- End product -->
-                        <!-- Product -->
-                        <div class="result-product">
-                            <!-- Image -->
-                            <div class="result-product__image">
-                                <a href="product.html">
-                                    <img src="assets/images/products/image1.jpg" alt="Product image" />
-                                </a>
-                            </div>
-                            <!-- End image -->
-                            <!-- Product name -->
-                            <div class="result-product__name"><a href="product.html">18K Yellow & White Gold Diamond
-                                    Ring</a></div>
-                            <!-- End product name -->
-                            <!-- Product price -->
-                            <div class="result-product__price">AED 1999.00</div>
-                            <!-- End product price -->
-                        </div>
-                        <!-- End product -->
-                        <!-- Product -->
-                        <div class="result-product">
-                            <!-- Image -->
-                            <div class="result-product__image">
-                                <a href="product.html">
-                                    <img src="assets/images/products/image4.jpg" alt="Product image" />
-                                </a>
-                            </div>
-                            <!-- End image -->
-                            <!-- Product name -->
-                            <div class="result-product__name"><a href="product.html">18K Red & Black Gold Diamond
-                                    Mismatched Earrings</a></div>
-                            <!-- End product name -->
-                            <!-- Product price -->
-                            <div class="result-product__price">
-                                <!-- Price new -->
-                                <span class="result-product__price-new">AED 2500.00</span>
-                                <!-- End price new -->
-                                <!-- Price old -->
-                                <span class="result-product__price-old">AED 5000.00</span>
-                                <!-- End price old -->
-                            </div>
-                            <!-- End product price -->
-                        </div>
-                        <!-- End product -->
-                    </div>
-                    <!-- End results -->
-                    <!-- Results action -->
-                    <div class="search-popup__results-action">
-                        <a href="#" class="fifth-button">All results (12)</a>
-                    </div>
-                    <!-- End results actions -->
-                </div> --}}
-                <!-- End search results -->
-            </div>
-            <!-- End container -->
-        </div>
     </div>
 
     <script>
-         @if (session('message'))
+        @if (session('message'))
             toastr.options = {
                 "closeButton": true,
                 "progressBar": true,
-                "positionClass": "toast-top-right", // Change the position if needed
+                "positionClass": "toast-top-right",
             };
             toastr["{{ session('alert-type', 'info') }}"]("{{ session('message') }}");
         @endif
@@ -209,7 +84,8 @@
             });
         }
 
-        var productDetailRoute = "{{ route('product-detail', ['slug' => '__slug__', 'sku' => '__sku__']) }}"; // this will be a placeholder
+        var productDetailRoute =
+            "{{ route('product-detail', ['slug' => '__slug__', 'sku' => '__sku__']) }}"; // this will be a placeholder
         $(".js-open-canvas-cart").on("click", function() {
 
             $.get('{{ route('cart.index') }}', {
@@ -219,13 +95,15 @@
                 // location.reload();
                 var productRow = '';
                 $.each(data.products, function(index, product) {
-                    
-                    var productLink = productDetailRoute.replace('__slug__', product.product.slug).replace('__sku__', product.product.sku);
-        
+
+                    var productLink = productDetailRoute.replace('__slug__', product.product.slug)
+                        .replace('__sku__', product.product.sku);
+
                     var attributeHTML = '';
 
                     $.each(product.product.attributes, function(attrIndex, attribute) {
-                        attributeHTML += `<span class="cart-item__variant">${attribute.name}, ${attribute.value || "Not specified"}</span>`;
+                        attributeHTML +=
+                            `<span class="cart-item__variant">${attribute.name}, ${attribute.value || "Not specified"}</span>`;
                     });
 
                     productRow += `
@@ -255,11 +133,11 @@
                                     </p>
                                 
                                 </li>`;
-                    
+
                 });
 
                 $('.header-cart__items').html(productRow);
-                               
+
                 $('.cart_sub_total').html(data.summary.after_discount);
             });
 
@@ -278,102 +156,103 @@
                 }
             });
 
-            
-            $(document).on('click', '.add-to-cart-btn', function () {
+
+            $(document).on('click', '.add-to-cart-btn', function() {
                 const productSlug = $(this).data('product-slug');
                 const productSku = $(this).data('product-sku');
                 var quantity = $('#product_quantity').val() ?? 1;
-            
+
                 $.ajax({
                     url: '/cart/add', // Laravel route
                     type: 'POST',
                     data: {
                         product_slug: productSlug,
-                        sku : productSku,
+                        sku: productSku,
                         quantity: quantity, // Default quantity
                     },
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
                     },
-                    success: function (response) {
+                    success: function(response) {
                         $('.cart_count').text(response.cart_count);
                         if (response.status == true) {
-                            toastr.success(response.message, "{{trans('messages.success')}}");
+                            toastr.success(response.message,
+                                "{{ trans('messages.success') }}");
                         } else {
-                            toastr.error(response.message, "{{trans('messages.error')}}");
+                            toastr.error(response.message, "{{ trans('messages.error') }}");
                         }
                     },
-                    error: function (xhr, status, error) {
-                        toastr.error("{{trans('messages.product_add_cart_failed')}}", 'Error');
+                    error: function(xhr, status, error) {
+                        toastr.error("{{ trans('messages.product_add_cart_failed') }}",
+                            'Error');
                     },
                 });
             });
 
-            // Event listener for the "Remove" button
             $(document).on('click', '.remove-cart-item', function() {
-                var cartItemId = $(this).data('id'); // Get the cart item ID
-                var row = $(this).closest('li'); // Get the closest row to remove
+                var cartItemId = $(this).data('id');
+                var row = $(this).closest('li');
 
-                // Send an Ajax request to remove the item from the cart
                 $.ajax({
                     url: '/cart/' + cartItemId,
                     type: 'DELETE',
                     success: function(response) {
                         if (response.status === true) {
-                            // Remove the row from the table
                             row.remove();
-                            $('.row_'+cartItemId).remove();
+                            $('.row_' + cartItemId).remove();
                             $('.cart_sub_total').html(response.updatedCartSummary.sub_total)
-                            // Optionally, you can update the cart summary here
-                            toastr.success(response.message, "{{trans('messages.success')}}");
+                            toastr.success(response.message,
+                                "{{ trans('messages.success') }}");
                         } else {
-                            toastr.error(response.message, "{{trans('messages.error')}}");
+                            toastr.error(response.message, "{{ trans('messages.error') }}");
                         }
                     },
                     error: function(xhr, status, error) {
-                        toastr.error("{{trans('messages.cart_remove_error')}}", "{{trans('messages.error')}}");
+                        toastr.error("{{ trans('messages.cart_remove_error') }}",
+                            "{{ trans('messages.error') }}");
                     }
                 });
             });
 
             $(document).on('click', '.change_quantity', function() {
-                var cartItemId = $(this).data('id'); // Get the cart item ID
-                var action = $(this).data('action'); // Get the cart item ID
-                var quantity = $('#quantity-field_'+cartItemId).val();
-                // Send an Ajax request to remove the item from the cart
-                if(action == 'plus'){
+                var cartItemId = $(this).data('id');
+                var action = $(this).data('action');
+                var quantity = $('#quantity-field_' + cartItemId).val();
+                if (action == 'plus') {
                     quantity = parseInt(quantity, 10) + 1;
-                    $('#quantity-field_'+cartItemId).val(quantity);
-                    
-                }else{
-                    quantity =  parseInt(quantity, 10) - 1;;
-                    $('#quantity-field_'+cartItemId).val(quantity);
+                    $('#quantity-field_' + cartItemId).val(quantity);
+
+                } else {
+                    quantity = parseInt(quantity, 10) - 1;;
+                    $('#quantity-field_' + cartItemId).val(quantity);
                 }
-                
+
                 $.ajax({
                     url: '/cart/change_quantity',
                     type: 'POST',
                     data: {
                         cart_id: cartItemId,
-                        action : action,
-                        quantity : quantity
+                        action: action,
+                        quantity: quantity
                     },
                     success: function(response) {
                         if (response.status === true) {
                             // Optionally, you can update the cart summary here
-                            toastr.success(response.message, "{{trans('messages.success')}}");
+                            toastr.success(response.message,
+                                "{{ trans('messages.success') }}");
                             window.location.reload();
                         } else {
-                            toastr.error(response.message, "{{trans('messages.error')}}");
+                            toastr.error(response.message, "{{ trans('messages.error') }}");
                         }
                     },
                     error: function(xhr, status, error) {
-                        toastr.error("{{trans('messages.cart_remove_error')}}", "{{trans('messages.error')}}");
+                        toastr.error("{{ trans('messages.cart_remove_error') }}",
+                            "{{ trans('messages.error') }}");
                     }
                 });
             });
 
-            $(document).on('click', '.wishlist-btn', function () {
+            $(document).on('click', '.wishlist-btn', function() {
                 const heartIcon = $(this).find('.lnr-heart');
                 const productSlug = $(this).data('product-slug');
                 const productSku = $(this).data('product-sku');
@@ -383,27 +262,31 @@
                     url: url,
                     type: 'POST',
                     data: {
-                        productSlug: productSlug, 
-                        productSku: productSku, 
-                        _token: $('meta[name="csrf-token"]').attr('content') 
+                        productSlug: productSlug,
+                        productSku: productSku,
+                        _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
-                        if(response.status == true){
+                        if (response.status == true) {
                             $('.wishlist_count').text(response.wishlist_count);
-                            toastr.success(response.message, "{{trans('messages.success')}}");
+                            toastr.success(response.message,
+                                "{{ trans('messages.success') }}");
                             heartIcon.toggleClass('active');
 
-                            if(response.wishlist_status == 1){
-                                $('.wishlist_msg').html("{{trans('messages.remove_wishlist')}}");
-                            }else{
-                                $('.wishlist_msg').html("{{trans('messages.add_wishlist')}}");
+                            if (response.wishlist_status == 1) {
+                                $('.wishlist_msg').html(
+                                    "{{ trans('messages.remove_wishlist') }}");
+                            } else {
+                                $('.wishlist_msg').html(
+                                    "{{ trans('messages.add_wishlist') }}");
                             }
-                        }else{
-                            toastr.error(response.message, "{{trans('messages.error')}}");
+                        } else {
+                            toastr.error(response.message, "{{ trans('messages.error') }}");
                         }
                     },
                     error: function(xhr, status, error) {
-                        toastr.error("{{trans('messages.wishlist_remove_error')}}", "{{trans('messages.error')}}");
+                        toastr.error("{{ trans('messages.wishlist_remove_error') }}",
+                            "{{ trans('messages.error') }}");
                     }
                 });
             });
@@ -416,13 +299,15 @@
                     method: "POST",
                     data: $(this).serialize(),
                     success: function(response) {
-                        $('#newsletterMessage').html('<p style="color: green;">' + response.success + '</p>');
+                        $('#newsletterMessage').html('<p style="color: green;">' + response
+                            .success + '</p>');
                         $('#newsletterForm')[0].reset();
                     },
                     error: function(xhr) {
                         let errors = xhr.responseJSON.errors;
                         if (errors && errors.email) {
-                            $('#newsletterMessage').html('<p style="color: red;">' + errors.email[0] + '</p>');
+                            $('#newsletterMessage').html('<p style="color: red;">' + errors
+                                .email[0] + '</p>');
                         }
                     }
                 });
@@ -430,21 +315,23 @@
 
         });
 
-        $('.proceedToCheckout').on('click', function () {
+        $('.proceedToCheckout').on('click', function() {
             $.ajax({
-                url: '/check-login-status',  // Endpoint to check login status
+                url: '/check-login-status', // Endpoint to check login status
                 type: 'GET',
-                success: function (response) {
+                success: function(response) {
                     if (response.is_logged_in) {
                         // Redirect to checkout page
                         window.location.href = '/checkout';
                     } else {
                         // Show alert if not logged in
-                        toastr.error("{{trans('messages.login_msg')}}", "{{trans('messages.error')}}");
+                        toastr.error("{{ trans('messages.login_msg') }}",
+                            "{{ trans('messages.error') }}");
                     }
                 },
-                error: function () {
-                    toastr.error("{{trans('messages.error_try_again')}}", "{{trans('messages.error')}}");
+                error: function() {
+                    toastr.error("{{ trans('messages.error_try_again') }}",
+                        "{{ trans('messages.error') }}");
                 }
             });
         });
@@ -457,10 +344,29 @@
             });
         });
     </script>
-    
+
     @yield('script')
+
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/owl.js"></script>
+    <script src="assets/js/wow.js"></script>
+    <script src="assets/js/validation.js"></script>
+    <script src="assets/js/jquery.fancybox.js"></script>
+    <script src="assets/js/appear.js"></script>
+    <script src="assets/js/isotope.js"></script>
+    <script src="assets/js/parallax-scroll.js"></script>
+    <script src="assets/js/jquery.nice-select.min.js"></script>
+    <script src="assets/js/scrolltop.min.js"></script>
+    <script src="assets/js/language.js"></script>
+    <script src="assets/js/countdown.js"></script>
+    <script src="assets/js/jquery-ui.js"></script>
+    <script src="assets/js/jquery.bootstrap-touchspin.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/script.js"></script>
+
 </body>
 
 </html>

@@ -2,7 +2,7 @@
     <div class="aiz-sidebar left c-scrollbar">
         <div class="aiz-side-nav-logo-wrap">
             <a href="{{ route('admin.dashboard') }}" class="d-block text-left">
-                <img class="mw-100" height="100" src="{{ asset('assets/img/logow.png') }}"
+                <img class="mw-100" height="100" src="{{ uploaded_asset(get_setting('site_icon')) }}"
                     alt="{{ get_setting('site_name') }}">
             </a>
         </div>
@@ -251,7 +251,7 @@
                                         <span class="aiz-side-nav-text">Menus</span>
                                     </a>
                                 </li>
-                               
+
                                 <li class="aiz-side-nav-item">
                                     <a href="{{ route('website.footer', ['lang' => App::getLocale()]) }}"
                                         class="aiz-side-nav-link {{ areActiveRoutes(['website.footer']) }}">
@@ -407,7 +407,6 @@
                     @endcanany
 
                     <!-- Staffs -->
-                    @canany(['manage_staffs'])
                         <li class="aiz-side-nav-item">
                             <a href="#" class="aiz-side-nav-link">
                                 <i class="las la-user-tie aiz-side-nav-icon"></i>
@@ -429,9 +428,7 @@
                                 </li>
                             </ul>
                         </li>
-                    @endcanany
 
-                    @canany(['manage_roles'])
                         <li class="aiz-side-nav-item">
                             <a href="#" class="aiz-side-nav-link">
                                 <i class="las la-user-tie aiz-side-nav-icon"></i>
@@ -453,7 +450,6 @@
                                 </li>
                             </ul>
                         </li>
-                    @endcanany
 
 
                 </ul><!-- .aiz-side-nav -->

@@ -6,8 +6,7 @@
             <!-- Image -->
             <div class="minimal-about__image">
                 <img alt="Image" data-sizes="auto"
-                    data-srcset="{{ asset('assets/images/login.webp')}}"
-                    src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" class="lazyload" />
+                    src="{{uploaded_asset(get_setting('site_icon'))}}" class="lazyload" />
             </div>
             <!-- End image -->
             <!-- Content -->

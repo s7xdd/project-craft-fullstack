@@ -1,145 +1,154 @@
-<footer class="modern-footer collection-footer">
-    @php
-        $pageData = getPageData('home');
-        $lang = getActiveLanguage();
-    @endphp
-    
-    <!-- Newsletter -->
-    <div class="blog-with-sidebar__newsletter">
-        <!-- Container -->
-        <div class="container">
-            <!-- Row -->
-            <div class="row blog-newsletter">
-                <div class="col-lg-12">
-                    <!-- Newsletter Title -->
-                    <h3 class="blog-newsletter__title font-family-jost text-center">{{ $pageData->getTranslation('heading8', $lang) }}</h3>
-                    <!-- End newsletter title -->
-                </div>
-
-                <div class="col-lg-6">
-                    <p class="newsletter-text-area">{{ $pageData->getTranslation('heading9', $lang) }}</p>
-                </div>
-                <div class="col-lg-6">
-                    <!-- Newsletter form -->
-                    <form class="blog-newsletter__form"  id="newsletterForm">
-                        <input type="email" placeholder="{{trans('email')}}"  name="email" class="blog-newsletter__input" />
-                        <button type="submit" class="blog-newsletter__submit">{{ trans('messages.subscribe') }}</button>
-                    </form>
-                    <div id="newsletterMessage"></div>
-                    <!-- End newsletter form -->
-                </div>
-            </div>
-            <!-- End row -->
-        </div>
-        <!-- End container -->
-    </div>
-    <!-- End newsletter -->
-
-    <!-- Container -->
-    <div class="container">
-
-        <!-- Menu -->
-        <ul class="modern-footer__menu">
-            <li><a href="{{route('home')}}">{{ trans('messages.home') }} </a></li>
-            <li><a href="{{route('about_us')}}">{{ trans('messages.about_us') }} </a></li>
-            <li><a href="{{route('products.index')}}">{{ trans('messages.shop') }} </a></li>
-            <li><a href="{{route('terms')}}">{{ trans('messages.terms_conditions') }} </a></li>
-            <li><a href="{{route('privacy')}}">{{ trans('messages.privacy_policy') }}</a></li>
-            <li><a href="{{route('contact')}}">{{ trans('messages.contact') }}</a></li>
-        </ul>
-        <!-- End menu -->
-        <!-- Row -->
-        <div class="row">
-            <div class="col-lg-4 mobile-order-2">
-                <!-- Social -->
-                <div class="modern-footer__social">
-                    <p>{{ get_setting('social_title') }}</p>
-                    <ul>
-                        <li><a href="{{ get_setting('instagram_link') }}"><img src="{{ asset('assets/images/instagram.svg') }}" alt=""></a></li>
-                        <li><a href="{{ get_setting('facebook_link') }}"><img src="{{ asset('assets/images/facebook.svg') }}"></a></li>
-                        <li><a href="{{ get_setting('youtube_link') }}"><img src="{{ asset('assets/images/youtube.svg') }}"></a></li>
-                        <li><a href="{{ get_setting('linkedin_link') }}"><img src="{{ asset('assets/images/LinkedIn.svg') }}"></a></li>
-                    </ul>
-                </div>
-                <!-- End social -->
-            </div>
-            <div class="col-lg-4">
-                <!-- Logo -->
-                <div class="modern-footer__logo">
-                    <img width="250" src="{{ asset('assets/img/logow.png') }}" alt="">
-                </div>
-                <!-- End logo -->
-                <!-- Address -->
-                <div class="modern-footer__address">
-
-                    <ul>
-                        <li><a href="#"><img width="40" src="{{ asset('assets/images/email.svg') }}" alt=""></a></li>
-                        <li><a href="#"><img width="40" src="{{ asset('assets/images/chat.svg') }}"></a></li>
-                        <li><a href="#"><img width="40" src="{{ asset('assets/images/phone.svg') }}"></a></li>
-                        <li><a href="#"><img width="40" src="{{ asset('assets/images/visit.svg') }}"></a></li>
-                    </ul>
-                </div>
-                <!-- End address -->
-                <!-- Payment -->
-                <div class="modern-footer__payment d-none d-lg-block">
-                    <img src="{{ uploaded_asset(get_setting('payment_method_images')) }}" alt="Payment" />
-                </div>
-                <!-- End payment -->
-            </div>
-            <div class="col-lg-4 mobile-order-3">
-                <!-- Currency -->
-                <div class="modern-footer__currency">
-                    <p>{{ trans('messages.join_with_us') }}</p>
-
-                    <div class="become_promotor" bis_skin_checked="1"><a href="#"><i
-                                class="lnr lnr-bullhorn"></i>{{ trans('messages.become_promotor') }}
-                        </a></div>
-                      @if (!auth()->guard('vendor')->check())
-                        <div class="become_partner" bis_skin_checked="1"><a href="#" data-bs-toggle="modal"
-                                data-bs-target="#becomePartnerModal"><i
-                                    class="lnr lnr-thumbs-up"></i>{{ trans('messages.become_partner') }}
-                            </a></div>
-                    @endif
-
-
-                </div>
-                <!-- End currency -->
-            </div>
-        </div>
-        <!-- End row -->
-        <!-- Payment -->
-        <div class="modern-footer__payment d-block d-lg-none">
-            <img src="{{ asset('assets/images/payment.svg') }}" alt="Payment" />
-        </div>
-        <!-- End payment -->
-
-
-
-    </div>
-
-    <!-- End container -->
-</footer>
-<div class="modal fade" id="becomePartnerModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="authModalLabel">{{ trans('messages.become_partner') }}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <!-- Modal Body -->
-            <div class="modal-body text-center">
-                <p>{{ trans('messages.choose_option') }}</p>
-                <div class="d-grid gap-2">
-                    <ul class="canvas-menu__nav horizontal-menu">
-                        <li><a href="{{ route('vendor.login') }}" class="canvas-nav__item"><i
-                                    class="lnil lnil-user"></i> {{ trans('messages.login') }}</a></li>
-                        <li><a href="{{ route('vendor.register') }}" class="canvas-nav__item"><i
-                                    class="lnil lnil-user"></i> {{ trans('messages.register') }}</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+   <footer class="main-footer home-3 footer-light">
+       <div class="widget-section p_relative pt_100 pb_80">
+           <div class="large-container">
+               <div class="row clearfix">
+                   <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                       <div class="tp-footer-widget logo-widget">
+                           <figure class="footer-logo">
+                               <a href="index.html"><img src="assets/images/White-logo.png" alt="" /></a>
+                           </figure>
+                           <div class="widget-content">
+                               <ul class="info-list clearfix">
+                                   <li>
+                                       We are a crafting company based
+                                       in India ..
+                                   </li>
+                               </ul>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-lg-2 col-md-6 col-sm-12 footer-column">
+                       <div class="tp-footer-widget links-widget">
+                           <div class="widget-title">
+                               <h4>Resources</h4>
+                           </div>
+                           <div class="widget-content">
+                               <ul class="links-list clearfix">
+                                   <li>
+                                       <a href="about.html">About Us</a>
+                                   </li>
+                                   <li>
+                                       <a href="shop.html">Shop</a>
+                                   </li>
+                                   <li>
+                                       <a href="cart.html">Cart</a>
+                                   </li>
+                               </ul>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-lg-2 col-md-6 col-sm-12 footer-column">
+                       <div class="tp-footer-widget links-widget">
+                           <div class="widget-title">
+                               <h4>Support</h4>
+                           </div>
+                           <div class="widget-content">
+                               <ul class="links-list clearfix">
+                                   <li>
+                                       <a href="index.html">Reviews</a>
+                                   </li>
+                                   <li>
+                                       <a href="contact.html">Contact</a>
+                                   </li>
+                                   <li>
+                                       <a href="index.html">Return Policy</a>
+                                   </li>
+                               </ul>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-lg-2 col-md-6 col-sm-12 footer-column">
+                       <div class="tp-footer-widget links-widget">
+                           <div class="widget-title">
+                               <h4>Store Info</h4>
+                           </div>
+                           <div class="widget-content">
+                               <ul class="links-list clearfix">
+                                   <li>
+                                       <a href="index.html">Best Seller</a>
+                                   </li>
+                                   <li>
+                                       <a href="index.html">Top Sold Items</a>
+                                   </li>
+                                   <li>
+                                       <a href="index.html">New Arrivals</a>
+                                   </li>
+                                   <li>
+                                       <a href="index.html">Flash Sale</a>
+                                   </li>
+                                   <li>
+                                       <a href="index.html">Discount Products</a>
+                                   </li>
+                               </ul>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
+                       <div class="tp-footer-widget subscribe-widget">
+                           <div class="widget-title">
+                               <h4>Support</h4>
+                           </div>
+                           <div class="widget-content">
+                               <ul class="info-list clearfix">
+                                   <li>
+                                       57 heol isaf Station Road,
+                                       Cardiff, UK
+                                   </li>
+                                   <li>
+                                       <a href="mailto:info@example.com">info@example.com</a>
+                                   </li>
+                               </ul>
+                               <ul class="social-links">
+                                   <li>
+                                       <a href="index.html"><i class="icon-14"></i></a>
+                                   </li>
+                                   <li>
+                                       <a href="index.html"><i class="icon-15"></i></a>
+                                   </li>
+                                   <li>
+                                       <a href="index.html"><i class="icon-16"></i></a>
+                                   </li>
+                                   <li>
+                                       <a href="index.html"><i class="icon-17"></i></a>
+                                   </li>
+                               </ul>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div class="footer-bottom">
+           <div class="large-container">
+               <div class="bottom-inner">
+                   <div class="copyright">
+                       <p>
+                           Copyright &copy; 2025
+                           <a href="index.html">Grostore</a>, Inc. All
+                           Rights Reserved
+                       </p>
+                   </div>
+                   <ul class="footer-card">
+                       <li>
+                           <a href="index.html"><img src="assets/images/icons/card-1.png" alt="" /></a>
+                       </li>
+                       <li>
+                           <a href="index.html"><img src="assets/images/icons/card-2.png" alt="" /></a>
+                       </li>
+                       <li>
+                           <a href="index.html"><img src="assets/images/icons/card-3.png" alt="" /></a>
+                       </li>
+                       <li>
+                           <a href="index.html"><img src="assets/images/icons/card-4.png" alt="" /></a>
+                       </li>
+                       <li>
+                           <a href="index.html"><img src="assets/images/icons/card-5.png" alt="" /></a>
+                       </li>
+                       <li>
+                           <a href="index.html"><img src="assets/images/icons/card-6.png" alt="" /></a>
+                       </li>
+                   </ul>
+               </div>
+           </div>
+       </div>
+   </footer>
