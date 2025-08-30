@@ -179,7 +179,7 @@
                     </ul>
                 </li>
 
-                <li class="aiz-side-nav-item">
+                {{-- <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
                         <i class="las la-user-friends aiz-side-nav-icon"></i>
                         <span class="aiz-side-nav-text">Vendors</span>
@@ -192,7 +192,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
                 <li class="aiz-side-nav-item">
                     <a href="{{ route('enquiries.contact') }}"
@@ -240,6 +240,13 @@
                                 <span class="aiz-side-nav-arrow"></span>
                             </a>
                             <ul class="aiz-side-nav-list level-2">
+
+                                <li class="aiz-side-nav-item">
+                                    <a href="{{ route('form-builder.index') }}" class="aiz-side-nav-link">
+                                        <span class="aiz-side-nav-text">Form Builder</span>
+                                    </a>
+                                </li>
+
                                 <li class="aiz-side-nav-item">
                                     <a href="{{ route('website.header') }}" class="aiz-side-nav-link">
                                         <span class="aiz-side-nav-text">Header</span>
@@ -407,49 +414,49 @@
                     @endcanany
 
                     <!-- Staffs -->
-                        <li class="aiz-side-nav-item">
-                            <a href="#" class="aiz-side-nav-link">
-                                <i class="las la-user-tie aiz-side-nav-icon"></i>
-                                <span class="aiz-side-nav-text">{{ trans('messages.staffs') }}</span>
-                                <span class="aiz-side-nav-arrow"></span>
-                            </a>
-                            <ul class="aiz-side-nav-list level-2">
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('staffs.create') }}"
-                                        class="aiz-side-nav-link {{ areActiveRoutes(['staffs.create']) }}">
-                                        <span class="aiz-side-nav-text">{{ trans('messages.add_new_staffs') }}</span>
-                                    </a>
-                                </li>
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('staffs.index') }}"
-                                        class="aiz-side-nav-link {{ areActiveRoutes(['staffs.index', 'staffs.edit']) }}">
-                                        <span class="aiz-side-nav-text">{{ trans('messages.all_staffs') }}</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                    <li class="aiz-side-nav-item">
+                        <a href="#" class="aiz-side-nav-link">
+                            <i class="las la-user-tie aiz-side-nav-icon"></i>
+                            <span class="aiz-side-nav-text">{{ trans('messages.staffs') }}</span>
+                            <span class="aiz-side-nav-arrow"></span>
+                        </a>
+                        <ul class="aiz-side-nav-list level-2">
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('staffs.create') }}"
+                                    class="aiz-side-nav-link {{ areActiveRoutes(['staffs.create']) }}">
+                                    <span class="aiz-side-nav-text">{{ trans('messages.add_new_staffs') }}</span>
+                                </a>
+                            </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('staffs.index') }}"
+                                    class="aiz-side-nav-link {{ areActiveRoutes(['staffs.index', 'staffs.edit']) }}">
+                                    <span class="aiz-side-nav-text">{{ trans('messages.all_staffs') }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
-                        <li class="aiz-side-nav-item">
-                            <a href="#" class="aiz-side-nav-link">
-                                <i class="las la-user-tie aiz-side-nav-icon"></i>
-                                <span class="aiz-side-nav-text">{{ trans('messages.roles_permissions') }}</span>
-                                <span class="aiz-side-nav-arrow"></span>
-                            </a>
-                            <ul class="aiz-side-nav-list level-2">
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('roles.create') }}"
-                                        class="aiz-side-nav-link {{ areActiveRoutes(['roles.create']) }}">
-                                        <span class="aiz-side-nav-text">{{ trans('messages.add_new_role') }}</span>
-                                    </a>
-                                </li>
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('roles.index') }}"
-                                        class="aiz-side-nav-link {{ areActiveRoutes(['roles.index', 'roles.edit']) }}">
-                                        <span class="aiz-side-nav-text">{{ trans('messages.all_roles') }}</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                    <li class="aiz-side-nav-item">
+                        <a href="#" class="aiz-side-nav-link">
+                            <i class="las la-user-tie aiz-side-nav-icon"></i>
+                            <span class="aiz-side-nav-text">{{ trans('messages.roles_permissions') }}</span>
+                            <span class="aiz-side-nav-arrow"></span>
+                        </a>
+                        <ul class="aiz-side-nav-list level-2">
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('roles.create') }}"
+                                    class="aiz-side-nav-link {{ areActiveRoutes(['roles.create']) }}">
+                                    <span class="aiz-side-nav-text">{{ trans('messages.add_new_role') }}</span>
+                                </a>
+                            </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('roles.index') }}"
+                                    class="aiz-side-nav-link {{ areActiveRoutes(['roles.index', 'roles.edit']) }}">
+                                    <span class="aiz-side-nav-text">{{ trans('messages.all_roles') }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
 
 
                 </ul><!-- .aiz-side-nav -->

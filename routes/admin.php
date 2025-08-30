@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\PartnersController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\BuilderController;
 use App\Http\Controllers\Frontend\VendorController;
 
 Route::group(['middleware' => ['guest']], function () {
@@ -234,4 +235,24 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/vendors/update/{id}', [VendorController::class, 'update'])->name('vendors.update');
     Route::post('/bulk-vendor-delete', [VendorController::class, 'bulk_vendor_delete'])->name('bulk-vendor-delete');
     Route::get('/download/{id}', [VendorController::class, 'downloadTradeLicense'])->name('vendor.download');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Route::get('/form-builder', [BuilderController::class, 'create'])->name('form-builder.index');
+    Route::post('/page', [BuilderController::class, 'form-builder.store']);
 });

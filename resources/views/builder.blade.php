@@ -1,4 +1,4 @@
-@extends('frontend.layouts.form-builder-layout')
+@extends('backend.layouts.app')
 
 @section('content')
     <div class="row">

@@ -131,10 +131,7 @@ Route::group(['middleware' => ['vendor.auth']], function () {
 
 Route::get('/test', [BuilderController::class, 'create']);
 Route::post('/test-add', [BuilderController::class, 'store']);
-
-
 Route::get('/get-form', [FormController::class, 'create']);
-
 Route::post('/store-data', [FormController::class, 'store']);
 
 
@@ -154,28 +151,4 @@ Route::prefix('dynamic-forms')->name('dynamic-forms.')->group(function () {
 
     Route::get('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'showURL'])->name('url-file-download');
     Route::delete('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'deleteURL']);
-
-    Route::get('form', [\App\Http\Controllers\DynamicFormsResourceController::class, 'index']);
-    Route::get('form/{resource}', [\App\Http\Controllers\DynamicFormsResourceController::class, 'resource']);
-    Route::get('form/{resource}/submission', [\App\Http\Controllers\DynamicFormsResourceController::class, 'resourceSubmissions']);
-});
-Route::prefix('dynamic-forms')->name('dynamic-forms.')->group(function () {
-    // Dummy route so we can use the route() helper to give formiojs the base path for this group
-    Route::get('/')->name('index');
-
-    Route::post('storage/s3', [\App\Http\Controllers\DynamicFormsStorageController::class, 'storeS3'])
-        ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
-
-    Route::get('storage/s3', [App\Http\Controllers\DynamicFormsStorageController::class, 'showS3'])->name('S3-file-download');
-    Route::get('storage/s3/{fileKey}', [\App\Http\Controllers\DynamicFormsStorageController::class, 'showS3'])->name('S3-file-redirect');
-
-    Route::post('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'storeURL'])
-        ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
-
-    Route::get('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'showURL'])->name('url-file-download');
-    Route::delete('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'deleteURL']);
-
-    Route::get('form', [\App\Http\Controllers\DynamicFormsResourceController::class, 'index']);
-    Route::get('form/{resource}', [\App\Http\Controllers\DynamicFormsResourceController::class, 'resource']);
-    Route::get('form/{resource}/submission', [\App\Http\Controllers\DynamicFormsResourceController::class, 'resourceSubmissions']);
 });

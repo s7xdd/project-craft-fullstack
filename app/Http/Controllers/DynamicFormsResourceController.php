@@ -13,22 +13,12 @@ use Symfony\Component\Finder\Finder;
 
 class ResourceController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Provides the index of all registered Resources
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(ResourceRegistry $resourceRegistry) //register
+    public function index(ResourceRegistry $resourceRegistry) 
     {
         $resourceIndexList = array_keys($resourceRegistry->registered());
 
@@ -44,36 +34,24 @@ class ResourceController extends Controller
 
         return response(
             $retString
-        ) ->header('Content-Type', 'application/json');
+        )->header('Content-Type', 'application/json');
     }
 
-    /**
-     * Returns a description of components for the given Resource
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function resource($resource, ResourceRegistry $resourceRegistry)
     {
         $resourceList = $resourceRegistry->registered();
-        if(!isset($resourceList[$resource]))
-        {
+        if (!isset($resourceList[$resource])) {
             abort(404, 'Given Resource does not exist');
         }
         $componentList = json_encode($resourceList[$resource]::components());
-        $str = '{"type":"resource", "components": '.$componentList.'}';
+        $str = '{"type":"resource", "components": ' . $componentList . '}';
         return response($str)->header('Content-Type', 'application/json');
     }
 
-    /**
-     * Returns the submission values for a given resource
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function resourceSubmissions(Request $request, $resource, ResourceRegistry $resourceRegistry)
     {
         $resourceList = $resourceRegistry->registered();
-        if(!isset($resourceList[$resource]))
-        {
+        if (!isset($resourceList[$resource])) {
             abort(404, 'Given Resource does not exist');
         }
         $params = $request->query();
@@ -83,8 +61,7 @@ class ResourceController extends Controller
         $searchValue = '';
         foreach ($params as $key => $value) {
             if (str_starts_with($key, 'data')) {
-                if($key !== 'data__regex' && preg_match('/data_(.*)__regex/', $key, $match))
-                {
+                if ($key !== 'data__regex' && preg_match('/data_(.*)__regex/', $key, $match)) {
                     $searchKey = $match[1];
                 }
                 $searchValue = $value;
@@ -94,20 +71,16 @@ class ResourceController extends Controller
         $resourceSubmissions = $resourceList[$resource]::submissions($limit, $skip, $searchKey, $searchValue, $request->headers->all());
         $handlesPaginationAndSearch = $resourceList[$resource]::handlesPaginationAndSearch();
 
-        if(!$handlesPaginationAndSearch)
-        {
-            if($searchValue !== '')
-            {
+        if (!$handlesPaginationAndSearch) {
+            if ($searchValue !== '') {
                 $resourceSubmissions = array_filter($resourceSubmissions, function ($submissions) use ($limit, $skip, $searchKey, $searchValue) {
-                    foreach ($submissions as $submissionComponent => $submissionValue)
-                    {
-                        if(($searchKey === '' || $submissionComponent === $searchKey) && str_contains($submissionValue, $searchValue) )
-                        {
+                    foreach ($submissions as $submissionComponent => $submissionValue) {
+                        if (($searchKey === '' || $submissionComponent === $searchKey) && str_contains($submissionValue, $searchValue)) {
                             return true;
                         }
                     }
                     return false;
-                } );
+                });
             }
 
             $resourceSubmissions = array_slice($resourceSubmissions, $skip, $limit);
@@ -118,18 +91,17 @@ class ResourceController extends Controller
         foreach ($resourceSubmissions as $componentName => $submission) {
             foreach ($submission as $label => $value) {
                 $submissions[] = [
-                    '_id' => $componentName.$count,
+                    '_id' => $componentName . $count,
                     'roles' => [],
                     'state' => 'submitted',
                     'access' => [],
                     'data' => [
-                        'label-'.$componentName => $label,
+                        'label-' . $componentName => $label,
                         'value' => $value
                     ]
                 ];
                 $count++;
             }
-
         }
         $str = json_encode($submissions);
 
