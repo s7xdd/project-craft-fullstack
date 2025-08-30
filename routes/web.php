@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BuilderController;
+use App\Http\Controllers\FormController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Frontend\FrontendController;
@@ -12,6 +14,7 @@ use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\ForgotPasswordController;
 use App\Http\Controllers\Frontend\VendorController;
+use Laravel\Prompts\FormBuilder;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,10 +66,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/order/success/{order_id}', [CheckoutController::class, 'success'])->name('order.success');
     Route::get('/order/failed', [CheckoutController::class, 'failed'])->name('order.failed');
-    
+
     Route::post('/razorpay-success', [CheckoutController::class, 'razorpaySuccess'])->name('razorpay.success');
     Route::post('/razorpay-failed', [CheckoutController::class, 'razorpayFailed'])->name('razorpay.failed');
-    
+
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('wishlists', [WishlistController::class, 'index'])->name('wishlist.index');
@@ -78,12 +81,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('orders', [ProfileController::class, 'orderList'])->name('orders.index');
     Route::get('order-details', [ProfileController::class, 'orderDetails'])->name('order-details');
     Route::get('order/returns', [ProfileController::class, 'orderReturnList'])->name('orders.returns');
-    
+
     Route::post('cancel-order', [CheckoutController::class, 'cancelOrderRequest'])->name('cancel-order');
     Route::post('return-order', [CheckoutController::class, 'returnOrderRequest'])->name('return-order');
 
     Route::get('account', [ProfileController::class, 'getUserAccountInfo'])->name('account');
-    Route::post('/account/update', [ProfileController::class, 'update'])->name('account.update'); 
+    Route::post('/account/update', [ProfileController::class, 'update'])->name('account.update');
     Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('account.changePassword');
 });
 
@@ -121,11 +124,58 @@ Route::group(['middleware' => ['vendor.auth']], function () {
         Route::get('vendor/product/view/{id}', 'viewProduct')->name('vendor.product.view');
         Route::post('vendor/update', 'vendorUpdate')->name('vendor.update.info');
     });
-
 });
 
 
 
 
+Route::get('/test', [BuilderController::class, 'create']);
+Route::post('/test-add', [BuilderController::class, 'store']);
 
 
+Route::get('/get-form', [FormController::class, 'create']);
+
+Route::post('/store-data', [FormController::class, 'store']);
+
+
+
+
+Route::prefix('dynamic-forms')->name('dynamic-forms.')->group(function () {
+    Route::get('/')->name('index');
+
+    Route::post('storage/s3', [\App\Http\Controllers\DynamicFormsStorageController::class, 'storeS3'])
+        ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+
+    Route::get('storage/s3', [App\Http\Controllers\DynamicFormsStorageController::class, 'showS3'])->name('S3-file-download');
+    Route::get('storage/s3/{fileKey}', [\App\Http\Controllers\DynamicFormsStorageController::class, 'showS3'])->name('S3-file-redirect');
+
+    Route::post('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'storeURL'])
+        ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+
+    Route::get('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'showURL'])->name('url-file-download');
+    Route::delete('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'deleteURL']);
+
+    Route::get('form', [\App\Http\Controllers\DynamicFormsResourceController::class, 'index']);
+    Route::get('form/{resource}', [\App\Http\Controllers\DynamicFormsResourceController::class, 'resource']);
+    Route::get('form/{resource}/submission', [\App\Http\Controllers\DynamicFormsResourceController::class, 'resourceSubmissions']);
+});
+Route::prefix('dynamic-forms')->name('dynamic-forms.')->group(function () {
+    // Dummy route so we can use the route() helper to give formiojs the base path for this group
+    Route::get('/')->name('index');
+
+    Route::post('storage/s3', [\App\Http\Controllers\DynamicFormsStorageController::class, 'storeS3'])
+        ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+
+    Route::get('storage/s3', [App\Http\Controllers\DynamicFormsStorageController::class, 'showS3'])->name('S3-file-download');
+    Route::get('storage/s3/{fileKey}', [\App\Http\Controllers\DynamicFormsStorageController::class, 'showS3'])->name('S3-file-redirect');
+
+    Route::post('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'storeURL'])
+        ->withoutMiddleware([\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class]);
+
+    Route::get('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'showURL'])->name('url-file-download');
+    Route::delete('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'deleteURL']);
+
+    Route::get('form', [\App\Http\Controllers\DynamicFormsResourceController::class, 'index']);
+    Route::get('form/{resource}', [\App\Http\Controllers\DynamicFormsResourceController::class, 'resource']);
+    Route::get('form/{resource}/submission', [\App\Http\Controllers\DynamicFormsResourceController::class, 'resourceSubmissions']);
+});

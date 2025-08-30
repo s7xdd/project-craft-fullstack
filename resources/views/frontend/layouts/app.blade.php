@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="{{ asset('assets/css/icon-font.min.css') }}">
     <link href="{{ asset('assets/css/custom-style.css') }}" rel="stylesheet" type="text/css" />
 
+    <!-- Formio CSS -->
+    <link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">
+    <!-- Formio JS -->
+    <script src="https://cdn.form.io/formiojs/formio.full.min.js"></script>
+
     <link href="assets/css/font-awesome-all.css" rel="stylesheet" />
     <link href="assets/css/flaticon.css" rel="stylesheet" />
     <link href="assets/css/owl.css" rel="stylesheet" />
