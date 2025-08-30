@@ -64,6 +64,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/order/success/{order_id}', [CheckoutController::class, 'success'])->name('order.success');
     Route::get('/order/failed', [CheckoutController::class, 'failed'])->name('order.failed');
     
+    Route::post('/razorpay-success', [CheckoutController::class, 'razorpaySuccess'])->name('razorpay.success');
+    Route::post('/razorpay-failed', [CheckoutController::class, 'razorpayFailed'])->name('razorpay.failed');
+    
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::get('wishlists', [WishlistController::class, 'index'])->name('wishlist.index');

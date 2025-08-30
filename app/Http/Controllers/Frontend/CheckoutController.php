@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Mail\EmailManager;
 use Mail;
+use Razorpay\Api\Api;
 
 class CheckoutController
 {
@@ -345,6 +346,20 @@ class CheckoutController
                 // NotificationUtility::sendNotification($order, 'created');
             
                 return redirect()->route('order.success', $order->id);
+            }else if($request->payment_method == 'razorpay'){
+                $api = new Api(env('RAZORPAY_KEY_ID'), env('RAZORPAY_KEY_SECRET'));
+                
+                $razorpayOrder = $api->order->create([
+                    'receipt' => $order->code,
+                    'amount' => round($grand_total * 100),
+                    'currency' => 'INR',
+                    'payment_capture' => 1 
+                ]);
+                
+                $order->razorpay_order_id = $razorpayOrder['id'];
+                $order->save();
+                
+                return view('frontend.razorpay-checkout', compact('order', 'razorpayOrder'));
             }else{
               
                 
@@ -439,6 +454,111 @@ class CheckoutController
             // $orderPayments->save();
         }
         return redirect(env('CCA_PAYMENT_CANCEL').'?status='.$order_status.'&code='.$order_code);
+    }
+
+    public function razorpaySuccess(Request $request)
+    {
+        $input = $request->all();
+        
+        $order = Order::find($request->order_id);
+        
+        if (!$order) {
+            return redirect()->route('order.failed')->with('error', 'Order not found.');
+        }
+        
+        $api = new Api(env('RAZORPAY_KEY_ID'), env('RAZORPAY_KEY_SECRET'));
+        
+        try {
+            $attributes = [
+                'razorpay_order_id' => $input['razorpay_order_id'],
+                'razorpay_payment_id' => $input['razorpay_payment_id'],
+                'razorpay_signature' => $input['razorpay_signature']
+            ];
+            
+            $api->utility->verifyPaymentSignature($attributes);
+            
+            $order->payment_status = 'paid';
+            $order->payment_type = 'razorpay';
+            $order->payment_details = json_encode([
+                'razorpay_payment_id' => $input['razorpay_payment_id'],
+                'razorpay_order_id' => $input['razorpay_order_id'],
+                'razorpay_signature' => $input['razorpay_signature']
+            ]);
+            $order->save();
+            
+            $orderDetails = $order->orderDetails;
+            if (!empty($orderDetails)) {
+                foreach ($orderDetails as $od) {
+                    $od->payment_status = 'paid';
+                    $od->save();
+                    
+                    $product_stock = ProductStock::where('product_id', $od->product_id)->first();
+                    if ($product_stock) {
+                        $product_stock->qty -= ($od->quantity >= $product_stock->qty) ? 0 : ($product_stock->qty - $od->quantity);
+                        $product_stock->save();
+                    }
+                }
+            }
+            
+            Cart::where('user_id', $order->user_id)->delete();
+            
+            $orderPayments = new OrderPayments();
+            $orderPayments->order_id = $order->id;
+            $orderPayments->payment_status = 'success';
+            $orderPayments->payment_details = json_encode([
+                'razorpay_payment_id' => $input['razorpay_payment_id'],
+                'razorpay_order_id' => $input['razorpay_order_id'],
+                'razorpay_signature' => $input['razorpay_signature']
+            ]);
+            $orderPayments->save();
+            
+            NotificationUtility::sendOrderPlacedNotification($order);
+            NotificationUtility::sendNotification($order, 'created');
+            
+            $message = getOrderStatusMessageTest($order->user->name, $order->code);
+            $userPhone = $order->user->phone ?? '';
+            if ($userPhone != '' && $message['order_placed'] != '') {
+                SendSMSUtility::sendSMS($userPhone, $message['order_placed']);
+            }
+            
+            return redirect()->route('order.success', $order->id);
+            
+        } catch (\Exception $e) {
+            $order->payment_status = 'failed';
+            $order->save();
+            
+            $orderPayments = new OrderPayments();
+            $orderPayments->order_id = $order->id;
+            $orderPayments->payment_status = 'failed';
+            $orderPayments->payment_details = json_encode([
+                'error' => $e->getMessage(),
+                'input' => $input
+            ]);
+            $orderPayments->save();
+            
+            return redirect()->route('order.failed')->with('error', 'Payment verification failed.');
+        }
+    }
+
+    public function razorpayFailed(Request $request)
+    {
+        $input = $request->all();
+        
+        $order = Order::find($request->order_id);
+        
+        if ($order) {
+            $order->payment_status = 'failed';
+            $order->payment_type = 'razorpay';
+            $order->save();
+            
+            $orderPayments = new OrderPayments();
+            $orderPayments->order_id = $order->id;
+            $orderPayments->payment_status = 'failed';
+            $orderPayments->payment_details = json_encode($input);
+            $orderPayments->save();
+        }
+        
+        return redirect()->route('order.failed')->with('error', 'Payment failed. Please try again.');
     }
 
     public function cancelOrderRequest(Request $request){
