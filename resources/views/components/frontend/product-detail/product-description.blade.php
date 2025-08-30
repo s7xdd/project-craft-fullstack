@@ -1,0 +1,12 @@
+<div class="product-discription">
+    <div class="tabs-box">
+        <div class="tab-btn-box">
+            <ul class="tab-btns tab-buttons">
+                {{ $tabs }}
+            </ul>
+        </div>
+        <div class="tabs-content">
+            {{ $slot }}
+        </div>
+    </div>
+</div>

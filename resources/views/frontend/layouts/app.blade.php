@@ -43,10 +43,34 @@
     <link href="assets/css/module-css/footer.css" rel="stylesheet" />
     <link href="assets/css/responsive.css" rel="stylesheet" />
 
+    <link href="assets/css/font-awesome-all.css" rel="stylesheet" />
+    <link href="assets/css/flaticon.css" rel="stylesheet" />
+    <link href="assets/css/owl.css" rel="stylesheet" />
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/css/jquery.fancybox.min.css" rel="stylesheet" />
+    <link href="assets/css/animate.css" rel="stylesheet" />
+    <link href="assets/css/nice-select.css" rel="stylesheet" />
+    <link href="assets/css/elpath.css" rel="stylesheet" />
+    <link href="assets/css/jquery-ui.css" rel="stylesheet" />
+    <link href="assets/css/color.css" id="jssDefault" rel="stylesheet" />
+    <link href="assets/css/rtl.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <link href="assets/css/module-css/header.css" rel="stylesheet" />
+    <link href="assets/css/module-css/shop-details.css" rel="stylesheet" />
+    <link href="assets/css/module-css/shop.css" rel="stylesheet" />
+
+    <link href="assets/css/module-css/featured.css" rel="stylesheet" />
+    <link href="assets/css/module-css/popular-product.css" rel="stylesheet" />
+    <link href="assets/css/module-css/subscribe.css" rel="stylesheet" />
+    <link href="assets/css/module-css/footer.css" rel="stylesheet" />
+    <link href="assets/css/responsive.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+        rel="stylesheet">
 
-    @yield('header')
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 </head>
@@ -362,6 +386,26 @@
     <script src="assets/js/countdown.js"></script>
     <script src="assets/js/jquery-ui.js"></script>
     <script src="assets/js/jquery.bootstrap-touchspin.js"></script>
+
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/owl.js"></script>
+    <script src="assets/js/wow.js"></script>
+    <script src="assets/js/validation.js"></script>
+    <script src="assets/js/jquery.fancybox.js"></script>
+    <script src="assets/js/appear.js"></script>
+    <script src="assets/js/isotope.js"></script>
+    <script src="assets/js/parallax-scroll.js"></script>
+    <script src="assets/js/jquery.nice-select.min.js"></script>
+    <script src="assets/js/scrolltop.min.js"></script>
+    <script src="assets/js/language.js"></script>
+    <script src="assets/js/jquery-ui.js"></script>
+    <script src="assets/js/jquery.bootstrap-touchspin.js"></script>
+    <script src="assets/js/countdown.js"></script>
+    <script src="assets/js/bxslider.js"></script>
+
+    <!-- main-js -->
+    <script src="assets/js/script.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
