@@ -1,17 +1,16 @@
-@extends('frontend.layouts.form-builder-layout')
+@extends('backend.layouts.app')
 
 @section('content')
     <div class="row">
-        <div class="col-md-6">
-            <h1>Form Builder Demo</h1>
+        <div class="col-md-6" style="padding: 20px">
+            <h4 class="fw-600">{{ $title ?? '' }}</h4>
+
         </div>
 
         <div class="col-md-6 text-right">
-            <form method="post" action="{{ '/store-data' }}" id="submissionForm">
+            <form method="post" action="{{ $submitRoute ?? '' }}" id="submissionForm">
                 @csrf
-
                 <input type="hidden" name="state">
-
                 <input type="hidden" name="submissionValues" id="submissionValues" value="">
         </div>
     </div>

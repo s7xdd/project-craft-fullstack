@@ -57,7 +57,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/banners/edit/{id}', [Bannercontroller::class, 'edit'])->name('banners.edit');
 
     Route::get('/enquiries-contact', [PageController::class, 'enquiries'])->name('enquiries.contact');
-    // website setting
     Route::group(['prefix' => 'website'], function () {
         Route::get('/footer', [WebsiteController::class, 'footer'])->name('website.footer');
 
@@ -76,7 +75,10 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::resource('custom-pages', PageController::class);
         Route::get('/pages', [PageController::class, 'index'])->name('website.pages');
+        
         Route::get('/custom-pages/edit/{id}', [PageController::class, 'edit'])->name('custom-pages.edit');
+        Route::post('/custom-pages/store', [PageController::class, 'updatePageData'])->name('custom-pages.updatePage');
+
         Route::get('/custom-pages/destroy/{id}', [PageController::class, 'destroy'])->name('custom-pages.destroy');
         Route::post('/page/delete_image', [PageController::class, 'delete_image'])->name('page.delete_image');
 
@@ -171,7 +173,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/reviews/published', [ReviewController::class, 'updatePublished'])->name('reviews.published');
 
     // Manage Blogs
-
     Route::get('/blogs/all', [BlogController::class, 'index'])->name('blog.index');
     Route::get('/blog/create', [BlogController::class, 'create'])->name('blog.create');
     Route::post('/blog/store/', [BlogController::class, 'store'])->name('blog.store');
@@ -221,11 +222,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/subscribers', [PageController::class, 'subscribers'])->name('subscribers.index');
     Route::get('/subscribers/destroy/{id}', [PageController::class, 'subscribersDestroy'])->name('subscriber.destroy');
 
-    // Route::resource('custom-pages', PageController::class);
-    // Route::get('/custom-pages/edit/{id}', [PageController::class, 'edit'])->name('custom-pages.edit');
-
-    // Route::get('/pages', [WebsiteController::class, 'index'])->name('website.pages');
-
     Route::post('/business-settings/update', [BusinessSettingsController::class, 'update'])->name('business_settings.update');
     Route::resource('vendors', VendorController::class);
     Route::get('vendors_ban/{vendor}', [VendorController::class, 'ban'])->name('vendors.ban');
@@ -237,22 +233,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/download/{id}', [VendorController::class, 'downloadTradeLicense'])->name('vendor.download');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    //Form Builder
     Route::get('/form-builder', [BuilderController::class, 'create'])->name('form-builder.index');
     Route::post('/page', [BuilderController::class, 'form-builder.store']);
 });
