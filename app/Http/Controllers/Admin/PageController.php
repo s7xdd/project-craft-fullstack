@@ -29,37 +29,12 @@ class PageController extends Controller
         return view('backend.website_settings.pages.index', compact('pages'));
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('backend.website_settings.pages.create');
-    }
+        $lang = $request->lang;
 
-    public function store(Request $request)
-    {
-
-        $page = new Page;
-        $page->title = $request->title;
-        if (Page::where('slug', preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug)))->first() == null) {
-            $page->slug             = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->slug));
-            $page->type             = "custom_page";
-            $page->content          = $request->content;
-            $page->meta_title       = $request->meta_title;
-            $page->meta_description = $request->meta_description;
-            $page->keywords         = $request->keywords;
-            $page->meta_image       = $request->meta_image;
-            $page->save();
-
-            $page_translation           = PageTranslation::firstOrNew(['lang' => env('DEFAULT_LANGUAGE'), 'page_id' => $page->id]);
-            $page_translation->title    = $request->title;
-            $page_translation->content  = $request->content;
-            $page_translation->save();
-
-            flash(translate('New page has been created successfully'))->success();
-            return redirect()->route('website.pages');
-        }
-
-        flash(translate('Slug has been used already'))->warning();
-        return back();
+        $view = $this->getPage('new_page', $lang);
+        return $view;
     }
 
     public function edit(Request $request, $id)
@@ -74,48 +49,6 @@ class PageController extends Controller
             return $view;
         }
         abort(404);
-    }
-
-    public function update(Request $request, $id)
-    {
-
-        $page = Page::findOrFail($id);
-        if ($page) {
-            if ($request->hasfile('image')) {
-                $photo = uploadImage('page', $request->image, 'image_1');
-                $page->image = $photo;
-                $page->save();
-            }
-
-            $page_translation                       = PageTranslation::firstOrNew(['lang' => $request->lang, 'page_id' => $page->id]);
-            $page_translation->title                = $request->title;
-            $page_translation->content              = $request->has('content') ? $request->content : NULL;
-            $page_translation->sub_title            = $request->has('sub_title') ? $request->sub_title : NULL;
-            $page_translation->heading1             = $request->has('heading1') ? $request->heading1 : NULL;
-            $page_translation->content1             = $request->has('content1') ? $request->content1 : NULL;
-            $page_translation->heading2             = $request->has('heading2') ? $request->heading2 : NULL;
-            $page_translation->content2             = $request->has('content2') ? $request->content2 : NULL;
-            $page_translation->heading3             = $request->has('heading3') ? $request->heading3 : NULL;
-            $page_translation->content3             = $request->has('content3') ? $request->content3 : NULL;
-            $page_translation->content4             = $request->has('content4') ? $request->content4 : NULL;
-            $page_translation->content5             = $request->has('content5') ? $request->content5 : NULL;
-            $page_translation->heading4             = $request->has('heading4') ? $request->heading4 : NULL;
-            $page_translation->meta_title           = $request->meta_title;
-            $page_translation->meta_description     = $request->meta_description;
-            $page_translation->og_title             = $request->og_title;
-            $page_translation->og_description       = $request->og_description;
-            $page_translation->twitter_title        = $request->twitter_title;
-            $page_translation->twitter_description  = $request->twitter_description;
-            $page_translation->keywords             = $request->keywords;
-            $page_translation->image1               = $request->has('image1') ? $request->image1 : NULL;
-            $page_translation->save();
-
-            flash(trans('messages.page') . ' ' . trans('messages.updated_msg'))->success();
-            return redirect()->route('website.pages');
-        }
-
-        flash(trans('messages.not_found'))->warning();
-        return back();
     }
 
     public function enquiries()
@@ -199,7 +132,7 @@ class PageController extends Controller
     public function getPage($id, $lang)
     {
 
-        $page = Page::where('type', $id)->first();
+        $page = Page::where('type', $id)->first() ?? $id;
 
         switch ($id) {
             case 'about_us':
@@ -229,6 +162,8 @@ class PageController extends Controller
                     'discover_categories' => json_decode(get_setting('discover_categories'), true) ?: [],
                     'home_mid_banner_1' => $current_banners['home_mid_banner'] ? json_decode($current_banners['home_mid_banner']->value)[0] : null,
                     'home_mid_banner_2' => $current_banners['home_mid_banner'] ? json_decode($current_banners['home_mid_banner']->value)[1] : null,
+                    'image1' => is_array(json_decode($page->getTranslation('image1', $lang))) ? json_decode($page->getTranslation('image1', $lang)) : [],
+                    'image2' => is_array(json_decode($page->getTranslation('image2', $lang))) ? json_decode($page->getTranslation('image2', $lang)) : [],
                     'heading2' => $page->getTranslation('heading2', $lang),
                     'new_arrival_products' => json_decode(get_setting('new_arrival_products'), true) ?: [],
                     'heading4' => $page->getTranslation('heading4', $lang),
@@ -278,7 +213,25 @@ class PageController extends Controller
                                     "data" => [
                                         "values" => $categoryOptions
                                     ]
-                                ]
+                                ],
+                                [
+                                    "label" => "Upload",
+                                    "tableView" => false,
+                                    "storage" => "base64",
+                                    "webcam" => false,
+                                    "image" => true,
+                                    "multiple" => true,
+                                    "fileTypes" => [
+                                        [
+                                            "label" => "",
+                                            "value" => ""
+                                        ]
+                                    ],
+                                    "validateWhenHidden" => false,
+                                    "key" => "image1",
+                                    "type" => "file",
+                                    "input" => true
+                                ],
                             ]
                         ],
                         [
@@ -412,58 +365,152 @@ class PageController extends Controller
 
 
             default:
-                break;
+
+                $existingData = [
+                    'page_id' => $page->id,
+                    'lang' => $lang,
+                    'heading1' => json_decode($page->getTranslation('heading1', $lang)) ?? "",
+                    'heading4' => $page->getTranslation('heading4', $lang) ?? "",
+                    'meta_title' => $page->getTranslation('meta_title', $lang) ?? "",
+                    'meta_description' => $page->getTranslation('meta_description', $lang) ?? "",
+                    'meta_keywords' => $page->getTranslation('keywords', $lang) ?? "",
+                    'og_title' => $page->getTranslation('og_title', $lang) ?? "",
+                    'og_description' => $page->getTranslation('og_description', $lang) ?? "",
+                    'twitter_title' => $page->getTranslation('twitter_title', $lang) ?? "",
+                    'twitter_description' => $page->getTranslation('twitter_description', $lang) ?? "",
+                ];
+
+                $formFields = [
+                    "components" => [
+                        [
+                            "type" => "panel",
+                            "key" => "seo_fields",
+                            "label" => "SEO Fields",
+                            "collapsible" => true,
+                            "input" => false,
+                            "components" => [
+                                [
+                                    "type" => "textfield",
+                                    "input" => true,
+                                    "key" => "meta_title",
+                                    "label" => "Meta Title"
+                                ],
+                                [
+                                    "type" => "textarea",
+                                    "input" => true,
+                                    "key" => "meta_description",
+                                    "label" => "Meta Description"
+                                ],
+                                [
+                                    "type" => "textarea",
+                                    "input" => true,
+                                    "key" => "meta_keywords",
+                                    "label" => "Meta Keywords",
+                                    "description" => "Separate with comma"
+                                ],
+                                [
+                                    "type" => "textfield",
+                                    "input" => true,
+                                    "key" => "og_title",
+                                    "label" => "OG Title"
+                                ],
+                                [
+                                    "type" => "textarea",
+                                    "input" => true,
+                                    "key" => "og_description",
+                                    "label" => "OG Description"
+                                ],
+                                [
+                                    "type" => "textfield",
+                                    "input" => true,
+                                    "key" => "twitter_title",
+                                    "label" => "Twitter Title"
+                                ],
+                                [
+                                    "type" => "textarea",
+                                    "input" => true,
+                                    "key" => "twitter_description",
+                                    "label" => "Twitter Description"
+                                ]
+                            ]
+                        ],
+                        [
+                            "type" => "button",
+                            "label" => "Submit",
+                            "key" => "submit",
+                            "disableOnInvalid" => true,
+                            "input" => true,
+                            "tableView" => false,
+                            "action" => "submit"
+                        ]
+                    ]
+                ];
+
+
+                return view('form')->with([
+                    'definition' => json_encode($formFields),
+                    'data' => json_encode($existingData),
+                    'title' => "Edit Home Page",
+                    'submitRoute' => route('custom-pages.updatePage')
+                ]);
         }
     }
 
 
-    public function updatePageData(Request $request)
+    public function updateData(Request $request)
     {
-
         if ($request->get('state') === 'draft') {
         }
 
         $submittedData = json_decode($request->submissionValues);
 
-        $id = $submittedData->page_id ? $submittedData->page_id : null;
+        $id = $submittedData->page_id ?? null;
 
-        if ($id != null) {
-            $page = Page::findOrFail($id);
-            if ($page) {
-                $page_translation                           = PageTranslation::firstOrNew(['lang' => $submittedData->lang, 'page_id' => $page->id]);
-                $page_translation->title                = $submittedData->title ?? "";
-                $page_translation->content              = $submittedData->content ?? "";
-                $page_translation->sub_title            = $submittedData->sub_title ?? "";
-                $page_translation->heading1             = $submittedData->heading1 ?? "";
-                $page_translation->content1             = $submittedData->content1 ?? "";
-                $page_translation->heading2             = $submittedData->heading2 ?? "";
-                $page_translation->content2             = $submittedData->content2 ?? "";
-                $page_translation->heading3             = $submittedData->heading3 ?? "";
-                $page_translation->content3             = $submittedData->content3 ?? "";
-                $page_translation->content4             = $submittedData->content4 ?? "";
-                $page_translation->content5             = $submittedData->content5 ?? "";
-                $page_translation->heading4                 = $submittedData->heading4 ?? "";
-                $page_translation->heading5             = $submittedData->heading5 ?? "";
-                $page_translation->heading6             = $submittedData->heading6 ?? "";
-                $page_translation->heading7             = $submittedData->heading7 ?? "";
-                $page_translation->heading8             = $submittedData->heading8 ?? "";
-                $page_translation->heading9             = $submittedData->heading9 ?? "";
+        if ($id) {
+            $page = Page::find($id);
+        }
 
-                $page_translation->meta_title           = $submittedData->meta_title ?? "";
-
-                $page_translation->meta_description     = $submittedData->meta_description ?? "";
-                $page_translation->og_title             = $submittedData->og_title ?? "";
-                $page_translation->og_description       = $submittedData->og_description ?? "";
-                $page_translation->twitter_title        = $submittedData->twitter_title ?? "";
-                $page_translation->twitter_description  = $submittedData->twitter_description ?? "";
-                $page_translation->keywords             = $submittedData->keywords ?? "";
-                $page_translation->image1               = $submittedData->image1 ?? "";
-
-                $page_translation->save();
-            }
-
+        if (empty($page)) {
+            $page = new Page;
+            $page->type = $submittedData->type ?? 'default';
             $page->save();
         }
+
+        $page_translation = PageTranslation::firstOrNew([
+            'lang' => $submittedData->lang ?? 'en',
+            'page_id' => $page->id,
+        ]);
+
+        $page_translation->title = $submittedData->title ?? '';
+        $page_translation->content = $submittedData->content ?? '';
+        $page_translation->sub_title = $submittedData->sub_title ?? '';
+        $page_translation->heading1 = $submittedData->heading1 ?? '';
+        $page_translation->content1 = $submittedData->content1 ?? '';
+        $page_translation->heading2 = $submittedData->heading2 ?? '';
+        $page_translation->content2 = $submittedData->content2 ?? '';
+        $page_translation->heading3 = $submittedData->heading3 ?? '';
+        $page_translation->content3 = $submittedData->content3 ?? '';
+        $page_translation->content4 = $submittedData->content4 ?? '';
+        $page_translation->content5 = $submittedData->content5 ?? '';
+        $page_translation->heading4 = $submittedData->heading4 ?? '';
+        $page_translation->heading5 = $submittedData->heading5 ?? '';
+        $page_translation->heading6 = $submittedData->heading6 ?? '';
+        $page_translation->heading7 = $submittedData->heading7 ?? '';
+        $page_translation->heading8 = $submittedData->heading8 ?? '';
+        $page_translation->heading9 = $submittedData->heading9 ?? '';
+        $page_translation->meta_title = $submittedData->meta_title ?? '';
+        $page_translation->meta_description = $submittedData->meta_description ?? '';
+        $page_translation->og_title = $submittedData->og_title ?? '';
+        $page_translation->og_description = $submittedData->og_description ?? '';
+        $page_translation->twitter_title = $submittedData->twitter_title ?? '';
+        $page_translation->twitter_description = $submittedData->twitter_description ?? '';
+        $page_translation->keywords = $submittedData->keywords ?? '';
+        $page_translation->image1 = json_encode($submittedData->image1) ?? '';
+        $page_translation->image2 = json_encode($submittedData->image2) ?? '';
+
+        $page_translation->save();
+
+        $page->save();
 
         Artisan::call('cache:clear');
 
