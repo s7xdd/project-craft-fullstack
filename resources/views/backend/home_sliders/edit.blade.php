@@ -46,49 +46,27 @@
                             </div>
                         </div>
 
+
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="signinSrEmail">
-                                Mobile Banner
-                                {{-- <small>(1300x650)</small> --}}
-                            </label>
+                            <label class="col-md-3 col-form-label">Button Text</label>
                             <div class="col-md-9">
-                                <div class="input-group" data-toggle="aizuploader" data-type="image">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text bg-soft-secondary font-weight-medium">
-                                            Browse
-                                        </div>
-                                    </div>
-                                    <div class="form-control file-amount">Choose File</div>
-                                    <input value="{{ old('mobile_banner', $homeSlider->mobile_image) }}" type="hidden"
-                                        name="mobile_banner" class="selected-files" required>
-                                </div>
-                                <div class="file-preview box sm">
-                                </div>
-                                @error('mobile_banner')
+                                <input type="text" placeholder="Name"
+                                    value="{{ old('btn_text', $homeSlider->btn_text) }}" id="btn_text" name="btn_text"
+                                    class="form-control" required>
+                                @error('btn_text')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
+
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label">Link Type</label>
+                            <label class="col-md-3 col-form-label">Button Link</label>
                             <div class="col-md-9">
-                                <select onchange="banner_form()" class="form-control aiz-selectpicker" name="link_type"
-                                    id="link_type" data-live-search="true" required>
-                                    <option {{ old('link_type', $homeSlider->link_type) == 'external' ? 'selected' : '' }}
-                                        value="external">
-                                        External
-                                    </option>
-                                    <option {{ old('link_type', $homeSlider->link_type) == 'product' ? 'selected' : '' }}
-                                        value="product">Product
-                                    </option>
-                                    <option {{ old('link_type', $homeSlider->link_type) == 'category' ? 'selected' : '' }}
-                                        value="category">
-                                        Category</option>
-                                    <option {{ old('link_type', $homeSlider->link_type) == 'brand' ? 'selected' : '' }} value="brand">Brand</option>
-                                    <option {{ old('link_type', $homeSlider->link_type) == 'occasion' ? 'selected' : '' }} value="occasion">Occasion</option>
-                                </select>
-                                @error('link_type')
+                                <input type="text" placeholder="Name"
+                                    value="{{ old('link', $homeSlider->link) }}" id="link" name="link"
+                                    class="form-control" required>
+                                @error('link')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
                             </div>

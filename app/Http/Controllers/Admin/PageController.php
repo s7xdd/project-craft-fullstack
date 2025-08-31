@@ -439,7 +439,7 @@ class PageController extends Controller
                             "type" => "button",
                             "label" => "Submit",
                             "key" => "submit",
-                            "disableOnInvalid" => true,
+                            "disableOnInvalid" => false,
                             "input" => true,
                             "tableView" => false,
                             "action" => "submit"

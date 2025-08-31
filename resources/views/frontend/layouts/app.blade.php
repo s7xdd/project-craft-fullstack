@@ -48,6 +48,10 @@
     <link href="assets/css/module-css/footer.css" rel="stylesheet" />
     <link href="assets/css/responsive.css" rel="stylesheet" />
 
+    <link href="assets/css/module-css/page-title.css" rel="stylesheet" />
+    <link href="assets/css/module-css/shop-sidebar.css" rel="stylesheet" />
+    <link href="assets/css/module-css/shop-page.css" rel="stylesheet" />
+
     <link href="assets/css/font-awesome-all.css" rel="stylesheet" />
     <link href="assets/css/flaticon.css" rel="stylesheet" />
     <link href="assets/css/owl.css" rel="stylesheet" />
@@ -69,6 +73,7 @@
     <link href="assets/css/module-css/subscribe.css" rel="stylesheet" />
     <link href="assets/css/module-css/footer.css" rel="stylesheet" />
     <link href="assets/css/responsive.css" rel="stylesheet" />
+    
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
@@ -88,6 +93,41 @@
 
         @include('frontend.parts.footer')
     </div>
+
+
+    <style>
+        .whatsapp-btn {
+            background-color: #25d366;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 20px 50px;
+            /* Increased padding */
+            font-size: 24px;
+            /* Increased font size */
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 6px 14px rgba(37, 211, 102, 0.4);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            min-width: 250px;
+            /* Optional fixed minimum width */
+            min-height: 70px;
+            /* Optional fixed minimum height */
+        }
+
+        .whatsapp-btn i {
+            margin-right: 16px;
+            font-size: 32px;
+            /* Larger icon */
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #128c7e;
+            box-shadow: 0 8px 20px rgba(18, 140, 126, 0.6);
+        }
+    </style>
 
     <script>
         @if (session('message'))

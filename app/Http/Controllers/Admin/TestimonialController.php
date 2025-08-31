@@ -9,74 +9,281 @@ use Illuminate\Validation\Rules\File;
 
 class TestimonialController extends Controller
 {
-   /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $testimonials = Testimonials::orderBy('sort_order','asc')->paginate(15);
+        $testimonials = Testimonials::orderBy('sort_order', 'asc')->paginate(15);
 
         return view('backend.testimonials.index', compact('testimonials'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function create(Request $request)
     {
-        return view('backend.testimonials.create');
+        $lang = $request->lang ?? 'en';
+
+        $formFields = [
+            "components" => [
+
+                [
+                    "type" => "panel",
+                    "key" => "testimonals",
+                    "label" => "Testimonial Information",
+                    "title" => "Testimonial Information",
+                    "collapsible" => true,
+                    "input" => false,
+                    "components" => [
+
+                        [
+                            "type" => "hidden",
+                            "key" => "lang",
+                            "value" => $lang,
+                        ],
+                        [
+                            "type" => "textfield",
+                            "key" => "name",
+                            "label" => "Name",
+                            "placeholder" => "Enter customer name",
+                            "validate" => [
+                                "required" => true
+                            ]
+                        ],
+                        [
+                            "type" => "textfield",
+                            "key" => "title",
+                            "label" => "Title/Designation",
+                            "placeholder" => "Enter customer title or designation"
+                        ],
+                        [
+                            "label" => "Upload",
+                            "tableView" => false,
+                            "storage" => "base64",
+                            "webcam" => false,
+                            "image" => true,
+                            "multiple" => false,
+                            "fileTypes" => [
+                                [
+                                    "label" => "",
+                                    "value" => ""
+                                ]
+                            ],
+                            "validateWhenHidden" => false,
+                            "key" => "image",
+                            "type" => "file",
+                            "input" => true
+                        ],
+                        [
+                            "type" => "textarea",
+                            "key" => "comment",
+                            "label" => "Testimonial Comment",
+                            "placeholder" => "Enter testimonial comment",
+                            "rows" => 5,
+                            "validate" => [
+                                "required" => true
+                            ]
+                        ],
+                        [
+                            "type" => "number",
+                            "key" => "sort_order",
+                            "label" => "Sort Order",
+                            "placeholder" => "Enter sort order (numeric)"
+                        ],
+                        [
+                            "type" => "select",
+                            "key" => "status",
+                            "label" => "Status",
+                            "data" => [
+                                "values" => [
+                                    ["label" => "Active", "value" => "1"],
+                                    ["label" => "Inactive", "value" => "0"]
+                                ]
+                            ],
+                            "defaultValue" => "1"
+                        ]
+                    ],
+
+                ],
+                [
+                    "type" => "button",
+                    "label" => "Submit",
+                    "key" => "submit",
+                    "disableOnInvalid" => true,
+                    "input" => true,
+                    "tableView" => false,
+                    "action" => "submit"
+                ]
+            ]
+        ];
+
+        $existingData = [
+            'lang' => $lang,
+            'name' => '',
+            'title' => '',
+            'comment' => '',
+            'sort_order' => 0,
+            'status' => '1'
+        ];
+
+        return view('form')->with([
+            'definition' => json_encode($formFields),
+            'data' => json_encode($existingData),
+            'title' => "Create New Testimonial",
+            'submitRoute' => route('testimonials.store')
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
+        $submittedData = json_decode($request->submissionValues);
+
         $request->validate([
-            'name' => 'required',
-            'title' => 'required',
-            'comment' => 'required',
-            'sort_order' => 'nullable|integer',
-            'status' => 'required',
+            'submissionValues' => 'required'
         ]);
+
         $data = [
-            'name'=> $request->name,
-            'title'=> $request->designation,
-            'comment'=> $request->comment,
-            'sort_order' => ($request->sort_order != '') ? $request->sort_order : 0,
-            'status' => $request->status
+            'name' => $submittedData->name ?? '',
+            'title' => $submittedData->title ?? '',
+            'comment' => $submittedData->comment ?? '',
+            'sort_order' => ($submittedData->sort_order != '') ? $submittedData->sort_order : 0,
+            'status' => $submittedData->status ?? '1'
         ];
 
         $testimonial = Testimonials::create($data);
-       
+
         return redirect()->route('testimonials.index')->with([
             'status' => "Testimonial created successfully"
         ]);
     }
 
-    public function edit(Testimonials $testimonial)
+    public function edit(Request $request, Testimonials $testimonial)
     {
-        return view('backend.testimonials.edit', compact('testimonial'));
+        $lang = $request->lang ?? 'en';
+
+        $formFields = [
+            "components" => [
+                [
+                    "type" => "panel",
+                    "key" => "testimonals",
+                    "label" => "Testimonial Information",
+                    "title" => "Testimonial Information",
+                    "collapsible" => true,
+                    "input" => false,
+                    "components" => [
+                        [
+                            "type" => "hidden",
+                            "key" => "testimonial_id",
+                            "value" => $testimonial->id,
+                        ],
+                        [
+                            "type" => "hidden",
+                            "key" => "lang",
+                            "value" => $lang,
+                        ],
+                        [
+                            "type" => "textfield",
+                            "key" => "name",
+                            "label" => "Name",
+                            "placeholder" => "Enter customer name",
+                            "validate" => [
+                                "required" => true
+                            ]
+                        ],
+                        [
+                            "type" => "textfield",
+                            "key" => "title",
+                            "label" => "Title/Designation",
+                            "placeholder" => "Enter customer title or designation"
+                        ],
+                        [
+                            "label" => "Upload",
+                            "tableView" => false,
+                            "storage" => "base64",
+                            "webcam" => false,
+                            "image" => true,
+                            "multiple" => false,
+                            "fileTypes" => [
+                                [
+                                    "label" => "",
+                                    "value" => ""
+                                ]
+                            ],
+                            "validateWhenHidden" => false,
+                            "key" => "image",
+                            "type" => "file",
+                            "input" => true
+                        ],
+                        [
+                            "type" => "textarea",
+                            "key" => "comment",
+                            "label" => "Testimonial Comment",
+                            "placeholder" => "Enter testimonial comment",
+                            "rows" => 5,
+                            "validate" => [
+                                "required" => true
+                            ]
+                        ],
+                        [
+                            "type" => "number",
+                            "key" => "sort_order",
+                            "label" => "Sort Order",
+                            "placeholder" => "Enter sort order (numeric)"
+                        ],
+                        [
+                            "type" => "select",
+                            "key" => "status",
+                            "label" => "Status",
+                            "data" => [
+                                "values" => [
+                                    ["label" => "Active", "value" => "1"],
+                                    ["label" => "Inactive", "value" => "0"]
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "button",
+                    "label" => "Submit",
+                    "key" => "submit",
+                    "disableOnInvalid" => false,
+                    "input" => true,
+                    "tableView" => false,
+                    "action" => "submit"
+                ]
+            ]
+        ];
+
+        $existingData = [
+            'testimonial_id' => $testimonial->id,
+            'lang' => $lang,
+            'name' => $testimonial->name,
+            'title' => $testimonial->title,
+            'image' => $testimonial->image ? json_decode($testimonial->image) : [],
+            'comment' => $testimonial->comment,
+            'sort_order' => $testimonial->sort_order,
+            'status' => $testimonial->status
+        ];
+
+        return view('form')->with([
+            'definition' => json_encode($formFields),
+            'data' => json_encode($existingData),
+            'title' => "Edit Testimonial",
+            'submitRoute' => route('testimonials.update', $testimonial->id)
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Testimonials $testimonial)
     {
+        $submittedData = json_decode($request->submissionValues);
+
         $request->validate([
-            'name' => 'required',
-            'title' => 'required',
-            'comment' => 'required',
-            'sort_order' => 'nullable|integer',
-            'status' => 'required',
+            'submissionValues' => 'required'
         ]);
 
-        $testimonial->name          = $request->name;
-        $testimonial->title         = $request->title;
-        $testimonial->comment       = $request->comment;
-        $testimonial->sort_order    = ($request->sort_order != '') ? $request->sort_order : 0;
-        $testimonial->status        = $request->status;
+        $testimonial->name = $submittedData->name ?? '';
+        $testimonial->title = $submittedData->title ?? '';
+        $testimonial->comment = $submittedData->comment ?? '';
+        $testimonial->image = json_encode($submittedData->image) ?? '';
+        $testimonial->sort_order = ($submittedData->sort_order != '') ? $submittedData->sort_order : 0;
+        $testimonial->status = $submittedData->status ?? '1';
         $testimonial->save();
 
         return redirect()->route('testimonials.index')->with([
@@ -88,7 +295,7 @@ class TestimonialController extends Controller
     {
         Testimonials::destroy($id);
 
-        flash('Testimonial '.trans('messages.deleted_msg'))->success();
+        flash('Testimonial ' . trans('messages.deleted_msg'))->success();
         return redirect()->route('testimonials.index');
     }
 
@@ -102,5 +309,4 @@ class TestimonialController extends Controller
         }
         return 0;
     }
-
 }

@@ -670,6 +670,7 @@ function getCategoryHeader()
 }
 
 
+
 function getTagsFromRequest($request)
 {
     $tags = array();
@@ -683,4 +684,11 @@ function getTagsFromRequest($request)
         'tags' => $implodedTags,
         'tags_array' => $tags
     ];
+}
+
+
+function buildMenuTree($items)
+{
+    // Simply return the items as they are since Efectn already provides the structure
+    return $items instanceof \Illuminate\Support\Collection ? $items : collect($items);
 }

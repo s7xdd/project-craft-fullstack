@@ -188,6 +188,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // Manage testimonials
     Route::resource('testimonials', TestimonialController::class)->except('show');
+    Route::post('/testimonials/update/{id}', [TestimonialController::class, 'update'])->name('testimonials.update');
     Route::get('/testimonials/delete/{id}', [TestimonialController::class, 'destroy'])->name('testimonials.delete');
     Route::post('/testimonials/update-status', [TestimonialController::class, 'updateStatus'])->name('testimonials.update-status');
 

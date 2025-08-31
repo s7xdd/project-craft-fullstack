@@ -21,15 +21,8 @@ class CollectionProductController extends Controller
 
 
         $pageOptions = [
-            'chairs' => 'Chairs',
-            'desks' => 'Desks',
-            'storage' => 'Storage',
-            'lounge' => 'Lounge',
-            'acoustic_solutions' => 'Acoustic Solutions',
-            'accessories' => 'Accessories',
-            'series' => 'Series',
-            'white_series' => 'White Series',
-            'black_series' => 'Black Series'
+            'home' => 'Home',
+            
         ];
         $pageReferenceOptions = [
             'top' => 'Top',
@@ -93,15 +86,8 @@ class CollectionProductController extends Controller
         $products = Product::all();
 
         $pageOptions = [
-            'chairs' => 'Chairs',
-            'desks' => 'Desks',
-            'storage' => 'Storage',
-            'lounge' => 'Lounge',
-            'acoustic_solutions' => 'Acoustic Solutions',
-            'accessories' => 'Accessories',
-            'series' => 'Series',
-            'white_series' => 'White Series',
-            'black_series' => 'Black Series'
+            'home' => 'Home',
+            
         ];
         $pageReferenceOptions = [
             'top' => 'Top',

@@ -14,6 +14,8 @@ use App\Http\Controllers\Frontend\WishlistController;
 use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Frontend\ForgotPasswordController;
 use App\Http\Controllers\Frontend\VendorController;
+use App\Http\Controllers\Frontend\SearchController;
+use App\Http\Controllers\Frontend\TestimonialController;
 use Laravel\Prompts\FormBuilder;
 
 /*
@@ -36,8 +38,8 @@ Route::post('/contact-us', [FrontendController::class, 'submitContactForm'])->na
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/product-detail', [ProductController::class, 'productDetails'])->name('product-detail');
-Route::post('/recently-viewed', [CommonController::class, 'addRecentlyViewed']);
-Route::get('/recently-viewed', [CommonController::class, 'getRecentlyViewed']);
+// Route::post('/recently-viewed', [CommonController::class, 'addRecentlyViewed']);
+// Route::get('/recently-viewed', [CommonController::class, 'getRecentlyViewed']);
 Route::get('related-products', [ProductController::class, 'relatedProducts'])->name('related.products');
 
 Route::get('/rent/products', [ProductController::class, 'rentProducts'])->name('rent.products');
@@ -59,6 +61,8 @@ Route::post('coupon-remove', [CheckoutController::class, 'remove_coupon_code'])-
 
 Route::get('/check-login-status', [UserController::class, 'checkLoginStatus'])->name('check.login.status');
 
+Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials.index');
+Route::get('/testimonials/{id}', [TestimonialController::class, 'show'])->name('testimonials.show');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->middleware('auth')->name('checkout');
@@ -128,12 +132,10 @@ Route::group(['middleware' => ['vendor.auth']], function () {
 
 
 
-
 Route::get('/test', [BuilderController::class, 'create']);
 Route::post('/test-add', [BuilderController::class, 'store']);
 Route::get('/get-form', [FormController::class, 'create']);
 Route::post('/store-data', [FormController::class, 'store']);
-
 
 
 
