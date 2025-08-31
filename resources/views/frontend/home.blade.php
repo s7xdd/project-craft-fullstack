@@ -18,9 +18,13 @@
 
         $testimonials = isset($data['testimonials'])
             ? $data['testimonials']->map(function ($testimonial) {
+                $imageData = $testimonial->image ? json_decode($testimonial->image) : [];
+                $image = isset($imageData[0]->url) ? $imageData[0]->url : '';
+
                 return [
                     'name' => $testimonial->name,
                     'text' => $testimonial->comment,
+                    'image' => $image,
                 ];
             })
             : [];
@@ -112,7 +116,7 @@
     @if ($testimonials->count() > 0)
         <x-frontend.home.instagram-feed>
             @foreach ($testimonials as $t)
-                <x-frontend.home.instagram-item image="assets/images/about_image.jpg" alt="Instagram Post 1" />
+                <x-frontend.home.instagram-item image="{{ $t['image'] }}" alt="{{ $t['name'] }}" />
             @endforeach
         </x-frontend.home.instagram-feed>
     @endif
