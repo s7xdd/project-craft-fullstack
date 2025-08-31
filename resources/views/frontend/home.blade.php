@@ -98,6 +98,10 @@
                         @foreach ($collection['products'] as $product)
                             @php
                                 $priceData = getProductOfferPrice($product);
+                                $productUrl = route('product-detail', [
+                                    'slug' => $product->slug,
+                                    'sku' => $product->sku,
+                                ]);
                             @endphp
                             <x-frontend.common.product-card image="{{ get_product_image($product->thumbnail_img) }}"
                                 alt="{{ $product->getTranslation('name', $lang) }}"
@@ -105,7 +109,7 @@
                                 name="{{ $product->getTranslation('name', $lang) }}"
                                 originalPrice="{{ env('DEFAULT_CURRENCY') }} {{ $priceData['original_price'] }}"
                                 price="{{ env('DEFAULT_CURRENCY') }} {{ $priceData['discounted_price'] }}"
-                                link="{{ route('product-detail', ['slug' => $product->slug, 'sku' => $product->sku]) }}" />
+                                link="{!! $productUrl !!}" />
                         @endforeach
                     </div>
                 </div>

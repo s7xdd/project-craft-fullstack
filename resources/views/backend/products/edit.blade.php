@@ -536,7 +536,22 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.description') }}</h5>
+                            <h5 class="mb-0 h6">{{ 'Product Short Description ' }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-from-label">{{ trans('messages.description') }}</label>
+                                <div class="col-md-8">
+                                    <textarea class="aiz-text-editor" name="short_description">{{ $product->getTranslation('short_description', $lang) }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.description') }}
+                            </h5>
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
@@ -704,7 +719,8 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="mb-0 h6">{{ trans('messages.return_refund') . ' ' . trans('messages.status') }}</h5>
+                            <h5 class="mb-0 h6">{{ trans('messages.return_refund') . ' ' . trans('messages.status') }}
+                            </h5>
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
@@ -909,19 +925,19 @@
                             $('[name="products[' + count + '][variant_images]"]').parent()
                                 .parent().parent().find(".product_attributes").first()
                                 .append('\
-                                                    <div class="form-group row">\
-                                                        <div class="col-md-3">\
-                                                            <input type="text" class="form-control" name="products[' +
+                                                        <div class="form-group row">\
+                                                            <div class="col-md-3">\
+                                                                <input type="text" class="form-control" name="products[' +
                                     count + '][choice_' + i + ']" value="' + name +
                                     '" placeholder="Choice Title" readonly>\
-                                                        </div>\
-                                                        <div class="col-md-8">\
-                                                            <select class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="products[' +
+                                                            </div>\
+                                                            <div class="col-md-8">\
+                                                                <select class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="products[' +
                                     count + '][choice_options_' + i + ']">\
-                                                                ' + obj + '\
-                                                            </select>\
-                                                        </div>\
-                                                    </div>');
+                                                                    ' + obj + '\
+                                                                </select>\
+                                                            </div>\
+                                                        </div>');
                             AIZ.plugins.bootstrapSelect('refresh');
                         }
                     });
@@ -1068,35 +1084,37 @@
                     if (productStockCount != 0) {
                         for (j = 0; j < productStockCount; j++) {
                             $('.old_product_attributes' + j).append('\
-                                    <div class="form-group row attr' + i + '" >\
-                                        <div class="col-md-3">\
-                                            <input type="text" class="form-control" name="oldproduct[' + j + '][choice_' +
+                                        <div class="form-group row attr' + i + '" >\
+                                            <div class="col-md-3">\
+                                                <input type="text" class="form-control" name="oldproduct[' + j +
+                                '][choice_' +
                                 i + ']" value="' + name +
                                 '" placeholder="Choice Title" readonly>\
-                                        </div>\
-                                        <div class="col-md-8">\
-                                            <select required class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="oldproduct[' +
+                                            </div>\
+                                            <div class="col-md-8">\
+                                                <select required class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="oldproduct[' +
                                 j + '][choice_options_' + i + ']">\
-                                                ' + obj + '\
-                                            </select>\
-                                        </div>\
-                                    </div>');
+                                                    ' + obj + '\
+                                                </select>\
+                                            </div>\
+                                        </div>');
                         }
                     }
 
                     // var stockCount = $product->stocks
                     $('.product_attributes').append('\
-                            <div class="form-group row attr' + i + '">\
-                                <div class="col-md-3">\
-                                    <input type="text" class="form-control" name="choice_' + i + '" value="' + name +
+                                <div class="form-group row attr' + i + '">\
+                                    <div class="col-md-3">\
+                                        <input type="text" class="form-control" name="choice_' + i + '" value="' + name +
                         '" placeholder="Choice Title" readonly>\
-                                </div>\
-                                <div class="col-md-8">\
-                                    <select class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="choice_options_' + i + '">\
-                                        ' + obj + '\
-                                    </select>\
-                                </div>\
-                            </div>');
+                                    </div>\
+                                    <div class="col-md-8">\
+                                        <select class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="choice_options_' +
+                        i + '">\
+                                            ' + obj + '\
+                                        </select>\
+                                    </div>\
+                                </div>');
                     AIZ.plugins.bootstrapSelect('refresh');
                 }
             });

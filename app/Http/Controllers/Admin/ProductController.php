@@ -241,6 +241,7 @@ class ProductController extends Controller
         $product_translation->unit = $request->unit;
         $product_translation->tags = implode(',', $tags);
         $product_translation->description = $request->description;
+        $product_translation->short_description = $request->short_description;
         $product_translation->save();
 
         $gallery = [];
@@ -623,6 +624,7 @@ class ProductController extends Controller
         $product_translation->unit = $request->unit;
         $product_translation->tags = implode(',', $tags);
         $product_translation->description = $request->description;
+        $product_translation->short_description = $request->short_description;
         $product_translation->save();
 
 

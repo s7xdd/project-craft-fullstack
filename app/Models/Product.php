@@ -81,11 +81,6 @@ class Product extends Model
     {
         return $this->hasMany(RecentlyViewedProduct::class);
     }
-    // public function getSeoTranslation($lang = "")
-    // {
-    //     $lang = $lang == "" ? App::getLocale() : $lang;
-    //     return $this->seo->where('lang', $lang)->first();
-    // }
 
     public function category()
     {

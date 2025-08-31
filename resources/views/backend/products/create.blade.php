@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="aiz-titlebar text-left mt-2 mb-3">
-        <h5 class="mb-0 h6">{{ trans('messages.add').' '.trans('messages.new').' '.trans('messages.product') }}</h5>
+        <h5 class="mb-0 h6">{{ trans('messages.add') . ' ' . trans('messages.new') . ' ' . trans('messages.product') }}</h5>
     </div>
     <div class="">
         <form class="form form-horizontal mar-top" id="addNewProduct" action="{{ route('products.store') }}" method="POST"
@@ -12,19 +12,21 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="mb-0 h6">{{ trans('messages.product').' '.trans('messages.information') }}</h5>
+                            <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.information') }}</h5>
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
-                                
-                                <label class="col-md-3 col-from-label">{{ trans('messages.product').' '.trans('messages.name') }} <span
-                                        class="text-danger">*</span></label>
+
+                                <label
+                                    class="col-md-3 col-from-label">{{ trans('messages.product') . ' ' . trans('messages.name') }}
+                                    <span class="text-danger">*</span></label>
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" name="name" placeholder="{{ trans('messages.product').' '.trans('messages.name') }}"
-                                    onkeyup="title_update(this)" required>
+                                    <input type="text" class="form-control" name="name"
+                                        placeholder="{{ trans('messages.product') . ' ' . trans('messages.name') }}"
+                                        onkeyup="title_update(this)" required>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group row" id="type">
                                 <label class="col-md-3 col-from-label">{{ trans('messages.type') }} <span
                                         class="text-danger">*</span></label>
@@ -37,17 +39,18 @@
                                     </select>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group row" id="deposit-amount" style="display: none;">
                                 <label class="col-md-3 col-from-label">{{ trans('messages.refundable_deposit') }} <span
                                         class="text-danger">*</span></label>
                                 <div class="col-md-8">
                                     <input type="number" class="form-control" name="deposit" id="deposit"
-                                        placeholder="{{__('messages.enter_deposit_amount')}}">
+                                        placeholder="{{ __('messages.enter_deposit_amount') }}">
                                 </div>
                             </div>
                             <div class="form-group row" id="category">
-                                <label class="col-md-3 col-from-label">{{ trans('messages.category') }} <span class="text-danger">*</span></label>
+                                <label class="col-md-3 col-from-label">{{ trans('messages.category') }} <span
+                                        class="text-danger">*</span></label>
                                 <div class="col-md-8">
                                     <select class="form-control aiz-selectpicker" name="category_id" id="category_id"
                                         data-live-search="true" required>
@@ -66,12 +69,15 @@
                             <div class="form-group row" id="brand">
                                 <label class="col-md-3 col-from-label">{{ trans('messages.brand') }}</label>
                                 <div class="col-md-8">
-                                    @php   
-                                        $brands = \App\Models\Brand::where('is_active',1)->orderBy('name','asc')->get();
+                                    @php
+                                        $brands = \App\Models\Brand::where('is_active', 1)
+                                            ->orderBy('name', 'asc')
+                                            ->get();
                                     @endphp
                                     <select class="form-control aiz-selectpicker" name="brand_id" id="brand_id"
                                         data-live-search="true">
-                                        <option value="">{{ trans('messages.select').' '.trans('messages.brand') }}</option>
+                                        <option value="">{{ trans('messages.select') . ' ' . trans('messages.brand') }}
+                                        </option>
                                         @foreach ($brands as $brand)
                                             <option value="{{ $brand->id }}">{{ $brand->name }}
                                             </option>
@@ -81,7 +87,8 @@
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-md-3 col-from-label">{{ trans('messages.minimum_purchase_qty') }} <span class="text-danger">*</span></label>
+                                <label class="col-md-3 col-from-label">{{ trans('messages.minimum_purchase_qty') }} <span
+                                        class="text-danger">*</span></label>
                                 <div class="col-md-8">
                                     <input type="number" lang="en" class="form-control" name="min_qty" value="1"
                                         min="1" required>
@@ -96,10 +103,11 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label">{{ trans('messages.slug') }}<span class="text-danger">*</span></label>
+                                <label class="col-md-3 col-form-label">{{ trans('messages.slug') }}<span
+                                        class="text-danger">*</span></label>
                                 <div class="col-md-8">
-                                    <input type="text" placeholder="{{ trans('messages.slug') }}" id="slug" name="slug" required
-                                        class="form-control">
+                                    <input type="text" placeholder="{{ trans('messages.slug') }}" id="slug"
+                                        name="slug" required class="form-control">
                                     @error('slug')
                                         <div class="alert alert-danger mt-1">{{ $message }}</div>
                                     @enderror
@@ -109,30 +117,34 @@
                             <div class="form-group row">
                                 <label class="col-md-3 col-from-label">{{ trans('messages.vat') }} (%) </label>
                                 <div class="col-md-6">
-                                    <input type="number" lang="en" min="0" value="0" step="0.01" placeholder="VAT" name="vat" class="form-control">
+                                    <input type="number" lang="en" min="0" value="0" step="0.01"
+                                        placeholder="VAT" name="vat" class="form-control">
                                 </div>
-                            </div> 
+                            </div>
 
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="mb-0 h6">{{ trans('messages.product').' '.trans('messages.images') }}</h5>
+                            <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.images') }}</h5>
                         </div>
                         <div class="card-body">
 
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="signinSrEmail">{{ trans('messages.gallery_images') }}<small>({{ trans('messages.1000*1000') }})</small></label>
+                                <label class="col-md-3 col-form-label"
+                                    for="signinSrEmail">{{ trans('messages.gallery_images') }}<small>({{ trans('messages.1000*1000') }})</small></label>
                                 <div class="col-md-8">
                                     <input type="file" name="gallery_images[]" multiple class="form-control"
                                         accept="image/*" required>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 col-form-label" for="signinSrEmail">{{ trans('messages.thumbnail_image') }}
+                                <label class="col-md-3 col-form-label"
+                                    for="signinSrEmail">{{ trans('messages.thumbnail_image') }}
                                     <small>({{ trans('messages.1000*1000') }})</small></label>
                                 <div class="col-md-8">
-                                    <input type="file" name="thumbnail_image" class="form-control" accept="image/*" required>
+                                    <input type="file" name="thumbnail_image" class="form-control" accept="image/*"
+                                        required>
                                 </div>
                             </div>
                         </div>
@@ -140,16 +152,20 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="mb-0 h6">{{ trans('messages.product').' '.trans('messages.discounts') }}</h5>
+                            <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.discounts') }}</h5>
                         </div>
                         <div class="card-body">
-                           
+
                             <div class="form-group row">
-                                <label class="col-sm-3 control-label" for="date_range">{{ trans('messages.discount').' '.trans('messages.date').' '.trans('messages.range') }}  </label>
+                                <label class="col-sm-3 control-label"
+                                    for="date_range">{{ trans('messages.discount') . ' ' . trans('messages.date') . ' ' . trans('messages.range') }}
+                                </label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control aiz-date-range" id="date_range"
-                                        name="date_range" placeholder="{{ trans('messages.select').' '.trans('messages.date') }}" data-time-picker="true"
-                                        data-format="DD-MM-Y HH:mm:ss" data-separator=" to " autocomplete="off">
+                                        name="date_range"
+                                        placeholder="{{ trans('messages.select') . ' ' . trans('messages.date') }}"
+                                        data-time-picker="true" data-format="DD-MM-Y HH:mm:ss" data-separator=" to "
+                                        autocomplete="off">
                                 </div>
                             </div>
 
@@ -157,7 +173,8 @@
                                 <label class="col-md-3 col-from-label">{{ trans('messages.discount') }}</label>
                                 <div class="col-md-6">
                                     <input type="number" lang="en" min="0" value="0" step="0.01"
-                                        placeholder="{{ trans('messages.discount') }}" name="discount" class="form-control">
+                                        placeholder="{{ trans('messages.discount') }}" name="discount"
+                                        class="form-control">
                                 </div>
                                 <div class="col-md-3">
                                     <select class="form-control aiz-selectpicker" name="discount_type">
@@ -169,17 +186,20 @@
 
                         </div>
                     </div>
-                                            
+
                     <div class="card product-repeater">
                         <div class="card-header">
-                            <h5 class="mb-0 h6">{{ trans('messages.product').' '.trans('messages.details') }}</h5>
+                            <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.details') }}</h5>
                         </div>
                         <div class="card-body">
 
                             <div class="form-group row">
-                                <label class="col-md-3 col-from-label">{{ trans('messages.product').' '.trans('messages.type') }} <span class="text-danger">*</span></label>
+                                <label
+                                    class="col-md-3 col-from-label">{{ trans('messages.product') . ' ' . trans('messages.type') }}
+                                    <span class="text-danger">*</span></label>
                                 <div class="col-md-6">
-                                    <select class="form-control aiz-selectpicker" name="product_type" id="product_type" required>
+                                    <select class="form-control aiz-selectpicker" name="product_type" id="product_type"
+                                        required>
                                         <option value="single">{{ trans('messages.single') }}</option>
                                         <option value="variant">{{ trans('messages.variants') }}</option>
                                     </select>
@@ -188,12 +208,16 @@
 
                             <div class="form-group row" id="attributes">
                                 <input type="hidden" name="selected_attributes" id="selected_attributes">
-                                <label class="col-md-3 col-from-label">{{ trans('messages.attributes') }} <span class="text-danger">*</span></label>
+                                <label class="col-md-3 col-from-label">{{ trans('messages.attributes') }} <span
+                                        class="text-danger">*</span></label>
                                 <div class="col-md-6">
-                                    @php   
-                                        $attributes = \App\Models\Attribute::where('is_active',1)->orderBy('name','asc')->get();
+                                    @php
+                                        $attributes = \App\Models\Attribute::where('is_active', 1)
+                                            ->orderBy('name', 'asc')
+                                            ->get();
                                     @endphp
-                                    <select class="form-control aiz-selectpicker" name="main_attributes[]" multiple id="main_attributes"  data-live-search="true">
+                                    <select class="form-control aiz-selectpicker" name="main_attributes[]" multiple
+                                        id="main_attributes" data-live-search="true">
                                         {{-- <option value="">{{ trans('messages.select').' '.trans('messages.attributes') }}</option> --}}
                                         @foreach ($attributes as $attr)
                                             <option value="{{ $attr->id }}">{{ $attr->name }}
@@ -207,53 +231,81 @@
                                 <div data-repeater-item>
                                     <div class="form-group row">
                                         <div class="col-md-12">
-                                            <h6 class="pro_variant_name" id="pro_variant_name">{{ trans('messages.product').' '.trans('messages.variant') }} 1</h6>
+                                            <h6 class="pro_variant_name" id="pro_variant_name">
+                                                {{ trans('messages.product') . ' ' . trans('messages.variant') }} 1</h6>
                                         </div>
                                     </div>
-                                
+
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-from-label">{{ trans('messages.sku') }} <span class="text-danger">*</span></label>
+                                        <label class="col-md-3 col-from-label">{{ trans('messages.sku') }} <span
+                                                class="text-danger">*</span></label>
                                         <div class="col-md-6">
-                                            <input type="text" placeholder="{{ trans('messages.sku') }}" name="sku" class="form-control" required>
+                                            <input type="text" placeholder="{{ trans('messages.sku') }}"
+                                                name="sku" class="form-control" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group row imageVariant">
-                                        <label class="col-md-3 col-form-label" for="signinSrEmail">{{ trans('messages.product').' '.trans('messages.variant').' '.trans('messages.image') }} <small>({{ trans('messages.1000*1000') }})</small></label>
+                                        <label class="col-md-3 col-form-label"
+                                            for="signinSrEmail">{{ trans('messages.product') . ' ' . trans('messages.variant') . ' ' . trans('messages.image') }}
+                                            <small>({{ trans('messages.1000*1000') }})</small></label>
                                         <div class="col-md-8">
-                                            <input type="file" name="variant_images" class="form-control variant_images"
-                                                accept="image/*" required>
+                                            <input type="file" name="variant_images"
+                                                class="form-control variant_images" accept="image/*" required>
                                         </div>
                                     </div>
 
-                                    <div class="product_attributes" >
-                                        
+                                    <div class="product_attributes">
+
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-from-label">{{ trans('messages.quantity') }} <span  class="text-danger">*</span></label>
+                                        <label class="col-md-3 col-from-label">{{ trans('messages.quantity') }} <span
+                                                class="text-danger">*</span></label>
                                         <div class="col-md-6">
-                                            <input type="number" lang="en" min="0" value="0" step="0.01" placeholder="{{ trans('messages.quantity') }}" name="current_stock" class="form-control" required>
+                                            <input type="number" lang="en" min="0" value="0"
+                                                step="0.01" placeholder="{{ trans('messages.quantity') }}"
+                                                name="current_stock" class="form-control" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-md-3 col-from-label">{{ trans('messages.price') }} <span class="text-danger">*</span></label>
+                                        <label class="col-md-3 col-from-label">{{ trans('messages.price') }} <span
+                                                class="text-danger">*</span></label>
                                         <div class="col-md-6">
-                                            <input type="number" lang="en" min="0" value="0" step="0.01" placeholder="{{ trans('messages.price') }}" name="price" class="form-control" required>
+                                            <input type="number" lang="en" min="0" value="0"
+                                                step="0.01" placeholder="{{ trans('messages.price') }}"
+                                                name="price" class="form-control" required>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <div class="col-md-12 text-right">
-                                            <input data-repeater-delete type="button" class="btn btn-danger action-btn" value="{{ trans('messages.delete') }}" />
+                                            <input data-repeater-delete type="button" class="btn btn-danger action-btn"
+                                                value="{{ trans('messages.delete') }}" />
                                         </div>
-                                    </div>     
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group row add_variant" >
+                            <div class="form-group row add_variant">
                                 <div class="col-md-12">
-                                    <input data-repeater-create type="button" class="btn btn-success action-btn" value="{{ trans('messages.add').' '.trans('messages.product').' '.trans('messages.variant') }} " />
+                                    <input data-repeater-create type="button" class="btn btn-success action-btn"
+                                        value="{{ trans('messages.add') . ' ' . trans('messages.product') . ' ' . trans('messages.variant') }} " />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0 h6">{{ "Product Short Description " }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-md-3 col-from-label">{{ trans('messages.description') }}</label>
+                                <div class="col-md-8">
+                                    <textarea class="aiz-text-editor" name="short_description"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -261,21 +313,21 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="mb-0 h6">{{ trans('messages.product').' '.trans('messages.description') }}</h5>
+                            <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.description') }}</h5>
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
-                                <label class="col-md-3 col-from-label">{{trans('messages.description') }}</label>
+                                <label class="col-md-3 col-from-label">{{ trans('messages.description') }}</label>
                                 <div class="col-md-8">
                                     <textarea class="aiz-text-editor" name="description"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card repeater">
                         <div class="card-header">
-                            <h5 class="mb-0 h6">{{ trans('messages.product').' '.trans('messages.tabs') }}</h5>
+                            <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.tabs') }}</h5>
                         </div>
                         <div class="card-body">
                             <div data-repeater-list="tabs">
@@ -295,8 +347,8 @@
                                     </div>
                                     <div class="form-group row">
                                         <input data-repeater-delete type="button" class="btn btn-danger action-btn"
-                                        value="{{ trans('messages.delete') }}" />
-                                    </div> 
+                                            value="{{ trans('messages.delete') }}" />
+                                    </div>
                                 </div>
                             </div>
                             <input data-repeater-create type="button" class="btn btn-success action-btn"
@@ -304,15 +356,16 @@
                         </div>
                     </div>
 
-                    
+
 
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="mb-0 h6">{{ trans('messages.product').' '.trans('messages.video') }}</h5>
+                            <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.video') }}</h5>
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
-                                <label class="col-md-3 col-from-label">{{ trans('messages.video').' '.trans('messages.provider') }}</label>
+                                <label
+                                    class="col-md-3 col-from-label">{{ trans('messages.video') . ' ' . trans('messages.provider') }}</label>
                                 <div class="col-md-8">
                                     <select class="form-control aiz-selectpicker" name="video_provider"
                                         id="video_provider">
@@ -322,19 +375,20 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-md-3 col-from-label">{{ trans('messages.video').' '.trans('messages.link') }}</label>
+                                <label
+                                    class="col-md-3 col-from-label">{{ trans('messages.video') . ' ' . trans('messages.link') }}</label>
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" name="video_link"
-                                        placeholder="{{ trans('messages.video').' '.trans('messages.link') }}">
+                                        placeholder="{{ trans('messages.video') . ' ' . trans('messages.link') }}">
                                     <small class="text-muted">
                                         {{-- Use proper link without extra parameter. Don't use short share link/embeded iframe code. --}}
-                                        </small>
+                                    </small>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                  
+
                     <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{ trans('messages.seo_section') }}</h5>
@@ -366,7 +420,8 @@
                             <div class="form-group row">
                                 <label class="col-lg-3 col-from-label">{{ trans('messages.og_title') }}</label>
                                 <div class="col-lg-8">
-                                    <input type="text" class="form-control" name="og_title" placeholder="{{ trans('messages.og_title') }}">
+                                    <input type="text" class="form-control" name="og_title"
+                                        placeholder="{{ trans('messages.og_title') }}">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -404,7 +459,7 @@
                                     <button type="submit" name="button" value="draft"
                                         class="btn btn-warning action-btn">{{ trans('messages.save_draft') }}</button>
                                 </div>
-                               
+
                                 <div class="btn-group" role="group" aria-label="Second group">
                                     <button type="submit" name="button" value="publish"
                                         class="btn btn-success action-btn">{{ trans('messages.save_publish') }}</button>
@@ -491,7 +546,7 @@
 
                     <div class="card">
                         <div class="card-header">
-                            <h5 class="mb-0 h6">{{ trans('messages.return_refund').' '.trans('messages.status') }}</h5>
+                            <h5 class="mb-0 h6">{{ trans('messages.return_refund') . ' ' . trans('messages.status') }}</h5>
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
@@ -509,12 +564,13 @@
                 <div class="col-12">
                     <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2" role="group" aria-label="First group">
-                            <button type="submit" name="button" value="draft" class="btn btn-warning action-btn">{{ trans('messages.save_draft') }}</button>
+                            <button type="submit" name="button" value="draft"
+                                class="btn btn-warning action-btn">{{ trans('messages.save_draft') }}</button>
                         </div>
                         <!-- <div class="btn-group mr-2" role="group" aria-label="Third group">
-                            <button type="submit" name="button" value="unpublish"
-                                class="btn btn-primary action-btn">Save & Unpublish</button>
-                        </div> -->
+                                <button type="submit" name="button" value="unpublish"
+                                    class="btn btn-primary action-btn">Save & Unpublish</button>
+                            </div> -->
                         <div class="btn-group" role="group" aria-label="Second group">
                             <button type="submit" name="button" value="publish"
                                 class="btn btn-success action-btn">{{ trans('messages.save_publish') }}</button>
@@ -527,12 +583,12 @@
 @endsection
 
 @section('styles')
-<style>
-    .pro_variant_name{
-        text-decoration: underline;
-        text-underline-position: under;
-    }
-</style>
+    <style>
+        .pro_variant_name {
+            text-decoration: underline;
+            text-underline-position: under;
+        }
+    </style>
 @endsection
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.repeater/1.2.1/jquery.repeater.min.js"
@@ -555,14 +611,14 @@
         $('.variant_images').removeAttr('required');
         $('.add_variant,#attributes,.pro_variant_name').hide();
         let buttons = [
-                    ["font", ["bold", "underline", "italic", "clear"]],
-                    ["para", ["ul", "ol", "paragraph"]],
-                    ["style", ["style"]],
-                    ["color", ["color"]],
-                    ["table", ["table"]],
-                    ["insert", ["link", "picture", "video"]],
-                    ["view", ["fullscreen", "undo", "redo"]],
-                ];
+            ["font", ["bold", "underline", "italic", "clear"]],
+            ["para", ["ul", "ol", "paragraph"]],
+            ["style", ["style"]],
+            ["color", ["color"]],
+            ["table", ["table"]],
+            ["insert", ["link", "picture", "video"]],
+            ["view", ["fullscreen", "undo", "redo"]],
+        ];
         $('.description-text-area').summernote({
             toolbar: buttons,
             height: 200,
@@ -633,9 +689,10 @@
                 var repeatCount = repeaterItems.length;
                 var count = parseInt(repeatCount) - 1;
 
-                $('[name="products['+count+'][sku]"]').parent().parent().parent().find('#pro_variant_name').attr("id","pro_variant_name"+count);
+                $('[name="products[' + count + '][sku]"]').parent().parent().parent().find('#pro_variant_name')
+                    .attr("id", "pro_variant_name" + count);
 
-                $('#pro_variant_name'+count).html('Product Variant '+repeatCount);
+                $('#pro_variant_name' + count).html('Product Variant ' + repeatCount);
                 $('.pro_variant_name').show();
                 $('.imageVariant').show();
                 // $('.variant_images').addAttr('required');
@@ -647,35 +704,41 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         },
-                        type:"POST",
-                        url:'{{ route('products.add-attributes') }}',
-                        data:{
-                        attribute_id: i
+                        type: "POST",
+                        url: '{{ route('products.add-attributes') }}',
+                        data: {
+                            attribute_id: i
                         },
                         success: function(data) {
                             var obj = JSON.parse(data);
-                           
-                            $('[name="products['+count+'][variant_images]"]').parent().parent().parent().find(".product_attributes").first().append('\
-                                <div class="form-group row">\
-                                    <div class="col-md-3">\
-                                        <input type="text" class="form-control" name="products['+count+'][choice_'+ i +']" value="'+name+'" placeholder="Choice Title" readonly>\
-                                    </div>\
-                                    <div class="col-md-8">\
-                                        <select required class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="products['+count+'][choice_options_'+ i +']">\
-                                            '+obj+'\
-                                        </select>\
-                                    </div>\
-                                </div>');
-                            
+
+                            $('[name="products[' + count + '][variant_images]"]').parent()
+                                .parent().parent().find(".product_attributes").first()
+                                .append('\
+                                    <div class="form-group row">\
+                                        <div class="col-md-3">\
+                                            <input type="text" class="form-control" name="products[' + count +
+                                    '][choice_' + i + ']" value="' + name +
+                                    '" placeholder="Choice Title" readonly>\
+                                        </div>\
+                                        <div class="col-md-8">\
+                                            <select required class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="products[' +
+                                    count + '][choice_options_' + i + ']">\
+                                                ' + obj + '\
+                                            </select>\
+                                        </div>\
+                                    </div>');
+
                             AIZ.plugins.bootstrapSelect('refresh');
                         }
                     });
                 });
 
-           
-                $('[name="products['+count+'][stone_availability][]"]').attr("id","stone_availability"+count);
-                $("#stone_availability"+count).prop('checked',false);
-                
+
+                $('[name="products[' + count + '][stone_availability][]"]').attr("id", "stone_availability" +
+                    count);
+                $("#stone_availability" + count).prop('checked', false);
+
                 $(this).find('.note-editor').remove();
                 note = $(this).find('.description-text-area').summernote({
                     toolbar: buttons,
@@ -702,14 +765,14 @@
             },
         });
 
-       
 
-        $(document).on('change','#product_type',function(){
-            if($(this).val() == 'variant'){
+
+        $(document).on('change', '#product_type', function() {
+            if ($(this).val() == 'variant') {
                 $('.add_variant,#attributes,.pro_variant_name,.imageVariant').show();
                 $('.variant_images').prop('required', true);
                 $('#main_attributes').prop('required', true);
-            }else{ 
+            } else {
                 $('.add_variant,#attributes,.pro_variant_name,.imageVariant').hide();
                 $('.variant_images').removeAttr('required');
                 $('#main_attributes').removeAttr("required");
@@ -721,55 +784,54 @@
 
         let selected_attributes = [];
         $('#main_attributes').on('change', function() {
-             $('.product_attributes').html(null);
+            $('.product_attributes').html(null);
             $.each($("#main_attributes option:selected"), function() {
-                 add_more_customer_choice_option($(this).val(), $(this).text());
-                 if( $.inArray($(this).val(), selected_attributes) == -1 ) {
-                     selected_attributes.push($(this).val());
-                 }
-                 $('#selected_attributes').val(selected_attributes);
-             });
+                add_more_customer_choice_option($(this).val(), $(this).text());
+                if ($.inArray($(this).val(), selected_attributes) == -1) {
+                    selected_attributes.push($(this).val());
+                }
+                $('#selected_attributes').val(selected_attributes);
+            });
 
-           // const values = $(this).val();
-           // // Remove all non selected from selected array if user has deselected something
-          //  selected = selected.filter((value) => values.includes(value));
-          //  // get value which is not in selected list
-           // const lastSelected = values.filter((value) => !selected.includes(value));
+            // const values = $(this).val();
+            // // Remove all non selected from selected array if user has deselected something
+            //  selected = selected.filter((value) => values.includes(value));
+            //  // get value which is not in selected list
+            // const lastSelected = values.filter((value) => !selected.includes(value));
 
         });
 
-        function add_more_customer_choice_option(i, name){
+        function add_more_customer_choice_option(i, name) {
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                type:"POST",
-                url:'{{ route('products.add-attributes') }}',
-                data:{
-                attribute_id: i
+                type: "POST",
+                url: '{{ route('products.add-attributes') }}',
+                data: {
+                    attribute_id: i
                 },
                 success: function(data) {
                     var obj = JSON.parse(data);
 
                     // if( $.inArray(i, selected_attributes) !== -1 ) {
-                        $('.product_attributes').append('\
-                            <div class="form-group row">\
-                                <div class="col-md-3">\
-                                    <input type="text" class="form-control" name="choice_'+ i +'" value="'+name+'" placeholder="Choice Title" readonly>\
-                                </div>\
-                                <div class="col-md-8">\
-                                    <select required class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="choice_options_'+ i +'">\
-                                        '+obj+'\
-                                    </select>\
-                                </div>\
-                            </div>');
+                    $('.product_attributes').append('\
+                                <div class="form-group row">\
+                                    <div class="col-md-3">\
+                                        <input type="text" class="form-control" name="choice_' + i + '" value="' + name +
+                        '" placeholder="Choice Title" readonly>\
+                                    </div>\
+                                    <div class="col-md-8">\
+                                        <select required class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="choice_options_' + i + '">\
+                                            ' + obj + '\
+                                        </select>\
+                                    </div>\
+                                </div>');
                     // }
                     AIZ.plugins.bootstrapSelect('refresh');
                 }
             });
         }
-
-        
     </script>
 
     <script type="text/javascript">
@@ -798,7 +860,5 @@
             title = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')
             $('#slug').val(title)
         }
-
-      
     </script>
 @endsection

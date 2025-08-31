@@ -1,56 +1,197 @@
 @extends('frontend.layouts.app')
 
 @section('content')
+    @php
+        $images = $response['photos'];
+        if ($response['thumbnail_image'] != null) {
+            array_unshift($images, $response['thumbnail_image']);
+        }
+
+        if ($response['variant_image'] != null) {
+            array_push($images, $response['variant_image']);
+        }
+
+        $thumbanailSlider = $productImagesWeb = $productImagesMob = '';
+
+        $flattened_product_prices = call_user_func_array('array_merge', $response['varient_productsPrice']);
+    @endphp
+
+
+    @if (!empty($images))
+        @foreach ($images as $imgkey => $img)
+            @php
+                $activeStatus = '';
+                if ($imgkey == 0) {
+                    $activeStatus = 'active';
+                }
+
+                $productImagesWeb .=
+                    '<li class="' .
+                    $activeStatus .
+                    ' js-product-main-image" data-id="' .
+                    $imgkey .
+                    '">
+                                        <a href="' .
+                    $img .
+                    '">
+                                            <img alt="Image" src="' .
+                    $img .
+                    '"
+                                                data-zoomed="' .
+                    $img .
+                    '" class="js-zoomit" />
+                                        </a>
+                                    </li>';
+
+                $productImagesMob .=
+                    '<div class="mobile-product-image">
+                                            <p>
+                                                <a href="' .
+                    $img .
+                    '" target="_blank">
+                                                    <img alt="Image" src="' .
+                    $img .
+                    '" />
+                                                </a>
+                                            </p>
+                                        </div>';
+
+                $thumbanailSlider .=
+                    '<li class="js-product-thumnail-slider" data-group="1">
+                                    <a href="#" class="' .
+                    $activeStatus .
+                    ' js-product-thumbnail" data-id="' .
+                    $imgkey .
+                    '">
+                                        <img alt="Image" src="' .
+                    $img .
+                    '" />
+                                    </a>
+                                </li>';
+            @endphp
+        @endforeach
+    @endif
+
+
     <x-frontend.product-detail.product-gallery>
         <x-slot name="productDetails">
-            <x-frontend.product-detail.product-details category="Resins" title="Premium Clear Epoxy Resin Kit" price="INR 899"
-                originalPrice="INR 999">
+
+            <x-frontend.product-detail.product-details category="Resins" title="Premium Clear Epoxy Resin Kit"
+                price="{{ $flattened_product_prices[$response['sku']]['discounted_price'] }}"
+                originalPrice="{{ $flattened_product_prices[$response['sku']]['original_price'] }}">
 
                 <x-slot name="description">
-                    <p>
-                        This premium clear epoxy resin kit is perfect for creating beautiful
-                        jewelry, coasters, and art pieces. The high-quality resin cures to a
-                        crystal-clear finish that highlights your creative designs beautifully.
-                    </p>
-                    <p>
-                        This comprehensive kit includes everything you need to get started with
-                        resin crafting. Perfect for beginners and experienced crafters alike.
-                    </p>
+                    {!! $response['short_description'] !!}
                 </x-slot>
 
                 <x-slot name="details">
-                    <li><strong>Brand :</strong>Grostore</li>
-                    <li><strong>Product SKU :</strong>#RESIN001</li>
-                    <li><strong>Category :</strong>Epoxy Resins</li>
+                    @if ($response['brand'])
+                        <li><strong>Brand :</strong>{{ $response['brand'] }}</li>
+                    @endif
+
+                    <li><strong>Product SKU :</strong>{{ $response['sku'] }}</li>
+
+                    <li><strong>Category :</strong>{{ $response['category']['name'] }}</li>
+
                     <li>
                         <strong>Availability :</strong>
-                        <span class="product-stock">
-                            <img src="assets/images/icons/icon-13.png" alt="" /> In Stock
-                        </span>
+                        @if ($response['quantity'] > 0)
+                            <span class="product-stock">
+                                <img src="assets/images/icons/icon-13.png" alt="" /> In Stock
+                            </span>
+                        @else
+                            <span class="" style="color: red">
+                                Out of stock
+                            </span>
+                        @endif
                     </li>
+
                 </x-slot>
 
                 <x-slot name="colorOptions">
-                    <x-frontend.product-detail.color-options>
-                        <x-frontend.product-detail.color-item id="color1" name="same" checked="checked" />
-                        <x-frontend.product-detail.color-item id="color2" name="same" />
-                        <x-frontend.product-detail.color-item id="color3" name="same" />
-                        <x-frontend.product-detail.color-item id="color4" name="same" />
-                    </x-frontend.product-detail.color-options>
+                    <div class="product-attributes product__options">
+                        @if ($response['product_type'] == 1 && !empty($response['product_attributes'][0]))
+                            @php
+                                $flattened_products = call_user_func_array(
+                                    'array_merge',
+                                    $response['varient_products'],
+                                );
+                            @endphp
+                            @foreach ($response['product_attributes'] as $akey => $attribute)
+                                <div class="attribute product__sizes-2 d-flex align-items-center">
+                                    <ul class="attribute-list product__available-sizes"
+                                        data-attribute-id="{{ $attribute['id'] }}">
+                                        @php
+                                            $selectedValue = '';
+                                        @endphp
+                                        @foreach ($attribute['values'] as $vkey => $value)
+                                            @php
+                                                $activeClass = '';
+                                                $is_present =
+                                                    isset($flattened_products[$response['sku']]) &&
+                                                    in_array($value['id'], $flattened_products[$response['sku']]);
+
+                                                if (
+                                                    isset($response['current_attribute'][$attribute['id']]) &&
+                                                    $response['current_attribute'][$attribute['id']] == $value['id']
+                                                ) {
+                                                    $activeClass = 'active';
+                                                    $selectedValue = $value['name'];
+                                                }
+
+                                            @endphp
+                                            <li class="attribute-item firstItem_{{ $akey }} firstvalue_{{ $vkey }} {{ isset($response['current_attribute'][$attribute['id']]) && $response['current_attribute'][$attribute['id']] == $value['id'] ? 'active' : '' }} @if (!$is_present && $akey != 0) disabled @endif"
+                                                data-value-id="{{ $value['id'] }}">
+                                                {{ $value['name'] }}
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                    <div class="product__current-size">{{ $attribute['name'] }}:
+                                        <span>{{ $selectedValue }}</span>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
                 </x-slot>
 
                 <x-slot name="cartOptions">
-                    <x-frontend.product-detail.add-to-cart quantity="1" returnLink="shop-details.html" />
+                    <div class="product__action js-product-action" style="margin-bottom: 20px">
+                        <div class="product__quantity-and-add-to-cart d-flex">
+                            <div class="product__quantity">
+                                <div class="product-quantity__minus js-quantity-down"><a href="#"><i
+                                            class="lnil lnil-minus"></i></a></div>
+                                <input type="text" value="1" name="product_quantity" id="product_quantity"
+                                    class="product-quantity__input js-quantity-field">
+                                <div class="product-quantity__plus js-quantity-up"><a href="#"><i
+                                            class="lnil lnil-plus"></i></a></div>
+                            </div>
+                            <div class="product__add-to-cart">
+                                @if ($response['quantity'] > 0)
+                                    <button class="eighth-button add-to-cart-btn"
+                                        data-product-slug="{{ $response['slug'] }}"
+                                        data-product-sku="{{ $response['sku'] }}">
+                                        {{ trans('messages.add_to_cart') }}
+                                    </button>
+                                @else
+                                    <span class="status__value ">{{ trans('messages.out_of_stock') }}</span>
+                                @endif
+
+                            </div>
+                        </div>
+                    </div>
                 </x-slot>
 
-                <x-slot name="tags">
-                    <li>
-                        <strong>Tag :</strong>
-                        <a href="blog-details.html">Best sellers</a>,
-                        <a href="blog-details.html">New Arrivals</a>,
-                        <a href="blog-details.html">On Sale</a>
-                    </li>
-                </x-slot>
+                @if ($response['tags'])
+                    <x-slot name="tags">
+                        <li>
+                            <strong>Tag :</strong>
+                            @foreach ($response['tags'] as $tag)
+                                <a href="">{{ $tag }}</a>,
+                            @endforeach
+                        </li>
+                    </x-slot>
+                @endif
 
                 <x-slot name="socialLinks">
                     <li class="social-links">
@@ -60,6 +201,7 @@
                         <a href="shop-details.html"><i class="icon-16"></i></a>
                     </li>
                 </x-slot>
+
             </x-frontend.product-detail.product-details>
         </x-slot>
 
@@ -69,46 +211,23 @@
                     <x-frontend.product-detail.tab-button class="active-btn" tabId="tab-1" title="Description" />
                 </x-slot>
 
-
                 <x-frontend.product-detail.description-content>
-                    <p>
-                        Our premium epoxy resin kit includes high-quality,
-                        crystal-clear resin that cures to a durable, glossy finish.
-                        Perfect for creating beautiful resin art, jewelry, coasters,
-                        and various craft projects with professional results.
-                    </p>
-                    <p>
-                        This comprehensive kit includes resin, hardener, mixing cups,
-                        stirring sticks, and detailed instructions. The resin has excellent
-                        UV resistance and won't yellow over time. Ideal for both beginners
-                        and experienced crafters looking to create stunning pieces.
-                    </p>
-                    <h4>Features :</h4>
-                    <ul class="list-style-one clearfix">
-                        <li>Crystal-clear finish with high gloss</li>
-                        <li>UV-resistant formula prevents yellowing</li>
-                        <li>Includes complete mixing and measuring tools</li>
-                        <li>Suitable for various craft applications</li>
-                        <li>Detailed instructions for perfect results</li>
-                        <li>Professional quality for stunning artwork</li>
-                    </ul>
+                    {!! $response['description'] !!}
                 </x-frontend.product-detail.description-content>
 
             </x-frontend.product-detail.product-description>
         </x-slot>
 
-        <x-frontend.product-detail.product-slider-item image="assets/images/product-1.webp" alt="Product Image">
+        <x-frontend.product-detail.product-slider-item image="{{ $images[0] ?? 'assets/images/product-1.webp' }}"
+            alt="Product Image">
             <x-slot name="thumbnails">
-                <x-frontend.product-detail.thumbnail-item class="active" index="0" image="assets/images/product-5.webp"
-                    alt="Thumbnail 1" />
-                <x-frontend.product-detail.thumbnail-item index="1" image="assets/images/product-5.webp"
-                    alt="Thumbnail 2" />
-                <x-frontend.product-detail.thumbnail-item index="2" image="assets/images/product-5.webp"
-                    alt="Thumbnail 3" />
-                <x-frontend.product-detail.thumbnail-item index="3" image="assets/images/product-5.webp"
-                    alt="Thumbnail 4" />
+                @foreach ($images as $index => $img)
+                    <x-frontend.product-detail.thumbnail-item class="{{ $index === 0 ? 'active' : '' }}"
+                        index="{{ $index }}" image="{{ $img }}" alt="Thumbnail {{ $index + 1 }}" />
+                @endforeach
             </x-slot>
         </x-frontend.product-detail.product-slider-item>
+
 
     </x-frontend.product-detail.product-gallery>
 
@@ -241,7 +360,5 @@
         </div>
     </x-frontend.common.product-section>
 
-    <x-frontend.common.whatsapp-subscribe title="Order With WhatsApp" buttonText="Order Now!"
-        backgroundImage="assets/images/whatsapp-bg.jpg"
-        whatsappLink="https://wa.me/1234567890?text=Hello,%20I%20would%20like%20to%20place%20an%20order!" />
+    <x-frontend.common.whatsapp-subscribe />
 @endsection

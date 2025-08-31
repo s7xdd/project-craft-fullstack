@@ -11,6 +11,7 @@ class ProductTranslation extends Model
     'name',
     'unit',
     'description',
+    'short_description',
     'meta_title',
     'meta_description',
     'meta_keywords',
