@@ -189,37 +189,6 @@ class ProjectController extends Controller
                         ]
                     ]
                 ],
-
-                [
-                    "collapsible" => false,
-                    "key" => "panel",
-                    "type" => "panel",
-                    "label" => "Panel",
-                    "title"  => "Project Highlights",
-                    "input" => false,
-                    "tableView" => false,
-                    "components" => [
-                        [
-                            "label" => "Highlight",
-                            "applyMaskOn" => "change",
-                            "tableView" => true,
-                            "validateWhenHidden" => false,
-                            "key" => "textField",
-                            "type" => "textfield",
-                            "input" => true
-                        ],
-                        [
-                            "label" => "Text Field",
-                            "applyMaskOn" => "change",
-                            "tableView" => true,
-                            "validateWhenHidden" => false,
-                            "key" => "textField1",
-                            "type" => "textfield",
-                            "input" => true
-                        ]
-                    ]
-                ],
-
                 [
                     "type" => "panel",
                     "key" => "gallery",
@@ -529,7 +498,7 @@ class ProjectController extends Controller
                             "validateMultiple" => false,
                             "validateCustom" => "",
                             "validateCustomPrivate" => false,
-                            "key" => "dataGrid",
+                            "key" => "highlights",
                             "type" => "datagrid",
                             "input" => true,
                             "components" => [
@@ -725,6 +694,8 @@ class ProjectController extends Controller
     {
 
         $submittedData = json_decode($request->submissionValues);
+
+        dd($submittedData);
 
         $project = Project::findOrFail($id);
 
