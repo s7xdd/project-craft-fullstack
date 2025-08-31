@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('frontend.parts.footer', function ($view) {
-            $menu = Menus::where('name', 'footer')->with('items.child.child')->first();
+            $menu = Menus::where('name', 'footer')->with('items.child')->first();
             $bottom_footer = Menus::where('name', 'bottom footer')->with('items')->first();
             
             $view->with([

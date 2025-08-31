@@ -48,7 +48,7 @@
                                     </div>
                                     <div class="file-preview"></div>
                                 </div>
-                                <div class="form-group">
+                                {{-- <div class="form-group">
                                     <label>About description (Translatable)</label>
                                     <input type="hidden" name="types[][{{ $lang }}]" value="about_us_description">
                                     <textarea class="aiz-text-editor form-control" name="about_us_description"
@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-primary">Update</button>
-                                </div>
+                                </div> --}}
                             </form>
                         </div>
                     </div>
@@ -102,12 +102,6 @@
                                     <input type="text" class="form-control" placeholder="Email" name="footer_email"
                                         value="{{ get_setting('footer_email') }}">
                                 </div>
-                                <div class="form-group">
-                                    <label>Working Hours</label>
-                                    <input type="hidden" name="types[][{{ $lang }}]"
-                                        value="footer_working_hours">
-                                    <textarea class="form-control" placeholder="Working Hours" name="footer_working_hours">{{ get_setting('footer_working_hours') }}</textarea>
-                                </div>
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </div>
@@ -115,7 +109,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 d-none">
+                {{-- <div class="col-lg-12 d-none">
                     <div class="card shadow-none bg-light">
                         <div class="card-header">
                             <h6 class="mb-0">Link Widget One</h6>
@@ -192,7 +186,7 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -204,7 +198,7 @@
         <form action="{{ route('business_settings.update') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
-                <div class="card shadow-none bg-light">
+                {{-- <div class="card shadow-none bg-light">
                     <div class="card-header">
                         <h6 class="mb-0">Copyright Widget </h6>
                     </div>
@@ -219,7 +213,7 @@
                             </textarea>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 <div class="card shadow-none bg-light">
                     <div class="card-header">
                         <h6 class="mb-0">Social Link Widget </h6>
@@ -227,7 +221,7 @@
                     <div class="card-body">
 
 
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label>Social Links Title</label>
                             <div class="input-group form-group">
                                 <input type="hidden" name="types[]" value="social_title">
@@ -245,7 +239,7 @@
                                     value="{{ get_setting('social_sub_title') }}">
 
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
                             <label>Social Links</label>
