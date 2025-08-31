@@ -314,7 +314,7 @@ class ProjectController extends Controller
             'definition' => json_encode($formFields),
             'data' => json_encode($existingData),
             'title' => "Add New Project",
-            'submitRoute' => route('project.storeWithForm')
+            'submitRoute' => route('project.store')
         ]);
     }
 
@@ -344,12 +344,7 @@ class ProjectController extends Controller
             'og_description' => $project->getTranslation('og_description', $lang),
             'twitter_title' => $project->getTranslation('twitter_title', $lang),
             'twitter_description' => $project->getTranslation('twitter_description', $lang),
-            'title1' => $highlights[0]['title'] ?? '',
-            'subtitle1' => $highlights[0]['subtitle'] ?? '',
-            'title2' => $highlights[1]['title'] ?? '',
-            'subtitle2' => $highlights[1]['subtitle'] ?? '',
-            'title3' => $highlights[2]['title'] ?? '',
-            'subtitle3' => $highlights[2]['subtitle'] ?? '',
+            'highlights' => $project->highlights ? json_decode($project->highlights) : [],
         ];
 
         $all_projects = Project::whereNull('parent_id')->where('id', '!=', $id)->get();
@@ -501,6 +496,79 @@ class ProjectController extends Controller
                 ],
 
                 [
+                    "collapsible" => false,
+                    "key" => "panel",
+                    "type" => "panel",
+                    "label" => "Panel",
+                    "title"  => "Project Highlights",
+                    "input" => false,
+                    "tableView" => false,
+                    "components" => [
+                        [
+                            "label" => "Data Grid",
+                            "disableAddingRemovingRows" => false,
+                            "reorder" => false,
+                            "addAnotherPosition" => "bottom",
+                            "layoutFixed" => false,
+                            "enableRowGroups" => false,
+                            "initEmpty" => false,
+                            "tableView" => false,
+                            "defaultValue" => [
+                                [
+                                    "textField" => "",
+                                    "textField1" => ""
+                                ]
+                            ],
+                            "validate" => [
+                                "minLength" => "1"
+                            ],
+                            "validateOn" => "change",
+                            "validateOnBlur" => false,
+                            "validateOnInput" => false,
+                            "validateRequired" => false,
+                            "validateMultiple" => false,
+                            "validateCustom" => "",
+                            "validateCustomPrivate" => false,
+                            "key" => "dataGrid",
+                            "type" => "datagrid",
+                            "input" => true,
+                            "components" => [
+                                [
+                                    "label" => "Title",
+                                    "applyMask" => false,
+                                    "applyMaskOn" => "change",
+                                    "autoComplete" => "off",
+                                    "tableView" => true,
+                                    "validate" => [],
+                                    "validateOn" => "change",
+                                    "validateOnBlur" => false,
+                                    "validateOnInput" => false,
+                                    "validateRequired" => false,
+                                    "key" => "textField",
+                                    "type" => "textfield",
+                                    "input" => true
+                                ],
+                                [
+                                    "label" => "Subtitle",
+                                    "applyMask" => false,
+                                    "applyMaskOn" => "change",
+                                    "autoComplete" => "off",
+                                    "tableView" => true,
+                                    "validate" => [],
+                                    "validateOn" => "change",
+                                    "validateOnBlur" => false,
+                                    "validateOnInput" => false,
+                                    "validateRequired" => false,
+                                    "key" => "textField1",
+                                    "type" => "textfield",
+                                    "input" => true
+                                ]
+                            ]
+                        ],
+                    ]
+                ],
+
+                [
                     "type" => "panel",
                     "key" => "gallery",
                     "label" => "Gallery Images",
@@ -623,25 +691,12 @@ class ProjectController extends Controller
         $project->sort_order = $submittedData->sort_order;
         $project->parent_id = $submittedData->parent_id ?? null;
 
-        $highlights = [];
-        for ($i = 1; $i <= 3; $i++) {
-            $title = 'title' . $i;
-            $subtitle = 'subtitle' . $i;
-            $highlights[] = [
-                'title' => $submittedData->$title ?? '',
-                'subtitle' => $submittedData->$subtitle ?? ''
-            ];
-        }
+        $project->highlights = is_array($submittedData->highlights) ? json_encode($submittedData->highlights) : [];
 
-        $project->highlights = json_encode($highlights);
-
-        // Handle gallery images if provided
         $gallery = [];
         if (isset($submittedData->gallery_images) && is_array($submittedData->gallery_images)) {
             $count = 1;
             foreach ($submittedData->gallery_images as $image) {
-                // You might need to implement image handling here
-                // For now, we'll just store the image URLs
                 $gallery[] = $image;
                 $count++;
             }
@@ -668,12 +723,8 @@ class ProjectController extends Controller
 
     public function updateWithForm(Request $request, $id)
     {
-        $submittedData = json_decode($request->submissionValues);
 
-        $request->validate([
-            'name' => 'required',
-            'slug' => 'required',
-        ]);
+        $submittedData = json_decode($request->submissionValues);
 
         $project = Project::findOrFail($id);
 
@@ -695,24 +746,13 @@ class ProjectController extends Controller
             $project->sort_order = $submittedData->sort_order;
             $project->parent_id = $submittedData->parent_id ?? null;
 
-            $highlights = [];
-            for ($i = 1; $i <= 3; $i++) {
-                $title = 'title' . $i;
-                $subtitle = 'subtitle' . $i;
-                $highlights[] = [
-                    'title' => $submittedData->$title ?? '',
-                    'subtitle' => $submittedData->$subtitle ?? ''
-                ];
-            }
-            $project->highlights = json_encode($highlights);
 
-            // Handle gallery images if provided
+            $project->highlights = is_array($submittedData->highlights) ? json_encode($submittedData->highlights) : [];
+
             $gallery = [];
             if (isset($submittedData->gallery_images) && is_array($submittedData->gallery_images)) {
                 $count = 1;
                 foreach ($submittedData->gallery_images as $image) {
-                    // You might need to implement image handling here
-                    // For now, we'll just store the image URLs
                     $gallery[] = $image;
                     $count++;
                 }
@@ -740,10 +780,6 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-
-        // return response()->json([
-        //     'request' => $request->all()
-        // ]);
 
         $request->validate([
             'name' => 'required',
