@@ -41,6 +41,703 @@ class ProjectController extends Controller
         return view('backend.projects.create', compact('projects', 'all_projects'));
     }
 
+    public function createWithForm(Request $request)
+    {
+        $lang = $request->lang ?? env('DEFAULT_LANGUAGE', 'en');
+
+        $existingData = [
+            'project_id' => null,
+            'lang' => $lang,
+            'name' => '',
+            'subtitle' => '',
+            'description' => '',
+            'slug' => '',
+            'image' => '',
+            'status' => 1,
+            'completion_status' => 'ongoing',
+            'sort_order' => 0,
+            'parent_id' => null,
+            'meta_title' => '',
+            'meta_description' => '',
+            'meta_keywords' => '',
+            'og_title' => '',
+            'og_description' => '',
+            'twitter_title' => '',
+            'twitter_description' => '',
+            'title1' => '',
+            'subtitle1' => '',
+            'title2' => '',
+            'subtitle2' => '',
+            'title3' => '',
+            'subtitle3' => '',
+        ];
+
+        $all_projects = Project::whereNull('parent_id')->get();
+        $projectOptions = [];
+        foreach ($all_projects as $project) {
+            $projectOptions[] = ["label" => $project->name, "value" => $project->id];
+        }
+
+        $formFields = [
+            "components" => [
+                [
+                    "type" => "panel",
+                    "key" => "basic_info",
+                    "label" => "Basic Information",
+                    "title" => "Basic Information",
+                    "input" => false,
+                    "components" => [
+                        [
+                            "type" => "hidden",
+                            "input" => true,
+                            "key" => "project_id",
+                            "value" => "{{ null }}",
+                        ],
+                        [
+                            "type" => "hidden",
+                            "input" => true,
+                            "key" => "lang",
+                            "value" => "{{ $lang }}",
+                        ],
+                        [
+                            "type" => "textfield",
+                            "input" => true,
+                            "key" => "name",
+                            "label" => "Project Name",
+                            "validate" => [
+                                "required" => true
+                            ]
+                        ],
+                        [
+                            "type" => "textfield",
+                            "input" => true,
+                            "key" => "subtitle",
+                            "label" => "Subtitle"
+                        ],
+                        [
+                            "type" => "textfield",
+                            "input" => true,
+                            "key" => "slug",
+                            "label" => "Slug",
+                            "validate" => [
+                                "required" => true
+                            ]
+                        ],
+                        [
+                            "type" => "select",
+                            "input" => true,
+                            "key" => "parent_id",
+                            "label" => "Parent Project",
+                            "data" => [
+                                "values" => $projectOptions
+                            ],
+                            "multiple" => false
+                        ],
+                        [
+                            "label" => "Main Image",
+                            "tableView" => false,
+                            "storage" => "base64",
+                            "webcam" => false,
+                            "image" => true,
+                            "fileTypes" => [
+                                [
+                                    "label" => "",
+                                    "value" => ""
+                                ]
+                            ],
+                            "validateWhenHidden" => false,
+                            "key" => "image",
+                            "type" => "file",
+                            "input" => true
+                        ],
+                        [
+                            "type" => "textarea",
+                            "input" => true,
+                            "wysiwyg" => true,
+                            "key" => "description",
+                            "label" => "Description"
+                        ],
+                        [
+                            "type" => "number",
+                            "input" => true,
+                            "key" => "sort_order",
+                            "label" => "Sort Order"
+                        ],
+                        [
+                            "type" => "select",
+                            "input" => true,
+                            "key" => "status",
+                            "label" => "Status",
+                            "data" => [
+                                "values" => [
+                                    ["label" => "Active", "value" => "1"],
+                                    ["label" => "Inactive", "value" => "0"]
+                                ]
+                            ]
+                        ],
+                        [
+                            "type" => "select",
+                            "input" => true,
+                            "key" => "completion_status",
+                            "label" => "Completion Status",
+                            "data" => [
+                                "values" => [
+                                    ["label" => "Ongoing", "value" => "ongoing"],
+                                    ["label" => "Completed", "value" => "completed"]
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+
+                [
+                    "collapsible" => false,
+                    "key" => "panel",
+                    "type" => "panel",
+                    "label" => "Panel",
+                    "title"  => "Project Highlights",
+                    "input" => false,
+                    "tableView" => false,
+                    "components" => [
+                        [
+                            "label" => "Highlight",
+                            "applyMaskOn" => "change",
+                            "tableView" => true,
+                            "validateWhenHidden" => false,
+                            "key" => "textField",
+                            "type" => "textfield",
+                            "input" => true
+                        ],
+                        [
+                            "label" => "Text Field",
+                            "applyMaskOn" => "change",
+                            "tableView" => true,
+                            "validateWhenHidden" => false,
+                            "key" => "textField1",
+                            "type" => "textfield",
+                            "input" => true
+                        ]
+                    ]
+                ],
+
+                [
+                    "type" => "panel",
+                    "key" => "gallery",
+                    "label" => "Gallery Images",
+                    "input" => false,
+                    "components" => [
+                        [
+                            "label" => "Gallery Images",
+                            "tableView" => false,
+                            "storage" => "base64",
+                            "webcam" => false,
+                            "image" => true,
+                            "multiple" => true,
+                            "fileTypes" => [
+                                [
+                                    "label" => "",
+                                    "value" => ""
+                                ]
+                            ],
+                            "validateWhenHidden" => false,
+                            "key" => "gallery_images",
+                            "type" => "file",
+                            "input" => true
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "panel",
+                    "key" => "seo_fields",
+                    "label" => "SEO Fields",
+                    "collapsible" => true,
+                    "input" => false,
+                    "components" => [
+                        [
+                            "type" => "textfield",
+                            "input" => true,
+                            "key" => "meta_title",
+                            "label" => "Meta Title"
+                        ],
+                        [
+                            "type" => "textarea",
+                            "input" => true,
+                            "key" => "meta_description",
+                            "label" => "Meta Description"
+                        ],
+                        [
+                            "type" => "textarea",
+                            "input" => true,
+                            "key" => "meta_keywords",
+                            "label" => "Meta Keywords",
+                            "description" => "Separate with comma"
+                        ],
+                        [
+                            "type" => "textfield",
+                            "input" => true,
+                            "key" => "og_title",
+                            "label" => "OG Title"
+                        ],
+                        [
+                            "type" => "textarea",
+                            "input" => true,
+                            "key" => "og_description",
+                            "label" => "OG Description"
+                        ],
+                        [
+                            "type" => "textfield",
+                            "input" => true,
+                            "key" => "twitter_title",
+                            "label" => "Twitter Title"
+                        ],
+                        [
+                            "type" => "textarea",
+                            "input" => true,
+                            "key" => "twitter_description",
+                            "label" => "Twitter Description"
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "button",
+                    "label" => "Submit",
+                    "key" => "submit",
+                    "disableOnInvalid" => true,
+                    "input" => true,
+                    "tableView" => false,
+                    "action" => "submit"
+                ]
+            ]
+        ];
+
+        return view('form')->with([
+            'definition' => json_encode($formFields),
+            'data' => json_encode($existingData),
+            'title' => "Add New Project",
+            'submitRoute' => route('project.storeWithForm')
+        ]);
+    }
+
+    public function editWithForm(Request $request, $id)
+    {
+        $lang = $request->lang ?? env('DEFAULT_LANGUAGE', 'en');
+        $project = Project::findOrFail($id);
+
+        $highlights = json_decode($project->highlights, true) ?? [];
+
+        $existingData = [
+            'project_id' => $project->id,
+            'lang' => $lang,
+            'name' => $project->getTranslation('name', $lang),
+            'subtitle' => $project->subtitle,
+            'description' => $project->getTranslation('description', $lang),
+            'slug' => $project->slug,
+            'image' => $project->image,
+            'status' => $project->status,
+            'completion_status' => $project->completion_status,
+            'sort_order' => $project->sort_order,
+            'parent_id' => $project->parent_id,
+            'meta_title' => $project->getTranslation('meta_title', $lang),
+            'meta_description' => $project->getTranslation('meta_description', $lang),
+            'meta_keywords' => $project->getTranslation('meta_keywords', $lang),
+            'og_title' => $project->getTranslation('og_title', $lang),
+            'og_description' => $project->getTranslation('og_description', $lang),
+            'twitter_title' => $project->getTranslation('twitter_title', $lang),
+            'twitter_description' => $project->getTranslation('twitter_description', $lang),
+            'title1' => $highlights[0]['title'] ?? '',
+            'subtitle1' => $highlights[0]['subtitle'] ?? '',
+            'title2' => $highlights[1]['title'] ?? '',
+            'subtitle2' => $highlights[1]['subtitle'] ?? '',
+            'title3' => $highlights[2]['title'] ?? '',
+            'subtitle3' => $highlights[2]['subtitle'] ?? '',
+        ];
+
+        $all_projects = Project::whereNull('parent_id')->where('id', '!=', $id)->get();
+        $projectOptions = [];
+        foreach ($all_projects as $proj) {
+            $projectOptions[] = ["label" => $proj->name, "value" => $proj->id];
+        }
+
+        $formFields = [
+            "components" => [
+                [
+                    "type" => "panel",
+                    "key" => "basic_info",
+                    "label" => "Basic Information",
+                    "title" => "Basic Information",
+                    "input" => false,
+                    "components" => [
+                        [
+                            "type" => "hidden",
+                            "input" => true,
+                            "key" => "project_id",
+                            "value" => "{{ $project->id }}",
+                        ],
+                        [
+                            "type" => "hidden",
+                            "input" => true,
+                            "key" => "lang",
+                            "value" => "{{ $lang }}",
+                        ],
+                        [
+                            "type" => "textfield",
+                            "input" => true,
+                            "key" => "name",
+                            "label" => "Project Name",
+                            "validate" => [
+                                "required" => true
+                            ]
+                        ],
+                        [
+                            "type" => "textfield",
+                            "input" => true,
+                            "key" => "subtitle",
+                            "label" => "Subtitle"
+                        ],
+                        [
+                            "type" => "textfield",
+                            "input" => true,
+                            "key" => "slug",
+                            "label" => "Slug",
+                            "validate" => [
+                                "required" => true
+                            ]
+                        ],
+                        [
+                            "type" => "select",
+                            "input" => true,
+                            "key" => "parent_id",
+                            "label" => "Parent Project",
+                            "data" => [
+                                "values" => $projectOptions
+                            ],
+                            "multiple" => false
+                        ],
+                        [
+                            "label" => "Main Image",
+                            "tableView" => false,
+                            "storage" => "base64",
+                            "webcam" => false,
+                            "image" => true,
+                            "fileTypes" => [
+                                [
+                                    "label" => "",
+                                    "value" => ""
+                                ]
+                            ],
+                            "validateWhenHidden" => false,
+                            "key" => "image",
+                            "type" => "file",
+                            "input" => true
+                        ],
+                        [
+                            "type" => "textarea",
+                            "input" => true,
+                            "wysiwyg" => true,
+                            "key" => "description",
+                            "label" => "Description"
+                        ],
+                        [
+                            "type" => "number",
+                            "input" => true,
+                            "key" => "sort_order",
+                            "label" => "Sort Order"
+                        ],
+                        [
+                            "type" => "select",
+                            "input" => true,
+                            "key" => "status",
+                            "label" => "Status",
+                            "data" => [
+                                "values" => [
+                                    ["label" => "Active", "value" => "1"],
+                                    ["label" => "Inactive", "value" => "0"]
+                                ]
+                            ]
+                        ],
+                        [
+                            "type" => "select",
+                            "input" => true,
+                            "key" => "completion_status",
+                            "label" => "Completion Status",
+                            "data" => [
+                                "values" => [
+                                    ["label" => "Ongoing", "value" => "ongoing"],
+                                    ["label" => "Completed", "value" => "completed"]
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+
+                [
+                    "collapsible" => false,
+                    "key" => "panel",
+                    "type" => "panel",
+                    "label" => "Panel",
+                    "title"  => "Project Highlights",
+                    "input" => false,
+                    "tableView" => false,
+                    "components" => [
+                        [
+                            "label" => "Highlight",
+                            "applyMaskOn" => "change",
+                            "tableView" => true,
+                            "validateWhenHidden" => false,
+                            "key" => "textField",
+                            "type" => "textfield",
+                            "input" => true
+                        ],
+                        [
+                            "label" => "Text Field",
+                            "applyMaskOn" => "change",
+                            "tableView" => true,
+                            "validateWhenHidden" => false,
+                            "key" => "textField1",
+                            "type" => "textfield",
+                            "input" => true
+                        ]
+                    ]
+                ],
+
+                [
+                    "type" => "panel",
+                    "key" => "gallery",
+                    "label" => "Gallery Images",
+                    "input" => false,
+                    "components" => [
+                        [
+                            "label" => "Gallery Images",
+                            "tableView" => false,
+                            "storage" => "base64",
+                            "webcam" => false,
+                            "image" => true,
+                            "multiple" => true,
+                            "fileTypes" => [
+                                [
+                                    "label" => "",
+                                    "value" => ""
+                                ]
+                            ],
+                            "validateWhenHidden" => false,
+                            "key" => "gallery_images",
+                            "type" => "file",
+                            "input" => true
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "panel",
+                    "key" => "seo_fields",
+                    "label" => "SEO Fields",
+                    "collapsible" => true,
+                    "input" => false,
+                    "components" => [
+                        [
+                            "type" => "textfield",
+                            "input" => true,
+                            "key" => "meta_title",
+                            "label" => "Meta Title"
+                        ],
+                        [
+                            "type" => "textarea",
+                            "input" => true,
+                            "key" => "meta_description",
+                            "label" => "Meta Description"
+                        ],
+                        [
+                            "type" => "textarea",
+                            "input" => true,
+                            "key" => "meta_keywords",
+                            "label" => "Meta Keywords",
+                            "description" => "Separate with comma"
+                        ],
+                        [
+                            "type" => "textfield",
+                            "input" => true,
+                            "key" => "og_title",
+                            "label" => "OG Title"
+                        ],
+                        [
+                            "type" => "textarea",
+                            "input" => true,
+                            "key" => "og_description",
+                            "label" => "OG Description"
+                        ],
+                        [
+                            "type" => "textfield",
+                            "input" => true,
+                            "key" => "twitter_title",
+                            "label" => "Twitter Title"
+                        ],
+                        [
+                            "type" => "textarea",
+                            "input" => true,
+                            "key" => "twitter_description",
+                            "label" => "Twitter Description"
+                        ]
+                    ]
+                ],
+                [
+                    "type" => "button",
+                    "label" => "Submit",
+                    "key" => "submit",
+                    "disableOnInvalid" => true,
+                    "input" => true,
+                    "tableView" => false,
+                    "action" => "submit"
+                ]
+            ]
+        ];
+
+        return view('form')->with([
+            'definition' => json_encode($formFields),
+            'data' => json_encode($existingData),
+            'title' => "Edit Project",
+            'submitRoute' => route('project.updateWithForm', $project->id)
+        ]);
+    }
+
+    public function storeWithForm(Request $request)
+    {
+        $submittedData = json_decode($request->submissionValues);
+
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required',
+        ]);
+
+        $slug = $submittedData->slug ? Str::slug($submittedData->slug, '-') : Str::slug($submittedData->name, '-');
+        $slug = Str::lower($slug);
+        $same_slug_count = Project::where('slug', 'LIKE', $slug . '%')->count();
+        $slug_suffix = $same_slug_count ? '-' . ($same_slug_count + 1) : '';
+        $slug .= $slug_suffix;
+
+        $project = new Project;
+        $project->name = $submittedData->name ?? NULL;
+        $project->subtitle = $submittedData->subtitle;
+        $project->slug = $slug;
+        $project->image = $submittedData->image;
+        $project->status = $submittedData->status;
+        $project->completion_status = $submittedData->completion_status;
+        $project->sort_order = $submittedData->sort_order;
+        $project->parent_id = $submittedData->parent_id ?? null;
+
+        $highlights = [];
+        for ($i = 1; $i <= 3; $i++) {
+            $title = 'title' . $i;
+            $subtitle = 'subtitle' . $i;
+            $highlights[] = [
+                'title' => $submittedData->$title ?? '',
+                'subtitle' => $submittedData->$subtitle ?? ''
+            ];
+        }
+
+        $project->highlights = json_encode($highlights);
+
+        // Handle gallery images if provided
+        $gallery = [];
+        if (isset($submittedData->gallery_images) && is_array($submittedData->gallery_images)) {
+            $count = 1;
+            foreach ($submittedData->gallery_images as $image) {
+                // You might need to implement image handling here
+                // For now, we'll just store the image URLs
+                $gallery[] = $image;
+                $count++;
+            }
+            $project->photos = implode(',', $gallery);
+        }
+
+        $project->save();
+
+        $project_translation = ProjectTranslation::firstOrNew(['lang' => $submittedData->lang, 'project_id' => $project->id]);
+        $project_translation->name = $submittedData->name;
+        $project_translation->description = $submittedData->description;
+        $project_translation->meta_title = $submittedData->meta_title;
+        $project_translation->meta_description = $submittedData->meta_description;
+        $project_translation->meta_keywords = $submittedData->meta_keywords;
+        $project_translation->og_title = $submittedData->og_title;
+        $project_translation->og_description = $submittedData->og_description;
+        $project_translation->twitter_title = $submittedData->twitter_title;
+        $project_translation->twitter_description = $submittedData->twitter_description;
+        $project_translation->save();
+
+        flash('Project ' . trans('messages.created_msg'))->success();
+        return redirect()->route('project.index');
+    }
+
+    public function updateWithForm(Request $request, $id)
+    {
+        $submittedData = json_decode($request->submissionValues);
+
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required',
+        ]);
+
+        $project = Project::findOrFail($id);
+
+        $slug = '';
+        if ($submittedData->slug != null) {
+            $slug = strtolower(Str::slug($submittedData->slug, '-'));
+            $same_slug_count = Project::where('slug', 'LIKE', $slug . '%')->where('id', '!=', $project->id)->count();
+            $slug_suffix = $same_slug_count > 0 ? '-' . ($same_slug_count + 1) : '';
+            $slug .= $slug_suffix;
+        }
+
+        if ($submittedData->lang == env("DEFAULT_LANGUAGE", 'en')) {
+            $project->name = $submittedData->name;
+            $project->subtitle = $submittedData->subtitle;
+            $project->status = $submittedData->status;
+            $project->completion_status = $submittedData->completion_status;
+            $project->slug = $slug;
+            $project->image = $submittedData->image;
+            $project->sort_order = $submittedData->sort_order;
+            $project->parent_id = $submittedData->parent_id ?? null;
+
+            $highlights = [];
+            for ($i = 1; $i <= 3; $i++) {
+                $title = 'title' . $i;
+                $subtitle = 'subtitle' . $i;
+                $highlights[] = [
+                    'title' => $submittedData->$title ?? '',
+                    'subtitle' => $submittedData->$subtitle ?? ''
+                ];
+            }
+            $project->highlights = json_encode($highlights);
+
+            // Handle gallery images if provided
+            $gallery = [];
+            if (isset($submittedData->gallery_images) && is_array($submittedData->gallery_images)) {
+                $count = 1;
+                foreach ($submittedData->gallery_images as $image) {
+                    // You might need to implement image handling here
+                    // For now, we'll just store the image URLs
+                    $gallery[] = $image;
+                    $count++;
+                }
+                $project->photos = implode(',', $gallery);
+            }
+
+            $project->save();
+        }
+
+        $project_translation = ProjectTranslation::firstOrNew(['lang' => $submittedData->lang, 'project_id' => $project->id]);
+        $project_translation->name = $submittedData->name;
+        $project_translation->description = $submittedData->description;
+        $project_translation->meta_title = $submittedData->meta_title;
+        $project_translation->meta_description = $submittedData->meta_description;
+        $project_translation->meta_keywords = $submittedData->meta_keywords;
+        $project_translation->og_title = $submittedData->og_title;
+        $project_translation->og_description = $submittedData->og_description;
+        $project_translation->twitter_title = $submittedData->twitter_title;
+        $project_translation->twitter_description = $submittedData->twitter_description;
+        $project_translation->save();
+
+        flash(trans('messages.project') . trans('messages.updated_msg'))->success();
+        return redirect()->route('project.index');
+    }
+
     public function store(Request $request)
     {
 

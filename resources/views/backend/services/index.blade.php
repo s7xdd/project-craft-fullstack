@@ -11,6 +11,9 @@
                 <a href="{{ route('service.create') }}" class="btn btn-primary">
                     <span>{{ trans('messages.add_new').' '.trans('messages.service') }}</span>
                 </a>
+                <a href="{{ route('service.createWithForm') }}" class="btn btn-secondary">
+                    <span>{{ trans('messages.add_new').' '.trans('messages.service') }} (Dynamic Form)</span>
+                </a>
             </div>
         </div>
     </div>
@@ -68,6 +71,12 @@
                                         <a class="btn btn-soft-primary btn-icon btn-circle"
                                             href="{{ route('service.edit', ['id' => $service->id, 'lang' => env('DEFAULT_LANGUAGE')]) }}"
                                             title="{{ trans('messages.edit') }}">
+                                            <i class="las la-edit"></i>
+                                        </a>
+                                        
+                                        <a class="btn btn-soft-info btn-icon btn-circle"
+                                            href="{{ route('service.editWithForm', ['id' => $service->id, 'lang' => env('DEFAULT_LANGUAGE')]) }}"
+                                            title="{{ trans('messages.edit') }} (Dynamic Form)">
                                             <i class="las la-edit"></i>
                                         </a>
 

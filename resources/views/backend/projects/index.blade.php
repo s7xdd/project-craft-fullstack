@@ -8,8 +8,9 @@
             </div>
 
             <div class="col-md-6 text-md-right">
-                <a href="{{ route('project.create') }}" class="btn btn-primary">
-                    <span>{{ trans('messages.add_new') . ' ' . trans('messages.project') }}</span>
+           
+                <a href="{{ route('project.create') }}" class="btn btn-secondary">
+                    <span>{{ trans('messages.add_new') . ' ' . trans('messages.project') }} (Dynamic Form)</span>
                 </a>
             </div>
         </div>
@@ -26,7 +27,7 @@
                         <form class="" id="sort_projects" action="" method="GET">
                             <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" id="search"
-                                    name="search"@isset($sort_search) value="{{ $sort_search }}" @endisset
+                                    name="search"@isset($sort_search) value="{{ $sort_search }}@endisset
                                     placeholder="{{ trans('messages.type_name_enter') }}">
                             </div>
                         </form>
@@ -71,7 +72,7 @@
                                             title="{{ trans('messages.edit') }}">
                                             <i class="las la-edit"></i>
                                         </a>
-
+                                        
                                         <a href="#" class="btn btn-soft-danger btn-icon btn-circle confirm-delete"
                                             data-href="{{ route('project.delete', $project->id) }}" title="Delete">
                                             <i class="las la-trash"></i>

@@ -77,7 +77,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/pages', [PageController::class, 'index'])->name('website.pages');
         
         Route::get('/custom-pages/edit/{id}', [PageController::class, 'edit'])->name('custom-pages.edit');
-        Route::post('/custom-pages/store', [PageController::class, 'updatePageData'])->name('custom-pages.updatePage');
+        Route::post('/custom-pages/store', [PageController::class, 'updateData'])->name('custom-pages.updatePage');
 
         Route::get('/custom-pages/destroy/{id}', [PageController::class, 'destroy'])->name('custom-pages.destroy');
         Route::post('/page/delete_image', [PageController::class, 'delete_image'])->name('page.delete_image');
@@ -116,17 +116,22 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/service/all', [ServiceController::class, 'index'])->name('service.index');
     Route::get('/service/create', [ServiceController::class, 'create'])->name('service.create');
+    Route::get('/service/create-with-form', [ServiceController::class, 'createWithForm'])->name('service.createWithForm');
     Route::post('/service/store/', [ServiceController::class, 'store'])->name('service.store');
+    Route::post('/service/store-with-form', [ServiceController::class, 'storeWithForm'])->name('service.storeWithForm');
     Route::get('/service/edit/{id}', [ServiceController::class, 'edit'])->name('service.edit');
+    Route::get('/service/edit-with-form/{id}', [ServiceController::class, 'editWithForm'])->name('service.editWithForm');
     Route::post('/service/update/{id}', [ServiceController::class, 'update'])->name('service.update');
+    Route::post('/service/update-with-form/{id}', [ServiceController::class, 'updateWithForm'])->name('service.updateWithForm');
     Route::post('/service/status', [ServiceController::class, 'updateStatus'])->name('service.status');
     Route::get('/service/delete/{id}', [ServiceController::class, 'destroy'])->name('service.delete');
 
     Route::get('/project/all', [ProjectController::class, 'index'])->name('project.index');
-    Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
-    Route::post('/project/store/', [ProjectController::class, 'store'])->name('project.store');
-    Route::get('/project/edit/{id}', [ProjectController::class, 'edit'])->name('project.edit');
+    Route::get('/project/create', [ProjectController::class, 'createWithForm'])->name('project.create');
+    Route::post('/project/store/', [ProjectController::class, 'storeWithForm'])->name('project.store');
+    Route::get('/project/edit-with-form/{id}', [ProjectController::class, 'editWithForm'])->name('project.edit');
     Route::post('/project/update/{id}', [ProjectController::class, 'update'])->name('project.update');
+    Route::post('/project/update-with-form/{id}', [ProjectController::class, 'updateWithForm'])->name('project.updateWithForm');
     Route::post('/project/status', [ProjectController::class, 'updateStatus'])->name('project.status');
     Route::get('/project/delete/{id}', [ProjectController::class, 'destroy'])->name('project.delete');
     Route::post('/project/delete_gallery', [ProjectController::class, 'delete_gallery'])->name('project.delete_gallery');

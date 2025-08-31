@@ -417,6 +417,7 @@ class PageController extends Controller
                                 [
                                     "type" => "textarea",
                                     "input" => true,
+                                    "wysiwyg" => true,
                                     "key" => "og_description",
                                     "label" => "OG Description"
                                 ],
@@ -480,33 +481,32 @@ class PageController extends Controller
             'lang' => $submittedData->lang ?? 'en',
             'page_id' => $page->id,
         ]);
-
-        $page_translation->title = $submittedData->title ?? '';
-        $page_translation->content = $submittedData->content ?? '';
-        $page_translation->sub_title = $submittedData->sub_title ?? '';
-        $page_translation->heading1 = $submittedData->heading1 ?? '';
-        $page_translation->content1 = $submittedData->content1 ?? '';
-        $page_translation->heading2 = $submittedData->heading2 ?? '';
-        $page_translation->content2 = $submittedData->content2 ?? '';
-        $page_translation->heading3 = $submittedData->heading3 ?? '';
-        $page_translation->content3 = $submittedData->content3 ?? '';
-        $page_translation->content4 = $submittedData->content4 ?? '';
-        $page_translation->content5 = $submittedData->content5 ?? '';
-        $page_translation->heading4 = $submittedData->heading4 ?? '';
-        $page_translation->heading5 = $submittedData->heading5 ?? '';
-        $page_translation->heading6 = $submittedData->heading6 ?? '';
-        $page_translation->heading7 = $submittedData->heading7 ?? '';
-        $page_translation->heading8 = $submittedData->heading8 ?? '';
-        $page_translation->heading9 = $submittedData->heading9 ?? '';
-        $page_translation->meta_title = $submittedData->meta_title ?? '';
-        $page_translation->meta_description = $submittedData->meta_description ?? '';
-        $page_translation->og_title = $submittedData->og_title ?? '';
-        $page_translation->og_description = $submittedData->og_description ?? '';
-        $page_translation->twitter_title = $submittedData->twitter_title ?? '';
-        $page_translation->twitter_description = $submittedData->twitter_description ?? '';
-        $page_translation->keywords = $submittedData->keywords ?? '';
-        $page_translation->image1 = json_encode($submittedData->image1) ?? '';
-        $page_translation->image2 = json_encode($submittedData->image2) ?? '';
+        $page_translation->title = isset($submittedData->title) ? $submittedData->title : '';
+        $page_translation->content = isset($submittedData->content) ? $submittedData->content : '';
+        $page_translation->sub_title = isset($submittedData->sub_title) ? $submittedData->sub_title : '';
+        $page_translation->heading1 = isset($submittedData->heading1) ? $submittedData->heading1 : '';
+        $page_translation->content1 = isset($submittedData->content1) ? $submittedData->content1 : '';
+        $page_translation->heading2 = isset($submittedData->heading2) ? $submittedData->heading2 : '';
+        $page_translation->content2 = isset($submittedData->content2) ? $submittedData->content2 : '';
+        $page_translation->heading3 = isset($submittedData->heading3) ? $submittedData->heading3 : '';
+        $page_translation->content3 = isset($submittedData->content3) ? $submittedData->content3 : '';
+        $page_translation->content4 = isset($submittedData->content4) ? $submittedData->content4 : '';
+        $page_translation->content5 = isset($submittedData->content5) ? $submittedData->content5 : '';
+        $page_translation->heading4 = isset($submittedData->heading4) ? $submittedData->heading4 : '';
+        $page_translation->heading5 = isset($submittedData->heading5) ? $submittedData->heading5 : '';
+        $page_translation->heading6 = isset($submittedData->heading6) ? $submittedData->heading6 : '';
+        $page_translation->heading7 = isset($submittedData->heading7) ? $submittedData->heading7 : '';
+        $page_translation->heading8 = isset($submittedData->heading8) ? $submittedData->heading8 : '';
+        $page_translation->heading9 = isset($submittedData->heading9) ? $submittedData->heading9 : '';
+        $page_translation->meta_title = isset($submittedData->meta_title) ? $submittedData->meta_title : '';
+        $page_translation->meta_description = isset($submittedData->meta_description) ? $submittedData->meta_description : '';
+        $page_translation->og_title = isset($submittedData->og_title) ? $submittedData->og_title : '';
+        $page_translation->og_description = isset($submittedData->og_description) ? $submittedData->og_description : '';
+        $page_translation->twitter_title = isset($submittedData->twitter_title) ? $submittedData->twitter_title : '';
+        $page_translation->twitter_description = isset($submittedData->twitter_description) ? $submittedData->twitter_description : '';
+        $page_translation->keywords = isset($submittedData->keywords) ? $submittedData->keywords : '';
+        $page_translation->image1 = isset($submittedData->image1) ? json_encode($submittedData->image1) : '';
+        $page_translation->image2 = isset($submittedData->image2) ? json_encode($submittedData->image2) : '';
 
         $page_translation->save();
 
