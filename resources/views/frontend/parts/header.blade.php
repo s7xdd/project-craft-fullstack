@@ -19,9 +19,9 @@
         <div class="large-container">
             <div class="outer-box" style="padding-top: 16px; padding-bottom: 16px">
                 <div class="search-inner">
-                    <form action="{{ '' }}" method="get">
+                    <form action="{{ route('products.index') }}" method="get">
                         <div class="form-group">
-                            <input type="search" name="search-field" placeholder="Search Products" required />
+                            <input type="search" name="search" placeholder="Search Products" value="{{ request()->get('search') }}" required />
                             <button type="submit">
                                 <i class="icon-4"></i>
                             </button>
@@ -55,13 +55,13 @@
                     <ul class="option-list">
                         <li class="shop-cart">
                             <button type="button">
-                                <a href="{{ route('orders.index') }}">
+                                <a href="{{ route('cart.items') }}">
                                     <i class="far fa-shopping-bag"></i><span>3</span>
                                 </a>
                             </button>
                         </li>
                         <li>
-                            <a href="{{ route('account') }}"><i class="far fa-user"></i></a>
+                            <a href="{{ route('orders.index') }}"><i class="far fa-user"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -72,9 +72,9 @@
         <div class="large-container">
             <div class="outer-box">
                 <div class="search-inner">
-                    <form action="{{ '' }}" method="get">
+                    <form action="{{ route('products.index') }}" method="get">
                         <div class="form-group">
-                            <input type="search" name="search-field" placeholder="Search Products" required />
+                            <input type="search" name="search" placeholder="Search Products" value="{{ request()->get('search') }}" required />
                             <button type="submit">
                                 <i class="icon-4"></i>
                             </button>
@@ -96,13 +96,13 @@
                     <ul class="option-list">
                         <li class="shop-cart">
                             <button type="button">
-                                <a href="{{ route('orders.index') }}">
+                                <a href="{{ route('cart.items') }}">
                                     <i class="far fa-shopping-bag"></i><span>3</span>
                                 </a>
                             </button>
                         </li>
                         <li>
-                            <a href="{{ route('account') }}"><i class="far fa-user"></i></a>
+                            <a href="{{ route('orders.index') }}"><i class="far fa-user"></i></a>
                         </li>
                     </ul>
                 </div>

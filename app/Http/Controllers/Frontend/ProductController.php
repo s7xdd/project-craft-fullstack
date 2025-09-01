@@ -145,7 +145,6 @@ class ProductController extends Controller
                     $q->where('tags', 'like', '%' . $sort_search . '%')->orWhere('name', 'like', '%' . $sort_search . '%');
                 });
             });
-            // SearchUtility::store($sort_search, $request);
         }
 
         if ($max_price != 0 && $min_price != 0) {
@@ -156,10 +155,10 @@ class ProductController extends Controller
 
         if ($request->has('offers')) {
             $today = Carbon::now()->timestamp;
-            $product_query->where('discount_start_date', '<=', $today) // Offer starts on or before today
+            $product_query->where('discount_start_date', '<=', $today) 
                 ->where('discount_end_date', '>=', $today);
         }
-        $products = $product_query->paginate(20)->appends($request->query());
+        $products = $product_query->paginate(5)->appends($request->query());
 
 
         $categories = Cache::rememberForever('categories', function () {

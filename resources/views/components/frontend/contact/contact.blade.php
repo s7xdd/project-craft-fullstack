@@ -1,1 +1,0 @@
-<x-frontend.contact.contact-section />
