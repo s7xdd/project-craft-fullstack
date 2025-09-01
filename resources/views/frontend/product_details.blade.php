@@ -205,18 +205,20 @@
             </x-frontend.product-detail.product-details>
         </x-slot>
 
-        <x-slot name="productDescription">
-            <x-frontend.product-detail.product-description>
-                <x-slot name="tabs">
-                    <x-frontend.product-detail.tab-button class="active-btn" tabId="tab-1" title="Description" />
-                </x-slot>
+        @if ($response['description'])
+            <x-slot name="productDescription">
+                <x-frontend.product-detail.product-description>
+                    <x-slot name="tabs">
+                        <x-frontend.product-detail.tab-button class="active-btn" tabId="tab-1" title="Description" />
+                    </x-slot>
 
-                <x-frontend.product-detail.description-content>
-                    {!! $response['description'] !!}
-                </x-frontend.product-detail.description-content>
+                    <x-frontend.product-detail.description-content>
+                        {!! $response['description'] !!}
+                    </x-frontend.product-detail.description-content>
 
-            </x-frontend.product-detail.product-description>
-        </x-slot>
+                </x-frontend.product-detail.product-description>
+            </x-slot>
+        @endif
 
         <x-frontend.product-detail.product-slider-item image="{{ $images[0] ?? 'assets/images/product-1.webp' }}"
             alt="Product Image">

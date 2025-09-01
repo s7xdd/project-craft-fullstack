@@ -21,7 +21,8 @@
                 <div class="search-inner">
                     <form action="{{ route('products.index') }}" method="get">
                         <div class="form-group">
-                            <input type="search" name="search" placeholder="Search Products" value="{{ request()->get('search') }}" required />
+                            <input type="search" name="search" placeholder="Search Products"
+                                value="{{ request()->get('search') }}" required />
                             <button type="submit">
                                 <i class="icon-4"></i>
                             </button>
@@ -35,7 +36,7 @@
                         <i class="icon-bar"></i>
                     </div>
                     <nav class="main-menu navbar-expand-md navbar-light clearfix">
-                        <div class="collapse navbar-collapse show clearfix" id="navbarSupportedContent">
+                        <div class="" id="navbarSupportedContent">
                             <ul class="navigation clearfix">
                                 <li class="logo-box">
                                     <figure class="navbar-logo">
@@ -74,7 +75,8 @@
                 <div class="search-inner">
                     <form action="{{ route('products.index') }}" method="get">
                         <div class="form-group">
-                            <input type="search" name="search" placeholder="Search Products" value="{{ request()->get('search') }}" required />
+                            <input type="search" name="search" placeholder="Search Products"
+                                value="{{ request()->get('search') }}" required />
                             <button type="submit">
                                 <i class="icon-4"></i>
                             </button>
