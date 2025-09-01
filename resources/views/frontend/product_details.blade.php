@@ -2,18 +2,20 @@
 
 @section('content')
     @php
-        $images = $response['photos'];
-        if ($response['thumbnail_image'] != null) {
+        $images = $response['photos'] ?? [];
+        if (isset($response['thumbnail_image']) && $response['thumbnail_image'] != null) {
             array_unshift($images, $response['thumbnail_image']);
         }
 
-        if ($response['variant_image'] != null) {
+        if (isset($response['variant_image']) && $response['variant_image'] != null) {
             array_push($images, $response['variant_image']);
         }
 
         $thumbanailSlider = $productImagesWeb = $productImagesMob = '';
 
-        $flattened_product_prices = call_user_func_array('array_merge', $response['varient_productsPrice']);
+        $flattened_product_prices =
+            isset($response['varient_productsPrice']) &&
+            call_user_func_array('array_merge', $response['varient_productsPrice']);
     @endphp
 
 
@@ -76,140 +78,146 @@
     <x-frontend.product-detail.product-gallery>
         <x-slot name="productDetails">
 
-            <x-frontend.product-detail.product-details category="Resins" title="Premium Clear Epoxy Resin Kit"
-                price="{{ isset($flattened_product_prices[$response['sku']]['discounted_price']) ? $flattened_product_prices[$response['sku']]['discounted_price'] : '' }}"
-                originalPrice="{{ isset($flattened_product_prices[$response['sku']]['original_price']) ? $flattened_product_prices[$response['sku']]['original_price'] : '' }}">
 
-                <x-slot name="description">
-                    {!! $response['short_description'] !!}
-                </x-slot>
+            @if (isset($response['id']) && isset($response['name']))
+                <x-frontend.product-detail.product-details category="{{ $response['category']['name'] }}"
+                    title="{{ isset($response['name']) ? $response['name'] : '' }}"
+                    price="{{ isset($flattened_product_prices[$response['sku']]['discounted_price']) ? $flattened_product_prices[$response['sku']]['discounted_price'] : '' }}"
+                    originalPrice="{{ isset($flattened_product_prices[$response['sku']]['original_price']) ? $flattened_product_prices[$response['sku']]['original_price'] : '' }}">
 
-                <x-slot name="details">
-                    @if ($response['brand'])
-                        <li><strong>Brand :</strong>{{ $response['brand'] }}</li>
-                    @endif
+                    <x-slot name="description">
+                        {!! $response['short_description'] !!}
+                    </x-slot>
 
-                    <li><strong>Product SKU :</strong>{{ $response['sku'] }}</li>
-
-                    <li><strong>Category :</strong>{{ $response['category']['name'] }}</li>
-
-                    <li>
-                        <strong>Availability :</strong>
-                        @if ($response['quantity'] > 0)
-                            <span class="product-stock">
-                                <img src="assets/images/icons/icon-13.png" alt="" /> In Stock
-                            </span>
-                        @else
-                            <span class="" style="color: red">
-                                Out of stock
-                            </span>
+                    <x-slot name="details">
+                        @if ($response['brand'])
+                            <li><strong>Brand :</strong>{{ $response['brand'] }}</li>
                         @endif
-                    </li>
 
-                </x-slot>
+                        <li><strong>Product SKU :</strong>{{ $response['sku'] }}</li>
 
-                <x-slot name="colorOptions">
-                    <div class="product-attributes product__options">
-                        @if ($response['product_type'] == 1 && !empty($response['product_attributes'][0]))
-                            @php
-                                $flattened_products = call_user_func_array(
-                                    'array_merge',
-                                    $response['varient_products'],
-                                );
-                            @endphp
-                            @foreach ($response['product_attributes'] as $akey => $attribute)
-                                <div class="attribute product__sizes-2 d-flex align-items-center">
-                                    <ul class="attribute-list product__available-sizes"
-                                        data-attribute-id="{{ $attribute['id'] }}">
-                                        @php
-                                            $selectedValue = '';
-                                        @endphp
-                                        @foreach ($attribute['values'] as $vkey => $value)
+                        <li><strong>Category :</strong>{{ $response['category']['name'] }}</li>
+
+                        <li>
+                            <strong>Availability :</strong>
+                            @if ($response['quantity'] > 0)
+                                <span class="product-stock">
+                                    <img src="assets/images/icons/icon-13.png" alt="" /> In Stock
+                                </span>
+                            @else
+                                <span class="" style="color: red">
+                                    Out of stock
+                                </span>
+                            @endif
+                        </li>
+
+                    </x-slot>
+
+                    <x-slot name="colorOptions">
+                        <div class="product-attributes product__options">
+                            @if ($response['product_type'] == 1 && !empty($response['product_attributes'][0]))
+                                @php
+                                    $flattened_products = call_user_func_array(
+                                        'array_merge',
+                                        $response['varient_products'],
+                                    );
+                                @endphp
+                                @foreach ($response['product_attributes'] as $akey => $attribute)
+                                    <div class="attribute product__sizes-2 d-flex align-items-center">
+                                        <ul class="attribute-list product__available-sizes"
+                                            data-attribute-id="{{ $attribute['id'] }}">
                                             @php
-                                                $activeClass = '';
-                                                $is_present =
-                                                    isset($flattened_products[$response['sku']]) &&
-                                                    in_array($value['id'], $flattened_products[$response['sku']]);
-
-                                                if (
-                                                    isset($response['current_attribute'][$attribute['id']]) &&
-                                                    $response['current_attribute'][$attribute['id']] == $value['id']
-                                                ) {
-                                                    $activeClass = 'active';
-                                                    $selectedValue = $value['name'];
-                                                }
-
+                                                $selectedValue = '';
                                             @endphp
-                                            <li class="attribute-item firstItem_{{ $akey }} firstvalue_{{ $vkey }} {{ isset($response['current_attribute'][$attribute['id']]) && $response['current_attribute'][$attribute['id']] == $value['id'] ? 'active' : '' }} @if (!$is_present && $akey != 0) disabled @endif"
-                                                data-value-id="{{ $value['id'] }}">
-                                                {{ $value['name'] }}
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                    <div class="product__current-size">{{ $attribute['name'] }}:
-                                        <span>{{ $selectedValue }}</span>
+                                            @foreach ($attribute['values'] as $vkey => $value)
+                                                @php
+                                                    $activeClass = '';
+                                                    $is_present =
+                                                        isset($flattened_products[$response['sku']]) &&
+                                                        in_array($value['id'], $flattened_products[$response['sku']]);
+
+                                                    if (
+                                                        isset($response['current_attribute'][$attribute['id']]) &&
+                                                        $response['current_attribute'][$attribute['id']] == $value['id']
+                                                    ) {
+                                                        $activeClass = 'active';
+                                                        $selectedValue = $value['name'];
+                                                    }
+
+                                                @endphp
+                                                <li class="attribute-item firstItem_{{ $akey }} firstvalue_{{ $vkey }} {{ isset($response['current_attribute'][$attribute['id']]) && $response['current_attribute'][$attribute['id']] == $value['id'] ? 'active' : '' }} @if (!$is_present && $akey != 0) disabled @endif"
+                                                    data-value-id="{{ $value['id'] }}">
+                                                    {{ $value['name'] }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                        <div class="product__current-size">{{ $attribute['name'] }}:
+                                            <span>{{ $selectedValue }}</span>
+                                        </div>
                                     </div>
+                                @endforeach
+                            @endif
+                        </div>
+                    </x-slot>
+
+                    <x-slot name="cartOptions">
+                        <div class="product__action js-product-action" style="margin-bottom: 20px">
+                            <div class="product__quantity-and-add-to-cart d-flex">
+                                <div class="product__quantity">
+                                    <div class="product-quantity__minus js-quantity-down"><a href="#"><i
+                                                class="lnil lnil-minus"></i></a></div>
+                                    <input type="text" value="1" name="product_quantity" id="product_quantity"
+                                        class="product-quantity__input js-quantity-field">
+                                    <div class="product-quantity__plus js-quantity-up"><a href="#"><i
+                                                class="lnil lnil-plus"></i></a></div>
                                 </div>
-                            @endforeach
-                        @endif
-                    </div>
-                </x-slot>
+                                <div class="product__add-to-cart">
+                                    @if ($response['quantity'] > 0)
+                                        <button class="eighth-button add-to-cart-btn"
+                                            data-product-slug="{{ $response['slug'] }}"
+                                            data-product-sku="{{ $response['sku'] }}">
+                                            {{ trans('messages.add_to_cart') }}
+                                        </button>
+                                    @else
+                                        <span class="status__value ">{{ trans('messages.out_of_stock') }}</span>
+                                    @endif
 
-                <x-slot name="cartOptions">
-                    <div class="product__action js-product-action" style="margin-bottom: 20px">
-                        <div class="product__quantity-and-add-to-cart d-flex">
-                            <div class="product__quantity">
-                                <div class="product-quantity__minus js-quantity-down"><a href="#"><i
-                                            class="lnil lnil-minus"></i></a></div>
-                                <input type="text" value="1" name="product_quantity" id="product_quantity"
-                                    class="product-quantity__input js-quantity-field">
-                                <div class="product-quantity__plus js-quantity-up"><a href="#"><i
-                                            class="lnil lnil-plus"></i></a></div>
-                            </div>
-                            <div class="product__add-to-cart">
-                                @if ($response['quantity'] > 0)
-                                    <button class="eighth-button add-to-cart-btn"
-                                        data-product-slug="{{ $response['slug'] }}"
-                                        data-product-sku="{{ $response['sku'] }}">
-                                        {{ trans('messages.add_to_cart') }}
-                                    </button>
-                                @else
-                                    <span class="status__value ">{{ trans('messages.out_of_stock') }}</span>
-                                @endif
-
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </x-slot>
+                    </x-slot>
 
-                @if ($response['tags'])
-                    <x-slot name="tags">
-                        <li>
-                            <strong>Tag :</strong>
-                            @foreach ($response['tags'] as $tag)
-                                <a href="">{{ $tag }}</a>,
-                            @endforeach
+                    @if ($response['tags'])
+                        <x-slot name="tags">
+                            <li>
+                                <strong>Tag :</strong>
+                                @foreach ($response['tags'] as $tag)
+                                    <a href="">{{ $tag }}</a>,
+                                @endforeach
+                            </li>
+                        </x-slot>
+                    @endif
+
+                    <x-slot name="socialLinks">
+                        <li class="social-links">
+                            <strong>Share :</strong>
+                            <a href="shop-details.html"><i class="icon-14"></i></a>
+                            <a href="shop-details.html"><i class="icon-15"></i></a>
+                            <a href="shop-details.html"><i class="icon-16"></i></a>
                         </li>
                     </x-slot>
-                @endif
 
-                <x-slot name="socialLinks">
-                    <li class="social-links">
-                        <strong>Share :</strong>
-                        <a href="shop-details.html"><i class="icon-14"></i></a>
-                        <a href="shop-details.html"><i class="icon-15"></i></a>
-                        <a href="shop-details.html"><i class="icon-16"></i></a>
-                    </li>
-                </x-slot>
+                </x-frontend.product-detail.product-details>
+            @endif
 
-            </x-frontend.product-detail.product-details>
         </x-slot>
 
-        @if ($response['description'])
+        @if (isset($response['description']))
             <x-slot name="productDescription">
                 <x-frontend.product-detail.product-description>
                     <x-slot name="tabs">
-                        <x-frontend.product-detail.tab-button class="active-btn text-black" tabId="tab-1" title="Description" />
+                        <x-frontend.product-detail.tab-button class="active-btn text-black" tabId="tab-1"
+                            title="Description" />
                     </x-slot>
 
                     <x-frontend.product-detail.description-content>

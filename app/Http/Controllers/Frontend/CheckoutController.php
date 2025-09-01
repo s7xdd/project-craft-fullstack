@@ -168,18 +168,14 @@ class CheckoutController
 
     public function placeOrder(Request $request){
 
-        // echo '<pre>';
-        // print_r($request->all());
-        
-        // die;
 
         $validatedData = $request->validate([
             'billing_name' => 'required|string|max:255',
             'billing_address' => 'required|string|max:255',
             'billing_city' => 'required|string|max:255',
             'billing_zipcode' => 'required|string|max:10',
-            'billing_phone' => 'required|string|max:15',  // Add phone validation
-            'billing_email' => 'required|email|max:255', // Add email validation
+            'billing_phone' => 'required|string|max:15',  
+            'billing_email' => 'required|email|max:255',
             'shipping_name' => 'nullable|string|max:255',
             'shipping_address' => 'nullable|string|max:255',
             'shipping_city' => 'nullable|string|max:255',
@@ -197,7 +193,6 @@ class CheckoutController
             'billing_email.max' => 'The email address must not exceed 255 characters.',
         ]);
 
-        // $address_id = $request->address_id ?? null;
         $billing_shipping_same = $request->same_as_billing ?? null;
 
         $shipping_address = [];

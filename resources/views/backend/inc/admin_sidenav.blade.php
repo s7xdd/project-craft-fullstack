@@ -22,11 +22,13 @@
                         <span class="aiz-side-nav-text">{{ trans('messages.dashboard') }}</span>
                     </a>
                 </li>
-                <!-- @if (Auth::user()->user_type == 'admin') -->
-                <!-- @endif -->
+                <!-- @if (Auth::user()->user_type == 'admin')
+-->
+                <!--
+@endif -->
 
                 <!-- Product -->
-                {{-- @canany(['manage_products', 'manage_categories', 'manage_brands', 'manage_occasions',
+                @canany(['manage_products', 'manage_categories', 'manage_brands', 'manage_occasions',
                     'manage_attributes', 'product_reviews'])
                     <li class="aiz-side-nav-item">
                         <a href="#" class="aiz-side-nav-link">
@@ -177,7 +179,7 @@
                             </a>
                         </li>
                     </ul>
-                </li> --}}
+                </li>
 
                 {{-- <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
@@ -192,7 +194,7 @@
                             </a>
                         </li>
                     </ul>
-                </li> --}}
+                </li>
 
                 {{-- <li class="aiz-side-nav-item">
                     <a href="{{ route('enquiries.contact') }}"
@@ -231,81 +233,80 @@
                         </li>
                     @endcanany --}}
 
-                    @canany(['website_setup'])
-                        <li class="aiz-side-nav-item">
-                            <a href="#"
-                                class="aiz-side-nav-link {{ areActiveRoutes(['website.footer', 'website.header', 'banners.*']) }}">
-                                <i class="las la-desktop aiz-side-nav-icon"></i>
-                                <span class="aiz-side-nav-text">Website Setup</span>
-                                <span class="aiz-side-nav-arrow"></span>
-                            </a>
-                            <ul class="aiz-side-nav-list level-2">
+                @canany(['website_setup'])
+                    <li class="aiz-side-nav-item">
+                        <a href="#"
+                            class="aiz-side-nav-link {{ areActiveRoutes(['website.footer', 'website.header', 'banners.*']) }}">
+                            <i class="las la-desktop aiz-side-nav-icon"></i>
+                            <span class="aiz-side-nav-text">Website Setup</span>
+                            <span class="aiz-side-nav-arrow"></span>
+                        </a>
+                        <ul class="aiz-side-nav-list level-2">
 
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('form-builder.index') }}" class="aiz-side-nav-link">
-                                        <span class="aiz-side-nav-text">Form Builder</span>
-                                    </a>
-                                </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('form-builder.index') }}" class="aiz-side-nav-link">
+                                    <span class="aiz-side-nav-text">Form Builder</span>
+                                </a>
+                            </li>
 
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('website.header') }}" class="aiz-side-nav-link">
-                                        <span class="aiz-side-nav-text">Header</span>
-                                    </a>
-                                </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('website.header') }}" class="aiz-side-nav-link">
+                                    <span class="aiz-side-nav-text">Header</span>
+                                </a>
+                            </li>
 
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('website.menu.builder') }}" class="aiz-side-nav-link">
-                                        <span class="aiz-side-nav-text">Menus</span>
-                                    </a>
-                                </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('website.menu.builder') }}" class="aiz-side-nav-link">
+                                    <span class="aiz-side-nav-text">Menus</span>
+                                </a>
+                            </li>
 
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('website.footer', ['lang' => App::getLocale()]) }}"
-                                        class="aiz-side-nav-link {{ areActiveRoutes(['website.footer']) }}">
-                                        <span class="aiz-side-nav-text">Footer</span>
-                                    </a>
-                                </li>
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('website.pages') }}"
-                                        class="aiz-side-nav-link {{ areActiveRoutes(['website.pages', 'custom-pages.create', 'custom-pages.edit']) }}">
-                                        <span class="aiz-side-nav-text">Pages</span>
-                                    </a>
-                                </li>
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('website.appearance') }}" class="aiz-side-nav-link">
-                                        <span class="aiz-side-nav-text">Appearance</span>
-                                    </a>
-                                </li>
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('home-slider.index') }}"
-                                        class="aiz-side-nav-link {{ areActiveRoutes(['home-slider.index', 'home-slider.create', 'home-slider.edit']) }}">
-                                        <span class="aiz-side-nav-text">Home Page Sliders</span>
-                                    </a>
-                                </li>
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('testimonials.index') }}" class="aiz-side-nav-link">
-                                        <span class="aiz-side-nav-text">Testimonials</span>
-                                    </a>
-                                </li>
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('banners.index') }}"
-                                        class="aiz-side-nav-link {{ areActiveRoutes(['banners.index', 'banners.create', 'banners.edit']) }}">
-                                        <span class="aiz-side-nav-text">Banners</span>
-                                    </a>
-                                </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('website.footer', ['lang' => App::getLocale()]) }}"
+                                    class="aiz-side-nav-link {{ areActiveRoutes(['website.footer']) }}">
+                                    <span class="aiz-side-nav-text">Footer</span>
+                                </a>
+                            </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('website.pages') }}"
+                                    class="aiz-side-nav-link {{ areActiveRoutes(['website.pages', 'custom-pages.create', 'custom-pages.edit']) }}">
+                                    <span class="aiz-side-nav-text">Pages</span>
+                                </a>
+                            </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('website.appearance') }}" class="aiz-side-nav-link">
+                                    <span class="aiz-side-nav-text">Appearance</span>
+                                </a>
+                            </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('home-slider.index') }}"
+                                    class="aiz-side-nav-link {{ areActiveRoutes(['home-slider.index', 'home-slider.create', 'home-slider.edit']) }}">
+                                    <span class="aiz-side-nav-text">Home Page Sliders</span>
+                                </a>
+                            </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('testimonials.index') }}" class="aiz-side-nav-link">
+                                    <span class="aiz-side-nav-text">Testimonials</span>
+                                </a>
+                            </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('banners.index') }}"
+                                    class="aiz-side-nav-link {{ areActiveRoutes(['banners.index', 'banners.create', 'banners.edit']) }}">
+                                    <span class="aiz-side-nav-text">Banners</span>
+                                </a>
+                            </li>
 
-                                <li class="aiz-side-nav-item">
-                                    <a href="{{ route('partners.index') }}"
-                                        class="aiz-side-nav-link {{ areActiveRoutes(['partners.index', 'partners.create', 'partners.edit']) }}">
-                                        <span class="aiz-side-nav-text">Partners</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                            <li class="aiz-side-nav-item">
+                                <a href="{{ route('partners.index') }}"
+                                    class="aiz-side-nav-link {{ areActiveRoutes(['partners.index', 'partners.create', 'partners.edit']) }}">
+                                    <span class="aiz-side-nav-text">Partners</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endcanany
 
-                    @endcanany
-
-                    {{-- @canany(['manage_blogs'])
+                {{-- @canany(['manage_blogs'])
                         <li class="aiz-side-nav-item">
                             <a href="#" class="aiz-side-nav-link">
                                 <i class="las la-newspaper aiz-side-nav-icon"></i>
@@ -459,8 +460,8 @@
                     </li> --}}
 
 
-                </ul><!-- .aiz-side-nav -->
-            </div><!-- .aiz-side-nav-wrap -->
-        </div><!-- .aiz-sidebar -->
-        <div class="aiz-sidebar-overlay"></div>
+            </ul><!-- .aiz-side-nav -->
+        </div><!-- .aiz-side-nav-wrap -->
     </div><!-- .aiz-sidebar -->
+    <div class="aiz-sidebar-overlay"></div>
+</div><!-- .aiz-sidebar -->
