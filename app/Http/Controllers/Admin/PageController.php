@@ -437,6 +437,24 @@ class PageController extends Controller
                                     "as" => "string",
                                     "uploadStorage" => "base64"
                                 ],
+                                [
+                                    "label" => "Image",
+                                    "tableView" => false,
+                                    "storage" => "base64",
+                                    "webcam" => false,
+                                    "image" => true,
+                                    "multiple" => false,
+                                    "fileTypes" => [
+                                        [
+                                            "label" => "",
+                                            "value" => ""
+                                        ]
+                                    ],
+                                    "validateWhenHidden" => false,
+                                    "key" => "image1",
+                                    "type" => "file",
+                                    "input" => true
+                                ],
                             ]
                         ],
                         [

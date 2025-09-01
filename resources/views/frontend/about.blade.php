@@ -8,11 +8,15 @@
             ? json_decode($page->getTranslation('heading3', $lang))
             : [];
 
+        $aboutUsImage = $page->getTranslation('image1', $lang)
+            ? json_decode($page->getTranslation('image1', $lang))
+            : [];
+
     @endphp
 
     <x-frontend.common.page-title title="About us" homeLink="/" />
 
-    <x-frontend.about.about-section image="assets/images/about_image.jpg" alt="About Us">
+    <x-frontend.about.about-section image="{{ $aboutUsImage[0]->url }}" alt="About Us">
 
         <x-slot name="content">
             {!! $page->getTranslation('content1', $lang) !!}
@@ -24,7 +28,7 @@
                 @foreach ($highlightsContent as $highlight)
                     <x-frontend.about.fun-fact-item count="{{ $highlight->title_1 }}" text="{{ $highlight->content_1 }}" />
                 @endforeach
-                
+
             </x-frontend.about.fun-facts>
         </x-slot>
 
