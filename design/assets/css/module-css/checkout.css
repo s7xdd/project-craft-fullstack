@@ -244,6 +244,8 @@
   cursor: pointer;
   font-weight: 600;
   margin-bottom: 0px;
+
+  .ul
 }
 
 .checkout-section .order-info .payment-option .check-box label:before{

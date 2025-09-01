@@ -187,6 +187,7 @@
 
 .checkout-section .order-info .cost-box{
   position: relative;
+  padding-left: 0px;
   display: block;
   padding-top: 22px;
   padding-bottom: 32px;

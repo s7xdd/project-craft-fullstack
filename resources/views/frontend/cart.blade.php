@@ -89,9 +89,10 @@
 
                 </x-slot>
 
-
                 <x-slot name="coupon">
-                    <x-frontend.cart.coupon :response="$response" />
+                    <div class="!my-10">
+                        <x-frontend.cart.coupon :response="$response" />
+                    </div>
                 </x-slot>
 
                 <x-slot name="checkoutButton">

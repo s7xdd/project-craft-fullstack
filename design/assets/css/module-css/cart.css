@@ -256,13 +256,13 @@
   top: 0px;
 }
 
-.cart-section .coupon-box .form-group{
+.coupon-box .form-group{
   position: relative;
   max-width: 330px;
   margin-bottom: 0px;
 }
 
-.cart-section .coupon-box .form-group input[type='text']{
+.coupon-box .form-group input[type='text']{
   position: relative;
   display: block;
   width: 100%;
@@ -275,11 +275,11 @@
   transition: all 500ms ease;
 }
 
-.cart-section .coupon-box .form-group input:focus{
+.coupon-box .form-group input:focus{
   
 }
 
-.cart-section .coupon-box .form-group button{
+.coupon-box .form-group button{
   position: absolute;
   display: inline-block;
   top: 5px;
