@@ -5,67 +5,78 @@
             <span class="text">Product</span>
             <span class="text">Total</span>
         </div>
-        <div class="order-product">
+        <div class="order-product space-y-6">
             @if (!empty($response['products']))
                 @foreach ($response['products'] as $prod)
-                    <div class="single-item">
-                        <div class="product-box">
-                            <figure class="image-box">
-                                <img src="{{ $prod['product']['image'] }}" alt="{{ $prod['product']['name'] }}">
+                    <div class="single-item flex items-center justify-between border-b pb-4">
+                        <div class="product-box flex items-start space-x-4">
+                            <figure class="image-box w-20 flex-shrink-0">
+                                <img src="{{ $prod['product']['image'] }}" alt="{{ $prod['product']['name'] }}"
+                                    class="w-full h-auto object-cover rounded" />
                             </figure>
-                            <h6><a
-                                    href="{{ route('product-detail', ['slug' => $prod['product']['slug'], 'sku' => $prod['product']['sku']]) }}">{{ $prod['product']['name'] }}</a>
-                            </h6>
+                            <div class="flex flex-col">
+                                <h6 class="text-lg font-semibold text-gray-900 mb-1">
+                                    <a href="{{ route('product-detail', ['slug' => $prod['product']['slug'], 'sku' => $prod['product']['sku']]) }}"
+                                        class="hover:underline text-blue-600">
+                                        {{ $prod['product']['name'] }}
+                                    </a>
+                                </h6>
 
-                            @php
-                                $attributeValue = '';
-                            @endphp
-                            @foreach ($prod['product']['attributes'] as $attribute)
                                 @php
-                                    $attributeValue .=
-                                        ' <strong>' . $attribute['name'] . ':</strong> ' . $attribute['value'];
+                                    $attributeValue = '';
+                                    foreach ($prod['product']['attributes'] as $attribute) {
+                                        $attributeValue .=
+                                            '<strong>' . $attribute['name'] . ':</strong> ' . $attribute['value'] . ' ';
+                                    }
                                 @endphp
-                            @endforeach
-                            @if ($attributeValue != '')
-                                <div class="cart-product__variant">{!! $attributeValue !!}</div>
-                            @endif
+
+                                @if ($attributeValue != '')
+                                    <div class="cart-product__variant text-sm text-gray-600">
+                                        {!! $attributeValue !!}
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                        <h4>{{ $prod['quantity'] }} x {{ env('DEFAULT_CURRENCY') }} {{ $prod['total'] }}</h4>
+
+                        <h4 class="!text-[16px] font-semibold text-gray-900">
+                            {{ $prod['quantity'] }} &times; {{ env('DEFAULT_CURRENCY') }} {{ $prod['main_price'] }}
+                        </h4>
                     </div>
                 @endforeach
             @endif
         </div>
 
+
         <ul class="cost-box">
             <li>
-                <h4><span>Subtotal</span></h4>
-                <h4>{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['sub_total'] }}</h4>
+                <h4><span class="!text-[16px]">Subtotal</span></h4>
+                <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['sub_total'] }}</h4>
             </li>
             <li>
-                <h4><span>Tax</span></h4>
-                <h4>{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['vat_amount'] }}</h4>
+                <h4><span class="!text-[16px]">Tax</span></h4>
+                <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['vat_amount'] }}</h4>
             </li>
             <li>
-                <h4><span>Discount</span></h4>
-                <h4>{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['discount'] }}</h4>
+                <h4><span class="!text-[16px]">Discount</span></h4>
+                <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['discount'] }}</h4>
             </li>
 
             @if ($response['summary']['coupon_applied'] == 1)
                 <li>
-                    <h4><span>Coupon Discount</span></h4>
-                    <h4>{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['coupon_discount'] }}</h4>
+                    <h4><span class="!text-[16px]">Coupon Discount</span></h4>
+                    <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['coupon_discount'] }}</h4>
                 </li>
             @endif
 
             <li>
-                <h4><span>Shipping</span></h4>
-                <h4>{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['shipping'] }}</h4>
+                <h4><span class="!text-[16px]">Shipping</span></h4>
+                <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['shipping'] }}</h4>
             </li>
         </ul>
 
         <div class="total-box">
-            <h4><span>Total</span></h4>
-            <h4>{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['total'] }}</h4>
+            <h4><span class="!text-[16px]">Total</span></h4>
+            <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['total'] }}</h4>
         </div>
 
         <div class="!mb-10">
@@ -90,10 +101,6 @@
                     </div>
                 </li>
             </ul>
-        </div>
-
-        <div class="privacy-policy-text">
-            {{ trans('messages.checkout_msg') }} <a href="#">{{ trans('messages.privacy_policy') }}</a>.
         </div>
 
         <div class="btn-box pt_30">

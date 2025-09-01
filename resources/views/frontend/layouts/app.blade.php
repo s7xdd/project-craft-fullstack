@@ -79,6 +79,9 @@
 
     <link href="{{ asset('assets/css/module-css/popular-product.css') }}" rel="stylesheet" />
 
+    <link href="{{ asset('assets/css/module-css/account.css') }}" rel="stylesheet" />
+
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 

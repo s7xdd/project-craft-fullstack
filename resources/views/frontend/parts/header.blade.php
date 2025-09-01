@@ -55,7 +55,7 @@
                     <ul class="option-list">
                         <li class="shop-cart">
                             <button type="button">
-                                <a href="{{ route('cart.items') }}">
+                                <a href="{{ route('orders.index') }}">
                                     <i class="far fa-shopping-bag"></i><span>3</span>
                                 </a>
                             </button>
@@ -96,7 +96,7 @@
                     <ul class="option-list">
                         <li class="shop-cart">
                             <button type="button">
-                                <a href="{{ route('cart.items') }}">
+                                <a href="{{ route('orders.index') }}">
                                     <i class="far fa-shopping-bag"></i><span>3</span>
                                 </a>
                             </button>

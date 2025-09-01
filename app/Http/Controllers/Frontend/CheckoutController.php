@@ -665,8 +665,7 @@ class CheckoutController
 
     public function success($order_id)
     {
-        $order = Order::findOrFail($order_id);
-        return view('frontend.order_success', compact('order'));
+        return view('frontend.order_success');
     }
 
     // Handle the failed page
