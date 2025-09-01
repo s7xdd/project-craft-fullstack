@@ -1,5 +1,5 @@
 <header class="main-header header-style-two">
-    <div class="header-top">
+    <div class="header-top" style="background-color: black;">
         <div class="large-container">
             <div class="top-inner">
                 <ul class="info-list">
@@ -55,7 +55,7 @@
                     <ul class="option-list">
                         <li class="shop-cart">
                             <button type="button">
-                                <a href="{{ '' }}">
+                                <a href="{{ route('cart.items') }}">
                                     <i class="far fa-shopping-bag"></i><span>3</span>
                                 </a>
                             </button>
@@ -96,7 +96,7 @@
                     <ul class="option-list">
                         <li class="shop-cart">
                             <button type="button">
-                                <a href="{{ '' }}">
+                                <a href="{{ route('cart.items') }}">
                                     <i class="far fa-shopping-bag"></i><span>3</span>
                                 </a>
                             </button>

@@ -277,7 +277,7 @@ class CartController extends Controller
         ];
 
         if ($new_guest_token_created) {
-            return response()->json($result)->cookie('guest_token', $guest_token, 60 * 24 * 30); 
+            return response()->json($result)->cookie('guest_token', $guest_token, 60 * 24 * 30);
         }
 
         return $result;
@@ -380,10 +380,11 @@ class CartController extends Controller
     {
         $lang = getActiveLanguage();
         $response = $this->index();
+        $collectionProducts = [];
         // echo '<pre>';
         // print_r($response);
         // die;
-        return view('frontend.cart', compact('response', 'lang'));
+        return view('frontend.cart', compact('response', 'collectionProducts', 'lang'));
     }
 
 

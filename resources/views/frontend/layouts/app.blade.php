@@ -16,64 +16,71 @@
     <link rel="stylesheet" href="{{ asset('assets/css/icon-font.min.css') }}">
     <link href="{{ asset('assets/css/custom-style.css') }}" rel="stylesheet" type="text/css" />
 
-    <!-- Formio CSS -->
     <link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">
-    <!-- Formio JS -->
     <script src="https://cdn.form.io/formiojs/formio.full.min.js"></script>
 
-    <link href="assets/css/font-awesome-all.css" rel="stylesheet" />
-    <link href="assets/css/flaticon.css" rel="stylesheet" />
-    <link href="assets/css/owl.css" rel="stylesheet" />
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="assets/css/jquery.fancybox.min.css" rel="stylesheet" />
-    <link href="assets/css/animate.css" rel="stylesheet" />
-    <link href="assets/css/nice-select.css" rel="stylesheet" />
-    <link href="assets/css/elpath.css" rel="stylesheet" />
-    <link href="assets/css/color.css" id="jssDefault" rel="stylesheet" />
-    <link href="assets/css/rtl.css" rel="stylesheet" />
-    <link href="assets/css/style.css" rel="stylesheet" />
-    <link href="assets/css/module-css/header.css" rel="stylesheet" />
-    <link href="assets/css/module-css/banner.css" rel="stylesheet" />
-    <link href="assets/css/module-css/shop.css" rel="stylesheet" />
-    <link href="assets/css/module-css/featured.css" rel="stylesheet" />
-    <link href="assets/css/module-css/category.css" rel="stylesheet" />
-    <link href="assets/css/module-css/ads.css" rel="stylesheet" />
-    <link href="assets/css/module-css/popular-product.css" rel="stylesheet" />
-    <link href="assets/css/module-css/highlights.css" rel="stylesheet" />
-    <link href="assets/css/module-css/collection.css" rel="stylesheet" />
-    <link href="assets/css/module-css/fluid.css" rel="stylesheet" />
-    <link href="assets/css/module-css/deals.css" rel="stylesheet" />
-    <link href="assets/css/module-css/news.css" rel="stylesheet" />
-    <link href="assets/css/module-css/subscribe.css" rel="stylesheet" />
-    <link href="assets/css/module-css/footer.css" rel="stylesheet" />
-    <link href="assets/css/responsive.css" rel="stylesheet" />
 
-    <link href="assets/css/module-css/page-title.css" rel="stylesheet" />
-    <link href="assets/css/module-css/shop-sidebar.css" rel="stylesheet" />
-    <link href="assets/css/module-css/shop-page.css" rel="stylesheet" />
 
-    <link href="assets/css/font-awesome-all.css" rel="stylesheet" />
-    <link href="assets/css/flaticon.css" rel="stylesheet" />
-    <link href="assets/css/owl.css" rel="stylesheet" />
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="assets/css/jquery.fancybox.min.css" rel="stylesheet" />
-    <link href="assets/css/animate.css" rel="stylesheet" />
-    <link href="assets/css/nice-select.css" rel="stylesheet" />
-    <link href="assets/css/elpath.css" rel="stylesheet" />
-    <link href="assets/css/jquery-ui.css" rel="stylesheet" />
-    <link href="assets/css/color.css" id="jssDefault" rel="stylesheet" />
-    <link href="assets/css/rtl.css" rel="stylesheet" />
-    <link href="assets/css/style.css" rel="stylesheet" />
-    <link href="assets/css/module-css/header.css" rel="stylesheet" />
-    <link href="assets/css/module-css/shop-details.css" rel="stylesheet" />
-    <link href="assets/css/module-css/shop.css" rel="stylesheet" />
+    <link href="{{ asset('assets/css/font-awesome-all.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/flaticon.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/owl.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/jquery.fancybox.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/nice-select.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/elpath.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/color.css" id="jssDefault') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/rtl.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/header.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/banner.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/shop.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/featured.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/category.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/ads.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/popular-product.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/highlights.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/collection.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/fluid.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/deals.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/news.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/subscribe.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/footer.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet" />
 
-    <link href="assets/css/module-css/featured.css" rel="stylesheet" />
-    <link href="assets/css/module-css/popular-product.css" rel="stylesheet" />
-    <link href="assets/css/module-css/subscribe.css" rel="stylesheet" />
-    <link href="assets/css/module-css/footer.css" rel="stylesheet" />
-    <link href="assets/css/responsive.css" rel="stylesheet" />
-    
+    <link href="{{ asset('assets/css/module-css/page-title.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/shop-sidebar.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/shop-page.css') }}" rel="stylesheet" />
+
+    <link href="{{ asset('assets/css/font-awesome-all.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/flaticon.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/owl.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/jquery.fancybox.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/nice-select.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/elpath.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/jquery-ui.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/color.css" id="jssDefault') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/rtl.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/header.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/shop-details.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/shop.css') }}" rel="stylesheet" />
+
+    <link href="{{ asset('assets/css/module-css/featured.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/popular-product.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/subscribe.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/footer.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet" />
+
+    <link href="{{ asset('assets/css/module-css/cart.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/module-css/checkout.css') }}" rel="stylesheet" />
+
+    <link href="{{ asset('assets/css/module-css/popular-product.css') }}" rel="stylesheet" />
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
@@ -102,9 +109,7 @@
             border: none;
             border-radius: 30px;
             padding: 20px 50px;
-            /* Increased padding */
             font-size: 24px;
-            /* Increased font size */
             font-weight: 600;
             cursor: pointer;
             display: inline-flex;
@@ -112,9 +117,7 @@
             box-shadow: 0 6px 14px rgba(37, 211, 102, 0.4);
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
             min-width: 250px;
-            /* Optional fixed minimum width */
             min-height: 70px;
-            /* Optional fixed minimum height */
         }
 
         .whatsapp-btn i {
@@ -126,6 +129,21 @@
         .whatsapp-btn:hover {
             background-color: #128c7e;
             box-shadow: 0 8px 20px rgba(18, 140, 126, 0.6);
+        }
+
+        .pink-button {
+            background-color: black;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pink-button:hover {
+            background-color: #c2185b;
         }
     </style>
 
@@ -416,45 +434,45 @@
 
     @yield('script')
 
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/owl.js"></script>
-    <script src="assets/js/wow.js"></script>
-    <script src="assets/js/validation.js"></script>
-    <script src="assets/js/jquery.fancybox.js"></script>
-    <script src="assets/js/appear.js"></script>
-    <script src="assets/js/isotope.js"></script>
-    <script src="assets/js/parallax-scroll.js"></script>
-    <script src="assets/js/jquery.nice-select.min.js"></script>
-    <script src="assets/js/scrolltop.min.js"></script>
-    <script src="assets/js/language.js"></script>
-    <script src="assets/js/countdown.js"></script>
-    <script src="assets/js/jquery-ui.js"></script>
-    <script src="assets/js/jquery.bootstrap-touchspin.js"></script>
+    <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/owl.js') }}"></script>
+    <script src="{{ asset('assets/js/wow.js') }}"></script>
+    <script src="{{ asset('assets/js/validation.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.fancybox.js') }}"></script>
+    <script src="{{ asset('assets/js/appear.js') }}"></script>
+    <script src="{{ asset('assets/js/isotope.js') }}"></script>
+    <script src="{{ asset('assets/js/parallax-scroll.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ asset('assets/js/scrolltop.min.js') }}"></script>
+    <script src="{{ asset('assets/js/language.js') }}"></script>
+    <script src="{{ asset('assets/js/countdown.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.bootstrap-touchspin.js') }}"></script>
 
-    <script src="assets/js/jquery.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/owl.js"></script>
-    <script src="assets/js/wow.js"></script>
-    <script src="assets/js/validation.js"></script>
-    <script src="assets/js/jquery.fancybox.js"></script>
-    <script src="assets/js/appear.js"></script>
-    <script src="assets/js/isotope.js"></script>
-    <script src="assets/js/parallax-scroll.js"></script>
-    <script src="assets/js/jquery.nice-select.min.js"></script>
-    <script src="assets/js/scrolltop.min.js"></script>
-    <script src="assets/js/language.js"></script>
-    <script src="assets/js/jquery-ui.js"></script>
-    <script src="assets/js/jquery.bootstrap-touchspin.js"></script>
-    <script src="assets/js/countdown.js"></script>
-    <script src="assets/js/bxslider.js"></script>
+    <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/owl.js') }}"></script>
+    <script src="{{ asset('assets/js/wow.js') }}"></script>
+    <script src="{{ asset('assets/js/validation.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.fancybox.js') }}"></script>
+    <script src="{{ asset('assets/js/appear.js') }}"></script>
+    <script src="{{ asset('assets/js/isotope.js') }}"></script>
+    <script src="{{ asset('assets/js/parallax-scroll.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ asset('assets/js/scrolltop.min.js') }}"></script>
+    <script src="{{ asset('assets/js/language.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-ui.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.bootstrap-touchspin.js') }}"></script>
+    <script src="{{ asset('assets/js/countdown.js') }}"></script>
+    <script src="{{ asset('assets/js/bxslider.js') }}"></script>
 
     <!-- main-js -->
-    <script src="assets/js/script.js"></script>
+    <script src="{{ asset('assets/js/script.js') }}"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/script.js"></script>
+    <script src="{{ asset('assets/js/script.js') }}"></script>
 
 </body>
 

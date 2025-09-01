@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <x-frontend.common.page-title title="Checkout" homeLink="index" />
+    <x-frontend.common.page-title title="Checkout" homeLink="/" />
 
     <x-frontend.checkout.checkout />
 

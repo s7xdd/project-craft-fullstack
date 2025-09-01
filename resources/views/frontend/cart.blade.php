@@ -1,9 +1,16 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <x-frontend.common.page-title 
-        title="Cart" 
-        homeLink="index.html" />
+    @php
+        $middleCollections = collect($collectionProducts)->filter(
+            fn($collection) => isset($collection['products']) &&
+                count($collection['products']) > 0 &&
+                isset($collection['page_reference']) &&
+                $collection['page_reference'] === 'middle',
+        );
+    @endphp
+
+    <x-frontend.common.page-title title="Cart" homeLink="index.html" />
 
     <x-frontend.cart.cart-section>
         <x-slot name="cartItems">
@@ -19,134 +26,109 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <x-frontend.cart.cart-item
-                            image="assets/images/shop/cart-1.png"
-                            alt="Colored Pigment Set"
-                            name="Colored Pigment Set"
-                            link="shop-details.html"
-                            price="INR 133"
-                            quantity="2"
-                            total="INR 266" />
-                        
-                        <x-frontend.cart.cart-item
-                            image="assets/images/shop/cart-2.png"
-                            alt="Colored Pigment Set"
-                            name="Colored Pigment Set"
-                            link="shop-details.html"
-                            price="INR 167.98"
-                            quantity="1"
-                            total="INR 167.98" />
-                        
-                        <x-frontend.cart.cart-item
-                            image="assets/images/shop/cart-3.png"
-                            alt="Colored Pigment Set"
-                            name="Colored Pigment Set"
-                            link="shop-details.html"
-                            price="INR 143"
-                            quantity="1"
-                            total="INR 143" />
-                        
-                        <x-frontend.cart.cart-item
-                            image="assets/images/shop/cart-4.png"
-                            alt="Colored Pigment Set"
-                            name="Colored Pigment Set"
-                            link="shop-details.html"
-                            price="INR 150"
-                            quantity="1"
-                            total="INR 150" />
+
+                        @if (!empty($response['products']))
+                            @foreach ($response['products'] as $prod)
+                                <x-frontend.cart.cart-item :prod="$prod" />
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="7" style="margin-top: 30px" class="text-center">
+                                    {{ trans('messages.no_products_cart') }}</td>
+                            </tr>
+                        @endif
+
+
                     </tbody>
                 </table>
             </div>
         </x-slot>
-        
+
         <x-slot name="cartTotals">
             <x-frontend.cart.cart-totals>
                 <x-slot name="slot">
-                    <x-frontend.cart.total-item 
-                        label="Subtotal" 
-                        value="INR 726.98" />
-                    <x-frontend.cart.total-item 
-                        label="Shipping" 
-                        value="INR 20.00" />
-                    <x-frontend.cart.total-box 
-                        label="Total" 
-                        value="INR 746.98" />
+                    <div class="order-summary__subtotal">
+                        <div class="summary-subtotal__title">{{ trans('messages.subtotal') }}</div>
+                        <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
+                            {{ $response['summary']['sub_total'] }}</div>
+                    </div>
+
+                    <div class="order-summary__subtotal">
+                        <div class="summary-subtotal__title">{{ trans('messages.tax') }}</div>
+                        <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
+                            {{ $response['summary']['vat_amount'] }}</div>
+                    </div>
+
+                    <div class="order-summary__subtotal">
+                        <div class="summary-subtotal__title">{{ trans('messages.discount') }}</div>
+                        <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
+                            {{ $response['summary']['discount'] }}</div>
+                    </div>
+
+                    @if ($response['summary']['coupon_applied'] == 1)
+                        <div class="order-summary__subtotal">
+                            <div class="summary-subtotal__title">
+                                {{ trans('messages.coupon') . ' ' . trans('messages.discount') }}</div>
+                            <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
+                                {{ $response['summary']['coupon_discount'] }}</div>
+                        </div>
+                    @endif
+
+
+                    <div class="order-summary__subtotal">
+                        <div class="summary-subtotal__title">{{ trans('messages.shipping_charge') }}</div>
+                        <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
+                            {{ $response['summary']['shipping'] }}</div>
+                    </div>
+
+                    <div class="order-summary__total">
+                        <div class="summary-total__title">{{ trans('messages.total') }}</div>
+                        <div class="summary-total__price">{{ env('DEFAULT_CURRENCY') }}
+                            {{ $response['summary']['total'] }}</div>
+                    </div>
+
                 </x-slot>
-                
+
+
                 <x-slot name="coupon">
-                    <x-frontend.cart.coupon placeholder="Apply Coupon" />
+                    <x-frontend.cart.coupon :response="$response" />
                 </x-slot>
-                
+
                 <x-slot name="checkoutButton">
-                    <x-frontend.cart.checkout-button 
-                        link="checkout.html" 
-                        text="Proceed to Checkout" />
+                    <x-frontend.cart.checkout-button link="{{ route('checkout') }}" text="Proceed to Checkout" />
                 </x-slot>
+
             </x-frontend.cart.cart-totals>
         </x-slot>
     </x-frontend.cart.cart-section>
 
-    <x-frontend.common.product-section title="You May Also <span>Like</span>" class="centred pb_90">
-        <div class="inner-container clearfix">
-            <x-frontend.common.product-card
-                image="assets/images/product-2.webp"
-                alt="Avengers Action Figure figurine Thano"
-                category="Dress"
-                name="Avengers Action Figure figurine Thano"
-                originalPrice="₹899"
-                price="$07.99"
-                link="shop-details.html" />
-            
-            <x-frontend.common.product-card
-                image="assets/images/product-3.webp"
-                alt="Marvel Spider-Man Basic Superhero Action"
-                category="Sticker"
-                name="Marvel Spider-Man Basic Superhero Action"
-                originalPrice="₹199"
-                price="₹99"
-                link="shop-details.html" />
-            
-            <x-frontend.common.product-card
-                image="assets/images/product-2.webp"
-                alt="Zoom Buddies Racers iron man sticker"
-                category="Sticker"
-                name="Zoom Buddies Racers iron man sticker"
-                originalPrice="₹199"
-                price="₹99"
-                link="shop-details.html" />
-            
-            <x-frontend.common.product-card
-                image="assets/images/product-3.webp"
-                alt="Art Brush Collection"
-                category="Book"
-                name="Art Brush Collection"
-                originalPrice="₹699"
-                price="₹599"
-                link="shop-details.html" />
-            
-            <x-frontend.common.product-card
-                image="assets/images/product-2.webp"
-                alt="Cute Soft Long Cat Plush Toys Stuffed"
-                category="Dress"
-                name="Cute Soft Long Cat Plush Toys Stuffed"
-                originalPrice="₹1299"
-                price="₹1199"
-                link="shop-details.html" />
-            
-            <x-frontend.common.product-card
-                image="assets/images/product-2.webp"
-                alt="Sunny Ride on & Car for Kids with Music"
-                category="Toy"
-                name="Sunny Ride on & Car for Kids with Music"
-                originalPrice="₹1299"
-                price="₹1199"
-                link="shop-details.html" />
-        </div>
-    </x-frontend.common.product-section>
 
-    <x-frontend.common.whatsapp-subscribe
-        title="Order With WhatsApp"
-        buttonText="Order Now!"
-        backgroundImage="assets/images/whatsapp-bg.jpg"
-        whatsappLink="https://wa.me/1234567890?text=Hello,%20I%20would%20like%20to%20place%20an%20order!" />
+
+    @if ($middleCollections->isNotEmpty())
+        @foreach ($middleCollections as $collectionKey => $collection)
+            <x-frontend.common.product-section title="{{ $collection['collectiontitle'] }}">
+                <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
+                    <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
+                        @foreach ($collection['products'] as $product)
+                            @php
+                                $priceData = getProductOfferPrice($product);
+                                $productUrl = route('product-detail', [
+                                    'slug' => $product->slug,
+                                    'sku' => $product->sku,
+                                ]);
+                            @endphp
+                            <x-frontend.common.product-card image="{{ get_product_image($product->thumbnail_img) }}"
+                                alt="{{ $product->getTranslation('name', $lang) }}"
+                                category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
+                                name="{{ $product->getTranslation('name', $lang) }}"
+                                originalPrice=" {{ $priceData['original_price'] }}"
+                                price=" {{ $priceData['discounted_price'] }}" link="{!! $productUrl !!}" />
+                        @endforeach
+                    </div>
+                </div>
+            </x-frontend.common.product-section>
+        @endforeach
+    @endif
+
+    <x-frontend.common.whatsapp-subscribe />
 @endsection

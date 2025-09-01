@@ -17592,8 +17592,8 @@ ol.breadcrumb {
 /* Discount form */
 .shopping-cart__discount {
   margin: 40px 0px 0px 0px;
-  border: 1px solid #d0d0d0;
-  padding: 24px 29px 29px 29px;
+  border: 0px solid #d0d0d0;
+  padding: 10pxpx 10px 10px 10px;
 }
 
 @media (max-width: 991px) {
