@@ -32,7 +32,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{trans('messages.parent') .' '. trans('messages.category')}}</label>
                         <div class="col-md-9">
                             <select class="select2 form-control aiz-selectpicker" name="parent_id" data-toggle="select2" data-placeholder="Choose ..." data-live-search="true">
@@ -46,7 +46,7 @@
                             </select>
                         </div>
                     </div>
-                    
+                     --}}
                     
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label" for="signinSrEmail">{{trans('messages.icon')}} <small>({{ trans('messages.32x32') }})</small></label>

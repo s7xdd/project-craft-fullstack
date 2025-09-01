@@ -14090,7 +14090,7 @@ ol.breadcrumb {
 }
 
 .top-filter__widget {
-  border-radius: 10px;
+  border-radius: 5px;
   border: 1px solid #D9D9D9;
   background: #FFF;
   padding: 20px;
@@ -35592,5 +35592,7 @@ body.home-minimal .header--type-7 {
   }
 }
 
-
+a {
+  text-decoration: none !important;
+}
 /* end :: 15-11-2024 */

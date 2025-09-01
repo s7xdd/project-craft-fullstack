@@ -1,5 +1,5 @@
 <div class="product-card">
-    <a href="{{ $link ?? 'shop-details.html' }}" class="product-image-link">
+    <a href="{!! $link !!}" class="product-image-link">
         <img class="product-image" src="{{ $image }}" alt="{{ $alt }}" />
         @if ($currentPrice < $originalPrice)
             @php
@@ -10,7 +10,7 @@
         @endif
     </a>
     <div class="product-info">
-        <a href="#">
+        <a href="{!! $link !!}">
             <h5 class="product-title">
                 {{ $title }}
             </h5>
