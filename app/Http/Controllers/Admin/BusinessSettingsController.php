@@ -15,8 +15,6 @@ class BusinessSettingsController extends Controller
 {
     public function general_setting(Request $request)
     {
-        // CoreComponentRepository::instantiateShopRepository();
-        //CoreComponentRepository::initializeCache();
     	return view('backend.setup_configurations.general_settings');
     }
 

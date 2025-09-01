@@ -8,13 +8,15 @@
         <div class="lower-content">
             <span class="text">{{ $category }}</span>
             <h4>
-                <a href="{!! $link !!}">{{ $name }}</a>
+                <a class="text-[16px]" href="{!! $link !!}">{{ $name }}</a>
             </h4>
             <div class="price">
                 @if ($originalPrice)
-                    <del>{{ env('DEFAULT_CURRENCY') . ' ' . $originalPrice }}</del>
+                    <del class="!text-[14px]">{{ env('DEFAULT_CURRENCY') . ' ' . $originalPrice }}</del>
                 @endif
-                {{ env('DEFAULT_CURRENCY') . ' ' . $price }}
+                <span class="text-[14px]">
+                    {{ env('DEFAULT_CURRENCY') . ' ' . $price }}
+                </span>
             </div>
         </div>
     </div>

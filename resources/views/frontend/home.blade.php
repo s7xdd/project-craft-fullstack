@@ -124,3 +124,11 @@
 
     <x-frontend.common.whatsapp-subscribe />
 @endsection
+
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var loaderText = document.querySelector('#page-loader .loader-text');
+        });
+    </script>
+@endsection

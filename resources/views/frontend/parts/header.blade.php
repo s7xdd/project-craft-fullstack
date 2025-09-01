@@ -40,7 +40,7 @@
                             <ul class="navigation clearfix">
                                 <li class="logo-box">
                                     <figure class="navbar-logo">
-                                        <a href="/"><img src="{{ asset('assets/images/Black-logo.png') }}"
+                                        <a href="/"><img src="{{ uploaded_asset(get_setting('site_icon')) }}"
                                                 alt="" /></a>
                                     </figure>
                                 </li>

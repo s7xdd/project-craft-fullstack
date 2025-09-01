@@ -5,7 +5,7 @@
                    <div class="col-lg-3 col-md-6 col-sm-12 footer-column">
                        <div class="tp-footer-widget logo-widget">
                            <figure class="footer-logo">
-                               <a href="/"><img src="{{ uploaded_asset(get_setting('site_icon')) }}"
+                               <a href="/"><img src="{{ uploaded_asset(get_setting('site_icon_light')) }}"
                                        alt="Site Logo" /></a>
                            </figure>
                            <div class="widget-content">

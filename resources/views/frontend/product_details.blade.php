@@ -209,7 +209,7 @@
             <x-slot name="productDescription">
                 <x-frontend.product-detail.product-description>
                     <x-slot name="tabs">
-                        <x-frontend.product-detail.tab-button class="active-btn" tabId="tab-1" title="Description" />
+                        <x-frontend.product-detail.tab-button class="active-btn text-black" tabId="tab-1" title="Description" />
                     </x-slot>
 
                     <x-frontend.product-detail.description-content>
