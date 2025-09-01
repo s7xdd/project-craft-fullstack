@@ -42,23 +42,13 @@ class HomeSliderController extends Controller
         $request->validate([
             'name' => 'required',
             'banner' => 'required',
-            'mobile_banner' => 'required',
-            'link_type' => 'required',
             'status' => 'required',
-            'link' => 'nullable|required_if:link_type,external',
-            'link_ref_id' => 'nullable|required_if:link_type,product,category',
-        ],[
-            'link.required_if' => "Please enter a valid link",
-            'link_ref_id.required_if' => "Please enter an option",
         ]);
 
         $slider = HomeSlider::create([
             'name' => $request->name,
             'image' => $request->banner,
             'mobile_image' => $request->mobile_banner,
-            'link_type' => $request->link_type,
-            'link_ref' => $request->link_type,
-            'link_ref_id' => $request->link_ref_id,
             'link' => $request->link,
             'sort_order' => $request->sort_order,
             'status' => $request->status,
@@ -66,7 +56,7 @@ class HomeSliderController extends Controller
 
         Cache::forget('homeSlider');
 
-        flash(trans('messages.slider').' '.trans('messages.created_msg'))->success();
+        flash(trans('messages.slider') . ' ' . trans('messages.created_msg'))->success();
         return redirect()->route('home-slider.index');
     }
 
@@ -101,27 +91,18 @@ class HomeSliderController extends Controller
      */
     public function update(Request $request, HomeSlider $homeSlider)
     {
-        $request->validate([
-            'name' => 'required',
-            'banner' => 'required',
-            'mobile_banner' => 'required',
-            'link_type' => 'required',
-            'status' => 'required',
-            'link' => 'nullable|required_if:link_type,external',
-            'link_ref_id' => 'nullable|required_if:link_type,product,category',
-        ],[
-            'link.required_if' => "Please enter a valid link",
-            'link_ref_id.required_if' => "Please enter an option",
-        ]);
+        $request->validate(
+            [
+                'name' => 'required',
+                'banner' => 'required',
+                'status' => 'required',
+            ]
+        );
 
 
         $homeSlider->update([
             'name' => $request->name,
             'image' => $request->banner,
-            'mobile_image' => $request->mobile_banner,
-            'link_type' => $request->link_type,
-            'link_ref' => $request->link_type,
-            'link_ref_id' => $request->link_ref_id,
             'link' => $request->link,
             'sort_order' => $request->sort_order,
             'status' => $request->status,
@@ -129,7 +110,7 @@ class HomeSliderController extends Controller
 
         Cache::forget('homeSlider');
 
-        flash(trans('messages.slider').' '.trans('messages.updated_msg'))->success();
+        flash(trans('messages.slider') . ' ' . trans('messages.updated_msg'))->success();
         return redirect()->route('home-slider.index');
     }
 
@@ -143,7 +124,7 @@ class HomeSliderController extends Controller
     {
         HomeSlider::destroy($id);
         Cache::forget('homeSlider');
-        flash(trans('messages.slider').' '.trans('messages.deleted_msg'))->success();
+        flash(trans('messages.slider') . ' ' . trans('messages.deleted_msg'))->success();
         return redirect()->route('home-slider.index');
     }
 

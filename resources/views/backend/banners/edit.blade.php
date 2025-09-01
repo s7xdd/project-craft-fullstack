@@ -89,15 +89,6 @@
                     </div>
 
 
-                    <div id="banner_form" class="@if ($lang != 'en') d-none @endif">
-                    </div>
-                    @error('link')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-                    @error('link_ref_id')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                    @enderror
-
                     <div class="form-group row @if ($lang != 'en') d-none @endif">
                         <label class="col-md-3 col-form-label">Status</label>
                         <div class="col-md-9">

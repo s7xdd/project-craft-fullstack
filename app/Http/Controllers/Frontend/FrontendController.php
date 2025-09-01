@@ -124,12 +124,12 @@ class FrontendController extends Controller
         })->values();
 
 
-        $home_banners = BusinessSetting::whereIn('type', array('home_mid_section_banner', 'home_center_banner', 'home_mid_banner'))->get()->keyBy('type');
+        $home_banners = $page->getTranslation('heading5', $lang) ? json_decode($page->getTranslation('heading5', $lang)) : [];
 
         $banners = [];
         if (!empty($home_banners)) {
             foreach ($home_banners as $key => $hb) {
-                $bannerIds = json_decode($hb->value);
+                $bannerIds = json_decode($hb->banner);
 
                 if (!empty($bannerIds) && is_array($bannerIds)) {
                     $bannerData = Banner::where('status', 1)->whereIn('id', $bannerIds)->get();

@@ -69,8 +69,6 @@
                             </div>
                         </div>
 
-                        <div id="banner_form">
-                        </div>
                         @error('link')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror

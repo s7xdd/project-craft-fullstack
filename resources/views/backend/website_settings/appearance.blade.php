@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="form-control file-amount">Choose File</div>
                                     <input type="hidden" name="types[]" value="site_icon_light">
-                                    <input type="hidden" name="site_icon" value="{{ get_setting('site_icon_light') }}"
+                                    <input type="hidden" name="site_icon_light" value="{{ get_setting('site_icon_light') }}"
                                         class="selected-files">
                                 </div>
                                 <div class="file-preview box"></div>

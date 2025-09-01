@@ -72,15 +72,6 @@
                             </div>
                         </div>
 
-                        <div id="banner_form">
-                        </div>
-                        @error('link')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-                        @error('link_ref_id')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
-
 
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label">Sort Order</label>

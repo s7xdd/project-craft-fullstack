@@ -137,37 +137,30 @@ class PageController extends Controller
         switch ($id) {
             case 'home':
                 $banners = Banner::where('status', 1)->get();
-                $current_banners = BusinessSetting::whereIn('type', array('home_banner', 'home_mid_section_banner', 'home_center_banner', 'home_mid_banner', 'home_large_banner'))->get()->keyBy('type');
-
 
                 $categories = Category::where('parent_id', 0)->where('is_active', 1)->with('childrenCategories')->get();
-
-                $products = Product::select('id', 'name')->where('published', 1)->get();
-                $brands = Brand::where('is_active', 1)->orderBy('name', 'asc')->get();
-
-                $productsOptions = [];
-                foreach ($products as $product) {
-                    $productOptions[] = ["label" => $product->name, "value" => $product->id];
-                }
 
                 $categoryOptions = [];
                 foreach ($categories as $category) {
                     $categoryOptions[] = ["label" => $category->name, "value" => $category->id];
                 }
 
+                $bannersOptionsArray = [];
+                foreach ($banners as $banner) {
+                    $bannersOptionsArray[] = ["label" => $banner->name, "value" => $banner->id];
+                }
+
                 $existingData = [
                     'page_id' => $page->id,
                     'lang' => $lang,
                     'discover_categories' => json_decode(get_setting('discover_categories'), true) ?: [],
-                    'home_mid_banner_1' => $current_banners['home_mid_banner'] ? json_decode($current_banners['home_mid_banner']->value)[0] : null,
-                    'home_mid_banner_2' => $current_banners['home_mid_banner'] ? json_decode($current_banners['home_mid_banner']->value)[1] : null,
                     'image1' => is_array(json_decode($page->getTranslation('image1', $lang))) ? json_decode($page->getTranslation('image1', $lang)) : [],
                     'image2' => is_array(json_decode($page->getTranslation('image2', $lang))) ? json_decode($page->getTranslation('image2', $lang)) : [],
                     'heading2' => $page->getTranslation('heading2', $lang) ?? "",
                     'heading3' => $page->getTranslation('heading3', $lang) ?? "",
                     'heading4' => $page->getTranslation('heading4', $lang) ?? "",
+                    'heading5' => $page->getTranslation('heading5', $lang) ? json_decode($page->getTranslation('heading5', $lang)) : "",
                     'new_arrival_products' => json_decode(get_setting('new_arrival_products'), true) ?: [],
-                    'heading4' => $page->getTranslation('heading4', $lang),
                     'meta_title' => $page->getTranslation('meta_title', $lang),
                     'meta_description' => $page->getTranslation('meta_description', $lang),
                     'meta_keywords' => $page->getTranslation('keywords', $lang),
@@ -283,6 +276,46 @@ class PageController extends Controller
                         ],
                         [
                             "type" => "panel",
+                            "key" => "mid_section_banners",
+                            "label" => "Mid Section Banners",
+                            "title" => "Mid Section Banners",
+                            "components" => [
+                                [
+                                    "type" => "datagrid",
+                                    "key" => "heading5",
+                                    "label" => "",
+                                    "input" => true,
+                                    "tableView" => true,
+                                    "validate" => [
+                                        "maxLength" => 3,
+                                        "minLength" => 3
+                                    ],
+                                    "validateOn" => "change",
+                                    "validateRequired" => false,
+                                    "addAnotherPosition" => "bottom",
+                                    "disableAddingRemovingRows" => true,
+                                    "defaultValue" => [],
+                                    "components" => [
+                                        [
+                                            "type" => "select",
+                                            "key" => "banner",
+                                            "label" => "Select Banner",
+                                            "data" => [
+                                                'values' => $bannersOptionsArray
+                                            ],
+                                            "dataSrc" => "values",
+                                            "validate" => [
+                                                "required" => false
+                                            ],
+                                            "input" => true,
+                                        ],
+                                    ]
+                                ],
+                            ]
+                        ],
+
+                        [
+                            "type" => "panel",
                             "key" => "panel",
                             "label" => "Whatsapp Section",
                             "title" => "Whatsapp Section",
@@ -339,7 +372,7 @@ class PageController extends Controller
                     'lang' => $lang,
                     'heading1' => $page->getTranslation('heading1', $lang) ?? "",
                     'heading2' => $page->getTranslation('heading2', $lang) ?? "",
-                    'heading3' => $page->getTranslation('heading3', $lang) ?? "",
+                    '4' => $page->getTranslation('4', $lang) ?? "",
                     'heading4' => $page->getTranslation('heading4', $lang) ?? "",
                     'meta_title' => $page->getTranslation('meta_title', $lang) ?? "",
                     'meta_description' => $page->getTranslation('meta_description', $lang) ?? "",
@@ -378,6 +411,9 @@ class PageController extends Controller
 
     public function updateData(Request $request)
     {
+
+        // return response()->json(['d' => $request->all()]);
+
         if ($request->get('state') === 'draft') {
         }
 
@@ -405,13 +441,13 @@ class PageController extends Controller
         $page_translation->heading1 = isset($submittedData->heading1) ? ($submittedData->heading1) : '';
         $page_translation->content1 = isset($submittedData->content1) ? $submittedData->content1 : '';
         $page_translation->heading2 = isset($submittedData->heading2) ? ($submittedData->heading2) : '';
+        $page_translation->heading3 = isset($submittedData->heading3) ? ($submittedData->heading3) : '';
         $page_translation->content2 = isset($submittedData->content2) ? $submittedData->content2 : '';
-        $page_translation->heading3 = isset($submittedData->heading3) ? $submittedData->heading3 : '';
         $page_translation->content3 = isset($submittedData->content3) ? $submittedData->content3 : '';
         $page_translation->content4 = isset($submittedData->content4) ? $submittedData->content4 : '';
         $page_translation->content5 = isset($submittedData->content5) ? $submittedData->content5 : '';
         $page_translation->heading4 = isset($submittedData->heading4) ? $submittedData->heading4 : '';
-        $page_translation->heading5 = isset($submittedData->heading5) ? $submittedData->heading5 : '';
+        $page_translation->heading5 = isset($submittedData->heading5) ? json_encode($submittedData->heading5) : '';
         $page_translation->heading6 = isset($submittedData->heading6) ? $submittedData->heading6 : '';
         $page_translation->heading7 = isset($submittedData->heading7) ? $submittedData->heading7 : '';
         $page_translation->heading8 = isset($submittedData->heading8) ? $submittedData->heading8 : '';
