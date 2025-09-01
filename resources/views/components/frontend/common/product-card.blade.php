@@ -11,10 +11,10 @@
                 <a href="{!! $link !!}">{{ $name }}</a>
             </h4>
             <div class="price">
-                @if($originalPrice)
-                    <del>{{ $originalPrice }}</del>
+                @if ($originalPrice)
+                    <del>{{ env('DEFAULT_CURRENCY') . ' ' . $originalPrice }}</del>
                 @endif
-                {{ $price }}
+                {{ env('DEFAULT_CURRENCY') . ' ' . $price }}
             </div>
         </div>
     </div>

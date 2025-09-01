@@ -692,3 +692,8 @@ function buildMenuTree($items)
     // Simply return the items as they are since Efectn already provides the structure
     return $items instanceof \Illuminate\Support\Collection ? $items : collect($items);
 }
+
+function getHomePageContent()
+{
+    return Page::where('slug', 'home')->with('page_translations')->first();
+}

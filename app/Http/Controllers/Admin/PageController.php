@@ -135,7 +135,7 @@ class PageController extends Controller
         $page = Page::where('type', $id)->first() ?? $id;
 
         switch ($id) {
-            case 'about_us':
+            case 'home':
                 $banners = Banner::where('status', 1)->get();
                 $current_banners = BusinessSetting::whereIn('type', array('home_banner', 'home_mid_section_banner', 'home_center_banner', 'home_mid_banner', 'home_large_banner'))->get()->keyBy('type');
 
@@ -158,13 +158,14 @@ class PageController extends Controller
                 $existingData = [
                     'page_id' => $page->id,
                     'lang' => $lang,
-                    'heading1' => json_decode($page->getTranslation('heading1', $lang)),
                     'discover_categories' => json_decode(get_setting('discover_categories'), true) ?: [],
                     'home_mid_banner_1' => $current_banners['home_mid_banner'] ? json_decode($current_banners['home_mid_banner']->value)[0] : null,
                     'home_mid_banner_2' => $current_banners['home_mid_banner'] ? json_decode($current_banners['home_mid_banner']->value)[1] : null,
                     'image1' => is_array(json_decode($page->getTranslation('image1', $lang))) ? json_decode($page->getTranslation('image1', $lang)) : [],
                     'image2' => is_array(json_decode($page->getTranslation('image2', $lang))) ? json_decode($page->getTranslation('image2', $lang)) : [],
-                    'heading2' => $page->getTranslation('heading2', $lang),
+                    'heading2' => $page->getTranslation('heading2', $lang) ?? "",
+                    'heading3' => $page->getTranslation('heading3', $lang) ?? "",
+                    'heading4' => $page->getTranslation('heading4', $lang) ?? "",
                     'new_arrival_products' => json_decode(get_setting('new_arrival_products'), true) ?: [],
                     'heading4' => $page->getTranslation('heading4', $lang),
                     'meta_title' => $page->getTranslation('meta_title', $lang),
@@ -183,6 +184,7 @@ class PageController extends Controller
                             "key" => "discover_section",
                             "label" => "Discover Section",
                             "title" => "Discover Section",
+                            "hidden" => true,
                             "input" => false,
                             "components" => [
                                 [
@@ -201,149 +203,115 @@ class PageController extends Controller
                                     "hidden" => true,
                                     "label" => "Heading",
                                 ],
+                            ]
+                        ],
+                        [
+                            "collapsible" => false,
+                            "key" => "panel",
+                            "type" => "panel",
+                            "label" => "Panel",
+                            "title"  => "Highlights",
+                            "input" => false,
+                            "tableView" => false,
+                            "components" => [
                                 [
-                                    "type" => "select",
-                                    "input" => true,
-                                    "key" => "heading1",
-                                    "label" => "Categories (Max 4)",
-                                    "multiple" => true,
-                                    "validate" => [
-                                        "maxLength" => 4
-                                    ],
-                                    "data" => [
-                                        "values" => $categoryOptions
-                                    ]
-                                ],
-                                [
-                                    "label" => "Upload",
+                                    "label" => "Data Grid",
+                                    "disableAddingRemovingRows" => false,
+                                    "reorder" => false,
+                                    "addAnotherPosition" => "bottom",
+                                    "layoutFixed" => false,
+                                    "enableRowGroups" => false,
+                                    "initEmpty" => false,
                                     "tableView" => false,
-                                    "storage" => "base64",
-                                    "webcam" => false,
-                                    "image" => true,
-                                    "multiple" => true,
-                                    "fileTypes" => [
+                                    "defaultValue" => [
                                         [
-                                            "label" => "",
-                                            "value" => ""
+                                            "textField" => "",
+                                            "textField1" => ""
                                         ]
                                     ],
-                                    "validateWhenHidden" => false,
+                                    "validate" => [
+                                        "minLength" => "1"
+                                    ],
+                                    "validateOn" => "change",
+                                    "validateOnBlur" => false,
+                                    "validateOnInput" => false,
+                                    "validateRequired" => false,
+                                    "validateMultiple" => false,
+                                    "validateCustom" => "",
+                                    "validateCustomPrivate" => false,
                                     "key" => "image1",
-                                    "type" => "file",
-                                    "input" => true
+                                    "type" => "datagrid",
+                                    "input" => true,
+                                    "components" => [
+                                        [
+                                            "label" => "Upload",
+                                            "tableView" => false,
+                                            "storage" => "base64",
+                                            "webcam" => false,
+                                            "image" => true,
+                                            "multiple" => true,
+                                            "fileTypes" => [
+                                                [
+                                                    "label" => "",
+                                                    "value" => ""
+                                                ]
+                                            ],
+                                            "validateWhenHidden" => false,
+                                            "key" => "icon",
+                                            "type" => "file",
+                                            "input" => true
+                                        ],
+                                        [
+                                            "label" => "Title",
+                                            "applyMask" => false,
+                                            "applyMaskOn" => "change",
+                                            "autoComplete" => "off",
+                                            "tableView" => true,
+                                            "validate" => [],
+                                            "validateOn" => "change",
+                                            "validateOnBlur" => false,
+                                            "validateOnInput" => false,
+                                            "validateRequired" => false,
+                                            "key" => "title",
+                                            "type" => "textfield",
+                                            "input" => true
+                                        ],
+
+                                    ]
                                 ],
                             ]
                         ],
                         [
                             "type" => "panel",
-                            "key" => "new_arrivals",
-                            "label" => "New Arrivals",
-                            "input" => false,
+                            "key" => "panel",
+                            "label" => "Whatsapp Section",
+                            "title" => "Whatsapp Section",
+                            "hidden" => false,
                             "components" => [
                                 [
                                     "type" => "textfield",
                                     "input" => true,
                                     "key" => "heading2",
+                                    "hidden" => false,
                                     "label" => "Heading",
-
                                 ],
                                 [
-                                    "type" => "select",
+                                    "type" => "textfield",
                                     "input" => true,
-                                    "key" => "new_arrival_products",
-                                    "label" => "Products (Max 4)",
-                                    "multiple" => true,
-                                    "validate" => [
-                                        "maxLength" => 4
-                                    ],
-                                    "data" => [
-                                        "values" => $productsOptions
-                                    ]
-                                ]
-                            ]
-                        ],
-                        [
-                            "type" => "panel",
-                            "key" => "special_products",
-                            "label" => "Special Products",
-                            "input" => false,
-                            "components" => [
+                                    "key" => "heading3",
+                                    "hidden" => false,
+                                    "label" => "Button Text",
+                                ],
                                 [
                                     "type" => "textfield",
                                     "input" => true,
                                     "key" => "heading4",
-                                    "label" => "Heading",
-
+                                    "hidden" => false,
+                                    "label" => "Button Link",
                                 ],
-                                [
-                                    "type" => "select",
-                                    "input" => true,
-                                    "key" => "special_products",
-                                    "label" => "Products (Max 4)",
-                                    "multiple" => true,
-                                    "validate" => [
-                                        "maxLength" => 4
-                                    ],
-                                    "data" => [
-                                        "values" => [
-                                            // Fill dynamically with products data as above
-                                        ]
-                                    ]
-                                ]
                             ]
                         ],
-                        [
-                            "type" => "panel",
-                            "key" => "seo_fields",
-                            "label" => "SEO Fields",
-                            "collapsible" => true,
-                            "input" => false,
-                            "components" => [
-                                [
-                                    "type" => "textfield",
-                                    "input" => true,
-                                    "key" => "meta_title",
-                                    "label" => "Meta Title"
-                                ],
-                                [
-                                    "type" => "textarea",
-                                    "input" => true,
-                                    "key" => "meta_description",
-                                    "label" => "Meta Description"
-                                ],
-                                [
-                                    "type" => "textarea",
-                                    "input" => true,
-                                    "key" => "meta_keywords",
-                                    "label" => "Meta Keywords",
-                                    "description" => "Separate with comma"
-                                ],
-                                [
-                                    "type" => "textfield",
-                                    "input" => true,
-                                    "key" => "og_title",
-                                    "label" => "OG Title"
-                                ],
-                                [
-                                    "type" => "textarea",
-                                    "input" => true,
-                                    "key" => "og_description",
-                                    "label" => "OG Description"
-                                ],
-                                [
-                                    "type" => "textfield",
-                                    "input" => true,
-                                    "key" => "twitter_title",
-                                    "label" => "Twitter Title"
-                                ],
-                                [
-                                    "type" => "textarea",
-                                    "input" => true,
-                                    "key" => "twitter_description",
-                                    "label" => "Twitter Description"
-                                ]
-                            ]
-                        ],
+                        $this->getSeoFields(),
                         [
                             "type" => "button",
                             "label" => "Submit",
@@ -369,7 +337,9 @@ class PageController extends Controller
                 $existingData = [
                     'page_id' => $page->id,
                     'lang' => $lang,
-                    'heading1' => json_decode($page->getTranslation('heading1', $lang)) ?? "",
+                    'heading1' => $page->getTranslation('heading1', $lang) ?? "",
+                    'heading2' => $page->getTranslation('heading2', $lang) ?? "",
+                    'heading3' => $page->getTranslation('heading3', $lang) ?? "",
                     'heading4' => $page->getTranslation('heading4', $lang) ?? "",
                     'meta_title' => $page->getTranslation('meta_title', $lang) ?? "",
                     'meta_description' => $page->getTranslation('meta_description', $lang) ?? "",
@@ -382,59 +352,7 @@ class PageController extends Controller
 
                 $formFields = [
                     "components" => [
-                        [
-                            "type" => "panel",
-                            "key" => "seo_fields",
-                            "label" => "SEO Fields",
-                            "collapsible" => true,
-                            "input" => false,
-                            "components" => [
-                                [
-                                    "type" => "textfield",
-                                    "input" => true,
-                                    "key" => "meta_title",
-                                    "label" => "Meta Title"
-                                ],
-                                [
-                                    "type" => "textarea",
-                                    "input" => true,
-                                    "key" => "meta_description",
-                                    "label" => "Meta Description"
-                                ],
-                                [
-                                    "type" => "textarea",
-                                    "input" => true,
-                                    "key" => "meta_keywords",
-                                    "label" => "Meta Keywords",
-                                    "description" => "Separate with comma"
-                                ],
-                                [
-                                    "type" => "textfield",
-                                    "input" => true,
-                                    "key" => "og_title",
-                                    "label" => "OG Title"
-                                ],
-                                [
-                                    "type" => "textarea",
-                                    "input" => true,
-                                    "wysiwyg" => true,
-                                    "key" => "og_description",
-                                    "label" => "OG Description"
-                                ],
-                                [
-                                    "type" => "textfield",
-                                    "input" => true,
-                                    "key" => "twitter_title",
-                                    "label" => "Twitter Title"
-                                ],
-                                [
-                                    "type" => "textarea",
-                                    "input" => true,
-                                    "key" => "twitter_description",
-                                    "label" => "Twitter Description"
-                                ]
-                            ]
-                        ],
+                        $this->getSeoFields(),
                         [
                             "type" => "button",
                             "label" => "Submit",
@@ -484,9 +402,9 @@ class PageController extends Controller
         $page_translation->title = isset($submittedData->title) ? $submittedData->title : '';
         $page_translation->content = isset($submittedData->content) ? $submittedData->content : '';
         $page_translation->sub_title = isset($submittedData->sub_title) ? $submittedData->sub_title : '';
-        $page_translation->heading1 = isset($submittedData->heading1) ? $submittedData->heading1 : '';
+        $page_translation->heading1 = isset($submittedData->heading1) ? ($submittedData->heading1) : '';
         $page_translation->content1 = isset($submittedData->content1) ? $submittedData->content1 : '';
-        $page_translation->heading2 = isset($submittedData->heading2) ? $submittedData->heading2 : '';
+        $page_translation->heading2 = isset($submittedData->heading2) ? ($submittedData->heading2) : '';
         $page_translation->content2 = isset($submittedData->content2) ? $submittedData->content2 : '';
         $page_translation->heading3 = isset($submittedData->heading3) ? $submittedData->heading3 : '';
         $page_translation->content3 = isset($submittedData->content3) ? $submittedData->content3 : '';
@@ -516,5 +434,61 @@ class PageController extends Controller
 
         flash(trans("messages.settings") . ' ' . trans("messages.updated_msg"))->success();
         return back();
+    }
+
+    function getSeoFields()
+    {
+        return    [
+            "type" => "panel",
+            "key" => "seo_fields",
+            "label" => "SEO Fields",
+            "collapsible" => true,
+            "input" => false,
+            "components" => [
+                [
+                    "type" => "textfield",
+                    "input" => true,
+                    "key" => "meta_title",
+                    "label" => "Meta Title"
+                ],
+                [
+                    "type" => "textarea",
+                    "input" => true,
+                    "key" => "meta_description",
+                    "label" => "Meta Description"
+                ],
+                [
+                    "type" => "textarea",
+                    "input" => true,
+                    "key" => "meta_keywords",
+                    "label" => "Meta Keywords",
+                    "description" => "Separate with comma"
+                ],
+                [
+                    "type" => "textfield",
+                    "input" => true,
+                    "key" => "og_title",
+                    "label" => "OG Title"
+                ],
+                [
+                    "type" => "textarea",
+                    "input" => true,
+                    "key" => "og_description",
+                    "label" => "OG Description"
+                ],
+                [
+                    "type" => "textfield",
+                    "input" => true,
+                    "key" => "twitter_title",
+                    "label" => "Twitter Title"
+                ],
+                [
+                    "type" => "textarea",
+                    "input" => true,
+                    "key" => "twitter_description",
+                    "label" => "Twitter Description"
+                ]
+            ]
+        ];
     }
 }

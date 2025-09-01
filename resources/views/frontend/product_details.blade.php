@@ -77,8 +77,8 @@
         <x-slot name="productDetails">
 
             <x-frontend.product-detail.product-details category="Resins" title="Premium Clear Epoxy Resin Kit"
-                price="{{ $flattened_product_prices[$response['sku']]['discounted_price'] }}"
-                originalPrice="{{ $flattened_product_prices[$response['sku']]['original_price'] }}">
+                price="{{ isset($flattened_product_prices[$response['sku']]['discounted_price']) ? $flattened_product_prices[$response['sku']]['discounted_price'] : '' }}"
+                originalPrice="{{ isset($flattened_product_prices[$response['sku']]['original_price']) ? $flattened_product_prices[$response['sku']]['original_price'] : '' }}">
 
                 <x-slot name="description">
                     {!! $response['short_description'] !!}
@@ -231,134 +231,38 @@
 
     </x-frontend.product-detail.product-gallery>
 
-    <x-frontend.common.product-section title="Related Products" class="pt_40 pb_90">
-        <div class="p-tab active-tab" id="tab-1">
-            <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="The Secret of the Enchanted Forest Path" category="History"
-                    name="The Secret of the Enchanted Forest Path" originalPrice="$08.99" price="$07.99"
-                    link="shop-details.html" />
 
-                <x-frontend.common.product-card image="assets/images/product-2.webp"
-                    alt="The Magical Adventure of the Lost Unicorn" category="Comic"
-                    name="The Magical Adventure of the Lost Unicorn" originalPrice="$04.99" price="$03.99"
-                    link="shop-details.html" />
 
-                <x-frontend.common.product-card image="assets/images/product-3.webp"
-                    alt="Oliver and the Quest for the Golden Key" category="School"
-                    name="Oliver and the Quest for the Golden Key" originalPrice="$02.99" price="$01.99"
-                    link="shop-details.html" />
-            </div>
-        </div>
+    @if (!empty($relatedProducts[0]))
+        <x-frontend.common.product-section title="Related Products" class="pt_40 pb_90">
+            @php
+                $chunks = collect($relatedProducts)->chunk(5);
+            @endphp
 
-        <div class="p-tab" id="tab-2">
-            <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="The Secret of the Enchanted Forest Path" category="History"
-                    name="The Secret of the Enchanted Forest Path" originalPrice="$08.99" price="$07.99"
-                    link="shop-details.html" />
+            @foreach ($chunks as $chunkIndex => $chunk)
+                <div class="p-tab active-tab" id="tab-{{ $chunkIndex + 1 }}">
+                    <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
 
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="The Magical Adventure of the Lost Unicorn" category="Comic"
-                    name="The Magical Adventure of the Lost Unicorn" originalPrice="$04.99" price="$03.99"
-                    link="shop-details.html" />
+                        @foreach ($chunk as $relProd)
+                            @php
+                                $imageRel = $relProd->thumbnail_img ?? app('url')->asset('assets/img/placeholder.jpg');
+                                $priceDataRel = getProductOfferPrice($relProd);
+                            @endphp
 
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="Oliver and the Quest for the Golden Key" category="School"
-                    name="Oliver and the Quest for the Golden Key" originalPrice="$02.99" price="$01.99"
-                    link="shop-details.html" />
+                            <x-frontend.common.product-card image="{{ $imageRel }}"
+                                alt="{{ $relProd->name ?? 'Product Image' }}"
+                                category="{{ $relProd->category->name ?? 'Category' }}" name="{{ $relProd->name }}"
+                                originalPrice="{{ $priceDataRel['original_price'] }}"
+                                price="{{ $priceDataRel['discounted_price'] }}"
+                                link="{{ route('product-detail', ['slug' => $relProd->slug, 'sku' => $relProd->sku]) }}" />
+                        @endforeach
 
-                <x-frontend.common.product-card image="assets/images/product-1.webp" alt="The Mystery of the Moonlight"
-                    category="Comic" name="The Mystery of the Moonlight" originalPrice="$07.99" price="$06.99"
-                    link="shop-details.html" />
+                    </div>
+                </div>
+            @endforeach
+        </x-frontend.common.product-section>
+    @endif
 
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="Luna and the Hidden Treasure Map" category="Science" name="Luna and the Hidden Treasure Map"
-                    originalPrice="$12.99" price="$10.99" link="shop-details.html" />
-            </div>
-        </div>
-
-        <div class="p-tab" id="tab-3">
-            <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="The Secret of the Enchanted Forest Path" category="History"
-                    name="The Secret of the Enchanted Forest Path" originalPrice="$08.99" price="$07.99"
-                    link="shop-details.html" />
-
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="The Magical Adventure of the Lost Unicorn" category="Comic"
-                    name="The Magical Adventure of the Lost Unicorn" originalPrice="$04.99" price="$03.99"
-                    link="shop-details.html" />
-
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="Oliver and the Quest for the Golden Key" category="School"
-                    name="Oliver and the Quest for the Golden Key" originalPrice="$02.99" price="$01.99"
-                    link="shop-details.html" />
-
-                <x-frontend.common.product-card image="assets/images/product-1.webp" alt="The Mystery of the Moonlight"
-                    category="Comic" name="The Mystery of the Moonlight" originalPrice="$07.99" price="$06.99"
-                    link="shop-details.html" />
-
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="Luna and the Hidden Treasure Map" category="Science" name="Luna and the Hidden Treasure Map"
-                    originalPrice="$12.99" price="$10.99" link="shop-details.html" />
-            </div>
-        </div>
-
-        <div class="p-tab" id="tab-4">
-            <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="The Secret of the Enchanted Forest Path" category="History"
-                    name="The Secret of the Enchanted Forest Path" originalPrice="$08.99" price="$07.99"
-                    link="shop-details.html" />
-
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="The Magical Adventure of the Lost Unicorn" category="Comic"
-                    name="The Magical Adventure of the Lost Unicorn" originalPrice="$04.99" price="$03.99"
-                    link="shop-details.html" />
-
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="Oliver and the Quest for the Golden Key" category="School"
-                    name="Oliver and the Quest for the Golden Key" originalPrice="$02.99" price="$01.99"
-                    link="shop-details.html" />
-
-                <x-frontend.common.product-card image="assets/images/product-1.webp" alt="The Mystery of the Moonlight"
-                    category="Comic" name="The Mystery of the Moonlight" originalPrice="$07.99" price="$06.99"
-                    link="shop-details.html" />
-
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="Luna and the Hidden Treasure Map" category="Science" name="Luna and the Hidden Treasure Map"
-                    originalPrice="$12.99" price="$10.99" link="shop-details.html" />
-            </div>
-        </div>
-
-        <div class="p-tab" id="tab-5">
-            <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="The Secret of the Enchanted Forest Path" category="History"
-                    name="The Secret of the Enchanted Forest Path" originalPrice="$08.99" price="$07.99"
-                    link="shop-details.html" />
-
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="The Magical Adventure of the Lost Unicorn" category="Comic"
-                    name="The Magical Adventure of the Lost Unicorn" originalPrice="$04.99" price="$03.99"
-                    link="shop-details.html" />
-
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="Oliver and the Quest for the Golden Key" category="School"
-                    name="Oliver and the Quest for the Golden Key" originalPrice="$02.99" price="$01.99"
-                    link="shop-details.html" />
-
-                <x-frontend.common.product-card image="assets/images/product-1.webp" alt="The Mystery of the Moonlight"
-                    category="Comic" name="The Mystery of the Moonlight" originalPrice="$07.99" price="$06.99"
-                    link="shop-details.html" />
-
-                <x-frontend.common.product-card image="assets/images/product-1.webp"
-                    alt="Luna and the Hidden Treasure Map" category="Science" name="Luna and the Hidden Treasure Map"
-                    originalPrice="$12.99" price="$10.99" link="shop-details.html" />
-            </div>
-        </div>
-    </x-frontend.common.product-section>
 
     <x-frontend.common.whatsapp-subscribe />
 @endsection

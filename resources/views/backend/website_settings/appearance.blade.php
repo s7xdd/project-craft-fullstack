@@ -121,39 +121,6 @@
     			</div>
     		</div>
 
-            <!-- Cookies Agreement -->
-            <div class="card">
-    			<div class="card-header">
-    				<h6 class="fw-600 mb-0">Cookies Agreement</h6>
-    			</div>
-    			<div class="card-body">
-    				<form action="{{ route('business_settings.update') }}" method="POST">
-    					@csrf
-    					<div class="form-group row">
-    						<label class="col-md-3 col-from-label">Cookies Agreement Text</label>
-                            <div class="col-md-8">
-        						<input type="hidden" name="types[]" value="cookies_agreement_text">
-        						<textarea name="cookies_agreement_text" rows="4" class="aiz-text-editor form-control" data-buttons='[["font", ["bold"]],["insert", ["link"]]]'>{{ get_setting('cookies_agreement_text') }}</textarea>
-                            </div>
-    					</div>
-                        <div class="form-group row">
-    						<label class="col-md-3 col-from-label">Show Cookies Agreement?</label>
-    						<div class="col-md-8">
-    							<label class="aiz-switch aiz-switch-success mb-0">
-    								<input type="hidden" name="types[]" value="show_cookies_agreement">
-    								<input type="checkbox" name="show_cookies_agreement" @if(get_setting('show_cookies_agreement') == 'on') checked @endif>
-    								<span></span>
-    							</label>
-    						</div>
-    					</div>
-    					<div class="text-right">
-    						<button type="submit" class="btn btn-primary">Update</button>
-    					</div>
-    				</form>
-    			</div>
-    		</div>
-
-            <!-- Website Popup -->
             <div class="card">
     			<div class="card-header">
     				<h6 class="fw-600 mb-0">Website Popup</h6>
@@ -194,37 +161,6 @@
     				</form>
     			</div>
     		</div>
-
-            <!-- Custom Scripts -->
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="fw-600 mb-0">Custom Script</h6>
-                </div>
-                <div class="card-body">
-                    <form action="{{ route('business_settings.update') }}" method="POST">
-                        @csrf
-                        <div class="form-group row">
-                            <label class="col-md-3 col-from-label">Header custom script - before </head></label>
-                            <div class="col-md-8">
-                                <input type="hidden" name="types[]" value="header_script">
-                                <textarea name="header_script" rows="4" class="form-control" placeholder="<script>...</script>">{{ get_setting('header_script') }}</textarea>
-                                <small>Write script with &lt;script&gt; tag</small>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-from-label">Footer custom script - before </body></label>
-                            <div class="col-md-8">
-                                <input type="hidden" name="types[]" value="footer_script">
-                                <textarea name="footer_script" rows="4" class="form-control" placeholder="<script>...</script>">{{ get_setting('footer_script') }}</textarea>
-                                <small>Write script with &lt;script&gt; tag</small>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
 
     	</div>
     </div>

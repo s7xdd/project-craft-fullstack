@@ -444,36 +444,6 @@ class ProjectController extends Controller
                     "tableView" => false,
                     "components" => [
                         [
-                            "label" => "Highlight",
-                            "applyMaskOn" => "change",
-                            "tableView" => true,
-                            "validateWhenHidden" => false,
-                            "key" => "textField",
-                            "type" => "textfield",
-                            "input" => true
-                        ],
-                        [
-                            "label" => "Text Field",
-                            "applyMaskOn" => "change",
-                            "tableView" => true,
-                            "validateWhenHidden" => false,
-                            "key" => "textField1",
-                            "type" => "textfield",
-                            "input" => true
-                        ]
-                    ]
-                ],
-
-                [
-                    "collapsible" => false,
-                    "key" => "panel",
-                    "type" => "panel",
-                    "label" => "Panel",
-                    "title"  => "Project Highlights",
-                    "input" => false,
-                    "tableView" => false,
-                    "components" => [
-                        [
                             "label" => "Data Grid",
                             "disableAddingRemovingRows" => false,
                             "reorder" => false,

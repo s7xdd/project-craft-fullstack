@@ -40,17 +40,15 @@
 
 
 
-    <x-frontend.home.highlights>
-        <x-frontend.home.highlight-item icon="assets/images/icons/fast-delivery.png" text="Same day Product Delivery" />
-
-        <x-frontend.home.highlight-item icon="assets/images/icons/rating.png" text="100% Customer Satisfaction" />
-
-        <x-frontend.home.highlight-item icon="assets/images/icons/peace.png" text="Help and access is our mission" />
-
-        <x-frontend.home.highlight-item icon="assets/images/icons/high-quality.png" text="100% quality Art Supplies" />
-
-        <x-frontend.home.highlight-item icon="assets/images/icons/customer-service.png" text="24/7 Support for Clients" />
-    </x-frontend.home.highlights>
+    @if ($page->getTranslation('image1', $lang) && is_array(json_decode($page->getTranslation('image1', $lang))))
+        <x-frontend.home.highlights>
+            @foreach (json_decode($page->getTranslation('image1', $lang), true) as $sectionData)
+                <x-frontend.home.highlight-item
+                    icon="{{ isset($sectionData['icon'][0]) ? $sectionData['icon'][0]['url'] ?? '' : '' }}"
+                    text="{{ $sectionData['title'] ?? '' }}" />
+            @endforeach
+        </x-frontend.home.highlights>
+    @endif
 
 
 
@@ -67,8 +65,8 @@
                                 alt="{{ $product->getTranslation('name', $lang) }}"
                                 category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
                                 name="{{ $product->getTranslation('name', $lang) }}"
-                                originalPrice="{{ env('DEFAULT_CURRENCY') }} {{ $priceData['original_price'] }}"
-                                price="{{ env('DEFAULT_CURRENCY') }} {{ $priceData['discounted_price'] }}"
+                                originalPrice=" {{ $priceData['original_price'] }}"
+                                price=" {{ $priceData['discounted_price'] }}"
                                 link="{{ route('product-detail', ['slug' => $product->slug, 'sku' => $product->sku]) }}" />
                         @endforeach
                     </div>
@@ -107,9 +105,8 @@
                                 alt="{{ $product->getTranslation('name', $lang) }}"
                                 category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
                                 name="{{ $product->getTranslation('name', $lang) }}"
-                                originalPrice="{{ env('DEFAULT_CURRENCY') }} {{ $priceData['original_price'] }}"
-                                price="{{ env('DEFAULT_CURRENCY') }} {{ $priceData['discounted_price'] }}"
-                                link="{!! $productUrl !!}" />
+                                originalPrice=" {{ $priceData['original_price'] }}"
+                                price=" {{ $priceData['discounted_price'] }}" link="{!! $productUrl !!}" />
                         @endforeach
                     </div>
                 </div>
