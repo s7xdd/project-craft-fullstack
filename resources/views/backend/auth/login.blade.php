@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="h-100 bg-cover bg-center py-5 d-flex align-items-center"
-        style="background-image: url({{ asset('assets/img/login.jpg') }})">
+        style="background-image: url({{ asset('assets/img/login2.jpg') }})">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-xl-4 mx-auto">

@@ -81,6 +81,9 @@
 
     <link href="{{ asset('assets/css/module-css/account.css') }}" rel="stylesheet" />
 
+    <link href="{{ asset('assets/css/module-css/contact.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/module-css/about.css') }}" rel="stylesheet">
+
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -93,8 +96,7 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    
-    <!-- Loader Styles -->
+
     <style>
         #page-loader {
             position: fixed;
@@ -109,11 +111,11 @@
             z-index: 9999;
             transition: opacity 0.5s ease-out;
         }
-        
+
         .loader-content {
             text-align: center;
         }
-        
+
         .spinner {
             width: 50px;
             height: 50px;
@@ -123,19 +125,24 @@
             animation: spin 1s linear infinite;
             margin: 0 auto;
         }
-        
+
         .loader-text {
             margin-top: 15px;
             font-size: 16px;
             color: #000;
             font-weight: 500;
         }
-        
+
         @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
-        
+
         .page-loaded #page-loader {
             opacity: 0;
             pointer-events: none;
@@ -144,7 +151,6 @@
 </head>
 
 <body>
-    <!-- Page Loader -->
     <div id="page-loader">
         <div class="loader-content">
             <div class="spinner"></div>
@@ -532,7 +538,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
-    
+
     <!-- Loader Script -->
     <script>
         window.addEventListener('load', function() {

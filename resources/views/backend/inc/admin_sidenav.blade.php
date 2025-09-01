@@ -2,8 +2,8 @@
     <div class="aiz-sidebar left c-scrollbar">
         <div class="aiz-side-nav-logo-wrap">
             <a href="{{ route('admin.dashboard') }}" class="d-block text-left">
-                <img class="mw-100" height="100" src="{{ uploaded_asset(get_setting('site_icon')) }}"
-                    alt="{{ get_setting('site_name') }}">
+                {{-- <img class="mw-100" height="100" src="{{ uploaded_asset(get_setting('site_icon')) }}"
+                    alt="{{ get_setting('site_name') }}"> --}}
             </a>
         </div>
         <div class="aiz-side-nav-wrap">
@@ -26,7 +26,7 @@
                 <!-- @endif -->
 
                 <!-- Product -->
-                @canany(['manage_products', 'manage_categories', 'manage_brands', 'manage_occasions',
+                {{-- @canany(['manage_products', 'manage_categories', 'manage_brands', 'manage_occasions',
                     'manage_attributes', 'product_reviews'])
                     <li class="aiz-side-nav-item">
                         <a href="#" class="aiz-side-nav-link">
@@ -177,7 +177,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
                 {{-- <li class="aiz-side-nav-item">
                     <a href="#" class="aiz-side-nav-link">
@@ -194,7 +194,7 @@
                     </ul>
                 </li> --}}
 
-                <li class="aiz-side-nav-item">
+                {{-- <li class="aiz-side-nav-item">
                     <a href="{{ route('enquiries.contact') }}"
                         class="aiz-side-nav-link {{ areActiveRoutes(['enquiries.contact']) }}">
                         <i class="las la-mail-bulk aiz-side-nav-icon"></i>
@@ -229,7 +229,7 @@
                                 <span class="aiz-side-nav-text">Newsletter Subscribers</span>
                             </a>
                         </li>
-                    @endcanany
+                    @endcanany --}}
 
                     @canany(['website_setup'])
                         <li class="aiz-side-nav-item">
@@ -305,7 +305,7 @@
 
                     @endcanany
 
-                    @canany(['manage_blogs'])
+                    {{-- @canany(['manage_blogs'])
                         <li class="aiz-side-nav-item">
                             <a href="#" class="aiz-side-nav-link">
                                 <i class="las la-newspaper aiz-side-nav-icon"></i>
@@ -456,7 +456,7 @@
                                 </a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
 
 
                 </ul><!-- .aiz-side-nav -->

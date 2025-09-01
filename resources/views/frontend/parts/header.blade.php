@@ -38,12 +38,12 @@
                     <nav class="main-menu navbar-expand-md navbar-light clearfix">
                         <div class="" id="navbarSupportedContent">
                             <ul class="navigation clearfix">
-                                <li class="logo-box">
+                                {{-- <li class="logo-box">
                                     <figure class="navbar-logo">
                                         <a href="/"><img src="{{ uploaded_asset(get_setting('site_icon')) }}"
                                                 alt="" /></a>
                                     </figure>
-                                </li>
+                                </li> --}}
 
                                 @foreach ($menu_items as $item)
                                     @include('frontend.parts.menu-item', ['item' => $item])

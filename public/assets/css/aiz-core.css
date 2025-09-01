@@ -3776,7 +3776,7 @@ input[type="number"] {
     height: 100vh;
     overflow-y: auto;
     z-index: 99;
-    background-color: #141423;
+    background-color: #ffffff;
     width: 265px;
     -webkit-transition: left 0.3s ease;
     transition: left 0.3s ease;
@@ -3801,7 +3801,7 @@ input[type="number"] {
     height: 55px;
 }
 .aiz-side-nav-logo-wrap {
-    background-color: #1a1a27;
+    background-color: white;
 }
 
 .aiz-side-nav-wrap {
@@ -3830,7 +3830,7 @@ input[type="number"] {
     padding: 10px 25px;
     font-size: 0.875rem;
     font-weight: 400;
-    color: #a2a3b7;
+    color: black;
 }
 .aiz-side-nav-list .aiz-side-nav-icon {
     display: -webkit-box;

@@ -4,3 +4,10 @@
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
+
+
+.formio-component-datagrid .datagrid-table,
+.formio-component-datagrid .datagrid-table td,
+.formio-component-datagrid .datagrid-table th {
+  border:1px !important;
+}

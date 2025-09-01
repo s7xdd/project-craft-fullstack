@@ -1,10 +1,6 @@
 @props([
     'contacts' => [
         [
-            'title' => 'Corporate Office',
-            'details' => '0233 Brisbane Cir. Shiloh, Australia 81063'
-        ],
-        [
             'title' => 'Main Warehouse',
             'details' => '0233 Brisbane Cir. Shiloh, Australia 81063'
         ],
@@ -26,7 +22,7 @@
         </div>
         <div class="row clearfix">
             @foreach($contacts as $contact)
-            <div class="col-xl-3 col-lg-6 col-md-12 info-column">
+            <div class="col-xl-4 col-lg-4 col-md-12 info-column">
                 <div class="info-block-one">
                     <div class="">
                         <h4>{{ $contact['title'] }}</h4>

@@ -45,7 +45,7 @@ class PageController extends Controller
         if ($page != null) {
             $page_id = $page->id;
 
-            $view = $this->getPage($id, $lang);
+            $view = $this->getPage($page->type, $lang);
             return $view;
         }
         abort(404);
@@ -129,12 +129,12 @@ class PageController extends Controller
         return redirect()->route('subscribers.index');
     }
 
-    public function getPage($id, $lang)
+    public function getPage($type, $lang)
     {
 
-        $page = Page::where('type', $id)->first() ?? $id;
+        $page = Page::where('type', $type)->first() ?? $type;
 
-        switch ($id) {
+        switch ($type) {
             case 'home':
                 $banners = Banner::where('status', 1)->get();
 
@@ -364,6 +364,173 @@ class PageController extends Controller
                     'submitRoute' => route('custom-pages.updatePage')
                 ]);
 
+            case 'about_us':
+
+                $existingData = [
+                    'page_id' => $page->id,
+                    'lang' => $lang,
+                    'discover_categories' => json_decode(get_setting('discover_categories'), true) ?: [],
+                    'image1' => is_array(json_decode($page->getTranslation('image1', $lang))) ? json_decode($page->getTranslation('image1', $lang)) : [],
+                    'image2' => is_array(json_decode($page->getTranslation('image2', $lang))) ? json_decode($page->getTranslation('image2', $lang)) : [],
+                    'heading1' => $page->getTranslation('heading1', $lang) ?? "",
+                    'heading2' => $page->getTranslation('heading2', $lang) ?? "",
+                    'content1' => $page->getTranslation('content1', $lang) ?? "",
+                    'heading3' => $page->getTranslation('heading3', $lang) ? json_decode($page->getTranslation('heading3', $lang)) : [],
+                    'heading4' => $page->getTranslation('heading4', $lang) ?? "",
+                    'heading5' => $page->getTranslation('heading5', $lang) ? json_decode($page->getTranslation('heading5', $lang)) : "",
+                    'new_arrival_products' => json_decode(get_setting('new_arrival_products'), true) ?: [],
+                    'meta_title' => $page->getTranslation('meta_title', $lang),
+                    'meta_description' => $page->getTranslation('meta_description', $lang),
+                    'meta_keywords' => $page->getTranslation('keywords', $lang),
+                    'og_title' => $page->getTranslation('og_title', $lang),
+                    'og_description' => $page->getTranslation('og_description', $lang),
+                    'twitter_title' => $page->getTranslation('twitter_title', $lang),
+                    'twitter_description' => $page->getTranslation('twitter_description', $lang),
+                ];
+
+                $formFields = [
+                    "components" => [
+                        [
+                            "type" => "panel",
+                            "key" => "about_us_section",
+                            "label" => "About us section",
+                            "title" => "About us",
+                            "hidden" => true,
+                            "input" => false,
+                            "components" => [
+                                [
+                                    "type" => "page_id",
+                                    "input" => true,
+                                    "key" => "page_id",
+                                    "value" => "{{ $page->id }}",
+                                    "hidden" => true,
+                                    "label" => "Heading",
+                                ],
+                                [
+                                    "type" => "lang",
+                                    "input" => true,
+                                    "key" => "lang",
+                                    "value" => "{{ $lang }}",
+                                    "hidden" => true,
+                                    "label" => "Heading",
+                                ],
+                            ]
+                        ],
+                        [
+                            "type" => "panel",
+                            "key" => "Main Information",
+                            "label" => "Main Information",
+                            "title" => "Main Information",
+                            "hidden" => false,
+                            "input" => false,
+                            "components" => [
+                                [
+                                    "label" => "Content",
+                                    "applyMaskOn" => "change",
+                                    "editor" => "quill",
+                                    "tableView" => true,
+                                    "validateWhenHidden" => false,
+                                    "key" => "content1",
+                                    "type" => "textarea",
+                                    "input" => true,
+                                    "isUploadEnabled" => true,
+                                    "as" => "string",
+                                    "uploadStorage" => "base64"
+                                ],
+                            ]
+                        ],
+                        [
+                            "collapsible" => false,
+                            "key" => "panel",
+                            "type" => "panel",
+                            "label" => "Panel",
+                            "title"  => "Highlights",
+                            "input" => false,
+                            "tableView" => false,
+                            "components" => [
+                                [
+                                    "label" => "Data Grid",
+                                    "disableAddingRemovingRows" => false,
+                                    "reorder" => false,
+                                    "addAnotherPosition" => "bottom",
+                                    "layoutFixed" => false,
+                                    "enableRowGroups" => false,
+                                    "initEmpty" => true,
+                                    "tableView" => false,
+                                    "defaultValue" => [
+                                        [
+                                            "title_1" => "",
+                                            "content_1" => "",
+                                        ]
+                                    ],
+                                    "validate" => [
+                                        "minLength" => "1"
+                                    ],
+                                    "validateOn" => "change",
+                                    "validateOnBlur" => false,
+                                    "validateOnInput" => false,
+                                    "validateRequired" => false,
+                                    "validateMultiple" => false,
+                                    "validateCustom" => "",
+                                    "validateCustomPrivate" => false,
+                                    "key" => "heading3",
+                                    "type" => "datagrid",
+                                    "input" => true,
+                                    "components" => [
+                                        [
+                                            "label" => "Title",
+                                            "applyMask" => false,
+                                            "applyMaskOn" => "change",
+                                            "autoComplete" => "off",
+                                            "tableView" => true,
+                                            "validate" => [],
+                                            "validateOn" => "change",
+                                            "validateOnBlur" => false,
+                                            "validateOnInput" => false,
+                                            "validateRequired" => false,
+                                            "key" => "title_1",
+                                            "type" => "textfield",
+                                            "input" => true
+                                        ],
+                                        [
+                                            "label" => "Content",
+                                            "applyMask" => false,
+                                            "applyMaskOn" => "change",
+                                            "autoComplete" => "off",
+                                            "tableView" => true,
+                                            "validate" => [],
+                                            "validateOn" => "change",
+                                            "validateOnBlur" => false,
+                                            "validateOnInput" => false,
+                                            "validateRequired" => false,
+                                            "key" => "content_1",
+                                            "type" => "textfield",
+                                            "input" => true
+                                        ],
+                                    ]
+                                ],
+                            ]
+                        ],
+                        $this->getSeoFields(),
+                        [
+                            "type" => "button",
+                            "label" => "Submit",
+                            "key" => "submit",
+                            "disableOnInvalid" => true,
+                            "input" => true,
+                            "tableView" => false,
+                            "action" => "submit"
+                        ]
+                    ]
+                ];
+
+                return view('form')->with([
+                    'definition' => json_encode($formFields),
+                    'data' => json_encode($existingData),
+                    'title' => "Edit About us Page",
+                    'submitRoute' => route('custom-pages.updatePage')
+                ]);
+
 
             default:
 
@@ -397,7 +564,6 @@ class PageController extends Controller
                         ]
                     ]
                 ];
-
 
                 return view('form')->with([
                     'definition' => json_encode($formFields),

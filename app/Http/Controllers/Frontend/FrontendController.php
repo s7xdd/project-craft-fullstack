@@ -158,8 +158,6 @@ class FrontendController extends Controller
 
         $data['banners'] = $banners;
 
-        dd($banners);
-
         $data['testimonials'] = Testimonials::where('status', 1)->orderBy('sort_order', 'asc')->get();
 
         return view('frontend.home', compact('page', 'data', 'lang'));
