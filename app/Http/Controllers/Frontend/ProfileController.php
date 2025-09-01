@@ -302,11 +302,31 @@ class ProfileController extends Controller
         $user = User::find($user_id);
         $total_count = 0;
         $orderList = [];
-        if ($user) {
+        
+        // Check if we're searching by email (for non-logged-in users)
+        $email = $request->email ?? '';
+        
+        if ($email != '') {
+            // Search orders by email for non-logged-in users
+            $orders = Order::with(['orderDetails'])
+                ->select('id', 'code', 'delivery_status', 'payment_type', 'coupon_code', 'grand_total', 'created_at', 'billing_address')
+                ->orderBy('id', 'desc')
+                ->whereHas('user', function ($query) use ($email) {
+                    $query->where('email', $email);
+                });
+            
+            $total_count = $orders->count();
+            $orderList = $orders->get();
+        } elseif ($user) {
+            // Regular logged-in user orders
             $sort_search = null;
             $delivery_status = null;
 
-            $orders = Order::with(['orderDetails'])->select('id', 'code', 'delivery_status', 'payment_type', 'coupon_code', 'grand_total', 'created_at')->orderBy('id', 'desc')->where('user_id', $user_id);
+            $orders = Order::with(['orderDetails'])
+                ->select('id', 'code', 'delivery_status', 'payment_type', 'coupon_code', 'grand_total', 'created_at')
+                ->orderBy('id', 'desc')
+                ->where('user_id', $user_id);
+                
             if ($request->has('search')) {
                 $sort_search = $request->search;
                 $orders = $orders->where('code', 'like', '%' . $sort_search . '%');
@@ -319,7 +339,8 @@ class ProfileController extends Controller
             $total_count = $orders->count();
             $orderList = $orders->get();
         }
-        return view('frontend.orders', compact('orderList', 'total_count'));
+        
+        return view('frontend.orders', compact('orderList', 'total_count', 'email'));
     }
 
     public function orderReturnList(Request $request)
