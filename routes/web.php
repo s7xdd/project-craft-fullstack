@@ -38,14 +38,7 @@ Route::post('/contact-us', [FrontendController::class, 'submitContactForm'])->na
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/product-detail', [ProductController::class, 'productDetails'])->name('product-detail');
-// Route::post('/recently-viewed', [CommonController::class, 'addRecentlyViewed']);
-// Route::get('/recently-viewed', [CommonController::class, 'getRecentlyViewed']);
 Route::get('related-products', [ProductController::class, 'relatedProducts'])->name('related.products');
-
-Route::get('/rent/products', [ProductController::class, 'rentProducts'])->name('rent.products');
-Route::get('/rent/product-details', [ProductController::class, 'rentProductDetails'])->name('rent.product-detail');
-
-Route::post('/language_change', [FrontendController::class, 'changeLanguage'])->name('language.change');
 
 Route::get('/category/{category_slug}', [SearchController::class, 'listingByCategory'])->name('products.category');
 
@@ -64,35 +57,22 @@ Route::get('/check-login-status', [UserController::class, 'checkLoginStatus'])->
 Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials.index');
 Route::get('/testimonials/{id}', [TestimonialController::class, 'show'])->name('testimonials.show');
 
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/checkout', [CheckoutController::class, 'index'])->middleware('auth')->name('checkout');
-    Route::post('checkout.process', [CheckoutController::class, 'placeOrder'])->name('checkout.process');
+Route::get('/checkout', [CheckoutController::class, 'index'])->middleware('auth')->name('checkout');
+Route::post('checkout.process', [CheckoutController::class, 'placeOrder'])->name('checkout.process');
 
-    Route::get('/order/success/{order_id}', [CheckoutController::class, 'success'])->name('order.success');
-    Route::get('/order/failed', [CheckoutController::class, 'failed'])->name('order.failed');
+Route::get('/order/success/{order_id}', [CheckoutController::class, 'success'])->name('order.success');
+Route::get('/order/failed', [CheckoutController::class, 'failed'])->name('order.failed');
 
-    Route::post('/razorpay-success', [CheckoutController::class, 'razorpaySuccess'])->name('razorpay.success');
-    Route::post('/razorpay-failed', [CheckoutController::class, 'razorpayFailed'])->name('razorpay.failed');
+Route::post('/razorpay-success', [CheckoutController::class, 'razorpaySuccess'])->name('razorpay.success');
+Route::post('/razorpay-failed', [CheckoutController::class, 'razorpayFailed'])->name('razorpay.failed');
 
-    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get('wishlists', [WishlistController::class, 'index'])->name('wishlist.index');
-    Route::post('/wishlist/store', [WishlistController::class, 'store'])->name('wishlist/store');
-    Route::get('wishlists/count', [WishlistController::class, 'getCount']);
-    Route::post('/wishlist/delete', [WishlistController::class, 'delete'])->name('wishlist.delete');
-    Route::post('wishlist/remove', [WishlistController::class, 'removeWishlistItem']);
+Route::get('orders', [ProfileController::class, 'orderList'])->name('orders.index');
+Route::get('order-details', [ProfileController::class, 'orderDetails'])->name('order-details');
+Route::get('order/returns', [ProfileController::class, 'orderReturnList'])->name('orders.returns');
 
-    Route::get('orders', [ProfileController::class, 'orderList'])->name('orders.index');
-    Route::get('order-details', [ProfileController::class, 'orderDetails'])->name('order-details');
-    Route::get('order/returns', [ProfileController::class, 'orderReturnList'])->name('orders.returns');
-
-    Route::post('cancel-order', [CheckoutController::class, 'cancelOrderRequest'])->name('cancel-order');
-    Route::post('return-order', [CheckoutController::class, 'returnOrderRequest'])->name('return-order');
-
-    Route::get('account', [ProfileController::class, 'getUserAccountInfo'])->name('account');
-    Route::post('/account/update', [ProfileController::class, 'update'])->name('account.update');
-    Route::post('/change-password', [ProfileController::class, 'changePassword'])->name('account.changePassword');
-});
+Route::get('account', [ProfileController::class, 'getUserAccountInfo'])->name('account');
 
 Route::post('/subscribe', [FrontendController::class, 'subscribe'])->name('newsletter.subscribe');
 
@@ -102,42 +82,10 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('login', [AuthController::class, 'login']);
 
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.sendResetLink');
-Route::get('/password/reset/{email}/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset.form');
-Route::post('/password/reset', [ForgotPasswordController::class, 'resetPassword'])->name('password.reset');
-
-Route::group(['middleware' => ['vendor.guest']], function () {
-    Route::controller(VendorController::class)->group(function () {
-        Route::get('/vendor-registration', 'vendorRegister')->name('vendor.register');
-        Route::post('/save-vendor', 'saveRegistration')->name('vendor.save');
-        Route::get('/vendor-login', 'vendorLogin')->name('vendor.login');
-        Route::post('/vendor-do-login', 'vendorDoLogin')->name('vendor.dologin');
-    });
-});
-Route::group(['middleware' => ['vendor.auth']], function () {
-    Route::controller(VendorController::class)->group(function () {
-        Route::get('/vendor/myaccount', 'vendorAccount')->name('vendor.myaccount');
-        Route::get('/vendor/profile', 'vendorProfile')->name('vendor.myprofile');
-        Route::post('/vendor/logout', 'vendorLogout')->name('vendor.logout');
-        Route::get('vendor/product/add', 'addProduct')->name('vendor.product.add');
-        Route::post('vendor/product/save', 'storeProduct')->name('vendor.product.store');
-        Route::get('vendor/product/edit/{id}', 'editProduct')->name('vendor.product.edit');
-        Route::post('vendor/product/update/{id}', 'updateProduct')->name('vendor.product.update');
-        Route::get('vendor/product/destroy/{id}', 'destroyProduct')->name('vendor.product.destroy');
-        Route::get('vendor/products', 'products')->name('vendor.product.index');
-        Route::get('vendor/product/view/{id}', 'viewProduct')->name('vendor.product.view');
-        Route::post('vendor/update', 'vendorUpdate')->name('vendor.update.info');
-    });
-});
-
-
-
 Route::get('/test', [BuilderController::class, 'create']);
 Route::post('/test-add', [BuilderController::class, 'store']);
 Route::get('/get-form', [FormController::class, 'create']);
 Route::post('/store-data', [FormController::class, 'store']);
-
-
 
 Route::prefix('dynamic-forms')->name('dynamic-forms.')->group(function () {
     Route::get('/')->name('index');

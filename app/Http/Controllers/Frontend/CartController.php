@@ -360,11 +360,19 @@ class CartController extends Controller
                 Cart::create($data);
             }
 
-            return response()->json([
-                'status' => true,
-                'message' => trans('messages.product_add_cart_success'),
-                'cart_count' =>  $this->cartCount()
-            ], 200);
+            if (!auth()->user()) {
+                return response()->json([
+                    'status' => true,
+                    'message' => trans('messages.product_add_cart_success'),
+                    'cart_count' =>  $this->cartCount()
+                ], 200)->cookie('guest_token', $guestToken, 60 * 24 * 30);
+            } else {
+                return response()->json([
+                    'status' => true,
+                    'message' => trans('messages.product_add_cart_success'),
+                    'cart_count' =>  $this->cartCount()
+                ], 200);
+            }
         } else {
             return response()->json([
                 'status' => false,

@@ -71,9 +71,16 @@ class CategoryController extends Controller
             'slug' => 'required',
         ]);
 
+        $slug               = $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->name, '-');
+        $slug               = Str::lower($slug);
+        $same_slug_count    = CategoryTranslation::where('slug', 'LIKE', $slug . '%')->count();
+        $slug_suffix        = $same_slug_count ? '-' . $same_slug_count + 1 : '';
+        $slug              .= $slug_suffix;
+
         $category               = new Category;
         $category->name         = $request->name ?? NULL;
         $category->parent_id    = $request->parent_id;
+        $category->slug    = $request->slug;
 
         if ($request->parent_id != "0") {
             $parent = Category::find($request->parent_id);
@@ -90,11 +97,7 @@ class CategoryController extends Controller
         $category->is_active    = ($request->status == 2) ? 0 : 1;
         $category->save();
 
-        $slug               = $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->name, '-');
-        $slug               = Str::lower($slug);
-        $same_slug_count    = CategoryTranslation::where('slug', 'LIKE', $slug . '%')->count();
-        $slug_suffix        = $same_slug_count ? '-' . $same_slug_count + 1 : '';
-        $slug              .= $slug_suffix;
+
 
         $category_translation                       = CategoryTranslation::firstOrNew(['lang' => env('DEFAULT_LANGUAGE'), 'category_id' => $category->id]);
         $category_translation->name                 = $request->name;
@@ -159,8 +162,17 @@ class CategoryController extends Controller
             'slug' => 'required',
         ]);
 
+        $slug = '';
+        if ($request->slug != null) {
+            $slug = strtolower(Str::slug($request->slug, '-'));
+            $same_slug_count = CategoryTranslation::where('slug', 'LIKE', $slug . '%')->where('category_id', '!=', $category->id)->count();
+            $slug_suffix = $same_slug_count > 0 ? '-' . $same_slug_count + 1 : '';
+            $slug .= $slug_suffix;
+        }
+
         if ($request->lang == env("DEFAULT_LANGUAGE")) {
             $category->name         = $request->name;
+            $category->slug         = $request->slug;
             $previous_level = $category->level;
 
             if ($request->parent_id != "0") {
@@ -186,13 +198,7 @@ class CategoryController extends Controller
             $category->allChildCategories()->update(['is_active' => $request->status]);
         }
 
-        $slug = '';
-        if ($request->slug != null) {
-            $slug = strtolower(Str::slug($request->slug, '-'));
-            $same_slug_count = CategoryTranslation::where('slug', 'LIKE', $slug . '%')->where('category_id', '!=', $category->id)->count();
-            $slug_suffix = $same_slug_count > 0 ? '-' . $same_slug_count + 1 : '';
-            $slug .= $slug_suffix;
-        }
+
 
         $category_translation                       = CategoryTranslation::firstOrNew(['lang' => $request->lang, 'category_id' => $category->id]);
         $category_translation->name                 = $request->name;
