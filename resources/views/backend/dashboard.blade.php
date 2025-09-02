@@ -107,42 +107,6 @@
 
 
     <div class="card">
-        <div class="card-header row gutters-5">
-            <div class="col">
-                <h6 class="mb-0">{{  trans('messages.latest_user_searches') }}</h6>
-            </div>
-            
-            <a href="#" class="btn btn-primary">View All</a>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered aiz-table mb-0">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>{{  trans('messages.search_key') }}</th>
-                        <th>{{  trans('messages.user') }}</th>
-                        <th>{{  trans('messages.ip_address') }}</th>
-                        <th>{{  trans('messages.date') }}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($searches as $key => $searche)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $searche->query }}</td>
-                            <td>
-                               
-                            </td>
-                            <td>{{ $searche->ip_address }}</td>
-                            <td>{{ $searche->created_at->format('d-m-Y h:i:s A') }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="card">
         <div class="card-header">
             <h6 class="mb-0">{{  trans('messages.top_12_products') }}</h6>
         </div>

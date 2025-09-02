@@ -417,7 +417,6 @@ class CartController extends Controller
 
             $updatedCart = Cart::where($user['users_id_type'], $user['users_id'])->get(); // Example for authenticated user
 
-            // Return the updated cart summary
             $summary = $this->getCartSummary($updatedCart);
 
             return response()->json([
@@ -436,9 +435,9 @@ class CartController extends Controller
     private function getCartSummary($cartItems)
     {
         $subTotal = $cartItems->sum('price');
-        $discount = 0; // Add logic for discount
-        $shipping = 0; // Add logic for shipping
-        $vatAmount = $subTotal * 0.05; // Example VAT
+        $discount = 0; 
+        $shipping = 0; 
+        $vatAmount = $subTotal * 0.05; 
         $total = $subTotal - $discount + $shipping + $vatAmount;
 
         return [

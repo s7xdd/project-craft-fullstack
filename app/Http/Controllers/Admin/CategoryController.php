@@ -17,8 +17,8 @@ class CategoryController extends Controller
     function __construct()
     {
         $this->middleware('auth');
-       
-        $this->middleware('permission:manage_categories', ['only' => ['index','create','store','edit','update','destroy','updateFeatured']]);
+
+        $this->middleware('permission:manage_categories', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy', 'updateFeatured']]);
     }
     /**
      * Display a listing of the resource.
@@ -41,7 +41,7 @@ class CategoryController extends Controller
             });
         }
         $categories = $categories->paginate(30);
-        return view('backend.categories.index', compact('categories', 'sort_search','catgeory'));
+        return view('backend.categories.index', compact('categories', 'sort_search', 'catgeory'));
     }
 
     /**
@@ -76,9 +76,11 @@ class CategoryController extends Controller
         $category->parent_id    = $request->parent_id;
         if ($request->parent_id != "0") {
             $parent = Category::find($request->parent_id);
-            $category->level = $parent->level + 1;
+            if ($parent) {
+                $category->level = $parent->level + 1;
+            }
         }
-        $category->is_active    = ($request->status ==2) ? 0 : 1;
+        $category->is_active    = ($request->status == 2) ? 0 : 1;
         $category->save();
 
         $slug               = $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->name, '-');
@@ -100,7 +102,7 @@ class CategoryController extends Controller
         $category_translation->twitter_description  = $request->twitter_description;
         $category_translation->save();
 
-        flash(trans('messages.category').' '.trans('messages.created_msg'))->success();
+        flash(trans('messages.category') . ' ' . trans('messages.created_msg'))->success();
         return redirect()->route('categories.index');
     }
 
@@ -154,10 +156,10 @@ class CategoryController extends Controller
             $category->name         = $request->name;
             $previous_level = $category->level;
             if ($request->parent_id != "0") {
-                $category->parent_id = $request->parent_id;
-    
                 $parent = Category::find($request->parent_id);
-                $category->level = $parent->level + 1;
+                if ($parent) {
+                    $category->level = $parent->level + 1;
+                }
             } else {
                 $category->parent_id = 0;
                 $category->level = 0;
@@ -170,7 +172,7 @@ class CategoryController extends Controller
                 CategoryUtility::move_level_up($category->id);
             }
 
-            $category->is_active    = ($request->status ==2) ? 0 : 1;
+            $category->is_active    = ($request->status == 2) ? 0 : 1;
             $category->save();
 
             $category->allChildCategories()->update(['is_active' => $request->status]);
@@ -198,7 +200,7 @@ class CategoryController extends Controller
         $category_translation->save();
 
         Cache::forget('featured_categories');
-        flash(trans('messages.category').' '.trans('messages.updated_msg'))->success();
+        flash(trans('messages.category') . ' ' . trans('messages.updated_msg'))->success();
         return back();
     }
 
@@ -242,7 +244,7 @@ class CategoryController extends Controller
     public function updateStatus(Request $request)
     {
         $category = Category::findOrFail($request->id);
-    
+
         $category->is_active = $request->status;
         $category->save();
         // $category->allChildCategories()->update(['is_active' => $request->status]);
@@ -251,7 +253,8 @@ class CategoryController extends Controller
         return 1;
     }
 
-    public function generateSlug(Request $request){
+    public function generateSlug(Request $request)
+    {
         $slug = Str::slug($request->title);
         echo  $slug;
     }
