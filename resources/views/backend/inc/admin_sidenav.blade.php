@@ -212,6 +212,11 @@
                                     </a>
                                 </li>
                                 <li class="aiz-side-nav-item">
+                                    <a href="{{ route('shipping_configuration.index') }}" class="aiz-side-nav-link">
+                                        <span class="aiz-side-nav-text">Shipping Configuration</span>
+                                    </a>
+                                </li>
+                                <li class="aiz-side-nav-item">
                                     <a href="{{ route('home-slider.index') }}"
                                         class="aiz-side-nav-link {{ areActiveRoutes(['home-slider.index', 'home-slider.create', 'home-slider.edit']) }}">
                                         <span class="aiz-side-nav-text">Home Page Sliders</span>

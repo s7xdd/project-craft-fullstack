@@ -31,133 +31,192 @@ class CheckoutController
         $user = Auth::user();
         $cartController = new CartController();
         $response = $cartController->index();
-       
+
         return view('frontend.checkout', compact('response', 'user'));
     }
 
     public function apply_coupon_code(Request $request)
     {
         $user = getUser();
-        // print_r($user);
-        if($user['users_id'] != ''){
-            $cart_items = Cart::where([$user['users_id_type'] => $user['users_id']])->get();
-            $cartCount = count($cart_items);
-            $coupon = Coupon::where('code', $request->coupon)->first();
+        $userId = $user['users_id'] ?? null;
+        $tempUserId = null;
 
-            if ($cart_items->isEmpty()) {
+        if (!$userId) {
+            $tempUserId = $request->cookie('guest_token');
+            if (!$tempUserId) {
                 return response()->json([
                     'success' => false,
-                    'message' => trans('messages.cart_empty')
+                    'message' => trans('messages.user_not_found')
                 ], 200);
             }
+        }
 
-            if ($coupon == null) {
-                return response()->json([
-                    'success' => false,
-                    'message' => trans('messages.invalid_coupon') 
-                ], 200);
-            }
+        $cartItemsQuery = Cart::query();
+        if ($userId) {
+            $cartItemsQuery->where('user_id', $userId);
+        } else {
+            $cartItemsQuery->where('temp_user_id', $tempUserId);
+        }
+        $cart_items = $cartItemsQuery->get();
+        $cartCount = count($cart_items);
 
-            $in_range = strtotime(date('d-m-Y')) >= $coupon->start_date && strtotime(date('d-m-Y')) <= $coupon->end_date;
-
-            if (!$in_range) {
-                return response()->json([
-                    'success' => false,
-                    'message' => trans('messages.coupon_expired') 
-                ], 200);
-            }
-
-            if($coupon->one_time_use == 1){
-                $is_used = CouponUsage::where('user_id', $user['users_id'])->where('coupon_id', $coupon->id)->first() != null;
-
-                if ($is_used) {
-                    return response()->json([
-                        'success' => false,
-                        'message' => trans('messages.already_used_coupon') 
-                    ], 200);
-                }
-            }
-
-            $coupon_details = json_decode($coupon->details);
-
-            if ($coupon->type == 'cart_base') {
-                $subtotal = 0;
-                $tax = 0;
-                $shipping = 0;
-                foreach ($cart_items as $key => $cartItem) {
-                    $subtotal += $cartItem['offer_price'] * $cartItem['quantity'];
-                    $tax += $cartItem['tax'];
-                    $shipping += $cartItem['shipping'];
-                }
-                $sum = $subtotal + $tax + $shipping;
-
-                if ($sum >= $coupon_details->min_buy) {
-                    if ($coupon->discount_type == 'percent') {
-                        $coupon_discount = ($sum * $coupon->discount) / 100;
-                        if ($coupon_discount > $coupon_details->max_discount) {
-                            $coupon_discount = $coupon_details->max_discount;
-                        }
-                    } elseif ($coupon->discount_type == 'amount') {
-                        $coupon_discount = $coupon->discount;
-                    }
-
-                    Cart::where('user_id', $user['users_id'])->update([
-                        'discount' => $coupon_discount / $cartCount,
-                        'coupon_code' => $request->coupon,
-                        'coupon_applied' => 1
-                    ]);
-
-                    return response()->json([
-                        'success' => true,
-                        'message' => trans('messages.coupon_applied')
-                    ], 200);
-                }else{
-                    return response()->json([
-                        'success' => false,
-                        'message' => trans('messages.coupon_cannot_applied')
-                    ], 200);
-                }
-            } elseif ($coupon->type == 'product_base') {
-                $coupon_discount = 0;
-
-                foreach ($cart_items as $key => $cartItem) {
-                    foreach ($coupon_details as $key => $coupon_detail) {
-                        if ($coupon_detail->product_id == $cartItem['product_id']) {
-                            if ($coupon->discount_type == 'percent') {
-                                $coupon_discount += ($cartItem['offer_price'] * $coupon->discount / 100) * $cartItem['quantity'];
-                            } elseif ($coupon->discount_type == 'amount') {
-                                $coupon_discount += $coupon->discount * $cartItem['quantity'];
-                            }
-                        }
-                    }
-                }
-
-                Cart::where('user_id', $user['users_id'])->update([
-                    'discount' => $coupon_discount / $cartCount,
-                    'coupon_code' => $request->coupon,
-                    'coupon_applied' => 1
-                ]);
-
-                return response()->json([
-                    'success' => true,
-                    'message' => trans('messages.coupon_applied')
-                ], 200);
-            }
-        }else{
+        if ($cart_items->isEmpty()) {
             return response()->json([
                 'success' => false,
-                'message' => trans('messages.user_not_found')
+                'message' => trans('messages.cart_empty')
             ], 200);
         }
+
+        $coupon = Coupon::where('code', $request->coupon)->first();
+        if ($coupon == null) {
+            return response()->json([
+                'success' => false,
+                'message' => trans('messages.invalid_coupon')
+            ], 200);
+        }
+
+        $today = strtotime(date('d-m-Y'));
+        if ($today < $coupon->start_date || $today > $coupon->end_date) {
+            return response()->json([
+                'success' => false,
+                'message' => trans('messages.coupon_expired')
+            ], 200);
+        }
+
+        if ($coupon->one_time_use == 1 && $userId) {
+            $is_used = CouponUsage::where('user_id', $userId)
+                ->where('coupon_id', $coupon->id)
+                ->exists();
+            if ($is_used) {
+                return response()->json([
+                    'success' => false,
+                    'message' => trans('messages.already_used_coupon')
+                ], 200);
+            }
+        }
+
+        $coupon_details = json_decode($coupon->details);
+        $coupon_discount = 0;
+
+        if ($coupon->type == 'cart_base') {
+            $subtotal = 0;
+            $tax = 0;
+            $shipping = 0;
+            foreach ($cart_items as $cartItem) {
+                $subtotal += $cartItem->offer_price * $cartItem->quantity;
+                $tax += $cartItem->tax;
+                $shipping += $cartItem->shipping_cost ?? 0;
+            }
+            $sum = $subtotal + $tax + $shipping;
+
+            if ($sum < $coupon_details->min_buy) {
+                return response()->json([
+                    'success' => false,
+                    'message' => trans('messages.coupon_cannot_applied')
+                ], 200);
+            }
+
+            if ($coupon->discount_type == 'percent') {
+                $coupon_discount = ($sum * $coupon->discount) / 100;
+                if ($coupon_discount > $coupon_details->max_discount) {
+                    $coupon_discount = $coupon_details->max_discount;
+                }
+            } elseif ($coupon->discount_type == 'amount') {
+                $coupon_discount = $coupon->discount;
+            }
+
+            $discountPerItem = $coupon_discount / $cartCount;
+
+            $updateQuery = Cart::query();
+            if ($userId) {
+                $updateQuery->where('user_id', $userId);
+            } else {
+                $updateQuery->where('temp_user_id', $tempUserId);
+            }
+            $updateQuery->update([
+                'discount' => $discountPerItem,
+                'coupon_code' => $request->coupon,
+                'coupon_applied' => 1,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => trans('messages.coupon_applied')
+            ], 200);
+        } elseif ($coupon->type == 'product_base') {
+            foreach ($cart_items as $cartItem) {
+                foreach ($coupon_details as $coupon_detail) {
+                    if ($coupon_detail->product_id == $cartItem->product_id) {
+                        if ($coupon->discount_type == 'percent') {
+                            $coupon_discount += ($cartItem->offer_price * $coupon->discount / 100) * $cartItem->quantity;
+                        } elseif ($coupon->discount_type == 'amount') {
+                            $coupon_discount += $coupon->discount * $cartItem->quantity;
+                        }
+                    }
+                }
+            }
+
+            if ($coupon_discount <= 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => trans('messages.coupon_cannot_applied')
+                ], 200);
+            }
+
+            $discountPerItem = $coupon_discount / $cartCount;
+
+            $updateQuery = Cart::query();
+            if ($userId) {
+                $updateQuery->where('user_id', $userId);
+            } else {
+                $updateQuery->where('temp_user_id', $tempUserId);
+            }
+            $updateQuery->update([
+                'discount' => $discountPerItem,
+                'coupon_code' => $request->coupon,
+                'coupon_applied' => 1,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => trans('messages.coupon_applied')
+            ], 200);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => trans('messages.coupon_cannot_applied')
+        ], 200);
     }
+
 
     public function remove_coupon_code(Request $request)
     {
         $user = getUser();
-        Cart::where([$user['users_id_type'] => $user['users_id']])->update([
+        $userId = $user['users_id'] ?? null;
+        $tempUserId = null;
+
+        if (!$userId) {
+            $tempUserId = $request->cookie('guest_token');
+            if (!$tempUserId) {
+                return response()->json([
+                    'success' => false,
+                    'message' => trans('messages.user_not_found')
+                ], 200);
+            }
+        }
+
+        $updateQuery = Cart::query();
+        if ($userId) {
+            $updateQuery->where('user_id', $userId);
+        } else {
+            $updateQuery->where('temp_user_id', $tempUserId);
+        }
+
+        $updateQuery->update([
             'discount' => 0.00,
-            'coupon_code' => "",
-            'coupon_applied' => 0
+            'coupon_code' => '',
+            'coupon_applied' => 0,
         ]);
 
         return response()->json([
@@ -166,7 +225,8 @@ class CheckoutController
         ], 200);
     }
 
-    public function placeOrder(Request $request){
+    public function placeOrder(Request $request)
+    {
 
 
         $validatedData = $request->validate([
@@ -174,14 +234,14 @@ class CheckoutController
             'billing_address' => 'required|string|max:255',
             'billing_city' => 'required|string|max:255',
             'billing_zipcode' => 'required|string|max:10',
-            'billing_phone' => 'required|string|max:15',  
+            'billing_phone' => 'required|string|max:15',
             'billing_email' => 'required|email|max:255',
             'shipping_name' => 'nullable|string|max:255',
             'shipping_address' => 'nullable|string|max:255',
             'shipping_city' => 'nullable|string|max:255',
             'shipping_zipcode' => 'nullable|string|max:10',
-            'shipping_phone' => 'nullable|string|max:15',  
-        ],[
+            'shipping_phone' => 'nullable|string|max:15',
+        ], [
             'billing_name.required' => 'This field is required.',
             'billing_address.required' => 'This field is required.',
             'billing_city.required' => 'This field is required.',
@@ -200,7 +260,7 @@ class CheckoutController
 
         $user = getUser();
         $user_id = $user['users_id'];
-        
+
         // if($user_id != ''){
         //     $address = Address::where('id', $address_id)->first();
         //     if($address){
@@ -249,9 +309,9 @@ class CheckoutController
         $shipping_address_json = json_encode($shipping_address);
         $billing_address_json = json_encode($billing_address);
 
-        $carts = Cart::where('user_id', $user_id)->orderBy('id','asc')->get();
-            
-        if(!empty($carts[0])){
+        $carts = Cart::where('user_id', $user_id)->orderBy('id', 'asc')->get();
+
+        if (!empty($carts[0])) {
             $carts->load(['product', 'product_stock']);
 
             $sub_total = $discount = $coupon_applied = $total_coupon_discount = $grand_total = $total_shipping = $total_tax = 0;
@@ -286,14 +346,14 @@ class CheckoutController
 
             $orderItems = $productQuantities = [];
 
-            foreach($carts as $data){
+            foreach ($carts as $data) {
                 $sub_total = $sub_total + ($data->price * $data->quantity);
                 $total_tax = $total_tax + $data->tax;
                 $total_shipping = $total_shipping + $data->shipping_cost;
                 $discount = $discount + (($data->price * $data->quantity) - ($data->offer_price * $data->quantity)) + $data->offer_discount;
                 $coupon_code = $data->coupon_code;
                 $coupon_applied = $data->coupon_applied;
-                if($data->coupon_applied == 1){
+                if ($data->coupon_applied == 1) {
                     $total_coupon_discount += $data->discount;
                 }
                 $orderItems[] = [
@@ -327,63 +387,62 @@ class CheckoutController
             $order->coupon_code         = $coupon_code;
             $order->save();
 
-            if($coupon_code != ''){
+            if ($coupon_code != '') {
                 $coupon_usage = new CouponUsage;
                 $coupon_usage->user_id = $user_id;
                 $coupon_usage->coupon_id = Coupon::where('code', $coupon_code)->first()->id;
                 $coupon_usage->save();
             }
-            if($request->payment_method == 'cod'){
+            if ($request->payment_method == 'cod') {
                 reduceProductQuantity($productQuantities);
                 Cart::where('user_id', $user_id)->delete();
 
                 // NotificationUtility::sendOrderPlacedNotification($order);
                 // NotificationUtility::sendNotification($order, 'created');
-            
+
                 return redirect()->route('order.success', $order->id);
-            }else if($request->payment_method == 'razorpay'){
+            } else if ($request->payment_method == 'razorpay') {
                 $api = new Api(env('RAZORPAY_KEY_ID'), env('RAZORPAY_KEY_SECRET'));
-                
+
                 $razorpayOrder = $api->order->create([
                     'receipt' => $order->code,
                     'amount' => round($grand_total * 100),
                     'currency' => 'INR',
-                    'payment_capture' => 1 
+                    'payment_capture' => 1
                 ]);
-                
+
                 $order->razorpay_order_id = $razorpayOrder['id'];
                 $order->save();
-                
+
                 return view('frontend.razorpay-checkout', compact('order', 'razorpayOrder'));
-            }else{
-              
-                
+            } else {
             }
-        }else{
+        } else {
             return redirect()->route('order.failed');
         }
     }
-    
-    public function successPayment(Request $request){
+
+    public function successPayment(Request $request)
+    {
         $encResponse = $request->encResp;          //This is the response sent by the CCAvenue Server
-        $rcvdString = decryptCC($encResponse,env('CCA_WORKING_KEY')); //Crypto Decryption used as per the specified working key.
+        $rcvdString = decryptCC($encResponse, env('CCA_WORKING_KEY')); //Crypto Decryption used as per the specified working key.
         $order_status = $order_code = $tracking_id = "";
         $decryptValues = explode('&', $rcvdString);
         $dataSize = sizeof($decryptValues);
         $details = [];
-        for($i = 0; $i < $dataSize; $i++) {
-            $information=explode('=',$decryptValues[$i]);
+        for ($i = 0; $i < $dataSize; $i++) {
+            $information = explode('=', $decryptValues[$i]);
             $details[$information[0]] = $information[1];
-            if($i==0)  $order_code=$information[1];
-            if($i==1)  $tracking_id=$information[1];
-            if($i==3)  $order_status=$information[1];
+            if ($i == 0)  $order_code = $information[1];
+            if ($i == 1)  $tracking_id = $information[1];
+            if ($i == 3)  $order_status = $information[1];
         }
-     
+
         $payment_details = json_encode($details);
 
-        if($order_code != ''){
-            $order = Order::where('code','=',$order_code)->firstOrFail();
-            if(strtolower($order_status) === "success"){
+        if ($order_code != '') {
+            $order = Order::where('code', '=', $order_code)->firstOrFail();
+            if (strtolower($order_status) === "success") {
                 $order->payment_status = 'paid';
                 $order->payment_tracking_id = $tracking_id;
                 $order->payment_details = $payment_details;
@@ -394,53 +453,54 @@ class CheckoutController
                 NotificationUtility::sendNotification($order, 'created');
                 $message = getOrderStatusMessageTest($order->user->name, $order->code);
                 $userPhone = $order->user->phone ?? '';
-                if($userPhone != '' && $message['order_placed'] != ''){
+                if ($userPhone != '' && $message['order_placed'] != '') {
                     SendSMSUtility::sendSMS($userPhone, $message['order_placed']);
                 }
-    
+
                 $orderDetails = OrderDetail::where('order_id', $order->id)->get();
 
-                if(!empty($orderDetails[0])){
-                    foreach($orderDetails as $od){
+                if (!empty($orderDetails[0])) {
+                    foreach ($orderDetails as $od) {
                         $od->payment_status = 'paid';
                         $od->save();
 
                         $product_stock = ProductStock::where('product_id', $od->product_id)->first();
-                        $product_stock->qty -= ($od->quantity >= $product_stock->qty) ? 0: ($product_stock->qty - $od->quantity);
+                        $product_stock->qty -= ($od->quantity >= $product_stock->qty) ? 0 : ($product_stock->qty - $od->quantity);
                         $product_stock->save();
                     }
                 }
-    
+
                 $orderPayments = new OrderPayments();
                 $orderPayments->order_id = $order->id;
                 $orderPayments->payment_status = $order_status;
                 $orderPayments->payment_details = $payment_details;
                 $orderPayments->save();
-            }else{
-                $orderDetails = Order::where('code','=',$order_code)->delete();
-            }    
+            } else {
+                $orderDetails = Order::where('code', '=', $order_code)->delete();
+            }
         }
-        return redirect(env('CCA_PAYMENT_SUCCESS').'?status='.$order_status.'&code='.$order_code);
+        return redirect(env('CCA_PAYMENT_SUCCESS') . '?status=' . $order_status . '&code=' . $order_code);
     }
 
-    public function cancelPayment(Request $request){
+    public function cancelPayment(Request $request)
+    {
         $encResponse = $request->encResp;          //This is the response sent by the CCAvenue Server
-        $rcvdString = decryptCC($encResponse,env('CCA_WORKING_KEY')); //Crypto Decryption used as per the specified working key.
+        $rcvdString = decryptCC($encResponse, env('CCA_WORKING_KEY')); //Crypto Decryption used as per the specified working key.
         $order_status = $order_code = "";
         $decryptValues = explode('&', $rcvdString);
         $dataSize = sizeof($decryptValues);
         $details = [];
-        for($i = 0; $i < $dataSize; $i++) {
-            $information=explode('=',$decryptValues[$i]);
+        for ($i = 0; $i < $dataSize; $i++) {
+            $information = explode('=', $decryptValues[$i]);
             $details[$information[0]] = $information[1];
-            if($i==0)  $order_code=$information[1];
-            if($i==3)  $order_status=$information[1];
+            if ($i == 0)  $order_code = $information[1];
+            if ($i == 3)  $order_status = $information[1];
         }
-     
+
         $payment_details = json_encode($details);
-        
-        if($order_code != ''){
-            $orderDetails = Order::where('code','=',$order_code)->delete();
+
+        if ($order_code != '') {
+            $orderDetails = Order::where('code', '=', $order_code)->delete();
 
             // $orderPayments = new OrderPayments();
             // $orderPayments->order_id = $orderDetails->id;
@@ -448,30 +508,30 @@ class CheckoutController
             // $orderPayments->payment_details = $payment_details;
             // $orderPayments->save();
         }
-        return redirect(env('CCA_PAYMENT_CANCEL').'?status='.$order_status.'&code='.$order_code);
+        return redirect(env('CCA_PAYMENT_CANCEL') . '?status=' . $order_status . '&code=' . $order_code);
     }
 
     public function razorpaySuccess(Request $request)
     {
         $input = $request->all();
-        
+
         $order = Order::find($request->order_id);
-        
+
         if (!$order) {
             return redirect()->route('order.failed')->with('error', 'Order not found.');
         }
-        
+
         $api = new Api(env('RAZORPAY_KEY_ID'), env('RAZORPAY_KEY_SECRET'));
-        
+
         try {
             $attributes = [
                 'razorpay_order_id' => $input['razorpay_order_id'],
                 'razorpay_payment_id' => $input['razorpay_payment_id'],
                 'razorpay_signature' => $input['razorpay_signature']
             ];
-            
+
             $api->utility->verifyPaymentSignature($attributes);
-            
+
             $order->payment_status = 'paid';
             $order->payment_type = 'razorpay';
             $order->payment_details = json_encode([
@@ -480,13 +540,13 @@ class CheckoutController
                 'razorpay_signature' => $input['razorpay_signature']
             ]);
             $order->save();
-            
+
             $orderDetails = $order->orderDetails;
             if (!empty($orderDetails)) {
                 foreach ($orderDetails as $od) {
                     $od->payment_status = 'paid';
                     $od->save();
-                    
+
                     $product_stock = ProductStock::where('product_id', $od->product_id)->first();
                     if ($product_stock) {
                         $product_stock->qty -= ($od->quantity >= $product_stock->qty) ? 0 : ($product_stock->qty - $od->quantity);
@@ -494,9 +554,9 @@ class CheckoutController
                     }
                 }
             }
-            
+
             Cart::where('user_id', $order->user_id)->delete();
-            
+
             $orderPayments = new OrderPayments();
             $orderPayments->order_id = $order->id;
             $orderPayments->payment_status = 'success';
@@ -506,22 +566,21 @@ class CheckoutController
                 'razorpay_signature' => $input['razorpay_signature']
             ]);
             $orderPayments->save();
-            
+
             NotificationUtility::sendOrderPlacedNotification($order);
             NotificationUtility::sendNotification($order, 'created');
-            
+
             $message = getOrderStatusMessageTest($order->user->name, $order->code);
             $userPhone = $order->user->phone ?? '';
             if ($userPhone != '' && $message['order_placed'] != '') {
                 SendSMSUtility::sendSMS($userPhone, $message['order_placed']);
             }
-            
+
             return redirect()->route('order.success', $order->id);
-            
         } catch (\Exception $e) {
             $order->payment_status = 'failed';
             $order->save();
-            
+
             $orderPayments = new OrderPayments();
             $orderPayments->order_id = $order->id;
             $orderPayments->payment_status = 'failed';
@@ -530,7 +589,7 @@ class CheckoutController
                 'input' => $input
             ]);
             $orderPayments->save();
-            
+
             return redirect()->route('order.failed')->with('error', 'Payment verification failed.');
         }
     }
@@ -538,32 +597,33 @@ class CheckoutController
     public function razorpayFailed(Request $request)
     {
         $input = $request->all();
-        
+
         $order = Order::find($request->order_id);
-        
+
         if ($order) {
             $order->payment_status = 'failed';
             $order->payment_type = 'razorpay';
             $order->save();
-            
+
             $orderPayments = new OrderPayments();
             $orderPayments->order_id = $order->id;
             $orderPayments->payment_status = 'failed';
             $orderPayments->payment_details = json_encode($input);
             $orderPayments->save();
         }
-        
+
         return redirect()->route('order.failed')->with('error', 'Payment failed. Please try again.');
     }
 
-    public function cancelOrderRequest(Request $request){
+    public function cancelOrderRequest(Request $request)
+    {
         $order_id = $request->order_id ?? '';
         $reason   = $request->reason ?? '';
         $user = getUser();
-        if($order_id != ''){
+        if ($order_id != '') {
             $order = Order::find($order_id);
-            if($order){
-                if($order->cancel_request == 0 && $order->delivery_status == "pending"){
+            if ($order) {
+                if ($order->cancel_request == 0 && $order->delivery_status == "pending") {
                     $order->cancel_request = 1;
                     $order->cancel_request_date = date('Y-m-d H:i:s');
                     $order->cancel_reason = $reason;
@@ -582,24 +642,24 @@ class CheckoutController
                     //                 <p>Best regards,</p>
                     //                 <p>Team ".env('APP_NAME')."</p>";
                     // Mail::to(env('MAIL_ADMIN'))->queue(new EmailManager($array));
-                    
+
                     return response()->json([
                         'status' => true,
                         'message' => trans('messages.request_success')
                     ], 200);
-                }else{
+                } else {
                     return response()->json([
                         'status' => false,
                         'message' => trans('messages.request_already_send')
                     ], 200);
                 }
-            }else{
+            } else {
                 return response()->json([
                     'status' => false,
                     'message' => trans('messages.not_found')
                 ], 200);
             }
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
                 'message' => trans('messages.not_found')
@@ -607,14 +667,15 @@ class CheckoutController
         }
     }
 
-    public function returnOrderRequest(Request $request){
+    public function returnOrderRequest(Request $request)
+    {
         $order_id = $request->order_id ?? '';
         $reason   = $request->reason ?? '';
         $user = getUser();
-        if($order_id != ''){
+        if ($order_id != '') {
             $order = Order::find($order_id);
-            if($order){
-                if($order->return_request == 0 && $order->delivery_status == "delivered"){
+            if ($order) {
+                if ($order->return_request == 0 && $order->delivery_status == "delivered") {
                     $order->return_request = 1;
                     $order->return_request_date = date('Y-m-d H:i:s');
                     $order->return_reason = $reason;
@@ -633,24 +694,24 @@ class CheckoutController
                     //                 <p>Best regards,</p>
                     //                 <p>Team ".env('APP_NAME')."</p>";
                     // Mail::to(env('MAIL_ADMIN'))->queue(new EmailManager($array));
-                    
+
                     return response()->json([
                         'status' => true,
                         'message' => trans('messages.request_success')
                     ], 200);
-                }else{
+                } else {
                     return response()->json([
                         'status' => false,
                         'message' => trans('messages.request_already_send')
                     ], 200);
                 }
-            }else{
+            } else {
                 return response()->json([
                     'status' => false,
                     'message' => trans('messages.not_found')
                 ], 200);
             }
-        }else{
+        } else {
             return response()->json([
                 'status' => false,
                 'message' => trans('messages.not_found')

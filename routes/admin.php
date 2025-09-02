@@ -228,6 +228,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/subscribers', [PageController::class, 'subscribers'])->name('subscribers.index');
     Route::get('/subscribers/destroy/{id}', [PageController::class, 'subscribersDestroy'])->name('subscriber.destroy');
 
+    Route::get('/business-settings/shipping-configuration', [BusinessSettingsController::class, 'shipping_configuration'])->name('shipping_configuration.index');
+    Route::post('/business-settings/shipping-configuration/update', [BusinessSettingsController::class, 'shipping_configuration_update'])->name('shipping_configuration.update');
     Route::post('/business-settings/update', [BusinessSettingsController::class, 'update'])->name('business_settings.update');
     Route::resource('vendors', VendorController::class);
     Route::get('vendors_ban/{vendor}', [VendorController::class, 'ban'])->name('vendors.ban');

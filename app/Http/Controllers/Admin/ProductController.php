@@ -40,7 +40,7 @@ class ProductController extends Controller
         $sort_search = null;
         $products = Product::orderBy('created_at', 'desc');
         $category = ($request->has('category')) ? $request->category : '';
-        
+
         if ($request->type != null) {
             $var = explode(",", $request->type);
             $col_name = $var[0];
@@ -57,16 +57,16 @@ class ProductController extends Controller
             $childIds = [];
             $categoryfilter = $request->category;
             $childIds[] = array($request->category);
-            
-            if($categoryfilter != ''){
+
+            if ($categoryfilter != '') {
                 $childIds[] = getChildCategoryIds($categoryfilter);
             }
 
-            if(!empty($childIds)){
+            if (!empty($childIds)) {
                 $childIds = array_merge(...$childIds);
                 $childIds = array_unique($childIds);
             }
-            
+
             $products = $products->whereHas('category', function ($q) use ($childIds) {
                 $q->whereIn('id', $childIds);
             });
@@ -81,32 +81,25 @@ class ProductController extends Controller
                 });
         }
 
-       
+
 
         $products = $products->paginate(15);
         $type = 'All';
 
-        return view('backend.products.index', compact('category','products', 'type', 'col_name', 'query', 'seller_id', 'sort_search'));
+        return view('backend.products.index', compact('category', 'products', 'type', 'col_name', 'query', 'seller_id', 'sort_search'));
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $categories = Category::where('parent_id', 0)
-            ->with('childrenCategories')
-            ->get();
+        $categories = Category::get();
+
 
         return view('backend.products.create', compact('categories'));
     }
 
     public function add_more_choice_option(Request $request)
     {
-        $all_attribute_values = AttributeValue::with('attribute')->where('is_active',1)->where('attribute_id', $request->attribute_id)->get();
+        $all_attribute_values = AttributeValue::with('attribute')->where('is_active', 1)->where('attribute_id', $request->attribute_id)->get();
 
         $html = '';
 
@@ -119,7 +112,7 @@ class ProductController extends Controller
 
     public function get_attribute_values(Request $request)
     {
-        $all_attribute_values = AttributeValue::with('attribute')->where('is_active',1)->where('attribute_id', $request->attribute_id)->get();
+        $all_attribute_values = AttributeValue::with('attribute')->where('is_active', 1)->where('attribute_id', $request->attribute_id)->get();
 
         $html = '';
 
@@ -130,28 +123,18 @@ class ProductController extends Controller
         echo json_encode($html);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        // echo '<pre>';
-        // echo env('DEFAULT_LANGUAGE', 'en');
-        // // print_r($request->all());
-        // die;
         $skuMain = '';
-        if($request->has('products')){
+        if ($request->has('products')) {
             $products = $request->products;
-            if(isset($products[0])){
+            if (isset($products[0])) {
                 $skuMain = $products[0]['sku'];
             }
         }
-       
+
         $product = new Product;
-        $product->type= $request->type;
+        $product->type = $request->type;
         $product->deposit = $request->has('deposit') ? $request->deposit : 0;
         $product->name = $request->name;
         $product->category_id = $request->category_id;
@@ -175,10 +158,6 @@ class ProductController extends Controller
             $product->discount_end_date   = strtotime($date_var[1]);
         }
 
-        // if ($request->hasFile('pdf')) {
-        //     $product->pdf = $request->pdf->store('uploads/products/pdf');
-        // }
-       
         $slug = $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->name, '-');
         $same_slug_count = Product::where('slug', 'LIKE', $slug . '%')->count();
         $slug_suffix = $same_slug_count ? '-' . $same_slug_count + 1 : '';
@@ -186,33 +165,11 @@ class ProductController extends Controller
 
         $product->slug = $slug;
 
-        // $choice_options = array();
-
-        // if ($request->has('main_attributes')) {
-        //     foreach ($request->main_attributes as $key => $no) {
-        //         $str = 'choice_options_' . $no;
-
-        //         $item['attribute_id'] = $no;
-
-        //         $data = array();
-        //         // foreach (json_decode($request[$str][0]) as $key => $eachValue) {
-        //         foreach ($request[$str] as $key => $eachValue) {
-        //             // array_push($data, $eachValue->value);
-        //             array_push($data, $eachValue);
-        //         }
-
-        //         $item['values'] = $data;
-        //         array_push($choice_options, $item);
-        //     }
-        // }
-
         if (!empty($request->main_attributes)) {
             $product->attributes = json_encode($request->main_attributes);
         } else {
             $product->attributes = json_encode(array());
         }
-
-        // $product->choice_options = json_encode($choice_options, JSON_UNESCAPED_UNICODE);
 
         $product->published = 1;
         if ($request->button == 'draft') {
@@ -255,7 +212,7 @@ class ProductController extends Controller
             }
 
             foreach ($request->file('gallery_images') as $key => $file) {
-                $gallery[] = $this->downloadAndResizeImage('main_product',$file, $product->sku, false, $count + $key);
+                $gallery[] = $this->downloadAndResizeImage('main_product', $file, $product->sku, false, $count + $key);
             }
             $product->photos = implode(',', array_merge($old_gallery, $gallery));
         }
@@ -277,7 +234,7 @@ class ProductController extends Controller
                     Storage::delete($product->thumbnail_img);
                 }
             }
-            $gallery = $this->downloadAndResizeImage('main_product',$request->file('thumbnail_image'), $product->sku, true);
+            $gallery = $this->downloadAndResizeImage('main_product', $request->file('thumbnail_image'), $product->sku, true);
             $product->thumbnail_img = $gallery;
         }
 
@@ -326,21 +283,21 @@ class ProductController extends Controller
             }
         }
 
-        if($request->has('products')){
+        if ($request->has('products')) {
             $products = $request->products;
             $product_attributes = array();
-            foreach($products as $prod){
+            foreach ($products as $prod) {
 
                 $product_stock = new ProductStock;
                 $product_stock->product_id = $product->id;
                 $product_stock->sku = $prod['sku'];
-                $product_stock->price = $prod['price'];// $prod['price'];
+                $product_stock->price = $prod['price']; // $prod['price'];
                 $product_stock->qty = $prod['current_stock'];
 
                 $offertag       = '';
                 $productOrgPrice = $prod['price'];
                 $discountPrice = $productOrgPrice;
-               
+
                 $discount_applicable = false;
                 if (strtotime(date('d-m-Y H:i:s')) >= $product->discount_start_date && strtotime(date('d-m-Y H:i:s')) <= $product->discount_end_date) {
                     if ($product->discount_type == 'percent') {
@@ -348,19 +305,19 @@ class ProductController extends Controller
                         $offertag = $product->discount . '% OFF';
                     } elseif ($product->discount_type == 'amount') {
                         $discountPrice = $productOrgPrice - $product->discount;
-                        $offertag = 'AED '.$product->discount.' OFF';
+                        $offertag = 'AED ' . $product->discount . ' OFF';
                     }
                 }
-                
+
                 $product_stock->price       = $productOrgPrice;
                 $product_stock->offer_price = $discountPrice;
                 $product_stock->offer_tag   = $offertag;
-            
-                $variantImage = (isset($prod['variant_images'])) ? $this->downloadAndResizeImage('varient',$prod['variant_images'], $prod['sku'], false) : NULL;
+
+                $variantImage = (isset($prod['variant_images'])) ? $this->downloadAndResizeImage('varient', $prod['variant_images'], $prod['sku'], false) : NULL;
                 $product_stock->image = $variantImage;
 
                 $product_stock->save();
-                
+
                 if ($request->has('main_attributes')) {
                     foreach ($request->main_attributes as $key => $no) {
                         $attrId = 'choice_options_' . $no;
@@ -372,14 +329,13 @@ class ProductController extends Controller
                         ];
                     }
                 }
-               
             }
-            if(!empty($product_attributes)){
+            if (!empty($product_attributes)) {
                 ProductAttributes::insert($product_attributes);
             }
         }
 
-        flash(trans('messages.product').' '.trans('messages.created_msg'))->success();
+        flash(trans('messages.product') . ' ' . trans('messages.created_msg'))->success();
 
         Artisan::call('view:clear');
         Artisan::call('cache:clear');
@@ -387,45 +343,22 @@ class ProductController extends Controller
         return redirect()->route('products.all');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    public function show($id) {}
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function admin_product_edit(Request $request, $id)
     {
         $lang = $request->lang;
-       
+
         $product = Product::with(['tabs' => function ($query) use ($lang) {
             $query->where('lang', $lang);
-        }, 'seo','stocks'])->findOrFail($id);
+        }, 'seo', 'stocks'])->findOrFail($id);
 
-       
+
         $tags = json_decode($product->tags);
-        $categories = Category::where('parent_id', 0)
-            ->with('childrenCategories')
-            ->get();
+        $categories = Category::get();
         return view('backend.products.edit', compact('product', 'categories', 'tags', 'lang'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function seller_product_edit(Request $request, $id)
     {
         $product = Product::findOrFail($id);
@@ -449,84 +382,65 @@ class ProductController extends Controller
         $data_url = '';
 
         // try {
-            $ext = $imageUrl->getClientOriginalExtension();
-            
-            if($product_type == 'main_product'){
-                $path = 'products/' . Carbon::now()->year . '/' . Carbon::now()->format('m') . '/' . $sku . '/main/';
-            }else{
-                $path = 'products/' . Carbon::now()->year . '/' . Carbon::now()->format('m') . '/' . $sku . '/';
-            }
-            
+        $ext = $imageUrl->getClientOriginalExtension();
+
+        if ($product_type == 'main_product') {
+            $path = 'products/' . Carbon::now()->year . '/' . Carbon::now()->format('m') . '/' . $sku . '/main/';
+        } else {
+            $path = 'products/' . Carbon::now()->year . '/' . Carbon::now()->format('m') . '/' . $sku . '/';
+        }
+
+
+        if ($mainImage) {
+            $filename = $path . $sku . '.' . $ext;
+        } else {
+            $n = $sku . '_gallery_' .  $count;
+            $filename = $path . $n . '.' . $ext;
+        }
+
+
+        $imageContents = file_get_contents($imageUrl);
+
+        Storage::disk('public')->put($filename, $imageContents);
+        $data_url = Storage::url($filename);
+
+        $image = Image::make($imageContents);
+
+        $sizes = config('app.img_sizes');
+
+        foreach ($sizes as $size) {
+            $resizedImage = $image->resize($size, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
 
             if ($mainImage) {
-                $filename = $path . $sku . '.' . $ext;
+                $filename2 = $path . $sku . "_{$size}px" . '.' . $ext;
             } else {
-                $n = $sku . '_gallery_' .  $count;
-                $filename = $path . $n . '.' . $ext;
+                $n = $sku . '_gallery_' .  $count . "_{$size}px";
+                $filename2 = $path . $n . '.' . $ext;
             }
 
-            
-            // Download the image from the given URL
-            $imageContents = file_get_contents($imageUrl);
-
-            // Save the original image in the storage folder
-            Storage::disk('public')->put($filename, $imageContents);
-            $data_url = Storage::url($filename);
-           
-            // Create an Intervention Image instance for the downloaded image
-            $image = Image::make($imageContents);
-           
-            // Resize and save three additional copies of the image with different sizes
-            $sizes = config('app.img_sizes'); // Specify the desired sizes in pixels
-           
-            foreach ($sizes as $size) {
-                $resizedImage = $image->resize($size, null, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-
-                if ($mainImage) {
-                    $filename2 = $path . $sku . "_{$size}px" . '.' . $ext;
-                } else {
-                    $n = $sku . '_gallery_' .  $count . "_{$size}px";
-                    $filename2 = $path . $n . '.' . $ext;
-                }
-
-                // Save the resized image in the storage folder
-                Storage::disk('public')->put($filename2, $resizedImage->encode('jpg'));
-
-                // $data_url[] = Storage::url($filename2);
-            }
-        // } catch (Exception $e) {
-        //     echo 'catch';
-        //     die;
-        // }
-
+            Storage::disk('public')->put($filename2, $resizedImage->encode('jpg'));
+        }
         return $data_url;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
 
         $skuMain = '';
-        if($request->has('oldproduct')){
+        if ($request->has('oldproduct')) {
             $oldproduct = $request->oldproduct;
-            if(isset($oldproduct[0])){
+            if (isset($oldproduct[0])) {
                 $skuMain = $oldproduct[0]['sku'];
             }
         }
 
-        if ($request->lang == env("DEFAULT_LANGUAGE",'en')) {
+        if ($request->lang == env("DEFAULT_LANGUAGE", 'en')) {
             $product->name = $request->name;
         }
-        
+
         $product->category_id = $request->category_id;
         $product->brand_id = $request->brand_id;
         $product->user_id = Auth::user()->id;
@@ -561,7 +475,7 @@ class ProductController extends Controller
         }
 
         $slug               = $request->slug ? Str::slug($request->slug, '-') : Str::slug($request->name, '-');
-        $same_slug_count    = Product::where('slug', 'LIKE', $slug . '%')->where('id','!=',$id)->count();
+        $same_slug_count    = Product::where('slug', 'LIKE', $slug . '%')->where('id', '!=', $id)->count();
         $slug_suffix        = $same_slug_count ? '-' . $same_slug_count + 1 : '';
         $slug .= $slug_suffix;
 
@@ -591,7 +505,7 @@ class ProductController extends Controller
             }
 
             foreach ($request->file('gallery_images') as $key => $file) {
-                $gallery[] = $this->downloadAndResizeImage('main_product',$file, $product->sku, false, $count + $key);
+                $gallery[] = $this->downloadAndResizeImage('main_product', $file, $product->sku, false, $count + $key);
             }
             $product->photos = implode(',', array_merge($old_gallery, $gallery));
         }
@@ -613,7 +527,7 @@ class ProductController extends Controller
                     Storage::delete($product->thumbnail_img);
                 }
             }
-            $gallery = $this->downloadAndResizeImage('main_product',$request->file('thumbnail_image'), $product->sku, true);
+            $gallery = $this->downloadAndResizeImage('main_product', $request->file('thumbnail_image'), $product->sku, true);
             $product->thumbnail_img = $gallery;
         }
         $product->save();
@@ -662,7 +576,7 @@ class ProductController extends Controller
 
         if ($request->has('tabs')) {
             ProductTabs::where('lang', $request->lang)->where('product_id', $product->id)->delete();
-           foreach ($request->tabs as $tab) {
+            foreach ($request->tabs as $tab) {
                 $p_tab = $product->tabs()->create([
                     'lang'    => $request->lang,
                     'heading' => $tab['tab_heading'],
@@ -670,16 +584,16 @@ class ProductController extends Controller
                 ]);
             }
         }
-       
-        if($request->has('oldproduct')){
+
+        if ($request->has('oldproduct')) {
             $oldproduct = $request->oldproduct;
             $oldproduct_attributes = array();
-            foreach($oldproduct as $prodOld){
+            foreach ($oldproduct as $prodOld) {
                 $product_stock                      = ProductStock::find($prodOld['stock_id']);
                 $product_stock->product_id          = $product->id;
                 $product_stock->product_id = $product->id;
                 $product_stock->sku = $prodOld['sku'];
-                $product_stock->price = $prodOld['price'];// $prod['price'];
+                $product_stock->price = $prodOld['price']; // $prod['price'];
                 $product_stock->qty = $prodOld['current_stock'];
                 $product_stock->status              = $prodOld['status'];
 
@@ -687,7 +601,7 @@ class ProductController extends Controller
                 $offertag       = '';
                 $productOrgPrice = $prodOld['price'];
                 $discountPrice = $productOrgPrice;
-                
+
                 $discount_applicable = false;
                 if (strtotime(date('d-m-Y H:i:s')) >= $product->discount_start_date && strtotime(date('d-m-Y H:i:s')) <= $product->discount_end_date) {
                     if ($product->discount_type == 'percent') {
@@ -695,7 +609,7 @@ class ProductController extends Controller
                         $offertag       = $product->discount . '% OFF';
                     } elseif ($product->discount_type == 'amount') {
                         $discountPrice  = $productOrgPrice - $product->discount;
-                        $offertag       = 'AED '.$product->discount.' OFF';
+                        $offertag       = 'AED ' . $product->discount . ' OFF';
                     }
                 }
                 $product_stock->price       = $productOrgPrice;
@@ -709,7 +623,7 @@ class ProductController extends Controller
                             $info = pathinfo($product_stock->image);
                             $file_name = basename($product_stock->image, '.' . $info['extension']);
                             $ext = $info['extension'];
-        
+
                             $sizes = config('app.img_sizes');
                             foreach ($sizes as $size) {
                                 $path = $info['dirname'] . '/' . $file_name . '_' . $size . 'px.' . $ext;
@@ -720,14 +634,14 @@ class ProductController extends Controller
                             Storage::delete($product_stock->image);
                         }
                     }
-                    $gallery = $this->downloadAndResizeImage('varient',$prodOld['variant_images'], $prodOld['sku'], false);
+                    $gallery = $this->downloadAndResizeImage('varient', $prodOld['variant_images'], $prodOld['sku'], false);
                     $product_stock->image = $gallery;
                 }
-            
+
                 $product_stock->save();
 
                 if ($request->has('main_attributes')) {
-                    ProductAttributes::where('product_id',$product->id)->delete();
+                    ProductAttributes::where('product_id', $product->id)->delete();
                     foreach ($request->main_attributes as $key => $no) {
                         $attrId = 'choice_options_' . $no;
                         $oldproduct_attributes[] = [
@@ -738,22 +652,21 @@ class ProductController extends Controller
                         ];
                     }
                 }
-               
             }
-            if(!empty($oldproduct_attributes)){
+            if (!empty($oldproduct_attributes)) {
                 ProductAttributes::insert($oldproduct_attributes);
             }
         }
 
-        if($request->has('products')){
+        if ($request->has('products')) {
             $products = $request->products;
             $product_attributes = array();
-            foreach($products as $prod){
+            foreach ($products as $prod) {
 
                 $product_stock = new ProductStock;
                 $product_stock->product_id = $product->id;
                 $product_stock->sku = $prod['sku'];
-                $product_stock->price = $prod['price'];// $prod['price'];
+                $product_stock->price = $prod['price']; // $prod['price'];
                 $product_stock->qty = $prod['current_stock'];
 
                 $offertag       = '';
@@ -767,7 +680,7 @@ class ProductController extends Controller
                         $offertag = $product->discount . '% OFF';
                     } elseif ($product->discount_type == 'amount') {
                         $discountPrice = $productOrgPrice - $product->discount;
-                        $offertag = 'AED '.$product->discount.' OFF';
+                        $offertag = 'AED ' . $product->discount . ' OFF';
                     }
                 }
 
@@ -775,12 +688,12 @@ class ProductController extends Controller
                 $product_stock->offer_price = $discountPrice;
                 $product_stock->offer_tag   = $offertag;
 
-            
-                $variantImage = (isset($prod['variant_images'])) ? $this->downloadAndResizeImage('varient',$prod['variant_images'], $prod['sku'], false) : NULL;
+
+                $variantImage = (isset($prod['variant_images'])) ? $this->downloadAndResizeImage('varient', $prod['variant_images'], $prod['sku'], false) : NULL;
                 $product_stock->image = $variantImage;
 
                 $product_stock->save();
-                
+
                 if ($request->has('main_attributes')) {
                     foreach ($request->main_attributes as $key => $no) {
                         $attrId = 'choice_options_' . $no;
@@ -792,35 +705,23 @@ class ProductController extends Controller
                         ];
                     }
                 }
-               
             }
-            if(!empty($product_attributes)){
+            if (!empty($product_attributes)) {
                 ProductAttributes::insert($product_attributes);
             }
-            
         }
 
-        flash(trans('messages.product').' '.trans('messages.updated_msg'))->success();
-        
+        flash(trans('messages.product') . ' ' . trans('messages.updated_msg'))->success();
+
         Artisan::call('view:clear');
         Artisan::call('cache:clear');
 
         return redirect()->route('products.all');
     }
-   
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
-        // foreach ($product->product_translations as $key => $product_translations) {
-        //     $product_translations->delete();
-        // }
 
         foreach ($product->stocks as $key => $stock) {
             $stock->delete();
@@ -1121,26 +1022,27 @@ class ProductController extends Controller
         }
     }
 
-    public function updateAllPrices(){
+    public function updateAllPrices()
+    {
         $today_gold_rate    = GoldPrices::first()->toArray();
         $gold_purity        = [18 => '18_k', 21 => '21_k', 22 => '22_k', 24 => '24_k'];
 
-        $productStocks = ProductStock::orderBy('status','desc')->get();
-        
-        if(!empty($productStocks)){
-            foreach($productStocks as $proSk){
+        $productStocks = ProductStock::orderBy('status', 'desc')->get();
+
+        if (!empty($productStocks)) {
+            foreach ($productStocks as $proSk) {
                 $price = $goldRate = 0;
                 $offertag = '';
-            
+
                 $product_id = $proSk->product_id;
                 $purity = $proSk->product->purity;
                 $metal_weight = $proSk->metal_weight;
-            
+
                 $discount_applicable = false;
-                if(array_key_exists($purity, $gold_purity)){
+                if (array_key_exists($purity, $gold_purity)) {
                     $goldRate = isset($today_gold_rate[$gold_purity[$purity]]) ? $today_gold_rate[$gold_purity[$purity]] : 0;
                 }
-        
+
                 $productPrice = [
                     'id' => $proSk->id,
                     'price' => 0,
@@ -1148,24 +1050,24 @@ class ProductController extends Controller
                     'offer_tag' => null,
                 ];
 
-                if($goldRate != 0){
+                if ($goldRate != 0) {
                     $metalPrice = $metal_weight * $goldRate;
                     $stonePrice = $proSk->stone_price ?? 0;
                     $making_price_type = $proSk->making_price_type;
                     $making_charge = $proSk->making_charge ?? 0;
-    
-                    $total_making_charge = 0; 
 
-                    if($making_price_type == 1){       // Per gram amount
+                    $total_making_charge = 0;
+
+                    if ($making_price_type == 1) {       // Per gram amount
                         $total_making_charge = $metal_weight * $making_charge;
-                    }elseif($making_price_type == 2){       // Per gram percentage
+                    } elseif ($making_price_type == 2) {       // Per gram percentage
                         $total_making_charge = ($metalPrice / 100) * $making_charge;
-                    }elseif($making_price_type == 3){       // PC Rate
+                    } elseif ($making_price_type == 3) {       // PC Rate
                         $total_making_charge = $making_charge;
                     }
 
                     $productOrgPrice = $metalPrice + $stonePrice + $total_making_charge;
-                    
+
                     $discountPrice = $productOrgPrice;
 
                     if (strtotime(date('d-m-Y H:i:s')) >= $proSk->product->discount_start_date && strtotime(date('d-m-Y H:i:s')) <= $proSk->product->discount_end_date) {
@@ -1174,7 +1076,7 @@ class ProductController extends Controller
                             $offertag = $proSk->product->discount . '% OFF';
                         } elseif ($proSk->product->discount_type == 'amount') {
                             $discountPrice = $productOrgPrice - $proSk->product->discount;
-                            $offertag = 'AED '.$proSk->product->discount.' OFF';
+                            $offertag = 'AED ' . $proSk->product->discount . ' OFF';
                         }
                     }
 
@@ -1186,8 +1088,6 @@ class ProductController extends Controller
                     $proSk->save();
                 }
             }
-
         }
-        
     }
 }

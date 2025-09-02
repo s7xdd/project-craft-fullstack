@@ -21,8 +21,6 @@ class BusinessSettingsController extends Controller
     public function update(Request $request)
     {
 
-        // return response()->json(['ss' => $request->all()]);
-        
         if (!empty($request->types)) {
             foreach ($request->types as $key => $type) {
                 if ($type == 'site_name') {
@@ -60,6 +58,23 @@ class BusinessSettingsController extends Controller
                         $business_settings->lang = $lang;
                         $business_settings->save();
                     }
+                }
+            }
+        }
+
+        $shippingTypes = ['free_shipping_status', 'free_shipping_min_amount', 'default_shipping_amount'];
+        foreach ($shippingTypes as $type) {
+            if ($request->has($type)) {
+                $business_settings = BusinessSetting::where('type', $type)->first();
+
+                if ($business_settings != null) {
+                    $business_settings->value = $request[$type];
+                    $business_settings->save();
+                } else {
+                    $business_settings = new BusinessSetting;
+                    $business_settings->type = $type;
+                    $business_settings->value = $request[$type];
+                    $business_settings->save();
                 }
             }
         }
@@ -190,11 +205,23 @@ class BusinessSettingsController extends Controller
 
     public function shipping_configuration_update(Request $request)
     {
-        $business_settings = BusinessSetting::where('type', $request->type)->first();
-        $business_settings->value = $request[$request->type];
-        $business_settings->save();
+        $types = ['free_shipping_status', 'free_shipping_min_amount', 'default_shipping_amount'];
+        foreach ($types as $type) {
+            $business_settings = BusinessSetting::where('type', $type)->first();
+
+            if ($business_settings != null) {
+                $business_settings->value = $request[$type] ?? 0;
+                $business_settings->save();
+            } else {
+                $business_settings = new BusinessSetting;
+                $business_settings->type = $type;
+                $business_settings->value = $request[$type] ?? 0;
+                $business_settings->save();
+            }
+        }
 
         Artisan::call('cache:clear');
+        flash(trans("messages.settings") . ' ' . trans("messages.updated_msg"))->success();
         return back();
     }
 }

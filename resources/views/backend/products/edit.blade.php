@@ -124,7 +124,7 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row @if ($lang != 'en') d-none @endif">
+                                <div class="form-group row hidden">
                                     <label class="col-md-3 col-from-label">{{ trans('messages.vat') }} (%) </label>
                                     <div class="col-md-6">
                                         <input type="number" lang="en" min="0" value="0" step="0.01"
@@ -563,7 +563,7 @@
                         </div>
                     </div>
 
-                    <div class="card repeater">
+                    {{-- <div class="card repeater">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.tabs') }}</h5>
                         </div>
@@ -599,9 +599,9 @@
                             <input data-repeater-create type="button" class="btn btn-success action-btn "
                                 value="{{ trans('messages.add') }}" />
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <div class="card @if ($lang != 'en') d-none @endif">
+                    {{-- <div class="card @if ($lang != 'en') d-none @endif">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.video') }}</h5>
                         </div>
@@ -633,7 +633,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="card">
                         <div class="card-header">
@@ -708,30 +708,6 @@
                         <div class="card-body p-0">
                             <div class="btn-toolbar justify-content-end" role="toolbar"
                                 aria-label="Toolbar with button groups">
-                                <div class="btn-group" role="group" aria-label="Second group">
-                                    <button type="submit" name="button" value="publish"
-                                        class="btn btn-info action-btn">{{ trans('messages.update') . ' ' . trans('messages.product') }}</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0 h6">{{ trans('messages.return_refund') . ' ' . trans('messages.status') }}
-                            </h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group row">
-                                <label class="col-md-6 col-from-label">{{ trans('messages.status') }}</label>
-                                <div class="col-md-6">
-                                    <label class="aiz-switch aiz-switch-success mb-0">
-                                        <input type="checkbox" name="return_refund" value="0"
-                                            @if ($product->return_refund == 1) checked @endif>
-                                        <span></span>
-                                    </label>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -759,7 +735,7 @@
                     </div>
                 </div>
                 <div class="col-12">
-                    <div class="mb-3 text-right">
+                    <div class="mb-3 text-left">
                         <button type="submit" name="button"
                             class="btn btn-info">{{ trans('messages.update') . ' ' . trans('messages.product') }}</button>
                     </div>
@@ -924,20 +900,21 @@
                             var obj = JSON.parse(data);
                             $('[name="products[' + count + '][variant_images]"]').parent()
                                 .parent().parent().find(".product_attributes").first()
-                                .append('\
-                                                        <div class="form-group row">\
-                                                            <div class="col-md-3">\
-                                                                <input type="text" class="form-control" name="products[' +
+                                .append(
+                                    '\
+                                                                    <div class="form-group row">\
+                                                                        <div class="col-md-3">\
+                                                                            <input type="text" class="form-control" name="products[' +
                                     count + '][choice_' + i + ']" value="' + name +
                                     '" placeholder="Choice Title" readonly>\
-                                                            </div>\
-                                                            <div class="col-md-8">\
-                                                                <select class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="products[' +
+                                                                        </div>\
+                                                                        <div class="col-md-8">\
+                                                                            <select class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="products[' +
                                     count + '][choice_options_' + i + ']">\
-                                                                    ' + obj + '\
-                                                                </select>\
-                                                            </div>\
-                                                        </div>');
+                                                                                ' + obj + '\
+                                                                            </select>\
+                                                                        </div>\
+                                                                    </div>');
                             AIZ.plugins.bootstrapSelect('refresh');
                         }
                     });
@@ -1084,37 +1061,40 @@
                     if (productStockCount != 0) {
                         for (j = 0; j < productStockCount; j++) {
                             $('.old_product_attributes' + j).append('\
-                                        <div class="form-group row attr' + i + '" >\
-                                            <div class="col-md-3">\
-                                                <input type="text" class="form-control" name="oldproduct[' + j +
+                                                    <div class="form-group row attr' + i + '" >\
+                                                        <div class="col-md-3">\
+                                                            <input type="text" class="form-control" name="oldproduct[' +
+                                j +
                                 '][choice_' +
                                 i + ']" value="' + name +
                                 '" placeholder="Choice Title" readonly>\
-                                            </div>\
-                                            <div class="col-md-8">\
-                                                <select required class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="oldproduct[' +
+                                                        </div>\
+                                                        <div class="col-md-8">\
+                                                            <select required class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="oldproduct[' +
                                 j + '][choice_options_' + i + ']">\
-                                                    ' + obj + '\
-                                                </select>\
-                                            </div>\
-                                        </div>');
+                                                                ' + obj + '\
+                                                            </select>\
+                                                        </div>\
+                                                    </div>');
                         }
                     }
 
                     // var stockCount = $product->stocks
                     $('.product_attributes').append('\
-                                <div class="form-group row attr' + i + '">\
-                                    <div class="col-md-3">\
-                                        <input type="text" class="form-control" name="choice_' + i + '" value="' + name +
+                                            <div class="form-group row attr' + i + '">\
+                                                <div class="col-md-3">\
+                                                    <input type="text" class="form-control" name="choice_' + i +
+                        '" value="' +
+                        name +
                         '" placeholder="Choice Title" readonly>\
-                                    </div>\
-                                    <div class="col-md-8">\
-                                        <select class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="choice_options_' +
+                                                </div>\
+                                                <div class="col-md-8">\
+                                                    <select class="form-control aiz-selectpicker attribute_choice" data-live-search="true" name="choice_options_' +
                         i + '">\
-                                            ' + obj + '\
-                                        </select>\
-                                    </div>\
-                                </div>');
+                                                        ' + obj + '\
+                                                    </select>\
+                                                </div>\
+                                            </div>');
                     AIZ.plugins.bootstrapSelect('refresh');
                 }
             });

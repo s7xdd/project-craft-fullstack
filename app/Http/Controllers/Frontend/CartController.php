@@ -262,15 +262,13 @@ class CartController extends Controller
 
         $cart_total = ($overall_subtotal + $total_shipping + $total_tax) - ($total_discount + $cart_coupon_discount);
 
-        // $total_discount = $total_discount + $cart_coupon_discount;
         $result['summary'] = [
             'sub_total' => $overall_subtotal,
-            'discount' => $total_discount, // Discount is in amount
+            'discount' => $total_discount,
             'after_discount' => $overall_subtotal - $total_discount,
             'shipping' => $total_shipping,
             'vat_amount' => $total_tax,
             'total' => $cart_total,
-            // 'coupon_display' => ($coupon_display === 0) ? 1 : 0,
             'coupon_code' => $cart_coupon_code,
             'coupon_applied' => $cart_coupon_applied,
             'coupon_discount' => $cart_coupon_discount
@@ -381,9 +379,6 @@ class CartController extends Controller
         $lang = getActiveLanguage();
         $response = $this->index();
         $collectionProducts = [];
-        // echo '<pre>';
-        // print_r($response);
-        // die;
         return view('frontend.cart', compact('response', 'collectionProducts', 'lang'));
     }
 
@@ -415,7 +410,6 @@ class CartController extends Controller
                 $user['users_id_type'] => $user['users_id']
             ])->where('id', $cart_id)->delete();
 
-            $updatedCart = Cart::where($user['users_id_type'], $user['users_id'])->get(); // Example for authenticated user
 
             $summary = $this->getCartSummary($updatedCart);
 
@@ -435,9 +429,9 @@ class CartController extends Controller
     private function getCartSummary($cartItems)
     {
         $subTotal = $cartItems->sum('price');
-        $discount = 0; 
-        $shipping = 0; 
-        $vatAmount = $subTotal * 0.05; 
+        $discount = 0;
+        $shipping = 0;
+        $vatAmount = $subTotal * 0.05;
         $total = $subTotal - $discount + $shipping + $vatAmount;
 
         return [
@@ -467,9 +461,9 @@ class CartController extends Controller
 
             $max_qty = $cart->product_stock->qty;
 
-            if ($action == 'plus') {           // Increase quantity of a product in the cart.
+            if ($action == 'plus') {
                 if ($quantity <= $max_qty) {
-                    $cart->quantity = $quantity;   // Update quantity of a product in the cart.
+                    $cart->quantity = $quantity;
                     $cart->save();
                     return response()->json([
                         'status'    => true,
@@ -481,11 +475,11 @@ class CartController extends Controller
                         'message'   => "Maximum quantity reached",
                     ], 200);
                 }
-            } elseif ($action == 'minus') {   // Decrease quantity of a product in the cart. If it reaches zero then delete that row from the table.
+            } elseif ($action == 'minus') {
                 if ($quantity < 1) {
                     Cart::where('id', $cart->id)->delete();
                 } else {
-                    $cart->quantity = $quantity;        // Update quantity of a product in the cart.
+                    $cart->quantity = $quantity;
                     $cart->save();
                 }
                 return response()->json([

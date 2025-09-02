@@ -74,12 +74,19 @@ class CategoryController extends Controller
         $category               = new Category;
         $category->name         = $request->name ?? NULL;
         $category->parent_id    = $request->parent_id;
+
         if ($request->parent_id != "0") {
             $parent = Category::find($request->parent_id);
             if ($parent) {
                 $category->level = $parent->level + 1;
+            } else {
+                $category->level = 0;
             }
+        } else {
+            $category->parent_id = 0;
         }
+
+
         $category->is_active    = ($request->status == 2) ? 0 : 1;
         $category->save();
 
@@ -155,16 +162,17 @@ class CategoryController extends Controller
         if ($request->lang == env("DEFAULT_LANGUAGE")) {
             $category->name         = $request->name;
             $previous_level = $category->level;
+
             if ($request->parent_id != "0") {
                 $parent = Category::find($request->parent_id);
                 if ($parent) {
                     $category->level = $parent->level + 1;
+                } else {
+                    $category->level = 0;
                 }
             } else {
                 $category->parent_id = 0;
-                $category->level = 0;
             }
-
 
             if ($category->level > $previous_level) {
                 CategoryUtility::move_level_down($category->id);

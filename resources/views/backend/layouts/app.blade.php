@@ -148,50 +148,7 @@
         }
     </script>
 
-    <script>
-        $(document).ready(function() {
-            $('#applyCouponForm').on('submit', function(e) {
-                e.preventDefault();
-
-                var couponCode = $('#couponCode').val();
-                var coupon_action = $('#coupon_action').val();
-                coupon_action = coupon_action.trim();
-
-                var url = '';
-                if (String(coupon_action) === "add") {
-                    url = "{{ route('coupon-apply') }}";
-                } else {
-                    url = "{{ route('coupon-remove') }}";
-                }
-
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: {
-                        coupon: couponCode,
-                        _token: $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            $('#couponMessage').html('<span style="color: green;">' + response
-                                .message + '</span>');
-                            window.location.reload();
-                        } else {
-                            $('#couponMessage').html('<span style="color: red;">' + response
-                                .message + '</span>');
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        $('#couponMessage').html(
-                            '<span style="color: red;">An error occurred. Please try again.</span>'
-                        );
-                    }
-                });
-            });
-
-
-        });
-    </script>
+    
 
 </body>
 

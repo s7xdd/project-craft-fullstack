@@ -34,20 +34,10 @@
                                     <select class="form-control aiz-selectpicker" name="type" id="type-select"
                                         data-live-search="true" required>
                                         <option value="sale">For Sale</option>
-                                        <option value="rent">For Rent</option>
-                                        <option value="auction">For Auction</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="form-group row" id="deposit-amount" style="display: none;">
-                                <label class="col-md-3 col-from-label">{{ trans('messages.refundable_deposit') }} <span
-                                        class="text-danger">*</span></label>
-                                <div class="col-md-8">
-                                    <input type="number" class="form-control" name="deposit" id="deposit"
-                                        placeholder="{{ __('messages.enter_deposit_amount') }}">
-                                </div>
-                            </div>
                             <div class="form-group row" id="category">
                                 <label class="col-md-3 col-from-label">{{ trans('messages.category') }} <span
                                         class="text-danger">*</span></label>
@@ -114,7 +104,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row hidden">
                                 <label class="col-md-3 col-from-label">{{ trans('messages.vat') }} (%) </label>
                                 <div class="col-md-6">
                                     <input type="number" lang="en" min="0" value="0" step="0.01"
@@ -325,7 +315,7 @@
                         </div>
                     </div>
 
-                    <div class="card repeater">
+                    {{-- <div class="card repeater">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.tabs') }}</h5>
                         </div>
@@ -354,10 +344,10 @@
                             <input data-repeater-create type="button" class="btn btn-success action-btn"
                                 value="{{ trans('messages.add') }}" />
                         </div>
-                    </div>
+                    </div> --}}
 
 
-
+{{-- 
                     <div class="card">
                         <div class="card-header">
                             <h5 class="mb-0 h6">{{ trans('messages.product') . ' ' . trans('messages.video') }}</h5>
@@ -381,12 +371,11 @@
                                     <input type="text" class="form-control" name="video_link"
                                         placeholder="{{ trans('messages.video') . ' ' . trans('messages.link') }}">
                                     <small class="text-muted">
-                                        {{-- Use proper link without extra parameter. Don't use short share link/embeded iframe code. --}}
                                     </small>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
 
                     <div class="card">
@@ -449,7 +438,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4">
+                {{-- <div class="col-lg-4">
 
                     <div class="card bg-transparent shadow-none border-0">
                         <div class="card-body p-0">
@@ -468,101 +457,9 @@
                         </div>
                     </div>
 
-
-                    {{-- <div class="card d-none">
-                        <div class="card-header">
-                            <h5 class="mb-0 h6">Low Stock Quantity Warning</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group mb-3">
-                                <label for="low_stock_quantity">
-                                    Quantity
-                                </label>
-                                <input type="number" name="low_stock_quantity" id="low_stock_quantity" value="1"
-                                    min="0" step="1" class="form-control">
-                            </div>
-                        </div>
-                    </div> --}}
-
-                    {{-- <div class="card d-none">
-                        <div class="card-header">
-                            <h5 class="mb-0 h6">
-                                Stock Visibility State
-                            </h5>
-                        </div>
-
-                        <div class="card-body">
-
-                            <div class="form-group row">
-                                <label class="col-md-6 col-from-label">Show Stock Quantity</label>
-                                <div class="col-md-6">
-                                    <label class="aiz-switch aiz-switch-success mb-0">
-                                        <input type="radio" name="stock_visibility_state" value="quantity" checked>
-                                        <span></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-md-6 col-from-label">Show Stock With Text Only</label>
-                                <div class="col-md-6">
-                                    <label class="aiz-switch aiz-switch-success mb-0">
-                                        <input type="radio" name="stock_visibility_state" value="text">
-                                        <span></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="col-md-6 col-from-label">Hide Stock</label>
-                                <div class="col-md-6">
-                                    <label class="aiz-switch aiz-switch-success mb-0">
-                                        <input type="radio" name="stock_visibility_state" value="hide">
-                                        <span></span>
-                                    </label>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div> --}}
-
-                    {{-- <div class="card d-none">
-                        <div class="card-header">
-                            <h5 class="mb-0 h6">Featured</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group row">
-                                <label class="col-md-6 col-from-label">Status</label>
-                                <div class="col-md-6">
-                                    <label class="aiz-switch aiz-switch-success mb-0">
-                                        <input type="checkbox" name="featured" value="1">
-                                        <span></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-
-
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0 h6">{{ trans('messages.return_refund') . ' ' . trans('messages.status') }}</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="form-group row">
-                                <label class="col-md-6 col-from-label">{{ trans('messages.status') }}</label>
-                                <div class="col-md-6">
-                                    <label class="aiz-switch aiz-switch-success mb-0">
-                                        <input type="checkbox" name="return_refund" value="0">
-                                        <span></span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </div> --}}
                 <div class="col-12">
-                    <div class="btn-toolbar float-right mb-3" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-toolbar float-left mb-3" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2" role="group" aria-label="First group">
                             <button type="submit" name="button" value="draft"
                                 class="btn btn-warning action-btn">{{ trans('messages.save_draft') }}</button>
