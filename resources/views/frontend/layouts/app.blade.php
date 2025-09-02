@@ -222,19 +222,6 @@
             toastr["{{ session('alert-type', 'info') }}"]("{{ session('message') }}");
         @endif
 
-        if ($('#lang-change').length > 0) {
-            $('#lang-change').on('change', function(e) {
-                e.preventDefault();
-                var $this = $(this);
-                var locale = $this.val();
-                $.post('{{ route('language.change') }}', {
-                    _token: '{{ csrf_token() }}',
-                    locale: locale
-                }, function(data) {
-                    location.reload();
-                });
-            });
-        }
 
         var productDetailRoute =
             "{{ route('product-detail', ['slug' => '__slug__', 'sku' => '__sku__']) }}"; // this will be a placeholder
@@ -404,45 +391,6 @@
                 });
             });
 
-            $(document).on('click', '.wishlist-btn', function() {
-                const heartIcon = $(this).find('.lnr-heart');
-                const productSlug = $(this).data('product-slug');
-                const productSku = $(this).data('product-sku');
-                const url = '/wishlist/store';
-
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: {
-                        productSlug: productSlug,
-                        productSku: productSku,
-                        _token: $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        if (response.status == true) {
-                            $('.wishlist_count').text(response.wishlist_count);
-                            toastr.success(response.message,
-                                "{{ trans('messages.success') }}");
-                            heartIcon.toggleClass('active');
-
-                            if (response.wishlist_status == 1) {
-                                $('.wishlist_msg').html(
-                                    "{{ trans('messages.remove_wishlist') }}");
-                            } else {
-                                $('.wishlist_msg').html(
-                                    "{{ trans('messages.add_wishlist') }}");
-                            }
-                        } else {
-                            toastr.error(response.message, "{{ trans('messages.error') }}");
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        toastr.error("{{ trans('messages.wishlist_remove_error') }}",
-                            "{{ trans('messages.error') }}");
-                    }
-                });
-            });
-
             $('#newsletterForm').on('submit', function(e) {
                 e.preventDefault();
 
@@ -472,14 +420,7 @@
                 url: '/check-login-status', // Endpoint to check login status
                 type: 'GET',
                 success: function(response) {
-                    if (response.is_logged_in) {
-                        // Redirect to checkout page
                         window.location.href = '/checkout';
-                    } else {
-                        // Show alert if not logged in
-                        toastr.error("{{ trans('messages.login_msg') }}",
-                            "{{ trans('messages.error') }}");
-                    }
                 },
                 error: function() {
                     toastr.error("{{ trans('messages.error_try_again') }}",
@@ -520,17 +461,24 @@
                         coupon: couponCode,
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
+                    xhrFields: {
+                        withCredentials: true 
+                    },
                     success: function(response) {
                         if (response.success) {
                             $('#couponMessage').html('<span style="color: green;">' + response
                                 .message + '</span>');
-                            window.location.reload();
+                            // Reload the page to reflect changes
+                            setTimeout(function() {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             $('#couponMessage').html('<span style="color: red;">' + response
                                 .message + '</span>');
                         }
                     },
                     error: function(xhr, status, error) {
+                        console.log('Coupon error:', xhr.responseText);
                         $('#couponMessage').html(
                             '<span style="color: red;">An error occurred. Please try again.</span>'
                         );

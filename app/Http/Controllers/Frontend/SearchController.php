@@ -96,8 +96,6 @@ class SearchController extends Controller
             });
         }
 
-
-
         switch ($sort_by) {
             case 'newest':
                 $products->orderBy('created_at', 'desc');
