@@ -12,11 +12,6 @@ use Auth;
 
 class CouponController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $request->session()->put('coupon_last_url', url()->full());
@@ -43,23 +38,11 @@ class CouponController extends Controller
         $coupons = $coupons->paginate(15);
         return view('backend.marketing.coupons.index', compact('coupons','sort_search','coupon_type','use_type'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('backend.marketing.coupons.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         if (count(Coupon::where('code', $request->coupon_code)->get()) > 0) {
@@ -76,25 +59,12 @@ class CouponController extends Controller
         return redirect()->route('coupon.index');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $coupon = Coupon::findOrFail(decrypt($id));
         return view('backend.marketing.coupons.edit', compact('coupon'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         if (count(Coupon::where('id', '!=', $id)->where('code', $request->coupon_code)->get()) > 0) {
@@ -110,12 +80,6 @@ class CouponController extends Controller
         return redirect()->route('coupon.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         Coupon::destroy($id);

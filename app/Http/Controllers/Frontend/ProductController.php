@@ -293,7 +293,6 @@ class ProductController extends Controller
                     'name' => $product_stock->product->getTranslation('name', $lang),
                     'slug' => $product_stock->product->slug,
                     'product_type' => $product_stock->product->product_type,
-                    'occasion' => $product_stock->product->occasion->getTranslation('name', $lang) ?? '',
                     'brand' => $product_stock->product->brand->getTranslation('name', $lang) ?? '',
                     'category' => $category,
                     'video_provider' => $product_stock->product->video_provider ?? '',

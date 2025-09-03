@@ -26,6 +26,7 @@ use Razorpay\Api\Api;
 
 class CheckoutController
 {
+
     public function index()
     {
         $user = Auth::user();
@@ -40,6 +41,9 @@ class CheckoutController
         $user = getUser();
         $userId = $user['users_id'] ?? null;
         $tempUserId = null;
+
+        // dd(request()->cookie('guest_token'));
+        
 
         if (!$userId) {
             $tempUserId = $request->cookie('guest_token');
