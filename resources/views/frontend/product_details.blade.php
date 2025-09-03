@@ -187,7 +187,7 @@
                         </div>
                     </x-slot>
 
-                    @if ($response['tags'])
+                    @if ($response['tags'] && !empty($response['tags']))
                         <x-slot name="tags">
                             <li>
                                 <strong>Tag :</strong>
