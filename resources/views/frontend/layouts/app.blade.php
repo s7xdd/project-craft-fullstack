@@ -417,17 +417,7 @@
         });
 
         $('.proceedToCheckout').on('click', function() {
-            $.ajax({
-                url: '/check-login-status', // Endpoint to check login status
-                type: 'GET',
-                success: function(response) {
-                    window.location.href = '/checkout';
-                },
-                error: function() {
-                    toastr.error("{{ trans('messages.error_try_again') }}",
-                        "{{ trans('messages.error') }}");
-                }
-            });
+            window.location.href = '/checkout';
         });
 
         $(document).ajaxComplete(function() {
