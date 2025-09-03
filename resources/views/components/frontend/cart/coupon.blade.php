@@ -18,5 +18,6 @@
                 </span>
             </button>
         </div>
+        <div id="couponMessage" class="mt-2"></div>
     </form>
 </div>
