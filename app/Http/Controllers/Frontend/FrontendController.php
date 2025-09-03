@@ -198,7 +198,7 @@ class FrontendController extends Controller
         ];
 
         $this->loadSEO($seo);
-        return view('frontend.terms', compact('page', 'lang'));
+        return view('frontend.generalpage', compact('page', 'lang'));
     }
 
     public function privacy()
@@ -217,7 +217,7 @@ class FrontendController extends Controller
         ];
 
         $this->loadSEO($seo);
-        return view('frontend.privacy_policy', compact('page', 'lang'));
+        return view('frontend.generalpage', compact('page', 'lang'));
     }
 
 
