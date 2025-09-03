@@ -18,12 +18,13 @@ class CartController extends Controller
         $lang = getActiveLanguage();
         $user_id = '';
 
-
-        
-        $guest_token = request()->cookie('guest_token') ?? uniqid('guest_', true);
+        $guest_token = request()->cookie('guest_token');
         $new_guest_token_created = false;
 
-        dd($guest_token);
+        if (!$guest_token) {
+            $guest_token = uniqid('guest_', true);
+            $new_guest_token_created = true;
+        }
 
         if (auth()->user()) {
             $user_id = auth()->user()->id;
@@ -41,12 +42,6 @@ class CartController extends Controller
             }
         } else {
             $temp_user_id = $guest_token;
-
-
-            if (!$guest_token) {
-                $guest_token = uniqid('guest_', true);
-                $new_guest_token_created = true;
-            }
 
             $carts = ($temp_user_id != null) ? Cart::where('temp_user_id', $temp_user_id)->orderBy('id', 'asc')->get() : [];
 
@@ -85,7 +80,9 @@ class CartController extends Controller
 
             $carts = $carts->fresh();
 
-            $coupon_code = $carts[0]->coupon_code;
+            $coupon_code = $carts->pluck('coupon_code')->filter()->first();
+            $coupon_applied = $carts->pluck('coupon_applied')->contains(1);
+
             if ($coupon_code) {
                 $coupon = Coupon::whereCode($coupon_code)->first();
                 $can_use_coupon = false;
@@ -100,6 +97,8 @@ class CartController extends Controller
                             } else {
                                 $can_use_coupon = true;
                             }
+                        } else {
+                            $can_use_coupon = true;
                         }
                     } else {
                         $can_use_coupon = false;
@@ -135,6 +134,13 @@ class CartController extends Controller
                                     'coupon_code' => $coupon_code,
                                     'coupon_applied' => 1
                                 ]);
+                            } else {
+                                // For guest users, update using temp_user_id
+                                Cart::where('temp_user_id', $guest_token)->update([
+                                    'discount' => $coupon_discount / count($carts),
+                                    'coupon_code' => $coupon_code,
+                                    'coupon_applied' => 1
+                                ]);
                             }
                         }
                     } elseif ($coupon->type == 'product_base') {
@@ -157,6 +163,12 @@ class CartController extends Controller
                                 'coupon_code' => $coupon_code,
                                 'coupon_applied' => 1
                             ]);
+                        } else {
+                            Cart::where('temp_user_id', $guest_token)->update([
+                                'discount' => $coupon_discount / count($carts),
+                                'coupon_code' => $coupon_code,
+                                'coupon_applied' => 1
+                            ]);
                         }
                     }
                 } else {
@@ -166,11 +178,23 @@ class CartController extends Controller
                             'coupon_code' => NULL,
                             'coupon_applied' => 0
                         ]);
+                    } else {
+                        Cart::where('temp_user_id', $guest_token)->update([
+                            'discount' => 0.00,
+                            'coupon_code' => NULL,
+                            'coupon_applied' => 0
+                        ]);
                     }
                 }
             } else {
                 if ($user_id != '') {
                     Cart::where('user_id', $user_id)->update([
+                        'discount' => 0.00,
+                        'coupon_code' => NULL,
+                        'coupon_applied' => 0
+                    ]);
+                } else {
+                    Cart::where('temp_user_id', $guest_token)->update([
                         'discount' => 0.00,
                         'coupon_code' => NULL,
                         'coupon_applied' => 0
@@ -219,9 +243,6 @@ class CartController extends Controller
                     $cart_coupon_discount += $datas->discount;
                     $coupon_display++;
                 }
-                // if($datas->offer_tag != ''){
-                //     $coupon_display++;
-                // }
             }
         } else {
             $result['products'] = [];
@@ -243,11 +264,23 @@ class CartController extends Controller
                         'shipping_type' => 'free',
                         'updated_at' => date('Y-m-d H:i:s')
                     ]);
+                } else {
+                    Cart::where('temp_user_id', $guest_token)->update([
+                        'shipping_cost' => 0,
+                        'shipping_type' => 'free',
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]);
                 }
             } else {
                 $total_shipping = $defaultShippingCharge;
                 if ($user_id != '' && $defaultShippingCharge > 0 && $cartCount != 0) {
                     Cart::where('user_id', $user_id)->update([
+                        'shipping_cost' => $defaultShippingCharge / $cartCount,
+                        'shipping_type' => 'paid',
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]);
+                } else if ($defaultShippingCharge > 0 && $cartCount != 0) {
+                    Cart::where('temp_user_id', $guest_token)->update([
                         'shipping_cost' => $defaultShippingCharge / $cartCount,
                         'shipping_type' => 'paid',
                         'updated_at' => date('Y-m-d H:i:s')
@@ -258,6 +291,12 @@ class CartController extends Controller
             $total_shipping = $defaultShippingCharge;
             if ($user_id != '' && $defaultShippingCharge > 0 && $cartCount != 0) {
                 Cart::where('user_id', $user_id)->update([
+                    'shipping_cost' => $defaultShippingCharge / $cartCount,
+                    'shipping_type' => 'paid',
+                    'updated_at' => date('Y-m-d H:i:s')
+                ]);
+            } else if ($defaultShippingCharge > 0 && $cartCount != 0) {
+                Cart::where('temp_user_id', $guest_token)->update([
                     'shipping_cost' => $defaultShippingCharge / $cartCount,
                     'shipping_type' => 'paid',
                     'updated_at' => date('Y-m-d H:i:s')
@@ -280,7 +319,7 @@ class CartController extends Controller
         ];
 
         if ($new_guest_token_created) {
-            return response()->json($result)->cookie('guest_token', $guest_token, 60 * 24 * 30);
+            return response()->json($result)->cookie('guest_token', $guest_token, 60 * 24 * 30, '/', null, false, false);
         }
 
         return $result;
@@ -292,7 +331,11 @@ class CartController extends Controller
         $quantity       = $request->has('quantity') ? $request->quantity : 0;
 
         $userId = Auth::id();
-        $guestToken = $request->cookie('guest_token') ?? uniqid('guest_', true);
+        $guestToken = $request->cookie('guest_token');
+
+        if (!$guestToken) {
+            $guestToken = uniqid('guest_', true);
+        }
 
         if (auth()->user()) {
             $users_id_type = 'user_id';
@@ -370,7 +413,7 @@ class CartController extends Controller
                     'status' => true,
                     'message' => trans('messages.product_add_cart_success'),
                     'cart_count' =>  $this->cartCount()
-                ], 200)->cookie('guest_token', $guestToken, 60 * 24 * 30);
+                ], 200)->cookie('guest_token', $guestToken, 60 * 24 * 30, '/', null, false, false);
             } else {
                 return response()->json([
                     'status' => true,
@@ -423,6 +466,8 @@ class CartController extends Controller
                 $user['users_id_type'] => $user['users_id']
             ])->where('id', $cart_id)->delete();
 
+            $updatedCart = Cart::where($user['users_id_type'], $user['users_id'])->get();
+            $summary = $this->getCartSummary($updatedCart);
 
             $summary = $this->getCartSummary($updatedCart);
 

@@ -27,7 +27,7 @@
                     </thead>
                     <tbody>
 
-                        @if (!empty($response['products']))
+                        @if ($response['products'] && !empty($response['products']))
                             @foreach ($response['products'] as $prod)
                                 <x-frontend.cart.cart-item :prod="$prod" />
                             @endforeach

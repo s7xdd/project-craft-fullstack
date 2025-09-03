@@ -40,31 +40,30 @@
 		
 	}
 
-	//Mobile Nav Hide Show
 	if($('.mobile-menu').length){
 		
-		
-		var mobileMenuContent = $('.main-header .menu-area .main-menu').html();
-		$('.mobile-menu .menu-box .menu-outer').append(mobileMenuContent);
-		$('.sticky-header .main-menu').append(mobileMenuContent);
-		
-		//Dropdown Button
-		$('.mobile-menu li.dropdown .dropdown-btn').on('click', function() {
+		$(document).on('click', '.mobile-menu li.dropdown .dropdown-btn', function() {
 			$(this).toggleClass('open');
-			$(this).prev('ul').slideToggle(500);
+			$(this).siblings('ul').slideToggle(500);
+			$(this).siblings('.megamenu').slideToggle(500);
 		});
-		//Dropdown Button
-		$('.mobile-menu li.dropdown .dropdown-btn').on('click', function() {
-			$(this).prev('.megamenu').slideToggle(900);
-		});
-		//Menu Toggle Btn
-		$('.mobile-nav-toggler').on('click', function() {
+		
+		$(document).on('click', '.mobile-nav-toggler', function() {
 			$('body').addClass('mobile-menu-visible');
 		});
 
-		//Menu Toggle Btn
-		$('.mobile-menu .menu-backdrop,.mobile-menu .close-btn').on('click', function() {
+		$(document).on('click', '.mobile-menu .menu-backdrop, .mobile-menu .close-btn', function() {
 			$('body').removeClass('mobile-menu-visible');
+		});
+		
+		$(document).on('click', '.mobile-menu a:not(.dropdown-btn span)', function(e) {
+			if ($(this).attr('href') === '#' || $(this).attr('href') === 'javascript:void(0)') {
+				return;
+			}
+			
+			setTimeout(function() {
+				$('body').removeClass('mobile-menu-visible');
+			}, 100);
 		});
 	}
 
@@ -899,6 +898,11 @@
 		(function ($) {
 			// add your functions
 			directionswitch();
+			
+			// Initialize mobile menu functionality
+			if($('.mobile-menu').length){
+				// Add any initialization code here if needed
+			}
 		})(jQuery);
 	});
 
