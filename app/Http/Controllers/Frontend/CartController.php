@@ -18,15 +18,9 @@ class CartController extends Controller
         $lang = getActiveLanguage();
         $user_id = '';
 
-
-        
         $guest_token = request()->cookie('guest_token') ?? uniqid('guest_', true);
 
-        // dd(request()->cookie('guest_token'));
-        
         $new_guest_token_created = false;
-
-        dd($guest_token);
 
         if (auth()->user()) {
             $user_id = auth()->user()->id;
