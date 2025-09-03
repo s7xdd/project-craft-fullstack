@@ -95,10 +95,19 @@
 =======
                 </x-slot> --}}
 
+<<<<<<< HEAD
 >>>>>>> 5c867e0971225d9a1e7e93d6d6e062f7e28e0d36
                 <x-slot name="checkoutButton">
                     <x-frontend.cart.checkout-button link="{{ route('checkout') }}" text="Proceed to Checkout" />
                 </x-slot>
+=======
+                @if ($response['products'] && !empty($response['products']))
+                    <x-slot name="checkoutButton">
+                        <x-frontend.cart.checkout-button link="{{ route('checkout') }}" text="Proceed to Checkout" />
+                    </x-slot>
+                @endif
+
+>>>>>>> 2b0b0b369dbf71120c880684f43d98d233c12113
             </x-frontend.cart.cart-totals>
         </x-slot>
     </x-frontend.cart.cart-section>
