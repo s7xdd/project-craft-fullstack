@@ -46,7 +46,7 @@ class CheckoutController
         
 
         if (!$userId) {
-            $tempUserId = $request->cookie('guest_token');
+            $tempUserId = request()->cookie('guest_token') ?? uniqid('guest_', true);
             if (!$tempUserId) {
                 return response()->json([
                     'success' => false,
@@ -55,16 +55,20 @@ class CheckoutController
             }
         }
 
+        dd($tempUserId);
+
         $cartItemsQuery = Cart::query();
+
         if ($userId) {
             $cartItemsQuery->where('user_id', $userId);
         } else {
             $cartItemsQuery->where('temp_user_id', $tempUserId);
         }
+        
         $cart_items = $cartItemsQuery->get();
-        $cartCount = count($cart_items);
+        $cartCount = $cart_items->count();
 
-        if ($cart_items->isEmpty()) {
+        if ($cartCount == 0) {
             return response()->json([
                 'success' => false,
                 'message' => trans('messages.cart_empty')
@@ -200,8 +204,9 @@ class CheckoutController
         $userId = $user['users_id'] ?? null;
         $tempUserId = null;
 
+        // For guest users, check cookie first
         if (!$userId) {
-            $tempUserId = $request->cookie('guest_token');
+            $tempUserId = $request->cookie('guest_token') ?? request()->cookie('guest_token');
             if (!$tempUserId) {
                 return response()->json([
                     'success' => false,
@@ -217,7 +222,7 @@ class CheckoutController
             $updateQuery->where('temp_user_id', $tempUserId);
         }
 
-        $updateQuery->update([
+        $updated = $updateQuery->update([
             'discount' => 0.00,
             'coupon_code' => '',
             'coupon_applied' => 0,

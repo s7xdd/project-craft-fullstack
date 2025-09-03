@@ -155,28 +155,20 @@ class ProductController extends Controller
 
         if ($request->has('offers')) {
             $today = Carbon::now()->timestamp;
-            $product_query->where('discount_start_date', '<=', $today) 
+            $product_query->where('discount_start_date', '<=', $today)
                 ->where('discount_end_date', '>=', $today);
         }
         $products = $product_query->paginate(5)->appends($request->query());
 
 
-        $categories = Cache::rememberForever('categories', function () {
-            $details = Category::where('parent_id', 0)->where('is_active', 1)->orderBy('name', 'asc')->get();
-            return $details;
-        });
+        $categories = Category::where('parent_id', 0)->where('is_active', 1)->orderBy('name', 'asc')->get();
 
         $brands = Cache::rememberForever('brands', function () {
             $details = Brand::where('is_active', 1)->orderBy('name', 'asc')->get();
             return $details;
         });
 
-        $occasions = Cache::rememberForever('occasions', function () {
-            $details = Occasion::where('is_active', 1)->orderBy('name', 'asc')->get();
-            return $details;
-        });
-
-        return view('frontend.products', compact('limit', 'products', 'offset', 'min_price', 'max_price', 'category', 'brand', 'occasion', 'sort_by', 'lang', 'categories', 'brands', 'occasions', 'categoryData', 'price'));
+        return view('frontend.products', compact('limit', 'products', 'offset', 'min_price', 'max_price', 'category', 'brand', 'sort_by', 'lang', 'categories', 'brands', 'categoryData', 'price'));
     }
 
     public function productDetails(Request $request)

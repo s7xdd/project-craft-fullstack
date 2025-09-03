@@ -9,7 +9,7 @@ class Category extends Model
 {
     protected $with = ['category_translations'];
 
-    protected $fillable = ['parent_id', 'name', 'icon', 'is_active'];
+    protected $fillable = ['parent_id', 'name', 'slug', 'icon', 'is_active'];
 
     public function getTranslation($field = '', $lang = false)
     {
@@ -63,11 +63,11 @@ class Category extends Model
         return $this->belongsToMany(Attribute::class);
     }
 
-    public function getAllChildren ()
+    public function getAllChildren()
     {
 
         $sections = collect([]);
-        if(!empty($this->childs)){
+        if (!empty($this->childs)) {
             foreach ($this->childs as $section) {
                 $sections->push($section);
                 $sections = $sections->merge($section->getAllChildren());
@@ -81,16 +81,15 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id')->with('categories');
     }
 
-     // Recursive method to update statuses of all child categories
-     public function updateChildStatuses($status)
-     {
-         // Update status of the current category
-         $this->update(['is_active' => $status]);
- 
-         // Recursively update statuses of child categories
-         foreach ($this->categories as $child) {
-             $child->updateChildStatuses($status);
-         }
-     }
+    // Recursive method to update statuses of all child categories
+    public function updateChildStatuses($status)
+    {
+        // Update status of the current category
+        $this->update(['is_active' => $status]);
 
+        // Recursively update statuses of child categories
+        foreach ($this->categories as $child) {
+            $child->updateChildStatuses($status);
+        }
+    }
 }
