@@ -343,6 +343,7 @@
                             $('.cart_sub_total').html(response.updatedCartSummary.sub_total)
                             toastr.success(response.message,
                                 "{{ trans('messages.success') }}");
+                            window.location.reload();
                         } else {
                             toastr.error(response.message, "{{ trans('messages.error') }}");
                         }
