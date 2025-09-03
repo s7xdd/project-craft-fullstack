@@ -436,7 +436,7 @@ class CartController extends Controller
         $lang = getActiveLanguage();
         $response = $this->index();
 
-        $collectionProducts = CollectionProduct::whereIn('page', array('checkout'))->get()->map(function ($item) {
+        $collectionProducts = CollectionProduct::whereIn('page', array('cart'))->get()->map(function ($item) {
             return [
                     'id' => $item->id,
                     'page_reference' => $item->page_reference,

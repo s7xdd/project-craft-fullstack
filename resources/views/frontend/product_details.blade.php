@@ -171,7 +171,7 @@
                                     <div class="product-quantity__plus js-quantity-up"><a href="#"><i
                                                 class="lnil lnil-plus"></i></a></div>
                                 </div>
-                                <div class="product__add-to-cart">
+                                <div class="product__add-to-cart max-w-[300px]">
                                     @if ($response['quantity'] > 0)
                                         <button class="eighth-button add-to-cart-btn"
                                             data-product-slug="{{ $response['slug'] }}"
@@ -199,12 +199,7 @@
                     @endif
 
                     <x-slot name="socialLinks">
-                        <li class="social-links">
-                            <strong>Share :</strong>
-                            <a href="shop-details.html"><i class="icon-14"></i></a>
-                            <a href="shop-details.html"><i class="icon-15"></i></a>
-                            <a href="shop-details.html"><i class="icon-16"></i></a>
-                        </li>
+                       <x-frontend.common.social-share :product="$response" />
                     </x-slot>
 
                 </x-frontend.product-detail.product-details>
@@ -228,15 +223,21 @@
             </x-slot>
         @endif
 
-        <x-frontend.product-detail.product-slider-item image="{{ $images[0] ?? 'assets/images/product-1.webp' }}"
-            alt="Product Image">
+        {{-- image-slider --}}
+
+        <x-frontend.common.image-slider :product="$response" />
+
+        {{-- <x-frontend.product-detail.product-slider-item image="{{ $images[0] ?? asset('assets/images/product-1.webp') }}"
+            alt="{{ $response['name'] ?? 'Product Image' }}">
             <x-slot name="thumbnails">
                 @foreach ($images as $index => $img)
                     <x-frontend.product-detail.thumbnail-item class="{{ $index === 0 ? 'active' : '' }}"
                         index="{{ $index }}" image="{{ $img }}" alt="Thumbnail {{ $index + 1 }}" />
                 @endforeach
             </x-slot>
-        </x-frontend.product-detail.product-slider-item>
+        </x-frontend.product-detail.product-slider-item> --}}
+
+
 
 
     </x-frontend.product-detail.product-gallery>
@@ -275,4 +276,177 @@
 
 
     <x-frontend.common.whatsapp-subscribe />
+@endsection
+
+
+@section('script')
+    <script>
+        const currentAttribute = @json($response['current_attribute']);
+        const productAttributes = @json($response['product_attributes']);
+        const variantProducts = @json($response['varient_products']);
+
+
+        var slug = '{{ $response['slug'] }}';
+        $(document).ready(function() {
+
+            let selectedAttributes = {};
+            const firstAttributeId = productAttributes[0].id;
+
+            $('.attribute-item').click(function() {
+                const attributeId = $(this).closest('.attribute-list').data('attribute-id');
+                const valueId = $(this).data('value-id');
+
+                if (attributeId === firstAttributeId) {
+                    selectedAttributes[attributeId] = valueId;
+                    $(this).siblings().removeClass('active');
+                    $(this).addClass('active');
+
+                    updateSubsequentAttributes(selectedAttributes);
+                    return;
+                }
+
+                selectedAttributes[attributeId] = valueId;
+
+                $(this).siblings().removeClass('active');
+                $(this).addClass('active');
+
+                clearSubsequentAttributes(attributeId);
+
+                filterAttributes(selectedAttributes);
+
+                if (Object.keys(selectedAttributes).length === productAttributes.length) {
+                    displaySKU(selectedAttributes);
+                } else {
+                    $('#product-stock').html('<p>Select all attributes to see product details.</p>');
+                }
+            });
+
+            function filterAttributes(selectedAttributes) {
+                const validCombinations = getValidCombinations(selectedAttributes);
+                let validValues = {};
+
+                validCombinations.forEach(variant => {
+                    const values = Object.values(variant)[0].map(value => parseInt(
+                        value));
+                    values.forEach(value => {
+                        const attrId = getAttributeId(value);
+                        if (!validValues[attrId]) validValues[attrId] = [];
+                        if (!validValues[attrId].includes(value)) validValues[attrId].push(value);
+                    });
+                });
+
+                $('.attribute-list').each(function() {
+                    const attrId = $(this).data('attribute-id');
+
+                    if (attrId === firstAttributeId) {
+                        $(this).find('.attribute-item').show().removeClass('disabled');
+                        return;
+                    }
+
+                    $(this).find('.attribute-item').each(function() {
+                        if ($(this).hasClass('firstItem_0')) {
+                            return;
+                        }
+
+                        const valueId = parseInt($(this).data('value-id'));
+                        if (validValues[attrId]?.includes(valueId)) {
+                            $(this).removeClass('disabled').show();
+                        } else {
+                            $(this).addClass('disabled').hide();
+                        }
+                    });
+                });
+            }
+
+            function updateSubsequentAttributes(selectedAttributes) {
+                const validCombinations = getValidCombinations(selectedAttributes);
+
+                let validValues = {};
+                validCombinations.forEach(variant => {
+                    const values = Object.values(variant)[0].map(value => parseInt(
+                        value));
+                    values.forEach(value => {
+                        const attrId = getAttributeId(value);
+                        if (!validValues[attrId]) validValues[attrId] = [];
+                        if (!validValues[attrId].includes(value)) validValues[attrId].push(value);
+                    });
+                });
+
+                $('.attribute-list').each(function() {
+                    const attrId = $(this).data('attribute-id');
+
+                    if (attrId === firstAttributeId) {
+                        $(this).find('.attribute-item').show().removeClass('disabled');
+                        return;
+                    }
+
+                    $(this).find('.attribute-item').each(function() {
+                        const valueId = parseInt($(this).data('value-id'));
+                        if (validValues[attrId]?.includes(valueId)) {
+                            $(this).removeClass('disabled').show();
+                            if (!selectedAttributes[attrId]) {
+                                selectedAttributes[attrId] = valueId;
+                                $(this).addClass('active');
+                            }
+                        } else {
+                            $(this).addClass('disabled').hide();
+                        }
+                    });
+                });
+
+                if (Object.keys(selectedAttributes).length === productAttributes.length) {
+                    displaySKU(selectedAttributes);
+                }
+            }
+
+            function getValidCombinations(selectedAttributes) {
+                console.log("Selected Attributes:", selectedAttributes);
+                console.log("Variant Products:", variantProducts);
+
+                return variantProducts.filter(variant => {
+                    const values = Object.values(variant)[0].map(value => parseInt(
+                        value));
+                    return Object.entries(selectedAttributes).every(([attrId, valueId]) => {
+                        return values.includes(parseInt(valueId));
+                    });
+                });
+            }
+
+            function clearSubsequentAttributes(attributeId) {
+                const attributeIndex = productAttributes.findIndex(attr => attr.id == attributeId);
+                productAttributes.slice(attributeIndex + 1).forEach(attr => {
+                    delete selectedAttributes[attr.id];
+                    $(`[data-attribute-id="${attr.id}"] .attribute-item`).removeClass('active');
+                });
+            }
+
+            function displaySKU(selectedAttributes) {
+                const matchingVariant = variantProducts.find(variant => {
+                    const values = Object.values(variant)[0].map(value => parseInt(
+                        value));
+                    return Object.values(selectedAttributes).every(value => values.includes(value));
+                });
+
+                if (matchingVariant) {
+                    const sku = Object.keys(matchingVariant)[0];
+                    $('#product-stock').html(`<p>SKU: ${sku}</p>`);
+                    var url = '/product-detail?slug=' + encodeURIComponent(slug) + '&sku=' + encodeURIComponent(
+                        sku);
+
+                    window.location.href = url;
+                } else {
+                    $('#product-stock').html('<p>No matching product found.</p>');
+                }
+            }
+
+            function getAttributeId(valueId) {
+                for (const attribute of productAttributes) {
+                    if (attribute.values.some(value => value.id === valueId)) {
+                        return attribute.id;
+                    }
+                }
+                return null;
+            }
+        });
+    </script>
 @endsection

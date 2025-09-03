@@ -18,7 +18,7 @@
     </ul>
     {!! $colorOptions !!}
     {{ $cartOptions ?? '' }}
-    <ul class="other-option clearfix">
+    <ul class="other-option clearfix !pl-0">
         {{ $tags ?? '' }}
         {{ $socialLinks ?? '' }}
     </ul>

@@ -93,7 +93,7 @@
         @foreach ($middleCollections as $collectionKey => $collection)
             <x-frontend.common.product-section title="{{ $collection['collectiontitle'] }}">
                 <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
-                    <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
+                    <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one ">
                         @foreach ($collection['products'] as $product)
                             @php
                                 $priceData = getProductOfferPrice($product);

@@ -79,12 +79,12 @@
             <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['total'] }}</h4>
         </div>
 
-        <div class="!mb-10">
+        {{-- <div class="!mb-10">
             <x-frontend.cart.coupon :response="$response" />
-        </div>
+        </div> --}}
 
 
-        <div class="payment-option">
+        {{-- <div class="payment-option">
             <h3>Payment Method</h3>
             <ul class="other-payment !pl-0">
                 <li>
@@ -101,7 +101,7 @@
                     </div>
                 </li>
             </ul>
-        </div>
+        </div> --}}
 
         <div class="btn-box pt_30">
             <button class="pink-button" type="button" id="submitCheckout">

@@ -89,11 +89,11 @@
 
                 </x-slot>
 
-                <x-slot name="coupon">
+                {{-- <x-slot name="coupon">
                     <div class="!my-10">
                         <x-frontend.cart.coupon :response="$response" />
                     </div>
-                </x-slot>
+                </x-slot> --}}
 
                 <x-slot name="checkoutButton">
                     <x-frontend.cart.checkout-button link="{{ route('checkout') }}" text="Proceed to Checkout" />
