@@ -38,12 +38,8 @@ class CheckoutController
 
     public function apply_coupon_code(Request $request)
     {
-        $user = getUser();
-        $userId = $user['users_id'] ?? null;
+        $userId = auth()->user() ? auth()->user()->id : null;
         $tempUserId = null;
-
-        // dd(request()->cookie('guest_token'));
-        
 
         if (!$userId) {
             $tempUserId = request()->cookie('guest_token') ?? uniqid('guest_', true);
@@ -55,8 +51,6 @@ class CheckoutController
             }
         }
 
-        dd($tempUserId);
-
         $cartItemsQuery = Cart::query();
 
         if ($userId) {
@@ -64,7 +58,7 @@ class CheckoutController
         } else {
             $cartItemsQuery->where('temp_user_id', $tempUserId);
         }
-        
+
         $cart_items = $cartItemsQuery->get();
         $cartCount = $cart_items->count();
 
@@ -200,13 +194,11 @@ class CheckoutController
 
     public function remove_coupon_code(Request $request)
     {
-        $user = getUser();
-        $userId = $user['users_id'] ?? null;
+        $userId = auth()->user() ? auth()->user()->id : null;
         $tempUserId = null;
 
-        // For guest users, check cookie first
         if (!$userId) {
-            $tempUserId = $request->cookie('guest_token') ?? request()->cookie('guest_token');
+            $tempUserId = request()->cookie('guest_token');
             if (!$tempUserId) {
                 return response()->json([
                     'success' => false,
@@ -237,6 +229,8 @@ class CheckoutController
     public function placeOrder(Request $request)
     {
 
+        $user_id = auth()->user() ? auth()->user()->id : null;
+        $guest_id = Request::cookie('guest_token');
 
         $validatedData = $request->validate([
             'billing_name' => 'required|string|max:255',
@@ -267,36 +261,6 @@ class CheckoutController
         $shipping_address = [];
         $billing_address = [];
 
-        $user = getUser();
-        $user_id = $user['users_id'];
-
-        // if($user_id != ''){
-        //     $address = Address::where('id', $address_id)->first();
-        //     if($address){
-        //         $shipping_address['name']        = $address->name;
-        //         $shipping_address['email']       = auth('sanctum')->user()->email;
-        //         $shipping_address['address']     = $address->address;
-        //         $shipping_address['country']     = $address->country_name;
-        //         $shipping_address['state']       = $address->state_name;
-        //         $shipping_address['city']        = $address->city;
-        //         $shipping_address['phone']       = $address->phone;
-        //         $shipping_address['longitude']   = $address->longitude;
-        //         $shipping_address['latitude']    = $address->latitude;
-        //     }else{
-        //         return response()->json([
-        //             'status' => false,
-        //             'message' => 'Shipping address not exist',
-        //             'data' => array(
-        //                 'order_id' => '',
-        //                 'order_code' => '',
-        //                 'grand_total' => 0,
-        //                 'payment_type' => '',
-        //                 'url' => ''
-        //             )
-        //         ], 200);
-        //     }
-        // }
-
         $billing_address['name']        = $request->billing_name;
         $billing_address['email']       = $request->billing_email;
         $billing_address['address']     = $request->billing_address;
@@ -318,7 +282,13 @@ class CheckoutController
         $shipping_address_json = json_encode($shipping_address);
         $billing_address_json = json_encode($billing_address);
 
-        $carts = Cart::where('user_id', $user_id)->orderBy('id', 'asc')->get();
+        $carts = Cart::query();
+
+        if ($user_id) {
+            $carts->where('user_id', $user_id)->orderBy('id', 'asc')->get();
+        } else {
+            $carts->where('temp_user_id', $guest_id)->orderBy('id', 'asc')->get();
+        }
 
         if (!empty($carts[0])) {
             $carts->load(['product', 'product_stock']);
@@ -327,7 +297,8 @@ class CheckoutController
             $coupon_code = '';
 
             $order = Order::create([
-                'user_id' => $user_id,
+                'user_id' => $user_id ?? $guest_id,
+                'is_guest' => $user_id ? 1 : 0,
                 'shipping_address' => $shipping_address_json,
                 'billing_address' => $billing_address_json,
                 'order_notes' => $request->order_note ?? '',
@@ -398,16 +369,17 @@ class CheckoutController
 
             if ($coupon_code != '') {
                 $coupon_usage = new CouponUsage;
-                $coupon_usage->user_id = $user_id;
+                $coupon_usage->user_id = $user_id ?? $guest_id;
                 $coupon_usage->coupon_id = Coupon::where('code', $coupon_code)->first()->id;
                 $coupon_usage->save();
             }
             if ($request->payment_method == 'cod') {
                 reduceProductQuantity($productQuantities);
-                Cart::where('user_id', $user_id)->delete();
-
-                // NotificationUtility::sendOrderPlacedNotification($order);
-                // NotificationUtility::sendNotification($order, 'created');
+                if ($user_id) {
+                    Cart::where('user_id', $user_id)->delete();
+                } else {
+                    Cart::where('temp_user_id', $guest_id)->delete();
+                }
 
                 return redirect()->route('order.success', $order->id);
             } else if ($request->payment_method == 'razorpay') {

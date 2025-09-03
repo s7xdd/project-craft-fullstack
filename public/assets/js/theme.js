@@ -88,8 +88,12 @@ var durotan;
       },
 
       mobileMenu: function() {
-        $('.js-mobile-menu-dropdown-btn').on("click", function() {
-          $(this).parent().find('.js-mobile-menu-dropdown-menu').slideToggle(500);
+        $('.js-mobile-menu-dropdown-btn').on("click", function(e) {
+          e.preventDefault();
+          // Toggle the next sibling element (either megamenu or submenu)
+          $(this).siblings('.megamenu, .submenu').slideToggle(500);
+          // Toggle active class on parent for styling purposes
+          $(this).parent().toggleClass('active');
         });
         $(".js-open-mobile-menu").on("click", function() {
           $(".js-mobile-menu").addClass("active");
