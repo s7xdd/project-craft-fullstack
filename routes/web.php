@@ -60,6 +60,11 @@ Route::get('/testimonials/{id}', [TestimonialController::class, 'show'])->name('
 Route::get('/checkout', [CheckoutController::class, 'index'])->middleware('auth')->name('checkout');
 Route::post('checkout.process', [CheckoutController::class, 'placeOrder'])->name('checkout.process');
 
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.sendResetLink');
+Route::get('/password/reset/{email}/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset.form');
+Route::post('/password/reset', [ForgotPasswordController::class, 'resetPassword'])->name('password.reset');
+
+
 Route::get('/order/success/{order_id}', [CheckoutController::class, 'success'])->name('order.success');
 Route::get('/order/failed', [CheckoutController::class, 'failed'])->name('order.failed');
 
