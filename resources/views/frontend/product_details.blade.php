@@ -11,79 +11,32 @@
             array_push($images, $response['variant_image']);
         }
 
-        $thumbanailSlider = $productImagesWeb = $productImagesMob = '';
+        $flattened_product_prices = [];
+        if (!empty($response['varient_productsPrice']) && is_array($response['varient_productsPrice'])) {
+            $arrays = array_filter($response['varient_productsPrice'], 'is_array');
+            if (!empty($arrays)) {
+                $flattened_product_prices = call_user_func_array('array_merge', $arrays);
+            }
+        }
 
-        $flattened_product_prices =
-            isset($response['varient_productsPrice']) &&
-            call_user_func_array('array_merge', $response['varient_productsPrice']);
+        $product_main_price = !empty($flattened_product_prices[$response['sku']]['original_price'])
+            ? $flattened_product_prices[$response['sku']]['original_price']
+            : $response['main_price'];
+
+        $product_discount_price = !empty($flattened_product_prices[$response['sku']]['discounted_price'])
+            ? $flattened_product_prices[$response['sku']]['original_price']
+            : $response['stroked_price'];
+
     @endphp
-
-
-    @if (!empty($images))
-        @foreach ($images as $imgkey => $img)
-            @php
-                $activeStatus = '';
-                if ($imgkey == 0) {
-                    $activeStatus = 'active';
-                }
-
-                $productImagesWeb .=
-                    '<li class="' .
-                    $activeStatus .
-                    ' js-product-main-image" data-id="' .
-                    $imgkey .
-                    '">
-                                        <a href="' .
-                    $img .
-                    '">
-                                            <img alt="Image" src="' .
-                    $img .
-                    '"
-                                                data-zoomed="' .
-                    $img .
-                    '" class="js-zoomit" />
-                                        </a>
-                                    </li>';
-
-                $productImagesMob .=
-                    '<div class="mobile-product-image">
-                                            <p>
-                                                <a href="' .
-                    $img .
-                    '" target="_blank">
-                                                    <img alt="Image" src="' .
-                    $img .
-                    '" />
-                                                </a>
-                                            </p>
-                                        </div>';
-
-                $thumbanailSlider .=
-                    '<li class="js-product-thumnail-slider" data-group="1">
-                                    <a href="#" class="' .
-                    $activeStatus .
-                    ' js-product-thumbnail" data-id="' .
-                    $imgkey .
-                    '">
-                                        <img alt="Image" src="' .
-                    $img .
-                    '" />
-                                    </a>
-                                </li>';
-            @endphp
-        @endforeach
-    @endif
 
 
     <x-frontend.product-detail.product-gallery>
         <x-slot name="productDetails">
 
-
             @if (isset($response['id']) && isset($response['name']))
                 <x-frontend.product-detail.product-details category="{{ $response['category']['name'] }}"
-                    title="{{ isset($response['name']) ? $response['name'] : '' }}"
-                    price="{{ isset($flattened_product_prices[$response['sku']]['discounted_price']) ? $flattened_product_prices[$response['sku']]['discounted_price'] : '' }}"
-                    originalPrice="{{ isset($flattened_product_prices[$response['sku']]['original_price']) ? $flattened_product_prices[$response['sku']]['original_price'] : '' }}">
+                    title="{{ isset($response['name']) ? $response['name'] : '' }}" price="{{ $product_main_price }}"
+                    originalPrice="{{ $product_discount_price }}">
 
                     <x-slot name="description">
                         {!! $response['short_description'] !!}
@@ -199,7 +152,7 @@
                     @endif
 
                     <x-slot name="socialLinks">
-                       <x-frontend.common.social-share :product="$response" />
+                        <x-frontend.common.social-share :product="$response" />
                     </x-slot>
 
                 </x-frontend.product-detail.product-details>
@@ -207,7 +160,7 @@
 
         </x-slot>
 
-        @if (isset($response['description']) && $response['description'].trim("") != '')
+        @if (isset($response['description']) && $response['description'] . trim('') != '')
             <x-slot name="productDescription">
                 <x-frontend.product-detail.product-description>
                     <x-slot name="tabs">

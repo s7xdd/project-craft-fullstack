@@ -201,7 +201,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 33px;
+  /* margin-bottom: 33px; */
 }
 
 .checkout-section .order-info .cost-box li:last-child{

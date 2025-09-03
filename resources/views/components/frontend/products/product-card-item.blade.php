@@ -11,7 +11,7 @@
     </a>
     <div class="product-info">
         <a href="{!! $link !!}">
-            <h5 class="product-title">
+            <h5 class="product-title !h-[50px]">
                 {{ $title }}
             </h5>
         </a>

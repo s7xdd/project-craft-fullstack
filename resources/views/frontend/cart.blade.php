@@ -95,9 +95,11 @@
                     </div>
                 </x-slot> --}}
 
-                <x-slot name="checkoutButton">
-                    <x-frontend.cart.checkout-button link="{{ route('checkout') }}" text="Proceed to Checkout" />
-                </x-slot>
+                @if ($response['products'] && !empty($response['products']))
+                    <x-slot name="checkoutButton">
+                        <x-frontend.cart.checkout-button link="{{ route('checkout') }}" text="Proceed to Checkout" />
+                    </x-slot>
+                @endif
 
             </x-frontend.cart.cart-totals>
         </x-slot>
