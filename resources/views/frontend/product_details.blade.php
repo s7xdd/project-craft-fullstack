@@ -207,7 +207,7 @@
 
         </x-slot>
 
-        @if (isset($response['description']))
+        @if (isset($response['description']) && $response['description'].trim("") != '')
             <x-slot name="productDescription">
                 <x-frontend.product-detail.product-description>
                     <x-slot name="tabs">

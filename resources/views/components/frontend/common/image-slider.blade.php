@@ -1,6 +1,6 @@
 @props(['product'])
 
-<div class="w-full md:w-1/2 relative flex flex-col justify-center items-center space-y-2">
+<div class="w-full md:w-1/2 relative flex flex-col justify-center items-center space-y-2 !min-h-[300px] md:!h-[700px]">
 
     <div class="swiper product-images-swiper overflow-hidden rounded-lg border w-full">
         <div class="swiper-wrapper py-10 m-auto">
