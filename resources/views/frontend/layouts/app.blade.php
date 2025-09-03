@@ -160,6 +160,7 @@
 
     <div id="main">
         @include('frontend.parts.header')
+        @include('frontend.parts.mobile-menu')
 
         @yield('content')
 
@@ -420,7 +421,7 @@
                 url: '/check-login-status', // Endpoint to check login status
                 type: 'GET',
                 success: function(response) {
-                        window.location.href = '/checkout';
+                    window.location.href = '/checkout';
                 },
                 error: function() {
                     toastr.error("{{ trans('messages.error_try_again') }}",
@@ -462,7 +463,7 @@
                         _token: $('meta[name="csrf-token"]').attr('content')
                     },
                     xhrFields: {
-                        withCredentials: true 
+                        withCredentials: true
                     },
                     success: function(response) {
                         if (response.success) {

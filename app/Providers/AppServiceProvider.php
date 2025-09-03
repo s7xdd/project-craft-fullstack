@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
             App::setLocale(Session::get('locale'));
         }
 
-        View::composer('frontend.parts.header', function ($view) {
+        View::composer(['frontend.parts.header', 'frontend.parts.mobile-menu'], function ($view) {
             $menu = Menus::where('name', 'header')->with('items.child.child.child')->first();
             $menu_items = $menu ? $menu->items : collect();
 
