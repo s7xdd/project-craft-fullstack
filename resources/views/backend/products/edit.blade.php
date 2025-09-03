@@ -1000,7 +1000,7 @@
             },
         });
 
-        repeater.setList({!! json_encode($tabs) !!});
+        // repeater.setList({!! json_encode($tabs) !!});
 
 
         $(document).on('change', '#product_type', function() {

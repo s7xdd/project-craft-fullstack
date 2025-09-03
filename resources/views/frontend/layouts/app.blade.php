@@ -16,6 +16,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/icon-font.min.css') }}">
     <link href="{{ asset('assets/css/custom-style.css') }}" rel="stylesheet" type="text/css" />
 
+    <link href="{{ asset('dist/assets/app-97de3ed1.css') }}" rel="stylesheet">
+    <link href="{{ asset('dist/assets/app-afc193cb.css') }}" rel="stylesheet">
+    <script type="module" src="{{ asset('assets/js/app-f10b86b9.js') }}"></script>
+
     <link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">
     <script src="https://cdn.form.io/formiojs/formio.full.min.js"></script>
 
@@ -141,6 +145,23 @@
             100% {
                 transform: rotate(360deg);
             }
+        }
+
+        .attribute-item {
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .attribute-item.disabled {
+            /* color: #ccc; */
+            pointer-events: none !important;
+            text-decoration: line-through !important;
+            /* background-color: #f9f9f9; */
         }
 
         .page-loaded #page-loader {
@@ -343,6 +364,7 @@
                             $('.cart_sub_total').html(response.updatedCartSummary.sub_total)
                             toastr.success(response.message,
                                 "{{ trans('messages.success') }}");
+                            window.location.reload();
                         } else {
                             toastr.error(response.message, "{{ trans('messages.error') }}");
                         }

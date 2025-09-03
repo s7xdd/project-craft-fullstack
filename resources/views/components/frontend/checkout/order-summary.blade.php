@@ -87,6 +87,7 @@
             <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $responseData['summary']['total'] }}</h4>
         </div>
 
+<<<<<<< HEAD
         {{-- COUPON CODE COMPONENT COMMENTED OUT
         <div class="!mb-10">
             <x-frontend.cart.coupon :response="$responseData" />
@@ -95,6 +96,14 @@
 
         {{-- PAYMENT METHODS SECTION COMMENTED OUT
         <div class="payment-option">
+=======
+        {{-- <div class="!mb-10">
+            <x-frontend.cart.coupon :response="$response" />
+        </div> --}}
+
+
+        {{-- <div class="payment-option">
+>>>>>>> 5c867e0971225d9a1e7e93d6d6e062f7e28e0d36
             <h3>Payment Method</h3>
             <ul class="other-payment !pl-0">
                 <li>
@@ -111,8 +120,12 @@
                     </div>
                 </li>
             </ul>
+<<<<<<< HEAD
         </div>
         --}}
+=======
+        </div> --}}
+>>>>>>> 5c867e0971225d9a1e7e93d6d6e062f7e28e0d36
 
         <div class="btn-box pt_30">
             <button class="pink-button" type="button" id="submitCheckout">

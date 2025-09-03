@@ -22,39 +22,11 @@ class CollectionProductController extends Controller
 
         $pageOptions = [
             'home' => 'Home',
-            
+            'cart' => 'Cart',
         ];
         $pageReferenceOptions = [
             'top' => 'Top',
-            'top-left' => 'Top Left',
-            'top-right' => 'Top Right',
-            'top-center' => 'Top Center',
-            'top-gap' => 'Top Gap',
-            'top-bottom' => 'Top Bottom',
-            'top-middle' => 'Top Middle',
             'middle' => 'Middle',
-            'middle-top' => 'Middle Top',
-            'middle-left' => 'Middle Left',
-            'middle-right' => 'Middle Right',
-            'middle-center' => 'Middle Center',
-            'middle-gap' => 'Middle Gap',
-            'middle-bottom' => 'Middle Bottom',
-            'bottom' => 'Bottom',
-            'bottom-top' => 'Bottom Top',
-            'bottom-left' => 'Bottom Left',
-            'bottom-right' => 'Bottom Right',
-            'bottom-center' => 'Bottom Center',
-            'bottom-middle' => 'Bottom Middle',
-            'bottom-gap' => 'Bottom Gap',
-            'footer' => 'Footer',
-            'footer-top' => 'Footer Top',
-            'footer-top-center' => 'Footer Top Center',
-            'footer-left' => 'Footer Left',
-            'footer-right' => 'Footer Right',
-            'footer-center' => 'Footer Center',
-            'footer-gap' => 'Footer Gap',
-            'footer-bottom' => 'Footer Bottom',
-            'footer-bottom-bottom' => 'Footer Bottom Bottom',
         ];
 
 
@@ -87,39 +59,11 @@ class CollectionProductController extends Controller
 
         $pageOptions = [
             'home' => 'Home',
-            
+            'cart' => 'Cart',
         ];
         $pageReferenceOptions = [
             'top' => 'Top',
-            'top-left' => 'Top Left',
-            'top-right' => 'Top Right',
-            'top-center' => 'Top Center',
-            'top-gap' => 'Top Gap',
-            'top-bottom' => 'Top Bottom',
-            'top-middle' => 'Top Middle',
             'middle' => 'Middle',
-            'middle-top' => 'Middle Top',
-            'middle-left' => 'Middle Left',
-            'middle-right' => 'Middle Right',
-            'middle-center' => 'Middle Center',
-            'middle-gap' => 'Middle Gap',
-            'middle-bottom' => 'Middle Bottom',
-            'bottom' => 'Bottom',
-            'bottom-top' => 'Bottom Top',
-            'bottom-left' => 'Bottom Left',
-            'bottom-right' => 'Bottom Right',
-            'bottom-center' => 'Bottom Center',
-            'bottom-middle' => 'Bottom Middle',
-            'bottom-gap' => 'Bottom Gap',
-            'footer' => 'Footer',
-            'footer-top' => 'Footer Top',
-            'footer-top-center' => 'Footer Top Center',
-            'footer-left' => 'Footer Left',
-            'footer-right' => 'Footer Right',
-            'footer-center' => 'Footer Center',
-            'footer-gap' => 'Footer Gap',
-            'footer-bottom' => 'Footer Bottom',
-            'footer-bottom-bottom' => 'Footer Bottom Bottom',
         ];
 
         return view('backend.collection_product.edit', [

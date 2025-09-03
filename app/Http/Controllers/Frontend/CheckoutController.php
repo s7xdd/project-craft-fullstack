@@ -8,20 +8,17 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Models\Coupon;
 use App\Models\CouponUsage;
 use App\Models\OrderTracking;
-use App\Models\Address;
-use App\Models\CombinedOrder;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\ProductStock;
 use App\Models\OrderPayments;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as RequestFacade;
 use App\Utility\NotificationUtility;
 use App\Utility\SendSMSUtility;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
-use App\Mail\EmailManager;
-use Mail;
 use Razorpay\Api\Api;
 
 class CheckoutController
@@ -405,8 +402,8 @@ class CheckoutController
 
     public function successPayment(Request $request)
     {
-        $encResponse = $request->encResp;          //This is the response sent by the CCAvenue Server
-        $rcvdString = decryptCC($encResponse, env('CCA_WORKING_KEY')); //Crypto Decryption used as per the specified working key.
+        $encResponse = $request->encResp;
+        $rcvdString = decryptCC($encResponse, env('CCA_WORKING_KEY'));
         $order_status = $order_code = $tracking_id = "";
         $decryptValues = explode('&', $rcvdString);
         $dataSize = sizeof($decryptValues);
@@ -465,8 +462,8 @@ class CheckoutController
 
     public function cancelPayment(Request $request)
     {
-        $encResponse = $request->encResp;          //This is the response sent by the CCAvenue Server
-        $rcvdString = decryptCC($encResponse, env('CCA_WORKING_KEY')); //Crypto Decryption used as per the specified working key.
+        $encResponse = $request->encResp;
+        $rcvdString = decryptCC($encResponse, env('CCA_WORKING_KEY'));
         $order_status = $order_code = "";
         $decryptValues = explode('&', $rcvdString);
         $dataSize = sizeof($decryptValues);
@@ -482,12 +479,6 @@ class CheckoutController
 
         if ($order_code != '') {
             $orderDetails = Order::where('code', '=', $order_code)->delete();
-
-            // $orderPayments = new OrderPayments();
-            // $orderPayments->order_id = $orderDetails->id;
-            // $orderPayments->payment_status = $order_status;
-            // $orderPayments->payment_details = $payment_details;
-            // $orderPayments->save();
         }
         return redirect(env('CCA_PAYMENT_CANCEL') . '?status=' . $order_status . '&code=' . $order_code);
     }
@@ -610,20 +601,6 @@ class CheckoutController
                     $order->cancel_reason = $reason;
                     $order->save();
 
-                    // $array['view'] = 'emails.commonmail';
-                    // $array['subject'] = "New Order Cancel Request - ".$order->code;
-                    // $array['from'] = env('MAIL_FROM_ADDRESS');
-                    // $array['content'] = "<p>Hi,</p>
-                    //                 <p style='line-height: 25px;'>We have received a new order cancel request. Below are the details of the order:</p>
-                    //                 <p><b>Order Code : </b>".$order->code."</p>
-                    //                 <p><b>Customer Name : </b>".$order->user->name ."</p>
-                    //                 <p style='line-height: 25px;'><b>Reason for cancel: </b>".$reason ."</p>
-                    //                 <p><b>Cancel Request Date: </b>".date('d-M-Y H:i a')."</p><br>
-                    //                 <p>Thank you for your cooperation.</p>
-                    //                 <p>Best regards,</p>
-                    //                 <p>Team ".env('APP_NAME')."</p>";
-                    // Mail::to(env('MAIL_ADMIN'))->queue(new EmailManager($array));
-
                     return response()->json([
                         'status' => true,
                         'message' => trans('messages.request_success')
@@ -662,20 +639,6 @@ class CheckoutController
                     $order->return_reason = $reason;
                     $order->save();
 
-                    // $array['view'] = 'emails.commonmail';
-                    // $array['subject'] = "New Order Cancel Request - ".$order->code;
-                    // $array['from'] = env('MAIL_FROM_ADDRESS');
-                    // $array['content'] = "<p>Hi,</p>
-                    //                 <p style='line-height: 25px;'>We have received a new order cancel request. Below are the details of the order:</p>
-                    //                 <p><b>Order Code : </b>".$order->code."</p>
-                    //                 <p><b>Customer Name : </b>".$order->user->name ."</p>
-                    //                 <p style='line-height: 25px;'><b>Reason for cancel: </b>".$reason ."</p>
-                    //                 <p><b>Cancel Request Date: </b>".date('d-M-Y H:i a')."</p><br>
-                    //                 <p>Thank you for your cooperation.</p>
-                    //                 <p>Best regards,</p>
-                    //                 <p>Team ".env('APP_NAME')."</p>";
-                    // Mail::to(env('MAIL_ADMIN'))->queue(new EmailManager($array));
-
                     return response()->json([
                         'status' => true,
                         'message' => trans('messages.request_success')
@@ -705,9 +668,222 @@ class CheckoutController
         return view('frontend.order_success');
     }
 
-    // Handle the failed page
     public function failed()
     {
         return view('frontend.order_failed');
+    }
+
+    public function redirectToWhatsApp(Request $request)
+    {
+        $validatedData = $request->validate([
+            'billing_name' => 'required|string|max:255',
+            'billing_address' => 'required|string|max:255',
+            'billing_city' => 'required|string|max:255',
+            'billing_zipcode' => 'required|string|max:10',
+            'billing_phone' => 'required|string|max:15',
+            'billing_email' => 'required|email|max:255',
+            'shipping_name' => 'nullable|string|max:255',
+            'shipping_address' => 'nullable|string|max:255',
+            'shipping_city' => 'nullable|string|max:255',
+            'shipping_zipcode' => 'nullable|string|max:10',
+            'shipping_phone' => 'nullable|string|max:15',
+        ]);
+
+        $user_id = auth()->user() ? auth()->user()->id : null;
+        $guest_id = RequestFacade::cookie('guest_token');
+
+        $cartsQuery = Cart::query();
+        if ($user_id) {
+            $cartsQuery->where('user_id', $user_id);
+        } else {
+            $cartsQuery->where('temp_user_id', $guest_id);
+        }
+
+        $carts = $cartsQuery->orderBy('id', 'asc')->get();
+
+        if ($carts->isEmpty()) {
+            return redirect()->back()->with('error', 'Your cart is empty');
+        }
+
+        $carts->load(['product', 'product_stock']);
+
+        $billing_shipping_same = $request->same_as_billing ?? null;
+
+        $shipping_address = [];
+        $billing_address = [];
+
+        $billing_address['name']        = $request->billing_name;
+        $billing_address['email']       = $request->billing_email;
+        $billing_address['address']     = $request->billing_address;
+        $billing_address['zipcode']     = $request->billing_zipcode;
+        $billing_address['city']        = $request->billing_city;
+        $billing_address['phone']       = $request->billing_phone;
+
+        if ($billing_shipping_same != 'on') {
+            $shipping_address['name']        = $request->shipping_name;
+            $shipping_address['email']       = $request->billing_email;
+            $shipping_address['address']     = $request->shipping_address;
+            $shipping_address['zipcode']     = $request->shipping_zipcode;
+            $shipping_address['city']        = $request->shipping_city;
+            $shipping_address['phone']       = $request->shipping_phone;
+        } else {
+            $shipping_address = $billing_address;
+        }
+
+        $shipping_address_json = json_encode($shipping_address);
+        $billing_address_json = json_encode($billing_address);
+
+        $sub_total = $discount = $coupon_applied = $total_coupon_discount = $grand_total = $total_shipping = $total_tax = 0;
+        $coupon_code = '';
+
+        $order = Order::create([
+            'user_id' => $user_id ?? $guest_id,
+            'is_guest' => $user_id ? 1 : 0,
+            'shipping_address' => $shipping_address_json,
+            'billing_address' => $billing_address_json,
+            'order_notes' => $request->order_note ?? '',
+            'shipping_type' => 'free_shipping',
+            'shipping_cost' => 0,
+            'delivery_status' => 'pending',
+            'payment_type' => 'whatsapp',
+            'payment_status' => 'un_paid',
+            'grand_total' =>  0,
+            'tax' => 0,
+            'sub_total' => 0,
+            'offer_discount' => 0,
+            'coupon_discount' => 0,
+            'code' => date('Ymd-His') . rand(10, 99),
+            'date' => strtotime('now'),
+            'delivery_viewed' => 0
+        ]);
+
+        $track = new OrderTracking;
+        $track->order_id = $order->id;
+        $track->status = 'pending';
+        $track->description = "The order has been placed successfully";
+        $track->status_date = date('Y-m-d H:i:s');
+        $track->save();
+
+        $orderItems = $productQuantities = [];
+
+        foreach ($carts as $data) {
+            $sub_total = $sub_total + ($data->price * $data->quantity);
+            $total_tax = $total_tax + $data->tax;
+            $total_shipping = $total_shipping + $data->shipping_cost;
+            $discount = $discount + (($data->price * $data->quantity) - ($data->offer_price * $data->quantity)) + $data->offer_discount;
+            $coupon_code = $data->coupon_code;
+            $coupon_applied = $data->coupon_applied;
+            if ($data->coupon_applied == 1) {
+                $total_coupon_discount += $data->discount;
+            }
+            $orderItems[] = [
+                'order_id' => $order->id,
+                'product_id' => $data->product_id,
+                'product_stock_id' => $data->product_stock->id,
+                'variation' => json_encode(getProductAttributes($data->product_stock->attributes)),
+                'og_price' => $data->price,
+                'tax' => $data->tax,
+                'shipping_cost' => $data->shipping_cost,
+                'offer_price' => $data->offer_price,
+                'price' => $data->offer_price * $data->quantity,
+                'quantity' => $data->quantity,
+            ];
+            $productQuantities[$data->product_id] = $data->quantity;
+
+            $product = Product::find($data->product_id);
+            $product->num_of_sale += $data->quantity;
+            $product->save();
+        }
+
+        OrderDetail::insert($orderItems);
+        $grand_total = ($sub_total + $total_tax + round($total_shipping))  - ($discount + $total_coupon_discount);
+
+        $order->grand_total         = $grand_total;
+        $order->sub_total           = $sub_total;
+        $order->offer_discount      = $discount;
+        $order->tax                 = $total_tax;
+        $order->shipping_cost       = round($total_shipping);
+        $order->shipping_type       = ($total_shipping == 0) ? 'free_shipping' : 'flat_rate';
+        $order->coupon_discount     = $total_coupon_discount;
+        $order->coupon_code         = $coupon_code;
+        $order->save();
+
+        if ($coupon_code != '') {
+            $coupon_usage = new CouponUsage;
+            $coupon_usage->user_id = $user_id ?? $guest_id;
+            $coupon_usage->coupon_id = Coupon::where('code', $coupon_code)->first()->id;
+            $coupon_usage->save();
+        }
+
+        $message = "I want to buy these products:
+
+";
+
+        $total = 0;
+        foreach ($carts as $cart) {
+            $productName = $cart->product->name ?? 'Unknown Product';
+            $productPrice = $cart->offer_price ?? $cart->price;
+            $quantity = $cart->quantity;
+            $subtotal = $productPrice * $quantity;
+            $total += $subtotal;
+
+            $message .= "- {$productName}
+";
+            //             $message .= "  Price: ₹{$productPrice}
+            // ";
+            $message .= "  Quantity: {$quantity}
+";
+            //             $message .= "  Subtotal: ₹{$subtotal}
+
+            // ";
+        }
+
+        //         $message .= "Total: ₹{$total}
+
+        // ";
+
+        $message .= "Customer Details:
+";
+        $message .= "Name: {$validatedData['billing_name']}
+";
+        $message .= "Email: {$validatedData['billing_email']}
+";
+        $message .= "Phone: {$validatedData['billing_phone']}
+
+";
+
+        $message .= "Billing Address:
+";
+        $message .= "{$validatedData['billing_address']}
+";
+        $message .= "{$validatedData['billing_city']} - {$validatedData['billing_zipcode']}
+
+";
+
+        if (!empty($validatedData['shipping_address'])) {
+            $message .= "Shipping Address:
+";
+            $message .= "{$validatedData['shipping_address']}
+";
+            $message .= "{$validatedData['shipping_city']} - {$validatedData['shipping_zipcode']}
+
+";
+        }
+
+        $message .= "Order Code: {$order->code}
+";
+
+        $encodedMessage = urlencode($message);
+
+        $whatsappNumber = env('WHATSAPP_BUSINESS_NUMBER', '');
+        $whatsappUrl = "https://wa.me/{$whatsappNumber}?text={$encodedMessage}";
+
+        if ($user_id) {
+            Cart::where('user_id', $user_id)->delete();
+        } else {
+            Cart::where('temp_user_id', $guest_id)->delete();
+        }
+
+        return redirect()->away($whatsappUrl);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\CollectionProduct;
 use App\Models\Product;
 use App\Models\ProductStock;
 use App\Models\Coupon;
@@ -219,24 +220,24 @@ class CartController extends Controller
                 $result['products'][] = [
                     'id' => $datas->id,
                     'product' => [
-                        'id' => $datas->product->id,
-                        'product_variant_id' => $datas->product_stock->id,
-                        'name' => $datas->product->getTranslation('name', $lang),
-                        'brand' => $datas->product->brand->getTranslation('name', $lang),
-                        'slug' => $datas->product->slug,
-                        'sku' => $datas->product_stock->sku,
-                        'image' => get_product_image($datas->product->thumbnail_img, '300'),
-                        'attributes' => getProductAttributes($datas->product_stock->attributes)
+                        'id' => optional($datas->product)->id ?? '',
+                        'product_variant_id' => optional($datas->product_stock)->id ?? '',
+                        'name' => optional($datas->product)->getTranslation('name', $lang) ?? '',
+                        'brand' => optional(optional($datas->product)->brand)->getTranslation('name', $lang) ?? '',
+                        'slug' => optional($datas->product)->slug ?? '',
+                        'sku' => optional($datas->product_stock)->sku ?? '',
+                        'image' => get_product_image(optional($datas->product)->thumbnail_img ?? '', '300'),
+                        'attributes' => getProductAttributes(optional($datas->product_stock)->attributes ?? '')
                     ],
-
-                    'stroked_price' => $datas->price,
-                    'main_price' => $datas->offer_price,
-                    'tax' => $datas->tax,
-                    'offer_tag' => $datas->offer_tag,
-                    'quantity' => (int) $datas->quantity,
-                    'date' => $datas->created_at->diffForHumans(),
-                    'total' => $datas->offer_price * $datas->quantity
+                    'stroked_price' => $datas->price ?? 0,
+                    'main_price' => $datas->offer_price ?? 0,
+                    'tax' => $datas->tax ?? 0,
+                    'offer_tag' => $datas->offer_tag ?? '',
+                    'quantity' => (int) ($datas->quantity ?? 0),
+                    'date' => optional($datas->created_at)->diffForHumans() ?? '',
+                    'total' => ($datas->offer_price ?? 0) * ($datas->quantity ?? 0)
                 ];
+
                 $cart_coupon_code = $datas->coupon_code;
                 $cart_coupon_applied = $datas->coupon_applied;
                 if ($datas->coupon_applied == 1) {
@@ -434,6 +435,18 @@ class CartController extends Controller
     {
         $lang = getActiveLanguage();
         $response = $this->index();
+
+        $collectionProducts = CollectionProduct::whereIn('page', array('cart'))->get()->map(function ($item) {
+            return [
+                    'id' => $item->id,
+                    'page_reference' => $item->page_reference,
+                    'collectiontitle' => $item->collectiontitle,   
+                    'products' => $item->products()->get()
+            ];
+        })->filter(function ($item) {
+            return count($item['products']) > 0;
+        })->values();
+
         $collectionProducts = [];
         return view('frontend.cart', compact('response', 'collectionProducts', 'lang'));
     }

@@ -79,13 +79,23 @@
                             {{ $responseData['summary']['total'] }}</div>
                     </div>
                 </x-slot>
+<<<<<<< HEAD
                 {{-- COUPON APPLY SECTION COMMENTED OUT
                 <x-slot name="coupon">
+=======
+
+                {{-- <x-slot name="coupon">
+>>>>>>> 5c867e0971225d9a1e7e93d6d6e062f7e28e0d36
                     <div class="!my-10">
                         <x-frontend.cart.coupon :response="$responseData" />
                     </div>
+<<<<<<< HEAD
                 </x-slot>
                 --}}
+=======
+                </x-slot> --}}
+
+>>>>>>> 5c867e0971225d9a1e7e93d6d6e062f7e28e0d36
                 <x-slot name="checkoutButton">
                     <x-frontend.cart.checkout-button link="{{ route('checkout') }}" text="Proceed to Checkout" />
                 </x-slot>
