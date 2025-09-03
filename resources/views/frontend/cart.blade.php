@@ -1,7 +1,9 @@
 @extends('frontend.layouts.app')
-
 @section('content')
     @php
+        // Convert JsonResponse to array
+        $responseData = $response->original ?? json_decode($response->getContent(), true);
+        
         $middleCollections = collect($collectionProducts)->filter(
             fn($collection) => isset($collection['products']) &&
                 count($collection['products']) > 0 &&
@@ -9,9 +11,7 @@
                 $collection['page_reference'] === 'middle',
         );
     @endphp
-
     <x-frontend.common.page-title title="Cart" homeLink="index.html" />
-
     <x-frontend.cart.cart-section>
         <x-slot name="cartItems">
             <div class="table-outer mb_30">
@@ -26,9 +26,8 @@
                         </tr>
                     </thead>
                     <tbody>
-
-                        @if ($response['products'] && !empty($response['products']))
-                            @foreach ($response['products'] as $prod)
+                        @if ($responseData['products'] && !empty($responseData['products']))
+                            @foreach ($responseData['products'] as $prod)
                                 <x-frontend.cart.cart-item :prod="$prod" />
                             @endforeach
                         @else
@@ -37,76 +36,81 @@
                                     {{ trans('messages.no_products_cart') }}</td>
                             </tr>
                         @endif
-
-
                     </tbody>
                 </table>
             </div>
         </x-slot>
-
         <x-slot name="cartTotals">
             <x-frontend.cart.cart-totals>
                 <x-slot name="slot">
                     <div class="order-summary__subtotal">
                         <div class="summary-subtotal__title">{{ trans('messages.subtotal') }}</div>
                         <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                            {{ $response['summary']['sub_total'] }}</div>
+                            {{ $responseData['summary']['sub_total'] }}</div>
                     </div>
-
                     <div class="order-summary__subtotal">
                         <div class="summary-subtotal__title">{{ trans('messages.tax') }}</div>
                         <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                            {{ $response['summary']['vat_amount'] }}</div>
+                            {{ $responseData['summary']['vat_amount'] }}</div>
                     </div>
-
                     <div class="order-summary__subtotal">
                         <div class="summary-subtotal__title">{{ trans('messages.discount') }}</div>
                         <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                            {{ $response['summary']['discount'] }}</div>
+                            {{ $responseData['summary']['discount'] }}</div>
                     </div>
-
-                    @if ($response['summary']['coupon_applied'] == 1)
+                    {{-- COUPON DISCOUNT SECTION COMMENTED OUT
+                    @if ($responseData['summary']['coupon_applied'] == 1)
                         <div class="order-summary__subtotal">
                             <div class="summary-subtotal__title">
                                 {{ trans('messages.coupon') . ' ' . trans('messages.discount') }}</div>
                             <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                                {{ $response['summary']['coupon_discount'] }}</div>
+                                {{ $responseData['summary']['coupon_discount'] }}</div>
                         </div>
                     @endif
-
-
+                    --}}
                     <div class="order-summary__subtotal">
                         <div class="summary-subtotal__title">{{ trans('messages.shipping_charge') }}</div>
                         <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                            {{ $response['summary']['shipping'] }}</div>
+                            {{ $responseData['summary']['shipping'] }}</div>
                     </div>
-
                     <div class="order-summary__total">
                         <div class="summary-total__title">{{ trans('messages.total') }}</div>
                         <div class="summary-total__price">{{ env('DEFAULT_CURRENCY') }}
-                            {{ $response['summary']['total'] }}</div>
+                            {{ $responseData['summary']['total'] }}</div>
                     </div>
-
                 </x-slot>
+<<<<<<< HEAD
+                {{-- COUPON APPLY SECTION COMMENTED OUT
+                <x-slot name="coupon">
+=======
 
                 {{-- <x-slot name="coupon">
+>>>>>>> 5c867e0971225d9a1e7e93d6d6e062f7e28e0d36
                     <div class="!my-10">
-                        <x-frontend.cart.coupon :response="$response" />
+                        <x-frontend.cart.coupon :response="$responseData" />
                     </div>
+<<<<<<< HEAD
+                </x-slot>
+                --}}
+=======
                 </x-slot> --}}
 
+<<<<<<< HEAD
+>>>>>>> 5c867e0971225d9a1e7e93d6d6e062f7e28e0d36
+                <x-slot name="checkoutButton">
+                    <x-frontend.cart.checkout-button link="{{ route('checkout') }}" text="Proceed to Checkout" />
+                </x-slot>
+=======
                 @if ($response['products'] && !empty($response['products']))
                     <x-slot name="checkoutButton">
                         <x-frontend.cart.checkout-button link="{{ route('checkout') }}" text="Proceed to Checkout" />
                     </x-slot>
                 @endif
 
+>>>>>>> 2b0b0b369dbf71120c880684f43d98d233c12113
             </x-frontend.cart.cart-totals>
         </x-slot>
     </x-frontend.cart.cart-section>
-
-
-
     @if ($middleCollections->isNotEmpty())
         @foreach ($middleCollections as $collectionKey => $collection)
             <x-frontend.common.product-section title="{{ $collection['collectiontitle'] }}">
@@ -132,6 +136,5 @@
             </x-frontend.common.product-section>
         @endforeach
     @endif
-
     <x-frontend.common.whatsapp-subscribe />
 @endsection

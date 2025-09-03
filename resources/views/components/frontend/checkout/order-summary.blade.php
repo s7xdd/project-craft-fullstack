@@ -1,3 +1,8 @@
+@php
+    // Convert JsonResponse to array
+    $responseData = $response->original ?? json_decode($response->getContent(), true);
+@endphp
+
 <div class="order-box">
     <h3>Order Summary</h3>
     <div class="order-info">
@@ -6,8 +11,8 @@
             <span class="text">Total</span>
         </div>
         <div class="order-product space-y-6">
-            @if (!empty($response['products']))
-                @foreach ($response['products'] as $prod)
+            @if (!empty($responseData['products']))
+                @foreach ($responseData['products'] as $prod)
                     <div class="single-item flex items-center justify-between border-b pb-4">
                         <div class="product-box flex items-start space-x-4">
                             <figure class="image-box w-20 flex-shrink-0">
@@ -24,9 +29,11 @@
 
                                 @php
                                     $attributeValue = '';
-                                    foreach ($prod['product']['attributes'] as $attribute) {
-                                        $attributeValue .=
-                                            '<strong>' . $attribute['name'] . ':</strong> ' . $attribute['value'] . ' ';
+                                    if (isset($prod['product']['attributes']) && is_array($prod['product']['attributes'])) {
+                                        foreach ($prod['product']['attributes'] as $attribute) {
+                                            $attributeValue .=
+                                                '<strong>' . $attribute['name'] . ':</strong> ' . $attribute['value'] . ' ';
+                                        }
                                     }
                                 @endphp
 
@@ -46,45 +53,57 @@
             @endif
         </div>
 
-
         <ul class="cost-box">
             <li>
                 <h4><span class="!text-[16px]">Subtotal</span></h4>
-                <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['sub_total'] }}</h4>
+                <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $responseData['summary']['sub_total'] }}</h4>
             </li>
             <li>
                 <h4><span class="!text-[16px]">Tax</span></h4>
-                <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['vat_amount'] }}</h4>
+                <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $responseData['summary']['vat_amount'] }}</h4>
             </li>
             <li>
                 <h4><span class="!text-[16px]">Discount</span></h4>
-                <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['discount'] }}</h4>
+                <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $responseData['summary']['discount'] }}</h4>
             </li>
 
-            @if ($response['summary']['coupon_applied'] == 1)
+            {{-- COUPON DISCOUNT DISPLAY COMMENTED OUT
+            @if ($responseData['summary']['coupon_applied'] == 1)
                 <li>
                     <h4><span class="!text-[16px]">Coupon Discount</span></h4>
-                    <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['coupon_discount'] }}</h4>
+                    <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $responseData['summary']['coupon_discount'] }}</h4>
                 </li>
             @endif
+            --}}
 
             <li>
                 <h4><span class="!text-[16px]">Shipping</span></h4>
-                <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['shipping'] }}</h4>
+                <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $responseData['summary']['shipping'] }}</h4>
             </li>
         </ul>
 
         <div class="total-box">
             <h4><span class="!text-[16px]">Total</span></h4>
-            <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['total'] }}</h4>
+            <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $responseData['summary']['total'] }}</h4>
         </div>
 
+<<<<<<< HEAD
+        {{-- COUPON CODE COMPONENT COMMENTED OUT
+        <div class="!mb-10">
+            <x-frontend.cart.coupon :response="$responseData" />
+        </div>
+        --}}
+
+        {{-- PAYMENT METHODS SECTION COMMENTED OUT
+        <div class="payment-option">
+=======
         {{-- <div class="!mb-10">
             <x-frontend.cart.coupon :response="$response" />
         </div> --}}
 
 
         {{-- <div class="payment-option">
+>>>>>>> 5c867e0971225d9a1e7e93d6d6e062f7e28e0d36
             <h3>Payment Method</h3>
             <ul class="other-payment !pl-0">
                 <li>
@@ -101,7 +120,12 @@
                     </div>
                 </li>
             </ul>
+<<<<<<< HEAD
+        </div>
+        --}}
+=======
         </div> --}}
+>>>>>>> 5c867e0971225d9a1e7e93d6d6e062f7e28e0d36
 
         <div class="btn-box pt_30">
             <button class="pink-button" type="button" id="submitCheckout">
