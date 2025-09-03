@@ -168,7 +168,7 @@ class ProductController extends Controller
             return $details;
         });
 
-        return view('frontend.products', compact('limit', 'products', 'offset', 'min_price', 'max_price', 'category', 'brand', 'sort_by', 'lang', 'categories', 'brands', 'occasions', 'categoryData', 'price'));
+        return view('frontend.products', compact('limit', 'products', 'offset', 'min_price', 'max_price', 'category', 'brand', 'sort_by', 'lang', 'categories', 'brands', 'categoryData', 'price'));
     }
 
     public function productDetails(Request $request)
