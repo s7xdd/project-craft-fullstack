@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
+use App\Models\CollectionProduct;
 use App\Models\Product;
 use App\Models\ProductStock;
 use App\Models\Coupon;
@@ -434,6 +435,18 @@ class CartController extends Controller
     {
         $lang = getActiveLanguage();
         $response = $this->index();
+
+        $collectionProducts = CollectionProduct::whereIn('page', array('checkout'))->get()->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'page_reference' => $item->page_reference,
+                'collectiontitle' => $item->collectiontitle,
+                'products' => $item->products()->get()
+            ];
+        })->filter(function ($item) {
+            return count($item['products']) > 0;
+        })->values();
+
         $collectionProducts = [];
         return view('frontend.cart', compact('response', 'collectionProducts', 'lang'));
     }
