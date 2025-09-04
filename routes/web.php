@@ -29,7 +29,6 @@ use Laravel\Prompts\FormBuilder;
 |
 */
 
-Route::middleware('disable.web')->group(function () {
     Route::get('/', [FrontendController::class, 'home'])->name('home');
     Route::get('/about', [FrontendController::class, 'about'])->name('about_us');
     Route::get('/terms', [FrontendController::class, 'terms'])->name('terms');
@@ -109,4 +108,3 @@ Route::middleware('disable.web')->group(function () {
         Route::get('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'showURL'])->name('url-file-download');
         Route::delete('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'deleteURL']);
     });
-});
