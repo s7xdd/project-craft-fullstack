@@ -2,7 +2,7 @@
 <div class="billing-content mr_30">
     <h3>Billing Details</h3>
     <div class="form-inner">
-        <form id="checkoutForm" action="{{ route('checkout.process') }}" method="POST">
+        <form id="checkoutForm" action="{{ route('checkout.whatsapp') }}" method="POST">
             @csrf
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 field-column">

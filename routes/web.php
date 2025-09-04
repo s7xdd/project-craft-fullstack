@@ -59,6 +59,7 @@ Route::get('/testimonials/{id}', [TestimonialController::class, 'show'])->name('
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::post('checkout.process', [CheckoutController::class, 'placeOrder'])->name('checkout.process');
+Route::post('checkout.whatsapp', [CheckoutController::class, 'redirectToWhatsApp'])->name('checkout.whatsapp');
 
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.sendResetLink');
 Route::get('/password/reset/{email}/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('password.reset.form');
