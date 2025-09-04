@@ -1,5 +1,5 @@
 <div class="testimonial-block-one">
-    <div class="inner-box">
+    <div class="inner-box video-card">
         <figure class="video-box">
             <video autoplay muted loop playsinline class="testimonial-video">
                 <source src="{{ $video }}" type="video/mp4">
