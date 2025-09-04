@@ -25,9 +25,9 @@
                     </div>
                 @endforeach
             </div>
-            <div class="advice-box">
+            {{-- <div class="advice-box">
                 <img class="h-full w-full object-fill" src="{{ asset('assets/images/product-1.webp') }}" />
-            </div>
+            </div> --}}
         </div>
     </li>
 @elseif($hasChildren)
