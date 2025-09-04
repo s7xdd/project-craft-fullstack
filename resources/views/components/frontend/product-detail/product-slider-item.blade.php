@@ -3,7 +3,7 @@
         <div class="image-box">
             <figure class="image">
                 <a href="{{ $image }}" class="lightbox-image" data-fancybox="gallery">
-                    <img src="{{ $image }}" alt="{{ $alt }}" />
+                    <img src="{{ $image }}" alt="{{ $alt }}">
                 </a>
             </figure>
         </div>

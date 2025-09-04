@@ -11,3 +11,4 @@
 @section('script')
     @stack('scripts')
 @endsection
+

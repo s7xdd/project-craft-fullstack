@@ -143,6 +143,23 @@
             }
         }
 
+        .attribute-item {
+            cursor: pointer;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 5px;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .attribute-item.disabled {
+            /* color: #ccc; */
+            pointer-events: none !important;
+            text-decoration: line-through !important;
+            /* background-color: #f9f9f9; */
+        }
+
         .page-loaded #page-loader {
             opacity: 0;
             pointer-events: none;

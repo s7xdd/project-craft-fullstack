@@ -321,12 +321,15 @@ class ProductController extends Controller
                 if ($request->has('main_attributes')) {
                     foreach ($request->main_attributes as $key => $no) {
                         $attrId = 'choice_options_' . $no;
-                        $product_attributes[] = [
-                            'product_id' => $product->id,
-                            'product_varient_id' => $product_stock->id,
-                            'attribute_id' => $no,
-                            'attribute_value_id' => $prod[$attrId]
-                        ];
+
+                        if (isset($prod[$attrId]) && $prod[$attrId] !== null) {
+                            $product_attributes[] = [
+                                'product_id'         => $product->id,
+                                'product_varient_id' => $product_stock->id,
+                                'attribute_id'       => $no,
+                                'attribute_value_id' => $prod[$attrId],
+                            ];
+                        }
                     }
                 }
             }

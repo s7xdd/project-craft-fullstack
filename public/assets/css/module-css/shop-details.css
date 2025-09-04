@@ -465,7 +465,7 @@
 
 .product-details-content .other-option li strong{
   display: inline-block;
-  width: 160px;
+  /* width: 160px; */
 }
 
 .product-details-content .other-option li a{
