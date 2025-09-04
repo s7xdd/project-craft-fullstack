@@ -434,20 +434,24 @@ class CartController extends Controller
     public function getCartDetails()
     {
         $lang = getActiveLanguage();
+
         $response = $this->index();
+
+        if ($response instanceof \Illuminate\Http\JsonResponse) {
+            $response = $response->getData(true);
+        }
 
         $collectionProducts = CollectionProduct::whereIn('page', array('cart'))->get()->map(function ($item) {
             return [
-                    'id' => $item->id,
-                    'page_reference' => $item->page_reference,
-                    'collectiontitle' => $item->collectiontitle,   
-                    'products' => $item->products()->get()
+                'id' => $item->id,
+                'page_reference' => $item->page_reference,
+                'collectiontitle' => $item->collectiontitle,
+                'products' => $item->products()->get()
             ];
         })->filter(function ($item) {
             return count($item['products']) > 0;
         })->values();
 
-        $collectionProducts = [];
         return view('frontend.cart', compact('response', 'collectionProducts', 'lang'));
     }
 
