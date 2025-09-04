@@ -8,8 +8,6 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Models\Coupon;
 use App\Models\CouponUsage;
 use App\Models\OrderTracking;
-use App\Models\Address;
-use App\Models\CombinedOrder;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -21,8 +19,6 @@ use App\Utility\NotificationUtility;
 use App\Utility\SendSMSUtility;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
-use App\Mail\EmailManager;
-use Mail;
 use Razorpay\Api\Api;
 
 class CheckoutController
@@ -833,18 +829,18 @@ class CheckoutController
 
             $message .= "- {$productName}
 ";
-            $message .= "  Price: ₹{$productPrice}
-";
+            //             $message .= "  Price: ₹{$productPrice}
+            // ";
             $message .= "  Quantity: {$quantity}
 ";
-            $message .= "  Subtotal: ₹{$subtotal}
+            //             $message .= "  Subtotal: ₹{$subtotal}
 
-";
+            // ";
         }
 
-        $message .= "Total: ₹{$total}
+        //         $message .= "Total: ₹{$total}
 
-";
+        // ";
 
         $message .= "Customer Details:
 ";
@@ -879,7 +875,7 @@ class CheckoutController
 
         $encodedMessage = urlencode($message);
 
-        $whatsappNumber = env('WHATSAPP_BUSINESS_NUMBER', ''); 
+        $whatsappNumber = env('WHATSAPP_BUSINESS_NUMBER', '');
         $whatsappUrl = "https://wa.me/{$whatsappNumber}?text={$encodedMessage}";
 
         if ($user_id) {

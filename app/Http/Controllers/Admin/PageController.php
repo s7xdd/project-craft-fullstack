@@ -555,6 +555,8 @@ class PageController extends Controller
                 $existingData = [
                     'page_id' => $page->id,
                     'lang' => $lang,
+                    'title' => $page->getTranslation('title', $lang) ?? "",
+                    'content1' => $page->getTranslation('content1', $lang) ?? "",
                     'heading1' => $page->getTranslation('heading1', $lang) ?? "",
                     'heading2' => $page->getTranslation('heading2', $lang) ?? "",
                     '4' => $page->getTranslation('4', $lang) ?? "",
@@ -570,6 +572,36 @@ class PageController extends Controller
 
                 $formFields = [
                     "components" => [
+                        [
+                            "type" => "panel",
+                            "key" => "Main Information",
+                            "label" => "Main Information",
+                            "title" => "Main Information",
+                            "hidden" => false,
+                            "input" => false,
+                            "components" => [
+                                [
+                                    "type" => "textfield",
+                                    "input" => true,
+                                    "key" => "title",
+                                    "label" => "Title"
+                                ],
+                                [
+                                    "label" => "Content",
+                                    "applyMaskOn" => "change",
+                                    "editor" => "quill",
+                                    "tableView" => true,
+                                    "validateWhenHidden" => false,
+                                    "key" => "content1",
+                                    "type" => "textarea",
+                                    "input" => true,
+                                    "isUploadEnabled" => true,
+                                    "as" => "string",
+                                    "uploadStorage" => "base64"
+                                ],
+
+                            ]
+                        ],
                         $this->getSeoFields(),
                         [
                             "type" => "button",
@@ -586,7 +618,7 @@ class PageController extends Controller
                 return view('form')->with([
                     'definition' => json_encode($formFields),
                     'data' => json_encode($existingData),
-                    'title' => "Edit Home Page",
+                    'title' => "Edit Custom Page",
                     'submitRoute' => route('custom-pages.updatePage')
                 ]);
         }
