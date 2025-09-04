@@ -2,13 +2,13 @@
     <div class="header-top" style="background-color: black;">
         <div class="large-container">
             <div class="top-inner">
-                <ul class="info-list">
+                <ul class="info-list"  style="margin-bottom: 0px">
                     <li>
                         <i class="icon-1"></i><span>{{ get_setting('helpline_title') }}</span>
                     </li>
                 </ul>
                 <div class="text">
-                    <p>
+                    <p style="margin-bottom: 0px">
                         {{ get_setting('helpline_number') }}
                     </p>
                 </div>

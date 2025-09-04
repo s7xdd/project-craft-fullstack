@@ -1,16 +1,16 @@
 @props([
     'contacts' => [
         [
-            'title' => 'Main Warehouse',
-            'details' => '0233 Brisbane Cir. Shiloh, Australia 81063'
+            'title' => 'Address',
+            'details' => get_setting('footer_address')
         ],
         [
             'title' => 'Email Address',
-            'details' => 'contact@example.com'
+            'details' => get_setting('footer_email')
         ],
         [
             'title' => 'Phone Number',
-            'details' => '+(208) 544 -0142'
+            'details' => get_setting('footer_phone')
         ]
     ]
 ])

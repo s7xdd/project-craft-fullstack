@@ -1,4 +1,4 @@
-<section class="about-section pb_120">
+<section class="about-section pb_20">
     <div class="large-container">
         <div class="row align-items-center">
             <div class="col-lg-6 col-md-12 col-sm-12 image-column">
