@@ -376,7 +376,7 @@ img {
   padding: 13px 30px;
   z-index: 1;
   border-width: 2px;
-  background: #fff;
+  background: black;
   transition: all 0.5s ease-in-out 0.0s;
 }
 
