@@ -1,6 +1,6 @@
 <div class="slide-item"
     style="background-image: url('{{ $image }}'); background-size: cover; background-position: center;">
-    <div class="bg-color-1"></div>
+    <div class="bg-color-1" role="presentation" aria-hidden="true"></div>
     <div class="row align-items-center">
         <div class="col-lg-6 col-md-12 col-sm-12 content-column">
             <div class="content-box">

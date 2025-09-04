@@ -57,7 +57,7 @@
                         <li class="shop-cart">
                             <button type="button">
                                 <a href="{{ route('cart.items') }}">
-                                    <i class="far fa-shopping-bag"></i><span>3</span>
+                                    <i class="fas fa-cart-shopping"></i><span>3</span>
                                 </a>
                             </button>
                         </li>
@@ -99,7 +99,7 @@
                         <li class="shop-cart">
                             <button type="button">
                                 <a href="{{ route('cart.items') }}">
-                                    <i class="far fa-shopping-bag"></i><span>3</span>
+                                    <i class="fas fa-cart-shopping"></i><span>3</span>
                                 </a>
                             </button>
                         </li>
