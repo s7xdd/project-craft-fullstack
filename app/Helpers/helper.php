@@ -341,17 +341,23 @@ if (!function_exists('get_product_image')) {
             if ($size == 'full') {
                 return app('url')->asset($path);
             } else {
-                $fileName = pathinfo($path)['filename'];
-                $ext   = pathinfo($path)['extension'];
-                $dirname   = pathinfo($path)['dirname'];
-                $r_path = "{$dirname}/" . $fileName . "_{$size}px" . ".{$ext}";
+                $info = pathinfo($path);
+                $fileName = $info['filename'] ?? '';
+                $ext = $info['extension'] ?? '';
+                $dirname = $info['dirname'] ?? '';
+
+                if ($fileName && $ext) {
+                    $r_path = "{$dirname}/" . $fileName . "_{$size}px" . ".{$ext}";
+                } else {
+                    $r_path = $path;
+                }
                 return app('url')->asset($r_path);
             }
         }
-
-        return app('url')->asset('admin_assets/assets/img/placeholder.jpg');
+        return '';
     }
 }
+
 
 function get_product_attrValue($attrValue, $productStockId)
 {
