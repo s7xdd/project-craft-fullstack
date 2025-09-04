@@ -57,7 +57,7 @@ Route::get('/check-login-status', [UserController::class, 'checkLoginStatus'])->
 Route::get('/testimonials', [TestimonialController::class, 'index'])->name('testimonials.index');
 Route::get('/testimonials/{id}', [TestimonialController::class, 'show'])->name('testimonials.show');
 
-Route::get('/checkout', [CheckoutController::class, 'index'])->middleware('auth')->name('checkout');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 Route::post('checkout.process', [CheckoutController::class, 'placeOrder'])->name('checkout.process');
 
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.sendResetLink');
