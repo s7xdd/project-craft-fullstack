@@ -25,7 +25,6 @@
 
 
 
-    <link href="{{ asset('assets/css/font-awesome-all.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/flaticon.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/owl.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" />
@@ -92,7 +91,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
 
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
         rel="stylesheet">
