@@ -1,6 +1,5 @@
 import './bootstrap';
-import './formio';import './formio';
-
+import './contact';
 
 import Swiper from 'swiper';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
