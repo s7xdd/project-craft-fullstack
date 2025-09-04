@@ -79,19 +79,20 @@ class CategoryController extends Controller
 
         $category               = new Category;
         $category->name         = $request->name ?? NULL;
-        $category->parent_id    = $request->parent_id;
+        // $category->parent_id    = $request->parent_id;
+        $category->parent_id    = '0';
         $category->slug    = $request->slug;
 
-        if ($request->parent_id != "0") {
-            $parent = Category::find($request->parent_id);
-            if ($parent) {
-                $category->level = $parent->level + 1;
-            } else {
-                $category->level = 0;
-            }
-        } else {
-            $category->parent_id = 0;
-        }
+        // if ($request->parent_id != "0") {
+        //     $parent = Category::find($request->parent_id);
+        //     if ($parent) {
+        //         $category->level = $parent->level + 1;
+        //     } else {
+        //         $category->level = 0;
+        //     }
+        // } else {
+        //     $category->parent_id = 0;
+        // }
 
 
         $category->is_active    = ($request->status == 2) ? 0 : 1;
