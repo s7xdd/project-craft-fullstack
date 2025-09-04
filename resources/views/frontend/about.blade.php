@@ -39,13 +39,15 @@
     @if (
         $homePageContents->getTranslation('image1', $lang) &&
             is_array(json_decode($homePageContents->getTranslation('image1', $lang))))
-        <x-frontend.home.highlights>
-            @foreach (json_decode($homePageContents->getTranslation('image1', $lang), true) as $sectionData)
-                <x-frontend.home.highlight-item
-                    icon="{{ isset($sectionData['icon'][0]) ? $sectionData['icon'][0]['url'] ?? '' : '' }}"
-                    text="{{ $sectionData['title'] ?? '' }}" />
-            @endforeach
-        </x-frontend.home.highlights>
+        <div class="py-10">
+            <x-frontend.home.highlights>
+                @foreach (json_decode($homePageContents->getTranslation('image1', $lang), true) as $sectionData)
+                    <x-frontend.home.highlight-item
+                        icon="{{ isset($sectionData['icon'][0]) ? $sectionData['icon'][0]['url'] ?? '' : '' }}"
+                        text="{{ $sectionData['title'] ?? '' }}" />
+                @endforeach
+            </x-frontend.home.highlights>
+        </div>
     @endif
 
     <x-frontend.common.whatsapp-subscribe />
