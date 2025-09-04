@@ -22,8 +22,7 @@ class CollectionProductController extends Controller
 
         $pageOptions = [
             'home' => 'Home',
-            'checkout' => 'Checkout',
-
+            'cart' => 'Cart',
         ];
         $pageReferenceOptions = [
             'top' => 'Top',
@@ -60,9 +59,9 @@ class CollectionProductController extends Controller
 
         $pageOptions = [
             'home' => 'Home',
-            'checkout' => 'Checkout',
+            'cart' => 'Cart',
         ];
-         $pageReferenceOptions = [
+        $pageReferenceOptions = [
             'top' => 'Top',
             'middle' => 'Middle',
         ];

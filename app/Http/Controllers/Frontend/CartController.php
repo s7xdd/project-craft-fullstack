@@ -438,10 +438,10 @@ class CartController extends Controller
 
         $collectionProducts = CollectionProduct::whereIn('page', array('checkout'))->get()->map(function ($item) {
             return [
-                'id' => $item->id,
-                'page_reference' => $item->page_reference,
-                'collectiontitle' => $item->collectiontitle,
-                'products' => $item->products()->get()
+                    'id' => $item->id,
+                    'page_reference' => $item->page_reference,
+                    'collectiontitle' => $item->collectiontitle,   
+                    'products' => $item->products()->get()
             ];
         })->filter(function ($item) {
             return count($item['products']) > 0;
