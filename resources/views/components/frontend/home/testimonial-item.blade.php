@@ -6,9 +6,5 @@
                 Your browser does not support the video tag.
             </video>
         </figure>
-        <div class="testimonial-content">
-            <h4 class="testimonial-name">{{ $name }}</h4>
-            <p class="testimonial-text">{{ $text }}</p>
-        </div>
     </div>
 </div>

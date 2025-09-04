@@ -23,9 +23,9 @@
   position: relative;
   display: block;
   background: #fff;
-  border-radius: 10px;
+  border-radius: 20px;
   border: 1px dashed #D8D8D8;
-  padding: 25px 30px 30px 30px;
+  padding: 15px;
   margin-bottom: 30px;
 }
 
@@ -107,38 +107,17 @@
 .testimonial-block-one .video-box {
     position: relative;
     display: block;
-    margin-bottom: 20px;
-    border-radius: 8px;
+    margin-bottom: 0;
+    border-radius: 15px;
     overflow: hidden;
 }
 
 .testimonial-block-one .testimonial-video {
     width: 100%;
-    height: 200px;
+    height: 180px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 15px;
     display: block;
-}
-
-.testimonial-content {
-    text-align: center;
-}
-
-.testimonial-content .testimonial-name {
-    display: block;
-    font-size: 18px;
-    line-height: 24px;
-    font-weight: 600;
-    color: var(--title-color);
-    margin-bottom: 8px;
-}
-
-.testimonial-content .testimonial-text {
-    font-size: 16px;
-    line-height: 24px;
-    color: #666;
-    font-style: italic;
-    margin: 0;
 }
 
 .testimonial-section .testimonial-carousel{
@@ -147,6 +126,18 @@
   max-width: 1650px;
   width: 100%;
   margin: 0 auto;
+}
+
+.testimonial-section .sec-title {
+  margin-bottom: 40px;
+}
+
+.testimonial-section .sec-title h2 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--title-color);
+  text-align: center;
+  margin: 0;
 }
 
 .testimonial-section .pattern-layer{
@@ -291,17 +282,25 @@
     margin-top: 0px;
   }
 
+  .testimonial-section .sec-title h2 {
+    font-size: 28px;
+  }
+
   .testimonial-block-one .testimonial-video {
-    height: 150px;
+    height: 120px;
   }
 
-  .testimonial-content .testimonial-name {
-    font-size: 16px;
+  .testimonial-block-one .inner-box {
+    padding: 10px;
+    border-radius: 15px;
   }
 
-  .testimonial-content .testimonial-text {
-    font-size: 14px;
-    line-height: 20px;
+  .testimonial-block-one .video-box {
+    border-radius: 12px;
+  }
+
+  .testimonial-block-one .testimonial-video {
+    border-radius: 12px;
   }
 }
 
@@ -310,21 +309,25 @@
 }
 
 @media only screen and (max-width: 499px){
+  .testimonial-section .sec-title h2 {
+    font-size: 24px;
+  }
+
   .testimonial-block-one .testimonial-video {
-    height: 120px;
+    height: 100px;
   }
 
   .testimonial-block-one .inner-box {
-    padding: 20px 15px 25px 15px;
+    padding: 8px;
+    border-radius: 12px;
   }
 
-  .testimonial-content .testimonial-name {
-    font-size: 14px;
+  .testimonial-block-one .video-box {
+    border-radius: 10px;
   }
 
-  .testimonial-content .testimonial-text {
-    font-size: 13px;
-    line-height: 18px;
+  .testimonial-block-one .testimonial-video {
+    border-radius: 10px;
   }
 }
 
