@@ -1,6 +1,6 @@
 <div class="content-box ml_30">
     <span class="upper-text">{{ $category }}</span>
-    <h2>{{ $title }}</h2>
+    <h2>{!! $title !!}</h2>
     <h3>
         {{ env('DEFAULT_CURRENCY') . ' ' . $price }}
         @if ($originalPrice && floatval($originalPrice) > floatval($price))

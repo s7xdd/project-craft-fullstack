@@ -28,9 +28,7 @@ class CheckoutController
     {
         $user = Auth::user();
         $cartController = new CartController();
-        $responseMain = $cartController->index();
-        $response = $responseMain->getData(true);
-
+        $response = $cartController->index();
 
         return view('frontend.checkout', compact('response', 'user'));
     }
