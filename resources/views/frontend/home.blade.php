@@ -22,10 +22,32 @@
                 $imageData = $testimonial->image ? json_decode($testimonial->image) : [];
                 $image = isset($imageData[0]->url) ? $imageData[0]->url : '';
 
+                // Get video from assets/Videos directory based on testimonial ID or use default
+                $videoFiles = [
+                    'VN20250904_035052.mp4',
+                    'VN20250904_035542.mp4',
+                    'VN20250904_124113 (1).mp4',
+                    'VN20250904_124113.mp4',
+                    'VN20250904_124131.mp4',
+                    'VN20250904_124156.mp4',
+                    'VN20250904_124335.mp4',
+                    'VN20250904_124350.mp4',
+                    'VN20250904_124402.mp4',
+                    'VN20250904_124417.mp4',
+                    'VN20250904_124432.mp4',
+                    'VN20250904_124444.mp4',
+                    'VN20250904_124500.mp4'
+                ];
+
+                // Use testimonial ID to select video, fallback to first video
+                $videoIndex = ($testimonial->id - 1) % count($videoFiles);
+                $video = asset('assets/Videos/' . $videoFiles[$videoIndex]);
+
                 return [
                     'name' => $testimonial->name,
                     'text' => $testimonial->comment,
                     'image' => $image,
+                    'video' => $video,
                 ];
             })
             : [];
@@ -116,11 +138,14 @@
     @endif
 
     @if ($testimonials->count() > 0)
-        <x-frontend.home.instagram-feed>
+        <x-frontend.home.testimonial-feed>
             @foreach ($testimonials as $t)
-                <x-frontend.home.instagram-item image="{{ $t['image'] }}" alt="{{ $t['name'] }}" />
+                <x-frontend.home.testimonial-item
+                    video="{{ $t['video'] }}"
+                    name="{{ $t['name'] }}"
+                    text="{{ $t['text'] }}" />
             @endforeach
-        </x-frontend.home.instagram-feed>
+        </x-frontend.home.testimonial-feed>
     @endif
 
     <x-frontend.common.whatsapp-subscribe />
