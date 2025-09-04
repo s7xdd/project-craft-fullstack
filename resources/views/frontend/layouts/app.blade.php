@@ -20,6 +20,12 @@
     <link href="{{ asset('dist/assets/app-afc193cb.css') }}" rel="stylesheet">
     <script type="module" src="{{ asset('assets/js/app-f10b86b9.js') }}"></script>
 
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
+
     <link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">
     <script src="https://cdn.form.io/formiojs/formio.full.min.js"></script>
 
@@ -97,10 +103,29 @@
         rel="stylesheet">
 
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
     <style>
+        .toast {
+            background-color: #333 !important;
+            color: #fff !important;
+        }
+
+        .toast-success {
+            background-color: #51A351 !important;
+        }
+
+        .toast-error {
+            background-color: #BD362F !important;
+        }
+
+        .toast-info {
+            background-color: #2F96B4 !important;
+        }
+
+        .toast-warning {
+            background-color: #F89406 !important;
+        }
+
+
         #page-loader {
             position: fixed;
             top: 0;
@@ -112,7 +137,7 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.5s ease-out;
+            transition: opacity 0.1ms ease-out;
         }
 
         .loader-content {
