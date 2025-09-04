@@ -236,6 +236,11 @@
     height: 100%;
     background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
     z-index: 1;
+    /* Performance optimization */
+    will-change: opacity;
+    transform: translateZ(0);
+    /* Accessibility */
+    pointer-events: none;
 }
 
 .featured-style-five .bg-color-1 {
@@ -781,14 +786,19 @@
     background-size: cover;
   }
 
-  .banner-style-two .slide-item .bg-color-1,
-  .banner-style-two .slide-item .bg-color-2{
+  .banner-style-two .slide-item .bg-color-1 {
     width: 100%;
-    background: rgba(190, 239, 255, 0.8);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.3) 70%, rgba(0, 0, 0, 0) 100%);
   }
 
-  .banner-style-two .slide-item .bg-color-2{
-    background: rgba(255, 238, 151, 0.8);
+  .banner-style-two .slide-item .bg-color-2 {
+    width: 100%;
+    background: linear-gradient(to right, rgba(190, 239, 255, 0.8) 0%, rgba(190, 239, 255, 0.4) 70%, rgba(190, 239, 255, 0) 100%);
+  }
+
+  .banner-style-two .slide-item .bg-color-3 {
+    width: 100%;
+    background: linear-gradient(to right, rgba(255, 175, 151, 0.9) 0%, rgba(255, 175, 151, 0.4) 70%, rgba(255, 175, 151, 0) 100%);
   }
 }
 
@@ -816,6 +826,11 @@
   .banner-style-two .slide-item:last-child{
     background-size: contain;
     background-position: center bottom;
+  }
+
+  /* Enhanced mobile gradient for better text readability */
+  .banner-style-two .slide-item .bg-color-1 {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.5) 60%, rgba(0, 0, 0, 0) 100%);
   }
 }
 
