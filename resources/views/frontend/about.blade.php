@@ -39,7 +39,7 @@
     @if (
         $homePageContents->getTranslation('image1', $lang) &&
             is_array(json_decode($homePageContents->getTranslation('image1', $lang))))
-        <div class="py-10">
+        <div class="py-10 pb_40">
             <x-frontend.home.highlights>
                 @foreach (json_decode($homePageContents->getTranslation('image1', $lang), true) as $sectionData)
                     <x-frontend.home.highlight-item
