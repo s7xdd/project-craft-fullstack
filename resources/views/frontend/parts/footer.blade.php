@@ -71,9 +71,9 @@
                                 @php
                                     $socialLinks = [
                                         'facebook_link' => ['icon-14', 'fab fa-facebook-f', 'Facebook'],
-                                        'twitter_link' => ['icon-15', 'fab fa-twitter', 'Twitter'],
+                                        'whatsapp_link' => ['icon-15', 'fab fa-whatsapp', 'Whatsapp'],
                                         'instagram_link' => ['icon-16', 'fab fa-instagram', 'Instagram'],
-                                        'youtube_link' => ['icon-17', 'fab fa-youtube', 'YouTube'],
+                                        
                                     ];
                                 @endphp
                                 <div class="social-links-wrapper" aria-label="Social media links">
@@ -104,7 +104,7 @@
                         Rights Reserved
                     </p>
                 </div>
-                @if (get_setting('payment_method_images'))
+                <!-- @if (get_setting('payment_method_images'))
                     <div class="payment-methods">
                         <ul class="footer-card" aria-label="Payment methods">
                             @php
@@ -117,7 +117,7 @@
                             @endforeach
                         </ul>
                     </div>
-                @endif
+                @endif -->
             </div>
         </div>
     </div>

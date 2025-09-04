@@ -434,7 +434,8 @@ class CartController extends Controller
     public function getCartDetails()
     {
         $lang = getActiveLanguage();
-        $response = $this->index();
+        $responseMain = $this->index();
+        $response = $responseMain->getData(true);
 
         $collectionProducts = CollectionProduct::whereIn('page', array('cart'))->get()->map(function ($item) {
             return [

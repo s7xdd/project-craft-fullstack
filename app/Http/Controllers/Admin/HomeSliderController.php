@@ -42,12 +42,15 @@ class HomeSliderController extends Controller
         $request->validate([
             'name' => 'required',
             'banner' => 'required',
+            'btn_text' => 'nullable',
+            'link' => 'nullable',
             'status' => 'required',
         ]);
 
         $slider = HomeSlider::create([
             'name' => $request->name,
             'image' => $request->banner,
+            'btn_text' => $request->btn_text,
             'mobile_image' => $request->mobile_banner,
             'link' => $request->link,
             'sort_order' => $request->sort_order,
@@ -99,10 +102,10 @@ class HomeSliderController extends Controller
             ]
         );
 
-
         $homeSlider->update([
             'name' => $request->name,
             'image' => $request->banner,
+            'btn_text' => $request->btn_text,
             'link' => $request->link,
             'sort_order' => $request->sort_order,
             'status' => $request->status,

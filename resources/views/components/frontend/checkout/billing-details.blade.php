@@ -59,14 +59,14 @@
                         @endif
                     </div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 field-column">
+                {{-- <div class="col-lg-12 col-md-12 col-sm-12 field-column">
                     <div class="form-group">
                         <div class="check-box-two">
                             <input class="check" type="checkbox" id="checkbox2" name="same_as_billing" @if(old('same_as_billing') == 'on') checked @endif>
                             <label for="checkbox2">Ship to a different address</label>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
             
             <div class="shipping-address-fields" id="shippingAddressFields">
