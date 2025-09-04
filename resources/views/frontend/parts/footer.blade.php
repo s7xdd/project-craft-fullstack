@@ -2,7 +2,6 @@
     <div class="widget-section p_relative pt_60 pb_40">
         <div class="large-container">
             <div class="row clearfix">
-                <!-- Logo and Motto - Full width on mobile -->
                 <div class="col-12 col-md-6 col-lg-3 footer-column">
                     <div class="tp-footer-widget logo-widget">
                         <figure class="footer-logo">
@@ -20,7 +19,6 @@
                     </div>
                 </div>
                 
-                <!-- Menu Items - 6 columns on mobile (half width) -->
                 @if (isset($menu_items) && count($menu_items) > 0)
                     @foreach ($menu_items as $menu)
                         <div class="col-6 col-md-3 col-lg-2 footer-column">
@@ -44,7 +42,6 @@
                     @endforeach
                 @endif
                 
-                <!-- Support Section - Full width on mobile -->
                 <div class="col-12 col-md-6 col-lg-3 footer-column mt-4 mt-md-0">
                     <div class="tp-footer-widget subscribe-widget">
                         <div class="widget-title">
@@ -93,7 +90,6 @@
         </div>
     </div>
     
-    <!-- Footer Bottom Section -->
     <div class="footer-bottom">
         <div class="large-container">
             <div class="bottom-inner">

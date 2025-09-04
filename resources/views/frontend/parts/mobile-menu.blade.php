@@ -4,7 +4,7 @@
     <nav class="menu-box">
         <div class="nav-logo">
             <a href="/">
-                <img src="{{ uploaded_asset(get_setting('site_icon')) }}" alt="{{ get_setting('site_name') }}" title="{{ get_setting('site_name') }}" />
+                <img src="{{ uploaded_asset(get_setting('site_icon_light')) }}" alt="{{ get_setting('site_name') }}" title="{{ get_setting('site_name') }}" />
             </a>
         </div>
         <div class="menu-outer">
