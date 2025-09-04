@@ -1,6 +1,6 @@
 @props(['product'])
 
-<div class="w-full md:w-1/2 relative flex flex-col justify-center items-center space-y-2 p-4">
+<div class="w-full md:w-1/2 relative flex flex-col justify-center items-center space-y-2">
 
     <div class="swiper product-images-swiper overflow-hidden rounded-lg border w-full">
         <div class="swiper-wrapper py-10 m-auto">
@@ -24,7 +24,7 @@
         </div>
 
         <div
-            class="swiper-button-next1 absolute z-50 right-2 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full w-[25px] h-[25px] md:w-[30px] md:h-[30px] lg:w-[50px] lg:h-[50px] xl:w-[50px] xl:h-[50px] flex items-center justify-center cursor-pointer shadow-lg hover:bg-gray-700 transition-all duration-300">
+            class="swiper-button-next1 absolute z-50 right-3 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white rounded-full w-[25px] h-[25px] md:w-[30px] md:h-[30px] lg:w-[50px] lg:h-[50px] xl:w-[50px] xl:h-[50px] flex items-center justify-center cursor-pointer shadow-lg hover:bg-gray-700 transition-all duration-300">
             <svg fill="white" height="30" width="30" viewBox="0 0 6.35 6.35"
                 xmlns="http://www.w3.org/2000/svg">
                 <g transform="translate(0 -290.65)">

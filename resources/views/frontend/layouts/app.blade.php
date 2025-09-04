@@ -16,6 +16,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/icon-font.min.css') }}">
     <link href="{{ asset('assets/css/custom-style.css') }}" rel="stylesheet" type="text/css" />
 
+    <link href="{{ asset('dist/assets/app-97de3ed1.css') }}" rel="stylesheet">
+    <link href="{{ asset('dist/assets/app-afc193cb.css') }}" rel="stylesheet">
+    <script type="module" src="{{ asset('assets/js/app-f10b86b9.js') }}"></script>
+
     <link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css">
     <script src="https://cdn.form.io/formiojs/formio.full.min.js"></script>
 
