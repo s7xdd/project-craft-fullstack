@@ -7,7 +7,7 @@
     <div class="large-container">
         <div class="inner-container relative bg-cover bg-center"
             style="background-image: url('{{ asset('assets/images/whatsapp-bg.jpg') }}');">
-            <div class="absolute inset-0 bg-black bg-opacity-80 pointer-events-none"></div>
+            <div class="absolute inset-0 bg-opacity-80 pointer-events-none"></div>
 
             <div class="row align-items-center relative z-10">
                 <div class="col-lg-6 col-md-12 col-sm-12 text-column">

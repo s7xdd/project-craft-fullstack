@@ -10,8 +10,8 @@
             <div class="row">
                 @if($testimonials->count() > 0)
                     @foreach($testimonials as $testimonial)
-                        <div class="col-lg-4 col-md-6 col-sm-12 testimonial-block">
-                            <div class="testimonial-card">
+                        <div class="col-lg-4 col-md-6 col-sm-12 testimonial-block ">
+                            <div class="testimonial-card !rounded-lg">
                                 <div class="testimonial-content">
                                     <p>"{{ $testimonial->comment }}"</p>
                                 </div>
