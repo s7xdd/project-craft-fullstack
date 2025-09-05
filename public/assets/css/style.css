@@ -1,4 +1,3 @@
- 
 /* Css For Kiddex */
 
 /************ TABLE OF CONTENTS ***************
@@ -376,16 +375,16 @@ img {
   padding: 13px 30px;
   z-index: 1;
   border-width: 2px;
-  background: black;
+  background: #ffffff;
   transition: all 0.5s ease-in-out 0.0s;
 }
 
 .theme-btn.btn-one{
-  color: var(--theme-color);
+  color: #000000;
 }
 
 .theme-btn.btn-one:hover{
-  color: #fff;
+  color: #ff0000;
 }
 
 .theme-btn:before{
@@ -2370,35 +2369,3 @@ button.ltr {
 .nav-toggle .line3 {
   top: 14px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
