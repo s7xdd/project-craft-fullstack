@@ -182,6 +182,30 @@ class FrontendController extends Controller
         return view('frontend.about', compact('page', 'lang'));
     }
 
+    public function dynamicPage($dynamicpagetype)
+    {
+        $page = Page::where('type', $dynamicpagetype)->first();
+
+        if(!$page){
+            return abort(404);
+        }
+        
+        $lang = getActiveLanguage();
+        $seo = [
+            'title'                 => $page->getTranslation('title', $lang),
+            'meta_title'            => $page->getTranslation('meta_title', $lang),
+            'meta_description'      => $page->getTranslation('meta_description', $lang),
+            'keywords'              => $page->getTranslation('keywords', $lang),
+            'og_title'              => $page->getTranslation('og_title', $lang),
+            'og_description'        => $page->getTranslation('og_description', $lang),
+            'twitter_title'         => $page->getTranslation('twitter_title', $lang),
+            'twitter_description'   => $page->getTranslation('twitter_description', $lang),
+        ];
+
+        $this->loadSEO($seo);
+        return view('frontend.generalpage', compact('page', 'lang'));
+    }
+
     public function terms()
     {
         $page = Page::where('type', 'terms')->first();
