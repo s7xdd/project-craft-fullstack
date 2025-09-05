@@ -15,7 +15,7 @@
 
         </div>
     </div>
-    <div class="col-12 col-md-6 col-lg-12">
+    {{-- <div class="col-12 col-md-6 col-lg-12">
         <div class="top-filter__widget">
             <h2 class="widget__title">{{ trans('messages.brands') }}</h2>
             <ul class="widget__checkbox-options">
@@ -33,7 +33,7 @@
                 @endif
             </ul>
         </div>
-    </div>
+    </div> --}}
 
     <div class="col-12 col-md-6 col-lg-12">
         <div class="top-filter__widget">
