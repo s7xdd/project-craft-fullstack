@@ -507,16 +507,16 @@ var durotan;
           $(".js-price-slider").slider({
             range: true,
             min: 100,
-            max: 300000,
+            max: 5000,
             values: [minValue, maxValue],
             slide: function( event, ui ) {
-                $(".js-price-slider-value").val("AED " + ui.values[ 0 ] + " - AED " + ui.values[ 1 ]);
+                $(".js-price-slider-value").val("INR " + ui.values[ 0 ] + " - INR " + ui.values[ 1 ]);
                 localStorage.setItem("sliderMin", ui.values[0]);
                 localStorage.setItem("sliderMax", ui.values[1]);
             }
           });
           if($(".js-price-slider-value").length) {
-            $(".js-price-slider-value").val("AED " + $(".js-price-slider").slider("values", 0) + " - AED " + $(".js-price-slider").slider("values", 1));
+            $(".js-price-slider-value").val("INR " + $(".js-price-slider").slider("values", 0) + " - INR " + $(".js-price-slider").slider("values", 1));
           
           };
         };
