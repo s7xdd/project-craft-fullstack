@@ -30,6 +30,10 @@ class CheckoutController
         $cartController = new CartController();
         $response = $cartController->index();
 
+        if ($response instanceof \Illuminate\Http\JsonResponse) {
+            $response = $response->getData(true); 
+        }
+
         return view('frontend.checkout', compact('response', 'user'));
     }
 

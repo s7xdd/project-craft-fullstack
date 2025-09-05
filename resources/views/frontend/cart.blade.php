@@ -33,7 +33,7 @@
                             @endforeach
                         @else
                             <tr>
-                                <td colspan="7" style="margin-top: 30px" class="text-center">
+                                <td colspan="7" style="margin-top: 30px" class="text-center !py-20">
                                     {{ trans('messages.no_products_cart') }}</td>
                             </tr>
                         @endif
