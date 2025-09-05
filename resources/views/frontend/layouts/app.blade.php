@@ -137,7 +137,7 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.1ms ease-out;
+            transition: opacity 0s ease-out;
         }
 
         .loader-content {
@@ -150,7 +150,7 @@
             border: 5px solid #f3f3f3;
             border-top: 5px solid #000;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 2s linear infinite;
             margin: 0 auto;
         }
 
@@ -182,10 +182,8 @@
         }
 
         .attribute-item.disabled {
-            /* color: #ccc; */
             pointer-events: none !important;
             text-decoration: line-through !important;
-            /* background-color: #f9f9f9; */
         }
 
         .page-loaded #page-loader {
