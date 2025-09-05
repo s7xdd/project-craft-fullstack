@@ -1,13 +1,3 @@
-@import 'tailwindcss';
-
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
-
-
-.formio-component-datagrid .datagrid-table,
-.formio-component-datagrid .datagrid-table td,
-.formio-component-datagrid .datagrid-table th {
-  border:1px !important;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
