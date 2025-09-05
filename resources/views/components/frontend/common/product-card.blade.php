@@ -8,7 +8,7 @@
         <div class="lower-content" style="height: 150px">
             <span class="text">{{ $category }}</span>
             <h4>
-                <a class="text-[16px] !h-[50px] line-clamp-2" href="{!! $link !!}">{{ $name }}</a>
+                <a class="text-[16px] !h-[50px] line-clamp-2" href="{!! $link !!}">{!! $name !!}</a>
             </h4>
             <div class="price">
                 @if ($originalPrice)
