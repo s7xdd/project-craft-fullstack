@@ -2,11 +2,13 @@
     <div class="header-top" style="background-color: black;">
         <div class="large-container">
             <div class="top-inner">
-                <ul class="info-list"  style="margin-bottom: 0px">
-                    <li>
-                        <i class="icon-1"></i><span>{{ get_setting('helpline_title') }}</span>
-                    </li>
-                </ul>
+                @if (get_setting('helpline_title'))
+                    <ul class="info-list" style="margin-bottom: 0px">
+                        <li class="!flex !flex-row !items-center !text-center !justify-center">
+                            <i class="icon-1"></i><span>{{ get_setting('helpline_title') }}</span>
+                        </li>
+                    </ul>
+                @endif
                 <div class="text">
                     <p style="margin-bottom: 0px">
                         {{ get_setting('helpline_number') }}
@@ -30,7 +32,7 @@
                     </form>
                 </div>
                 <div class="menu-area">
-                    <div class="mobile-nav-toggler">
+                    <div class="mobile-nav-toggler !rounded-md">
                         <i class="icon-bar"></i>
                         <i class="icon-bar"></i>
                         <i class="icon-bar"></i>
