@@ -20,7 +20,17 @@
     <link href="{{ asset('dist/assets/app-afc193cb.css') }}" rel="stylesheet">
     <script type="module" src="{{ asset('assets/js/app-f10b86b9.js') }}"></script>
 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GJB4R99EX9"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
 
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-GJB4R99EX9');
+    </script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
