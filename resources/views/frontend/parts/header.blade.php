@@ -32,7 +32,7 @@
                     </form>
                 </div>
                 <div class="menu-area">
-                    <div class="mobile-nav-toggler">
+                    <div class="mobile-nav-toggler !rounded-md">
                         <i class="icon-bar"></i>
                         <i class="icon-bar"></i>
                         <i class="icon-bar"></i>
