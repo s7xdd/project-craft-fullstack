@@ -22,6 +22,7 @@ class HomeSlider extends Model
         'link_type',
         'link_ref',
         'link_ref_id',
+        'btn_text',
         'link',
         'sort_order',
         'status',
