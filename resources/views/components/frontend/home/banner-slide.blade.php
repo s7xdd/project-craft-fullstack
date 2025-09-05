@@ -9,7 +9,7 @@
                 </h2>
                 @if ($buttonText)
                     <div class="btn-box">
-                        <a href="{{ $link }}" class="theme-btn btn-one">{!! $buttonText !!}</a>
+                        <a href="{!! $link !!}" class="theme-btn btn-one">{!! $buttonText !!}</a>
                     </div>
                 @endif
             </div>
