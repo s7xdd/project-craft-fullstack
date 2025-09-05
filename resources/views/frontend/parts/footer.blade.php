@@ -45,7 +45,7 @@
                 <div class="col-12 col-md-6 col-lg-3 footer-column mt-4 mt-md-0">
                     <div class="tp-footer-widget subscribe-widget">
                         <div class="widget-title">
-                            <h4>Support</h4>
+                            <h4>Contact</h4>
                         </div>
                         <div class="widget-content">
                             <ul class="info-list clearfix" aria-label="Contact information">
