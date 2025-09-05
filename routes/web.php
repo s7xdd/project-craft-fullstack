@@ -32,7 +32,7 @@ use Laravel\Prompts\FormBuilder;
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/about', [FrontendController::class, 'about'])->name('about_us');
 
-Route::get('/{dynamicpagetype}', [FrontendController::class, 'dynamicPage'])->name('dynamic-page');
+Route::get('/pages/{dynamicpagetype}', [FrontendController::class, 'dynamicPage'])->name('dynamic-page');
 
 Route::get('/contact', [FrontendController::class, 'contact'])->name('contact');
 Route::post('/contact-us', [FrontendController::class, 'submitContactForm'])->name('contact.submit');
