@@ -1,17 +1,20 @@
 <section class="shop-style-nine relative {{ $class ?? 'pt-[70px] pb-[90px]' }}">
-    <div class="large-container max-w-[1800px] px-4 mx-auto">
-        <div class="project-tab">
-            <div class="title-box flex items-center justify-between mb-[60px]">
-                <div class="sec-title relative block z-[1]">
-                    <h2 class="relative block text-[48px] leading-[54px]">{{ $title ?? "" }}</h2>
-                </div>
-            </div>
-            <div class="p-tabs-content inner-container relative block">
-                {{ $slot }}
-            </div>
+  <div class="large-container max-w-[1800px] px-4 mx-auto">
+    <div class="project-tab">
+      <div class="title-box flex items-center justify-center mb-[60px]">
+        <div class="sec-title relative block z-[21]">
+          <h2 class="relative block text-[48px] leading-[54px] text-center">
+            {{ $title ?? "" }}
+          </h2>
         </div>
+      </div>
+      <div class="p-tabs-content inner-container relative block">
+        {{ $slot }}
+      </div>
     </div>
+  </div>
 </section>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

@@ -51,6 +51,12 @@
 
     @endphp
 
+      <style>
+            .hide-scrollbar::-webkit-scrollbar {
+              display: none;
+            }
+          </style>
+
     <x-frontend.home.banner>
         @foreach ($data['slider'] as $slide)
             <x-frontend.home.banner-slide image="{{ uploaded_asset($slide['image']) }}" title="{{ $slide['name'] ?? '' }}"
@@ -70,30 +76,47 @@
         </x-frontend.home.highlights>
     @endif
 
+    
 
 
     @if ($topCollections->isNotEmpty())
-        @foreach ($topCollections as $collectionKey => $collection)
-            <x-frontend.common.product-section title="{{ $collection['collectiontitle'] }}">
-                <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
-                    <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
-                        @foreach ($collection['products'] as $product)
-                            @php
-                                $priceData = getProductOfferPrice($product);
-                            @endphp
-                            <x-frontend.common.product-card image="{{ get_product_image($product->thumbnail_img) }}"
-                                alt="{{ $product->getTranslation('name', $lang) }}"
-                                category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
-                                name="{{ $product->getTranslation('name', $lang) }}"
-                                originalPrice=" {{ $priceData['original_price'] }}"
-                                price=" {{ $priceData['discounted_price'] }}"
-                                link="{{ route('product-detail', ['slug' => $product->slug, 'sku' => $product->sku]) }}" />
-                        @endforeach
+    @foreach ($topCollections as $collectionKey => $collection)
+        <x-frontend.common.product-section title="{{ $collection['collectiontitle'] }}">
+            <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
+                <div class="relative">
+                    {{-- edge fade (optional hint) --}}
+                    <div class="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-white to-transparent"></div>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white to-transparent"></div>
+
+                    {{-- horizontal scroller with snap --}}
+                    <div
+                        id="row-{{ $loop->index + 1 }}"
+                        class="scroll-row overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth hide-scrollbar"
+                        aria-label="Products scroller {{ $collection['collectiontitle'] }}"
+                    >
+                        <div class="flex flex-row gap-5 pr-4 ">
+                            @foreach ($collection['products'] as $product)
+                                @php $priceData = getProductOfferPrice($product); @endphp
+                                <div class="snap-start shrink-0">
+                                    <x-frontend.common.product-card
+                                        image="{{ get_product_image($product->thumbnail_img) }}"
+                                        alt="{{ $product->getTranslation('name', $lang) }}"
+                                        category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
+                                        name="{{ $product->getTranslation('name', $lang) }}"
+                                        originalPrice="{{ $priceData['original_price'] }}"
+                                        price="{{ $priceData['discounted_price'] }}"
+                                        link="{{ route('product-detail', ['slug' => $product->slug, 'sku' => $product->sku]) }}"
+                                    />
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            </x-frontend.common.product-section>
-        @endforeach
-    @endif
+            </div>
+        </x-frontend.common.product-section>
+    @endforeach
+@endif
+
 
 
     @if (!empty($data['banners']['home_mid_banner']))
@@ -108,31 +131,44 @@
         </x-frontend.home.featured-products>
     @endif
 
-    @if ($middleCollections->isNotEmpty())
-        @foreach ($middleCollections as $collectionKey => $collection)
-            <x-frontend.common.product-section title="{{ $collection['collectiontitle'] }}">
-                <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
-                    <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one ">
-                        @foreach ($collection['products'] as $product)
-                            @php
-                                $priceData = getProductOfferPrice($product);
-                                $productUrl = route('product-detail', [
-                                    'slug' => $product->slug,
-                                    'sku' => $product->sku,
-                                ]);
-                            @endphp
-                            <x-frontend.common.product-card image="{{ get_product_image($product->thumbnail_img) }}"
-                                alt="{{ $product->getTranslation('name', $lang) }}"
-                                category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
-                                name="{{ $product->getTranslation('name', $lang) }}"
-                                originalPrice=" {{ $priceData['original_price'] }}"
-                                price=" {{ $priceData['discounted_price'] }}" link="{!! $productUrl !!}" />
-                        @endforeach
+ 
+    @if ($topCollections->isNotEmpty())
+    @foreach ($topCollections as $collectionKey => $collection)
+        <x-frontend.common.product-section title="{{ $collection['collectiontitle'] }}">
+            <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
+                <div class="relative">
+                    {{-- edge fade (optional hint) --}}
+                    <div class="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-white to-transparent"></div>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-white to-transparent"></div>
+
+                    {{-- horizontal scroller with snap --}}
+                    <div
+                        id="row-{{ $loop->index + 1 }}"
+                        class="scroll-row overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth hide-scrollbar"
+                        aria-label="Products scroller {{ $collection['collectiontitle'] }}"
+                    >
+                        <div class="flex flex-row gap-5 pr-4 ">
+                            @foreach ($collection['products'] as $product)
+                                @php $priceData = getProductOfferPrice($product); @endphp
+                                <div class="snap-start shrink-0">
+                                    <x-frontend.common.product-card
+                                        image="{{ get_product_image($product->thumbnail_img) }}"
+                                        alt="{{ $product->getTranslation('name', $lang) }}"
+                                        category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
+                                        name="{{ $product->getTranslation('name', $lang) }}"
+                                        originalPrice="{{ $priceData['original_price'] }}"
+                                        price="{{ $priceData['discounted_price'] }}"
+                                        link="{{ route('product-detail', ['slug' => $product->slug, 'sku' => $product->sku]) }}"
+                                    />
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-            </x-frontend.common.product-section>
-        @endforeach
-    @endif
+            </div>
+        </x-frontend.common.product-section>
+    @endforeach
+@endif
 
     @if ($testimonials->count() > 0)
         <x-frontend.home.testimonial-feed>
