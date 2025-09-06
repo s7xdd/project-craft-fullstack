@@ -10,10 +10,43 @@ use App\Models\ProductStock;
 use App\Models\Coupon;
 use App\Models\CouponUsage;
 use Illuminate\Http\Request;
+use Artesaos\SEOTools\Facades\SEOMeta;
+use Artesaos\SEOTools\Facades\OpenGraph;
+use Artesaos\SEOTools\Facades\TwitterCard;
+use Artesaos\SEOTools\Facades\JsonLd;
+use Artesaos\SEOTools\Facades\JsonLdMulti;
+use Artesaos\SEOTools\Facades\SEOTools;
+use Illuminate\Support\Facades\URL;
 use Auth;
 
 class CartController extends Controller
 {
+
+    public function loadSEO($model)
+    {
+        SEOTools::setTitle($model['title']);
+        OpenGraph::setTitle($model['title']);
+        TwitterCard::setTitle($model['title']);
+
+        SEOMeta::setTitle($model['meta_title'] ?? $model['title']);
+        SEOMeta::setDescription($model['meta_description']);
+        SEOMeta::addKeyword($model['keywords']);
+
+        OpenGraph::setTitle($model['og_title']);
+        OpenGraph::setDescription($model['og_description']);
+        OpenGraph::setUrl(URL::full());
+        OpenGraph::addProperty('locale', 'en_US');
+
+        JsonLd::setTitle($model['meta_title']);
+        JsonLd::setDescription($model['meta_description']);
+        JsonLd::setType('Page');
+
+        TwitterCard::setTitle($model['twitter_title']);
+        TwitterCard::setDescription($model['twitter_description']);
+
+        SEOTools::jsonLd()->addImage(URL::to(asset('assets/img/favicon.svg')));
+    }
+
     public function index()
     {
         $lang = getActiveLanguage();
@@ -451,6 +484,19 @@ class CartController extends Controller
         })->filter(function ($item) {
             return count($item['products']) > 0;
         })->values();
+
+        $seo = [
+            'title'               => 'Shopping Cart - Raw Materials for Arts and Craft | TheGroStore',
+            'meta_title'          => 'Your Cart - Buy Arts and Craft Raw Materials Online | TheGroStore',
+            'meta_description'    => 'Review and manage your selected raw materials for arts and crafts. Secure checkout with TheGroStore, your trusted supplier for quality craft materials.',
+            'keywords'            => 'arts and craft raw materials, craft supplies cart, buy craft materials online, handmade supplies cart, arts and crafts shopping cart',
+            'og_title'            => 'Your Cart - Raw Materials for Arts and Craft | TheGroStore',
+            'og_description'      => 'Easily review your arts and craft raw materials and proceed to secure checkout at TheGroStore. Quality supplies for your creativity.',
+            'twitter_title'       => 'Your Cart - TheGroStore Arts and Craft Supplies',
+            'twitter_description' => 'Manage your selected craft raw materials and complete your purchase securely on TheGroStore.',
+        ];
+
+        $this->loadSEO($seo);
 
         return view('frontend.cart', compact('response', 'collectionProducts', 'lang'));
     }

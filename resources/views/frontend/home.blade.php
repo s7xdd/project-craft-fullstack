@@ -1,4 +1,3 @@
-
 @extends('frontend.layouts.app')
 
 @section('content')
@@ -137,9 +136,7 @@
     @if ($testimonials->count() > 0)
         <x-frontend.home.testimonial-feed>
             @foreach ($testimonials as $t)
-                <x-frontend.home.testimonial-item
-                    video="{{ $t['video'] }}"
-                    name="{{ $t['name'] }}"
+                <x-frontend.home.testimonial-item video="{{ $t['video'] }}" name="{{ $t['name'] }}"
                     text="{{ $t['text'] }}" />
             @endforeach
         </x-frontend.home.testimonial-feed>

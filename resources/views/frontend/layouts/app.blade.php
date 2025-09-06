@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title></title>
     {!! SEO::generate() !!}
+    <link rel="canonical" href="{{ url()->current() }}" />
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/theme.css?v=4') }}" rel="stylesheet" type="text/css" />
     <script src="{{ asset('assets/js/vendor.js') }}"></script>
@@ -264,8 +264,6 @@
         .pink-button:hover {
             background-color: #c2185b;
         }
-        
-     
     </style>
 
     <script>
@@ -394,7 +392,7 @@
                     url: '/cart/' + cartItemId,
                     type: 'DELETE',
                     success: function(response) {
-                      if (response.status === true) {
+                        if (response.status === true) {
                             row.remove();
                             $('.row_' + cartItemId).remove();
                             $('.cart_sub_total').html(response.updatedCartSummary.sub_total)
