@@ -37,8 +37,8 @@
 
     <div class="col-12 col-md-6 col-lg-12">
         <div class="top-filter__widget">
-            <h2 class="widget__title">{{ trans('messages.price') }}</h2>
-            <div class="widget__price-slider">
+            <h2 class="widget__title !border-0">{{ trans('messages.price') }}</h2>
+            <div class="widget__price-slider ">
                 <div class="js-price-slider"></div>
                 <div class="price-slider__value">
                     <span>{{ trans('messages.from') }}</span>

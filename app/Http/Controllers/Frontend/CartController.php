@@ -491,12 +491,14 @@ class CartController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => trans('messages.cart_item_removed_success'),
-                'updatedCartSummary' => $summary
+                'updatedCartSummary' => $summary,
+                'cart_count' => $this->cartCount()
             ], 200);
         } else {
             return response()->json([
                 'status' => false,
                 'message' => trans('messages.cart_item_not_found'),
+                'cart_count' => $this->cartCount()
             ], 200);
         }
     }
@@ -543,11 +545,13 @@ class CartController extends Controller
                     return response()->json([
                         'status'    => true,
                         'message'   => "Cart updated",
+                        'cart_count' => $this->cartCount()
                     ], 200);
                 } else {
                     return response()->json([
                         'status'    => false,
                         'message'   => "Maximum quantity reached",
+                        'cart_count' => $this->cartCount()
                     ], 200);
                 }
             } elseif ($action == 'minus') {
@@ -560,17 +564,20 @@ class CartController extends Controller
                 return response()->json([
                     'status'    => true,
                     'message'   => "Cart updated",
+                    'cart_count' => $this->cartCount()
                 ], 200);
             } else {
                 return response()->json([
                     'status'    => false,
                     'message'   => "Undefined action value",
+                    'cart_count' => $this->cartCount()
                 ], 200);
             }
         } else {
             return response()->json([
                 'status'    => false,
-                'message'   => "Missing data"
+                'message'   => "Missing data",
+                'cart_count' => $this->cartCount()
             ], 200);
         }
     }

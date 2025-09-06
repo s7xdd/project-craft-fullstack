@@ -11,8 +11,12 @@
     </a>
     <div class="product-info">
         <a href="{!! $link !!}">
-            <h5 class="product-title !h-[50px]">
-                {{ $title }}
+            <span class="!text-xs !md:text-sm text-gray-500">
+                {{ $category ?? "" }}
+            </span>
+
+            <h5 class="product-title !h-[50px] mt-1">
+                {{ $title ?? ""}}
             </h5>
         </a>
         <div class="price-row">

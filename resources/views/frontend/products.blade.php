@@ -64,7 +64,7 @@
                             title="{{ $prod->getTranslation('name', $lang) }}"
                             currentPrice="{{ $priceData['discounted_price'] }}"
                             originalPrice="{{ $priceData['original_price'] }}" link="{!! $productUrl !!}"
-                            sku="{{ $prod->sku }}" slug="{{ $prod->slug }}" />
+                            sku="{{ $prod->sku }}" slug="{{ $prod->slug }}" category="{{ $prod->category->name }}" />
                     @endforeach
                 @endif
 

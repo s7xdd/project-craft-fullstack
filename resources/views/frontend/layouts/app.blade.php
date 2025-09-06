@@ -264,6 +264,23 @@
         .pink-button:hover {
             background-color: #c2185b;
         }
+        
+        .theme-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: 2px solid #000;
+        }
+        
+        .theme-btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
     </style>
 
     <script>
@@ -368,6 +385,8 @@
                     },
                     success: function(response) {
                         $('.cart_count').text(response.cart_count);
+                        $('#cart-count-header').text(response.cart_count);
+                        $('#cart-count-sticky').text(response.cart_count);
                         if (response.status == true) {
                             toastr.success(response.message,
                                 "{{ trans('messages.success') }}");
@@ -390,7 +409,7 @@
                     url: '/cart/' + cartItemId,
                     type: 'DELETE',
                     success: function(response) {
-                        if (response.status === true) {
+                      if (response.status === true) {
                             row.remove();
                             $('.row_' + cartItemId).remove();
                             $('.cart_sub_total').html(response.updatedCartSummary.sub_total)
