@@ -1,8 +1,10 @@
-<div class="shop-block-one">
-
   {{-- Added background color to the card --}}
   {{-- Made the card more rounded --}}
-  <div class="inner-box group relative block px-4 pt-4 pb-0 text-center transition-all duration-500 ease before:absolute before:border-r before:border-dashed before:border-gray-300 before:top-0 before:right-[-8px] before:h-full before:content-[''] " style="background-color: #f9f9f9; border-radius: 50px;">
+
+<div class="shop-block-one" style="background-color: #FFFDF7; border-radius: 50px;">
+
+
+  <div class="inner-box group relative block px-4 pt-4 pb-0 text-center transition-all duration-500 ease before:absolute before:border-r before:border-dashed before:border-gray-300 before:top-0 before:right-[-8px] before:h-full before:content-[''] " >
     <div class="image-box relative block">
       <figure class="image relative block max-w-[180px] w-full mx-auto overflow-hidden">
         <a href="{!! $link !!}">

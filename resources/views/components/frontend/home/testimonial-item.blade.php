@@ -1,6 +1,6 @@
-<div class="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden border border-gray-100">
+<div class="group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden border border-gray-100" style="background-color: #FFFDF7; border-radius: 50px;">
     <div class="relative">
-        <div class="aspect-square overflow-hidden">
+        <div class="aspect-square overflow-hidden" >
             <video autoplay muted loop playsinline 
                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 rounded-t-6xl">
                 <source src="{{ $video }}" type="video/mp4">
