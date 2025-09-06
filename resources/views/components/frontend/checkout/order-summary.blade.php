@@ -17,7 +17,7 @@
                             <div class="flex flex-col">
                                 <h6 class="text-lg font-semibold text-gray-900 mb-1">
                                     <a href="{{ route('product-detail', ['slug' => $prod['product']['slug'], 'sku' => $prod['product']['sku']]) }}"
-                                        class="hover:underline text-blue-600">
+                                        class="hover:underline text-black">
                                         {{ $prod['product']['name'] }}
                                     </a>
                                 </h6>

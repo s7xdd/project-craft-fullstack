@@ -10,7 +10,7 @@
         );
     @endphp
 
-    <x-frontend.common.page-title title="Cart" homeLink="index.html" />
+    <x-frontend.common.page-title title="Cart" homeLink="/" />
 
     @if ($response['products'] && !empty($response['products']))
         <x-frontend.cart.cart-section>
