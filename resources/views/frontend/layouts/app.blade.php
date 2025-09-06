@@ -265,22 +265,7 @@
             background-color: #c2185b;
         }
         
-        .theme-btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: #000;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            border: 2px solid #000;
-        }
-        
-        .theme-btn:hover {
-            background-color: #fff;
-            color: #000;
-        }
+     
     </style>
 
     <script>

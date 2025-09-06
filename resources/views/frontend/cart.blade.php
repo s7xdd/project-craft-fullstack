@@ -90,8 +90,10 @@
     @else
         <div class="empty-cart-container" style="text-align: center; padding: 50px 20px;">
             <h2 style="margin-bottom: 20px;">{{ trans('messages.no_products_cart') }}</h2>
-            <p style="margin-bottom: 30px; font-size: 18px; color: #666;">Your cart is currently empty. Browse our products and add items to your cart.</p>
-            <a href="{{ route('products.index') }}" class="theme-btn btn-one" style="display: inline-block; padding: 12px 30px; background-color: #000; color: #fff; text-decoration: none; border-radius: 4px; transition: all 0.3s ease; font-weight: 600; border: 2px solid #000;">
+            <p style="margin-bottom: 30px; font-size: 18px; color: #666;">Your cart is currently empty. Browse our products
+                and add items to your cart.</p>
+            <a href="{{ route('products.index') }}" class="theme-btn btn-one"
+                style="display: inline-block; padding: 12px 30px; background-color: #000; color: #fff; text-decoration: none; border-radius: 4px; transition: all 0.3s ease; font-weight: 600; border: 2px solid #000;">
                 <span>Continue Shopping</span>
             </a>
         </div>
@@ -127,3 +129,22 @@
 
     <x-frontend.common.whatsapp-subscribe />
 @endsection
+
+<style>
+    .theme-btn {
+        display: inline-block;
+        padding: 12px 30px;
+        background-color: #000;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        border: 2px solid #000;
+    }
+
+    .theme-btn:hover {
+        background-color: #fff;
+        color: #000;
+    }
+</style>
