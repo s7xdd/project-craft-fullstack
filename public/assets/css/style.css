@@ -469,7 +469,8 @@ img {
 
 .pagination li a:hover,
 .pagination li a.current{
-  color: #fff;
+  background-color: black;
+  color: white;
   border-color: #fff;
 }
 
