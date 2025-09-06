@@ -61,7 +61,6 @@ class FrontendController extends Controller
         JsonLd::setType('Page');
 
         TwitterCard::setTitle($model['twitter_title']);
-        TwitterCard::setSite("@aldourigroup");
         TwitterCard::setDescription($model['twitter_description']);
 
         SEOTools::jsonLd()->addImage(URL::to(asset('assets/img/favicon.svg')));
@@ -87,7 +86,6 @@ class FrontendController extends Controller
         JsonLd::setType('Page');
 
         TwitterCard::setTitle($model->twitter_title);
-        TwitterCard::setSite("@aldourigroup");
         TwitterCard::setDescription($model->twitter_description);
 
         SEOTools::jsonLd()->addImage(URL::to(asset('assets/img/favicon.svg')));

@@ -42,6 +42,31 @@ use Carbon\Carbon;
 class ProductController extends Controller
 {
 
+    public function loadSEO($model)
+    {
+        SEOTools::setTitle($model['title']);
+        OpenGraph::setTitle($model['title']);
+        TwitterCard::setTitle($model['title']);
+
+        SEOMeta::setTitle($model['meta_title'] ?? $model['title']);
+        SEOMeta::setDescription($model['meta_description']);
+        SEOMeta::addKeyword($model['keywords']);
+
+        OpenGraph::setTitle($model['og_title']);
+        OpenGraph::setDescription($model['og_description']);
+        OpenGraph::setUrl(URL::full());
+        OpenGraph::addProperty('locale', 'en_US');
+
+        JsonLd::setTitle($model['meta_title']);
+        JsonLd::setDescription($model['meta_description']);
+        JsonLd::setType('Page');
+
+        TwitterCard::setTitle($model['twitter_title']);
+        TwitterCard::setDescription($model['twitter_description']);
+
+        SEOTools::jsonLd()->addImage(URL::to(asset('assets/img/favicon.svg')));
+    }
+
     public function index(Request $request)
     {
         $price = $request->price;
@@ -168,6 +193,35 @@ class ProductController extends Controller
             return $details;
         });
 
+        $defaultSEO = [
+            'title'               => 'Raw Materials for Arts and Craft - Product Listing | TheGroStore',
+            'meta_title'          => 'Buy Raw Materials for Arts and Crafts Online | TheGroStore',
+            'meta_description'    => 'Browse a wide selection of raw materials for arts and craft projects. Quality supplies available with secure checkout.',
+            'keywords'            => 'arts and crafts raw materials, craft supplies, craft raw materials online',
+            'og_title'            => 'Raw Materials for Arts and Craft - TheGroStore',
+            'og_description'      => 'Shop quality raw materials for your arts and crafts needs at TheGroStore.',
+            'twitter_title'       => 'Raw Materials for Arts and Crafts | TheGroStore',
+            'twitter_description' => 'Explore and order craft raw materials online at TheGroStore.',
+        ];
+
+        $seo = $defaultSEO;
+
+        if ($categoryData) {
+            $seo = [
+                'title'               => $categoryData->getTranslation('title', $lang) ?? $defaultSEO['title'],
+                'meta_title'          => $categoryData->getTranslation('meta_title', $lang) ?? $defaultSEO['meta_title'],
+                'meta_description'    => $categoryData->getTranslation('meta_description', $lang) ?? $defaultSEO['meta_description'],
+                'keywords'            => $categoryData->getTranslation('keywords', $lang) ?? $defaultSEO['keywords'],
+                'og_title'            => $categoryData->getTranslation('og_title', $lang) ?? $defaultSEO['og_title'],
+                'og_description'      => $categoryData->getTranslation('og_description', $lang) ?? $defaultSEO['og_description'],
+                'twitter_title'       => $categoryData->getTranslation('twitter_title', $lang) ?? $defaultSEO['twitter_title'],
+                'twitter_description' => $categoryData->getTranslation('twitter_description', $lang) ?? $defaultSEO['twitter_description'],
+            ];
+        }
+
+        $this->loadSEO($seo);
+
+
         return view('frontend.products', compact('limit', 'products', 'offset', 'min_price', 'max_price', 'category', 'brand', 'sort_by', 'lang', 'categories', 'brands', 'categoryData', 'price'));
     }
 
@@ -179,6 +233,7 @@ class ProductController extends Controller
 
         $product_stock = '';
         $response = $relatedProducts = [];
+
         if ($slug !=  '' && $sku != '') {
             $product_stock = ProductStock::leftJoin('products', 'products.id', '=', 'product_stocks.product_id')
                 ->where('products.published', 1)
@@ -326,6 +381,36 @@ class ProductController extends Controller
         }
 
         $recentlyViewedProducts = getRecentlyViewedProducts();
+
+
+        $defaultSEO = [
+            'title'               => 'Raw Materials for Arts and Craft - Product Listing | TheGroStore',
+            'meta_title'          => 'Buy Raw Materials for Arts and Crafts Online | TheGroStore',
+            'meta_description'    => 'Browse a wide selection of raw materials for arts and craft projects. Quality supplies available with secure checkout.',
+            'keywords'            => 'arts and crafts raw materials, craft supplies, craft raw materials online',
+            'og_title'            => 'Raw Materials for Arts and Craft - TheGroStore',
+            'og_description'      => 'Shop quality raw materials for your arts and crafts needs at TheGroStore.',
+            'twitter_title'       => 'Raw Materials for Arts and Crafts | TheGroStore',
+            'twitter_description' => 'Explore and order craft raw materials online at TheGroStore.',
+        ];
+
+        $seo = $defaultSEO;
+
+        if ($response) {
+            $seo = [
+                'title'               => optional(optional($product_stock->product))->getSeoTranslation('title', $lang) ?? $defaultSEO['title'],
+                'meta_title'          => optional(optional($product_stock->product))->getSeoTranslation('meta_title', $lang) ?? '',
+                'meta_description'    => optional(optional($product_stock->product))->getSeoTranslation('meta_description', $lang) ?? '',
+                'keywords'            => optional(optional($product_stock->product))->getSeoTranslation('keywords', $lang) ?? '',
+                'og_title'            => optional(optional($product_stock->product))->getSeoTranslation('og_title', $lang) ?? '',
+                'og_description'      => optional(optional($product_stock->product))->getSeoTranslation('og_description', $lang) ?? '',
+                'twitter_title'       => optional(optional($product_stock->product))->getSeoTranslation('twitter_title', $lang) ?? '',
+                'twitter_description' => optional(optional($product_stock->product))->getSeoTranslation('twitter_description', $lang) ?? '',
+            ];
+        }
+
+        $this->loadSEO($seo);
+
 
         return view('frontend.product_details', compact('lang', 'response', 'product_stock', 'relatedProducts', 'recentlyViewedProducts'));
     }
