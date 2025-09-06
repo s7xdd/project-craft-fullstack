@@ -434,7 +434,7 @@
 
 .main-menu .navigation > li > ul > li > a:hover,
 .main-menu .navigation > li > .megamenu li > a:hover{
-  color: #fff;
+  color: gray;
 }
 
 .main-menu .navigation > li > ul > li:last-child > a,
