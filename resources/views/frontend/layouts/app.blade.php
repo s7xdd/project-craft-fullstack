@@ -212,10 +212,15 @@
     </div> --}}
 
     <div id="main">
-        @include('frontend.parts.header')
+  
+              @include('frontend.parts.header')
+      
+      
         @include('frontend.parts.mobile-menu')
-
-        @yield('content')
+<div style="background-color    :rgb(255, 247, 231)">
+  @yield('content')
+</div>
+      
 
         @include('frontend.parts.footer')
     </div>
