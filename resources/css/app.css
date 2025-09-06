@@ -11,3 +11,9 @@
 .formio-component-datagrid .datagrid-table th {
   border:1px !important;
 }
+
+.swiper-button-prev,
+.swiper-button-next {
+color: black !important;
+}
+

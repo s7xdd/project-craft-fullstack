@@ -178,7 +178,10 @@
 
         {{-- image-slider --}}
 
-        <x-frontend.common.image-slider :product="$response" />
+        <div id="product-swiper" data-images='@json($response['photos'] ?? ['default-product.jpg'])'
+            class="w-full md:w-1/2 relative flex flex-col justify-center items-center space-y-2 !min-h-[400px] md:!h-[700px]">
+        </div>
+
 
         {{-- <x-frontend.product-detail.product-slider-item image="{{ $images[0] ?? asset('assets/images/product-1.webp') }}"
             alt="{{ $response['name'] ?? 'Product Image' }}">
