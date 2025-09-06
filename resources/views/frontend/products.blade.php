@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <x-frontend.common.page-title title="Shop" homeLink="index.html" />
+    <x-frontend.common.page-title title="{{ capitalizeFirstLetter(request('category', 'Shop')) }}" homeLink="/" />
 
     <form action="" class="mt-20" id="productfilters" method="GET">
         <div class="row">
@@ -64,7 +64,8 @@
                             title="{{ $prod->getTranslation('name', $lang) }}"
                             currentPrice="{{ $priceData['discounted_price'] }}"
                             originalPrice="{{ $priceData['original_price'] }}" link="{!! $productUrl !!}"
-                            sku="{{ $prod->sku }}" slug="{{ $prod->slug }}" category="{{ $prod->category->name }}" />
+                            sku="{{ $prod->sku }}" slug="{{ $prod->slug }}"
+                            category="{{ $prod->category->name }}" />
                     @endforeach
                 @endif
 

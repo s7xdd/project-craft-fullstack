@@ -703,3 +703,8 @@ function getHomePageContent()
 {
     return Page::where('slug', 'home')->with('page_translations')->first();
 }
+
+function capitalizeFirstLetter($string)
+{
+    return ucwords(str_replace('-', ' ', $string));
+}
