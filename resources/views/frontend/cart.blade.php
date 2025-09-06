@@ -12,98 +12,90 @@
 
     <x-frontend.common.page-title title="Cart" homeLink="index.html" />
 
-    <x-frontend.cart.cart-section>
-        <x-slot name="cartItems">
-            <div class="table-outer mb_30">
-                <table class="cart-table">
-                    <thead class="cart-header">
-                        <tr>
-                            <th>product</th>
-                            <th>price</th>
-                            <th>quantity</th>
-                            <th>total</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                        @if ($response['products'] && !empty($response['products']))
+    @if ($response['products'] && !empty($response['products']))
+        <x-frontend.cart.cart-section>
+            <x-slot name="cartItems">
+                <div class="table-outer mb_30">
+                    <table class="cart-table">
+                        <thead class="cart-header">
+                            <tr>
+                                <th>product</th>
+                                <th>price</th>
+                                <th>quantity</th>
+                                <th>total</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                             @foreach ($response['products'] as $prod)
                                 <x-frontend.cart.cart-item :prod="$prod" />
                             @endforeach
-                        @else
-                            <tr>
-                                <td colspan="7" style="margin-top: 30px" class="text-center !py-20">
-                                    {{ trans('messages.no_products_cart') }}</td>
-                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </x-slot>
+
+            <x-slot name="cartTotals">
+                <x-frontend.cart.cart-totals>
+                    <x-slot name="slot">
+                        <div class="order-summary__subtotal">
+                            <div class="summary-subtotal__title">{{ trans('messages.subtotal') }}</div>
+                            <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
+                                {{ $response['summary']['sub_total'] }}</div>
+                        </div>
+
+                        <div class="order-summary__subtotal">
+                            <div class="summary-subtotal__title">{{ trans('messages.tax') }}</div>
+                            <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
+                                {{ $response['summary']['vat_amount'] }}</div>
+                        </div>
+
+                        <div class="order-summary__subtotal">
+                            <div class="summary-subtotal__title">{{ trans('messages.discount') }}</div>
+                            <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
+                                {{ $response['summary']['discount'] }}</div>
+                        </div>
+
+                        @if ($response['summary']['coupon_applied'] == 1)
+                            <div class="order-summary__subtotal">
+                                <div class="summary-subtotal__title">
+                                    {{ trans('messages.coupon') . ' ' . trans('messages.discount') }}</div>
+                                <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
+                                    {{ $response['summary']['coupon_discount'] }}</div>
+                            </div>
                         @endif
 
 
-                    </tbody>
-                </table>
-            </div>
-        </x-slot>
-
-        <x-slot name="cartTotals">
-            <x-frontend.cart.cart-totals>
-                <x-slot name="slot">
-                    <div class="order-summary__subtotal">
-                        <div class="summary-subtotal__title">{{ trans('messages.subtotal') }}</div>
-                        <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                            {{ $response['summary']['sub_total'] }}</div>
-                    </div>
-
-                    <div class="order-summary__subtotal">
-                        <div class="summary-subtotal__title">{{ trans('messages.tax') }}</div>
-                        <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                            {{ $response['summary']['vat_amount'] }}</div>
-                    </div>
-
-                    <div class="order-summary__subtotal">
-                        <div class="summary-subtotal__title">{{ trans('messages.discount') }}</div>
-                        <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                            {{ $response['summary']['discount'] }}</div>
-                    </div>
-
-                    @if ($response['summary']['coupon_applied'] == 1)
                         <div class="order-summary__subtotal">
-                            <div class="summary-subtotal__title">
-                                {{ trans('messages.coupon') . ' ' . trans('messages.discount') }}</div>
+                            <div class="summary-subtotal__title">{{ trans('messages.shipping_charge') }}</div>
                             <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                                {{ $response['summary']['coupon_discount'] }}</div>
+                                {{ $response['summary']['shipping'] }}</div>
                         </div>
-                    @endif
 
+                        <div class="order-summary__total">
+                            <div class="summary-total__title">{{ trans('messages.total') }}</div>
+                            <div class="summary-total__price">{{ env('DEFAULT_CURRENCY') }}
+                                {{ $response['summary']['total'] }}</div>
+                        </div>
 
-                    <div class="order-summary__subtotal">
-                        <div class="summary-subtotal__title">{{ trans('messages.shipping_charge') }}</div>
-                        <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                            {{ $response['summary']['shipping'] }}</div>
-                    </div>
+                    </x-slot>
 
-                    <div class="order-summary__total">
-                        <div class="summary-total__title">{{ trans('messages.total') }}</div>
-                        <div class="summary-total__price">{{ env('DEFAULT_CURRENCY') }}
-                            {{ $response['summary']['total'] }}</div>
-                    </div>
-
-                </x-slot>
-
-                {{-- <x-slot name="coupon">
-                    <div class="!my-10">
-                        <x-frontend.cart.coupon :response="$response" />
-                    </div>
-                </x-slot> --}}
-
-                @if ($response['products'] && !empty($response['products']))
                     <x-slot name="checkoutButton">
                         <x-frontend.cart.checkout-button link="{{ route('checkout') }}" text="Proceed to Checkout" />
                     </x-slot>
-                @endif
 
-            </x-frontend.cart.cart-totals>
-        </x-slot>
-    </x-frontend.cart.cart-section>
+                </x-frontend.cart.cart-totals>
+            </x-slot>
+        </x-frontend.cart.cart-section>
+    @else
+        <div class="empty-cart-container" style="text-align: center; padding: 50px 20px;">
+            <h2 style="margin-bottom: 20px;">{{ trans('messages.no_products_cart') }}</h2>
+            <p style="margin-bottom: 30px; font-size: 18px; color: #666;">Your cart is currently empty. Browse our products and add items to your cart.</p>
+            <a href="{{ route('products.index') }}" class="theme-btn btn-one" style="display: inline-block; padding: 12px 30px; background-color: #000; color: #fff; text-decoration: none; border-radius: 4px; transition: all 0.3s ease; font-weight: 600; border: 2px solid #000;">
+                <span>Continue Shopping</span>
+            </a>
+        </div>
+    @endif
 
 
 

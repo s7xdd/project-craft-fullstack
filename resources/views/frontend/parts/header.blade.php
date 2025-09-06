@@ -59,7 +59,7 @@
                         <li class="shop-cart">
                             <button type="button">
                                 <a href="{{ route('cart.items') }}">
-                                    <i class="fas fa-cart-shopping"></i><span>3</span>
+                                    <i class="fas fa-cart-shopping"></i><span class="bg-red-500" id="cart-count-header">{{ cartCount() }}</span>
                                 </a>
                             </button>
                         </li>
@@ -101,7 +101,7 @@
                         <li class="shop-cart">
                             <button type="button">
                                 <a href="{{ route('cart.items') }}">
-                                    <i class="fas fa-cart-shopping"></i><span>3</span>
+                                    <i class="fas fa-cart-shopping"></i><span class="bg-red-500" id="cart-count-sticky">{{ cartCount() }}</span>
                                 </a>
                             </button>
                         </li>
