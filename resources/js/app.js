@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="swiper product-images-swiper overflow-hidden rounded-lg border w-full">
             <div class="swiper-wrapper py-10 m-auto">
                 ${images.map(img => `
-                    <div class="swiper-slide !flex !justify-center !items-center !mx-auto">
+                    <div class="swiper-slide !flex !justify-center !items-center !mx-auto !bg-white">
                         <img src="${img}" alt="product image" 
                              class="!max-w-full !max-h-[300px] md:!max-h-[500px] object-contain m-auto">
                     </div>`).join('')}
@@ -30,9 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
         <div class="swiper product-thumbs-swiper w-full max-w-full mt-1">
-            <div class="swiper-wrapper">
+            <div class="swiper-wrapper ">
                 ${images.map(img => `
-                    <div class="swiper-slide border cursor-pointer flex items-center justify-center">
+                    <div class="swiper-slide !bg-white border cursor-pointer flex items-center justify-center">
                         <img src="${img}" alt="thumb" class="w-full max-h-[100px] object-contain rounded">
                     </div>`).join('')}
             </div>
