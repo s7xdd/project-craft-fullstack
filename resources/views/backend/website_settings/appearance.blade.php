@@ -68,8 +68,8 @@
                             <label class="col-md-3 col-from-label">Website Base Color</label>
                             <div class="col-md-8">
                                 <input type="hidden" name="types[]" value="base_color">
-                                <input type="text" name="base_color" class="form-control" placeholder="rgb(255, 254, 243)"
-                                    value="{{ get_setting('base_color') }}">
+                                <input type="text" name="base_color" class="form-control"
+                                    placeholder="rgb(255, 254, 243)" value="{{ get_setting('base_color') }}">
                             </div>
                         </div>
 
@@ -77,8 +77,17 @@
                             <label class="col-md-3 col-from-label">Website Product Card Color</label>
                             <div class="col-md-8">
                                 <input type="hidden" name="types[]" value="base_hov_color">
-                                <input type="text" name="base_hov_color" class="form-control" placeholder="rgb(255, 254, 243)"
-                                    value="{{ get_setting('base_hov_color') }}">
+                                <input type="text" name="base_hov_color" class="form-control"
+                                    placeholder="rgb(255, 254, 243)" value="{{ get_setting('base_hov_color') }}">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-from-label">Header Color</label>
+                            <div class="col-md-8">
+                                <input type="hidden" name="types[]" value="header_base_color">
+                                <input type="text" name="header_base_color" class="form-control"
+                                    placeholder="rgb(255, 254, 243)" value="{{ get_setting('header_base_color') }}">
                             </div>
                         </div>
 
