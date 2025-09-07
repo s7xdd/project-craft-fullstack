@@ -1,5 +1,5 @@
 {{-- Added background color to the card --}}
-<div class="product-card" style="background-color: #f9f9f9;">
+<div class="product-card" style="background-color: {{ get_setting('base_hov_color') }};">
     <a href="{!! $link !!}" class="product-image-link">
         <img class="product-image" src="{{ $image }}" alt="{{ $alt }}" />
         @if ($currentPrice < $originalPrice)

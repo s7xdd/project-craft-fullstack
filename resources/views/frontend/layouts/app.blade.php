@@ -211,7 +211,8 @@
         @include('frontend.parts.header')
 
         @include('frontend.parts.mobile-menu')
-        <div style="background-color    :rgb(255, 250, 240)">
+
+        <div style="background-color: {{ get_setting('base_color') }}">
             @yield('content')
         </div>
 

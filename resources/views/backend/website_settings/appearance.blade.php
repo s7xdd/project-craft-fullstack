@@ -64,25 +64,23 @@
                             </div>
                         </div>
 
-                        {{-- <div class="form-group row">
+                        <div class="form-group row">
                             <label class="col-md-3 col-from-label">Website Base Color</label>
                             <div class="col-md-8">
                                 <input type="hidden" name="types[]" value="base_color">
-                                <input type="text" name="base_color" class="form-control" placeholder="#377dff"
+                                <input type="text" name="base_color" class="form-control" placeholder="rgb(255, 254, 243)"
                                     value="{{ get_setting('base_color') }}">
-                                <small class="text-muted">Hex Color Code</small>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-3 col-from-label">Website Base Hover Color</label>
+                            <label class="col-md-3 col-from-label">Website Product Card Color</label>
                             <div class="col-md-8">
                                 <input type="hidden" name="types[]" value="base_hov_color">
-                                <input type="text" name="base_hov_color" class="form-control" placeholder="#377dff"
+                                <input type="text" name="base_hov_color" class="form-control" placeholder="rgb(255, 254, 243)"
                                     value="{{ get_setting('base_hov_color') }}">
-                                <small class="text-muted">Hex Color Code</small>
                             </div>
-                        </div> --}}
+                        </div>
 
                         <div class="form-group row">
                             <label class="col-md-3 col-from-label">Menu Image</label>
@@ -93,8 +91,8 @@
                                     </div>
                                     <div class="form-control file-amount">Choose File</div>
                                     <input type="hidden" name="types[]" value="menu_image">
-                                    <input type="hidden" name="menu_image"
-                                        value="{{ get_setting('menu_image') }}" class="selected-files">
+                                    <input type="hidden" name="menu_image" value="{{ get_setting('menu_image') }}"
+                                        class="selected-files">
                                 </div>
                                 <div class="file-preview box"></div>
                             </div>
