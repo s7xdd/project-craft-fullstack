@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div class="header-lower p_relative" style="background-color:{{ get_setting('base_color') }};">
+    <div class="header-lower p_relative" style="background-color:{{ get_setting('header_base_color') }};">
         <div class="large-container">
             <div class="outer-box" style="padding-top: 16px; padding-bottom: 16px">
                 <div class="search-inner">
@@ -80,7 +80,7 @@
             </div>
         </div>
     </div>
-    <div class="sticky-header" style="background-color:rgb(255, 254, 243);">
+    <div class="sticky-header" style="background-color:{{ get_setting('header_base_color') }};">
         <div class="large-container">
             <div class="outer-box">
                 <div class="search-inner">
