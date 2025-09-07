@@ -1,11 +1,11 @@
-<div class="order-box">
+<div class="order-box ">
     <h3>Order Summary</h3>
-    <div class="order-info">
+    <div class="order-info !bg-white rounded-md">
         <div class="title-box">
             <span class="text">Product</span>
             <span class="text">Total</span>
         </div>
-        <div class="order-product space-y-6">
+        <div class="order-product space-y-6 ">
             @if (!empty($response['products']))
                 @foreach ($response['products'] as $prod)
                     <div class="single-item flex items-center justify-between border-b pb-4">

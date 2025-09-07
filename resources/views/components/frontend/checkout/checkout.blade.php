@@ -4,7 +4,7 @@
             <h2>The <span>Checkout</span></h2>
         </div>
         <div class="row clearfix">
-            <div class="col-lg-8 col-md-12 col-sm-12 billing-column">
+            <div class="col-lg-8 col-md-12 col-sm-12 billing-column ">
                 @include('components.frontend.checkout.billing-details')
             </div>
             <div class="col-lg-4 col-md-12 col-sm-12 order-column">

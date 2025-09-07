@@ -21,9 +21,9 @@
                 
                 @if (isset($menu_items) && count($menu_items) > 0)
                     @foreach ($menu_items as $menu)
-                        <div class="col-6 col-md-3 col-lg-2 footer-column">
+                        <div class="col-6 col-md-3 col-lg-2 footer-column mb-5">
                             <div class="tp-footer-widget links-widget">
-                                <div class="widget-title">
+                                <div class="widget-title !font-bold">
                                     <h4>{{ $menu->label }}</h4>
                                 </div>
                                 <div class="widget-content">

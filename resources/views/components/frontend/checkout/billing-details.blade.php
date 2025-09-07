@@ -1,5 +1,5 @@
 
-<div class="billing-content mr_30">
+<div class="billing-content mr_30 !bg-white p-3 rounded-md">
     <h3>Billing Details</h3>
     <div class="form-inner">
         <form id="checkoutForm" action="{{ route('checkout.whatsapp') }}" method="POST">
