@@ -3,6 +3,6 @@
         <div class="icon-box">
             <img src="{{ $icon }}" alt="" style="height: 43px;" />
         </div>
-        <h5>{{ $text }}</h5>
+        <h5 class="!text-[12px] !leading-5 md:!text-lg">{{ $text }}</h5>
     </div>
 </li>

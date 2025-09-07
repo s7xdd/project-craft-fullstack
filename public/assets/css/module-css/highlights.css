@@ -169,17 +169,17 @@
 
 @media only screen and (max-width: 767px){
   .highlights-section .list-item li{
-    width: 100%;
+    width: calc(50% - 12px); /* reduce width slightly */
+    margin-right: 12px; /* space between columns */
+    margin-bottom: 20px; /* space between rows */
   }
 
-  .highlights-style-two{
-    padding-bottom: 50px;
-  }
-
-  .highlights-section.pt_0{
-    padding-top: 0px;
+  /* Remove right margin on every 2nd item to avoid extra space */
+  .highlights-section .list-item li:nth-child(2n){
+    margin-right: 0;
   }
 }
+
 
 @media only screen and (max-width: 599px){
   .highlights-style-two .list-item li{
