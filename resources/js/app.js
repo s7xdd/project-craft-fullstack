@@ -59,3 +59,21 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.product-swiper').forEach((el) => {
+        new Swiper(el, {
+            slidesPerView: 4,
+            spaceBetween: 20,
+            navigation: {
+                nextEl: el.querySelector('.swiper-button-next'),
+                prevEl: el.querySelector('.swiper-button-prev'),
+            },
+            breakpoints: {
+                1024: { slidesPerView: 5 },
+                768: { slidesPerView: 2 },
+                0: { slidesPerView: 1.5 }
+            }
+        });
+    });
+});

@@ -387,17 +387,17 @@
 	if ($('.five-item-carousel').length) {
 		$('.five-item-carousel').owlCarousel({
 			loop:true,
-			margin:30,
+			margin:2,
 			nav:true,
 			smartSpeed: 500,
 			autoplay: 1000,
 			navText: [ '<span class="icon-11"></span>', '<span class="icon-12"></span>' ],
 			responsive:{
 				0:{
-					items:1
+					items:1.3
 				},
 				480:{
-					items:1
+					items:1.3
 				},
 				600:{
 					items:2
@@ -516,7 +516,7 @@
 	if ($('.testimonial-carousel').length) {
 		$('.testimonial-carousel').owlCarousel({
 			loop:true,
-			margin:30,
+			margin:10,
 			nav:true,
 			smartSpeed: 500,
 			autoplay: 1000,
@@ -526,16 +526,16 @@
 					items:1
 				},
 				480:{
-					items:1
-				},
-				600:{
 					items:2
 				},
-				800:{
+				600:{
 					items:3
+				},
+				800:{
+					items:4
 				},			
 				1200:{
-					items:4
+					items:5
 				}
 
 			}

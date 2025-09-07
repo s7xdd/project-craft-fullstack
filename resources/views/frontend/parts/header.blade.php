@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    <div class="header-lower p_relative">
+    <div class="header-lower p_relative" style="background-color:rgb(255, 254, 243);">
         <div class="large-container">
             <div class="outer-box" style="padding-top: 16px; padding-bottom: 16px">
                 <div class="search-inner">
@@ -36,6 +36,12 @@
                         <i class="icon-bar"></i>
                         <i class="icon-bar"></i>
                         <i class="icon-bar"></i>
+                    </div>
+                    <div class="mobile-logo-box !bg-white">
+                        <figure class="navbar-logo !mb-0">
+                            <a href="/"><img src="{{ uploaded_asset(get_setting('site_icon')) }}"
+                                    alt="" /></a>
+                        </figure>
                     </div>
                     <nav class="main-menu navbar-expand-md navbar-light clearfix">
                         <div class="" id="navbarSupportedContent">
@@ -56,6 +62,9 @@
                 </div>
                 <div class="menu-right-content">
                     <ul class="option-list">
+                        <li class="search-icon-mobile">
+                            <a href="#" id="mobile-search-trigger" style="display: flex"><i class="icon-4"></i></a>
+                        </li>
                         <li class="shop-cart">
                             <button type="button">
                                 <a href="{{ route('cart.items') }}">
@@ -71,7 +80,7 @@
             </div>
         </div>
     </div>
-    <div class="sticky-header">
+    <div class="sticky-header" style="background-color:rgb(255, 254, 243);">
         <div class="large-container">
             <div class="outer-box">
                 <div class="search-inner">
@@ -110,6 +119,25 @@
                         </li>
                     </ul>
                 </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mobile Search Popup -->
+    <div class="mobile-search-popup" id="mobile-search-popup" style="display: none;">
+        <div class="search-popup-overlay" id="search-popup-overlay"></div>
+        <div class="search-popup-content">
+            <div class="search-popup-header">
+                <h4>Search Products</h4>
+                <span class="close-search-popup" id="close-search-popup">&times;</span>
+            </div>
+            <div class="search-popup-body">
+                <form action="{{ route('products.index') }}" method="get">
+                    <div class="form-group">
+                        <input type="search" name="search" placeholder="Search Products" value="{{ request()->get('search') }}" required />
+                        <button type="submit"><i class="icon-4"></i></button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

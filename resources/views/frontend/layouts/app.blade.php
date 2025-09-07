@@ -204,18 +204,17 @@
 </head>
 
 <body>
-    {{-- <div id="page-loader">
-        <div class="loader-content">
-            <div class="spinner"></div>
-            <div class="loader-text">Loading...</div>
-        </div>
-    </div> --}}
+
 
     <div id="main">
-        @include('frontend.parts.header')
-        @include('frontend.parts.mobile-menu')
 
-        @yield('content')
+        @include('frontend.parts.header')
+
+        @include('frontend.parts.mobile-menu')
+        <div style="background-color    :rgb(255, 250, 240)">
+            @yield('content')
+        </div>
+
 
         @include('frontend.parts.footer')
     </div>
@@ -578,6 +577,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('assets/js/script.js') }}"></script>
+    <script src="{{ asset('assets/js/mobile-search.js') }}"></script>
 
     <!-- Loader Script -->
     <script>

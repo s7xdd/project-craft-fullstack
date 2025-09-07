@@ -23,9 +23,11 @@
 .ml-2{
     margin-left: 2rem !important;
 }
+
 .mb-1{
     margin-bottom: 1rem !important;
 }
+
 .mb-2{
     margin-bottom: 2rem !important;
 }
@@ -36,4 +38,289 @@
 
 .red{
     color: red !important;
+}
+
+/* Mobile search box styles */
+.mobile-search-box .form-group {
+    margin-bottom: 0;
+}
+
+.mobile-search-box input[type="search"] {
+    padding: 10px 40px 10px 15px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    width: 100%;
+    font-size: 14px;
+}
+
+.mobile-search-box button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.mobile-search-box button i {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Mobile Search Icon */
+.search-icon-mobile {
+    display: none;
+}
+
+/* Mobile Search Popup */
+.mobile-search-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-search-popup.show {
+    display: block;
+    opacity: 1;
+}
+
+.search-popup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.search-popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background-color: #fff;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.mobile-search-popup.show .search-popup-content {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
+.search-popup-header {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-popup-header h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.close-search-popup {
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.3s ease;
+}
+
+.close-search-popup:hover {
+    color: #333;
+}
+
+.search-popup-body {
+    padding: 20px;
+}
+
+.search-popup-body .form-group {
+    position: relative;
+    margin-bottom: 0;
+}
+
+.search-popup-body input[type="search"] {
+    width: 100%;
+    padding: 12px 50px 12px 20px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-popup-body input[type="search"]:focus {
+    border-color: #ac8660;
+}
+
+.search-popup-body button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 18px;
+    color: #666;
+}
+
+.search-popup-body button:hover {
+    color: #333;
+}
+
+/* Mobile Styles (1200px and below) */
+@media only screen and (max-width: 1200px) {
+    /* Mobile logo styles */
+    .mobile-logo-box {
+        display: block !important;
+    }
+    
+    .main-header .logo-box {
+        display: none;
+    }
+    
+    /* Reduce logo size */
+    .mobile-logo-box .navbar-logo {
+        width: 120px !important;
+        height: auto !important;
+    }
+    
+    .mobile-logo-box .navbar-logo img {
+        max-height: 40px !important;
+        width: auto !important;
+    }
+    
+    .search-icon-mobile {
+        display: block;
+    }
+    
+    .search-icon-mobile a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        color: #333;
+        font-size: 20px;
+        transition: all 0.3s ease;
+    }
+    
+    .search-icon-mobile a:hover {
+        background-color: #eee;
+        color: #000;
+    }
+    
+    /* Mobile Navbar Alignment with Flexbox */
+    .main-header .outer-box {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        height: 70px !important;
+        padding-top: 16px !important;
+        padding-bottom: 16px !important;
+    }
+    
+    .search-inner {
+        flex: 0 0 auto !important;
+        width: 30% !important;
+        display: none !important; /* Hide desktop search on mobile */
+    }
+    
+    .menu-area {
+        flex: 0 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        width: auto !important;
+    }
+    
+    .mobile-nav-toggler {
+        margin-right: 15px !important;
+        padding: 8px !important;
+        font-size: 30px !important;
+        line-height: 30px !important;
+        z-index: 102 !important;
+        display: block !important;
+    }
+    
+    .mobile-nav-toggler .icon-bar {
+        width: 25px !important;
+        margin-bottom: 4px !important;
+    }
+    
+    .mobile-logo-box {
+        flex: 1 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 0 15px !important;
+    }
+    
+    .menu-right-content {
+        flex: 0 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        width: auto !important;
+        z-index: 102 !important;
+    }
+    
+    .option-list {
+        display: flex !important;
+        align-items: center !important;
+        list-style: none !important;
+    }
+    
+    .option-list li {
+        margin-left: 10px !important;
+    }
+    
+    /* Hide desktop menu on mobile */
+    .main-menu {
+        display: none !important;
+    }
+}
+
+/* Desktop Styles (1201px and above) */
+@media only screen and (min-width: 1201px) {
+    /* Hide mobile-specific elements on desktop */
+    .mobile-nav-toggler {
+        display: none !important;
+    }
+    
+    .mobile-logo-box {
+        display: none !important;
+    }
+    
+    .search-icon-mobile {
+        display: none !important;
+    }
+    
+    /* Ensure desktop menu is visible */
+    .main-menu {
+        display: block !important;
+    }
+    
+    .main-header .logo-box {
+        display: block !important;
+    }
 }

@@ -7,6 +7,16 @@
                 <img src="{{ uploaded_asset(get_setting('site_icon_light')) }}" alt="{{ get_setting('site_name') }}" title="{{ get_setting('site_name') }}" />
             </a>
         </div>
+        {{-- <div class="mobile-search-box" style="padding: 15px;">
+            <form action="{{ route('products.index') }}" method="get">
+                <div class="form-group" style="position: relative;">
+                    <input type="search" name="search" placeholder="Search Products" value="{{ request()->get('search') }}" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" />
+                    <button type="submit" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;">
+                        <i class="icon-4"></i>
+                    </button>
+                </div>
+            </form>
+        </div> --}}
         <div class="menu-outer">
             <ul class="navigation clearfix">
                 @foreach ($menu_items as $item)
