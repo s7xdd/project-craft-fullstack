@@ -4,7 +4,7 @@
 
 <section class="contact-section pb_120">
     <div class="large-container">
-        <div class="inner-container">
+        <div class="inner-container !bg-white">
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 content-column">
                     <div class="form-inner">
@@ -35,8 +35,8 @@
                                     <label>Write Message *</label>
                                     <textarea name="message" placeholder="" required></textarea>
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn">
-                                    <button type="submit" class="theme-btn btn-one" name="submit-form">Send Message</button>
+                                <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn ">
+                                    <button type="submit" class="theme-btn btn-one !bg-black" name="submit-form">Send Message</button>
                                 </div>
                             </div>
                         </form>
