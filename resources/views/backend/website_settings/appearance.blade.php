@@ -92,6 +92,16 @@
                         </div>
 
                         <div class="form-group row">
+                            <label class="col-md-3 col-from-label">Top Bar Color</label>
+                            <div class="col-md-8">
+                                <input type="hidden" name="types[]" value="top_bar_base_color">
+                                <input type="text" name="top_bar_base_color" class="form-control"
+                                    placeholder="rgb(255, 254, 243)" value="{{ get_setting('top_bar_base_color') }}">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
                             <label class="col-md-3 col-from-label">Menu Image</label>
                             <div class="col-md-8">
                                 <div class="input-group" data-toggle="aizuploader" data-type="image">

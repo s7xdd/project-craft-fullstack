@@ -1,5 +1,5 @@
 <header class="main-header header-style-two">
-    <div class="header-top" style="background-color: black;">
+    <div class="header-top" style="background-color: {{ get_setting('top_bar_base_color') }};">
         <div class="large-container">
             <div class="top-inner">
                 @if (get_setting('helpline_title'))
@@ -63,12 +63,14 @@
                 <div class="menu-right-content">
                     <ul class="option-list">
                         <li class="search-icon-mobile">
-                            <a href="#" id="mobile-search-trigger" style="display: flex"><i class="icon-4"></i></a>
+                            <a href="#" id="mobile-search-trigger" style="display: flex"><i
+                                    class="icon-4"></i></a>
                         </li>
                         <li class="shop-cart">
                             <button type="button">
                                 <a href="{{ route('cart.items') }}">
-                                    <i class="fas fa-cart-shopping"></i><span class="bg-red-500" id="cart-count-header">{{ cartCount() }}</span>
+                                    <i class="fas fa-cart-shopping"></i><span class="bg-red-500"
+                                        id="cart-count-header">{{ cartCount() }}</span>
                                 </a>
                             </button>
                         </li>
@@ -110,7 +112,8 @@
                         <li class="shop-cart">
                             <button type="button">
                                 <a href="{{ route('cart.items') }}">
-                                    <i class="fas fa-cart-shopping"></i><span class="bg-red-500" id="cart-count-sticky">{{ cartCount() }}</span>
+                                    <i class="fas fa-cart-shopping"></i><span class="bg-red-500"
+                                        id="cart-count-sticky">{{ cartCount() }}</span>
                                 </a>
                             </button>
                         </li>
@@ -122,7 +125,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Mobile Search Popup -->
     <div class="mobile-search-popup" id="mobile-search-popup" style="display: none;">
         <div class="search-popup-overlay" id="search-popup-overlay"></div>
@@ -134,7 +137,8 @@
             <div class="search-popup-body">
                 <form action="{{ route('products.index') }}" method="get">
                     <div class="form-group">
-                        <input type="search" name="search" placeholder="Search Products" value="{{ request()->get('search') }}" required />
+                        <input type="search" name="search" placeholder="Search Products"
+                            value="{{ request()->get('search') }}" required />
                         <button type="submit"><i class="icon-4"></i></button>
                     </div>
                 </form>
