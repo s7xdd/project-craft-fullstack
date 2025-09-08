@@ -224,7 +224,7 @@
         .banner-style-two .slide-item{
           position: relative;
           padding: 60px 120px;
-          min-height: 600px;
+          min-height: 400px;
           display: flex;
           align-items: center;
         }
