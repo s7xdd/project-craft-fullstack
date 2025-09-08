@@ -4,12 +4,12 @@
     <div class="row align-items-center">
         <div class="col-lg-6 col-md-12 col-sm-12 content-column !w-[80%]">
             <div class="content-box">
-                <h2 style="color: white;">
+                <h2 style="color: white; font-size: 30px;">
                     {!! $title !!}
                 </h2>
                 @if ($buttonText)
-                    <div class="btn-box">
-                        <a href="{!! $link !!}" class="theme-btn btn-one">{!! $buttonText !!}</a>
+                    <div class="btn-box" >
+                        <a href="{!! $link !!}" class="theme-btn btn-one" style="padding: 5px 15px; font-size: 20px;" >{!! $buttonText !!}</a>
                     </div>
                 @endif
             </div>
