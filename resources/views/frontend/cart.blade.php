@@ -15,23 +15,12 @@
     @if ($response['products'] && !empty($response['products']))
         <x-frontend.cart.cart-section>
             <x-slot name="cartItems">
-                <div class="table-outer mb_30 !bg-white">
-                    <table class="cart-table">
-                        <thead class="cart-header">
-                            <tr>
-                                <th>product</th>
-                                <th>price</th>
-                                <th>quantity</th>
-                                <th>total</th>
-                                <th>&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($response['products'] as $prod)
-                                <x-frontend.cart.cart-item :prod="$prod" />
-                            @endforeach
-                        </tbody>
-                    </table>
+                <div class="cart-items-container mb_30">
+                    <div class="cart-items-list">
+                        @foreach ($response['products'] as $prod)
+                            <x-frontend.cart.cart-item :prod="$prod" />
+                        @endforeach
+                    </div>
                 </div>
             </x-slot>
 
@@ -129,7 +118,6 @@
         </div>
     @endif
 
-    <x-frontend.common.whatsapp-subscribe />
 @endsection
 
 <style>

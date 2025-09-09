@@ -40,7 +40,6 @@
         </x-frontend.account.account-section>
     </div>
 
-    <x-frontend.common.whatsapp-subscribe />
 @endsection
 
 @section('script')

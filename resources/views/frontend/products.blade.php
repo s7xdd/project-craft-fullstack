@@ -74,8 +74,6 @@
                 </x-slot>
             </x-frontend.products.shop-page>
 
-            <x-frontend.common.whatsapp-subscribe />
-
         </div>
     </form>
 @endsection

@@ -50,5 +50,4 @@
         </div>
     @endif
 
-    <x-frontend.common.whatsapp-subscribe />
 @endsection

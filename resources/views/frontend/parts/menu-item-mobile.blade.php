@@ -6,7 +6,7 @@
 @if ($isMegamenu)
     <li class="dropdown">
         <a href="{{ $item->link }}">{{ $item->label }}</a>
-        <div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>
+        {{-- <div class="dropdown-btn"><span class="fas fa-angle-down"></span></div> --}}
         <div class="megamenu" style="display: none;">
             <div class="row clearfix">
                 @foreach ($item->child as $group)
@@ -33,13 +33,13 @@
     </li>
 @elseif($hasChildren)
     <li class="dropdown">
-        <a href="{{ $item->link }}">{{ $item->label }}</a>
+        {{-- <a href="{{ $item->link }}">{{ $item->label }}</a>
         <div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>
         <ul class="submenu" style="display: none;">
             @foreach ($item->child as $child)
                 @include('frontend.parts.menu-item-mobile', ['item' => $child])
             @endforeach
-        </ul>
+        </ul> --}}
     </li>
 @else
     <li>

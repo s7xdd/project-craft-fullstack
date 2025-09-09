@@ -572,7 +572,7 @@
 .menu-area .mobile-nav-toggler {
   position: relative;
   float: right;
-  font-size: 40px;
+  font-size: 20px;
   line-height: 50px;
   cursor: pointer;
   background: var(--theme-color);
