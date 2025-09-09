@@ -2370,3 +2370,12 @@ button.ltr {
 .nav-toggle .line3 {
   top: 14px;
 }
+
+/** Mobile button styles **/
+@media only screen and (max-width: 767px) {
+  .theme-btn {
+    font-size: 14px;
+    line-height: 20px;
+    padding: 8px 16px;
+  }
+}

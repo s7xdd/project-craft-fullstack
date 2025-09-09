@@ -5,83 +5,232 @@
   position: relative;
 }
 
-.page-title .bread-crumb{
+/* Modern Breadcrumb Container */
+.page-title .breadcrumb-container {
+  position: relative !important;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%) !important;
+  border-radius: 16px !important;
+  padding: 20px 30px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.page-title .breadcrumb-list {
+  display: flex !important;
+  align-items: center !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+}
+
+/* Breadcrumb Items */
+.page-title .breadcrumb-item {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.page-title .bread-crumb li{
-  position: relative;
-  display: inline-block;
-  font-size: 16px;
-  line-height: 21px;
-  font-family: var(--title-font);
-  margin-right: 18px;
-  color: var(--title-color);
+/* Override Bootstrap's default breadcrumb separator */
+.page-title .breadcrumb-item+.breadcrumb-item::before {
+  content: none !important;
 }
 
-.page-title .bread-crumb li:last-child{
-  margin: 0px;
-}
-
-.page-title .bread-crumb li a{
-  display: inline-block;
-  color: var(--title-color);
-}
-
-.page-title .bread-crumb li a:hover{
-
-}
-
-.page-title .bread-crumb li:before{
-  position: absolute;
+.page-title .breadcrumb-item:not(:last-child)::after {
   content: '';
-  background: var(--secondary-color);
-  width: 6px;
-  height: 1px;
-  top: 11px;
-  right: -13px;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 6px solid #cbd5e1 !important;
+  border-top: 4px solid transparent !important;
+  border-bottom: 4px solid transparent !important;
+  margin: 0 12px !important;
+  flex-shrink: 0;
 }
 
-.page-title .bread-crumb li:last-child:before{
-  display: none;
+/* Breadcrumb Links */
+.page-title .breadcrumb-link {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 12px 16px !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-radius: 12px !important;
+  text-decoration: none !important;
+  color: #475569 !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+  transition: all 0.3s ease !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+.page-title .breadcrumb-link:hover {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.page-title .breadcrumb-home-icon {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.page-title .breadcrumb-text {
+  font-weight: 600;
+}
+
+/* Current Page Item */
+.page-title .breadcrumb-current {
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%) !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3) !important;
+}
+
+.page-title .breadcrumb-current-text {
+  display: block !important;
+  padding: 8px 15px !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+  letter-spacing: 0.025em !important;
 }
 
 
 /** rtl-css **/
 
-.rtl .page-title .bread-crumb li{
-  margin-right: 0px;
-  margin-left: 18px;
+.rtl .page-title .breadcrumb-item:not(:last-child)::after {
+  border-left: none;
+  border-right: 6px solid #cbd5e1;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  margin: 0 12px;
 }
 
-.rtl .page-title .bread-crumb li:before{
-  right: inherit;
-  left: -13px;
+.rtl .page-title .breadcrumb-list {
+  direction: rtl;
 }
 
 /** responsive-css **/
 
 @media only screen and (max-width: 1200px){
-  
+  .page-title .breadcrumb-container {
+    padding: 18px 24px;
+  }
+
+  .page-title .breadcrumb-link {
+    padding: 10px 14px;
+    font-size: 15px;
+  }
+
+  .page-title .breadcrumb-current-text {
+    font-size: 17px;
+    padding: 10px 18px;
+  }
 }
 
 @media only screen and (max-width: 991px){
-  
+  .page-title .breadcrumb-container {
+    padding: 16px 20px;
+  }
+
+  .page-title .breadcrumb-link {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+
+  .page-title .breadcrumb-current-text {
+    font-size: 16px;
+    padding: 8px 16px;
+  }
+
+  .page-title .breadcrumb-item:not(:last-child)::after {
+    margin: 0 8px;
+  }
 }
 
 @media only screen and (max-width: 767px){
+  .page-title .breadcrumb-container {
+    padding: 14px 16px;
+    border-radius: 12px;
+  }
 
+  .page-title .breadcrumb-list {
+    gap: 6px;
+  }
+
+  .page-title .breadcrumb-link {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .page-title .breadcrumb-home-icon {
+    font-size: 12px;
+  }
+
+  .page-title .breadcrumb-current-text {
+    font-size: 15px;
+    padding: 8px 14px;
+  }
+
+  .page-title .breadcrumb-item:not(:last-child)::after {
+    border-left-width: 4px;
+    border-top-width: 3px;
+    border-bottom-width: 3px;
+    margin: 0 6px;
+  }
 }
 
 @media only screen and (max-width: 599px){
+  .page-title .breadcrumb-container {
+    padding: 12px 14px;
+    margin: 0 10px;
+  }
 
+  .page-title .breadcrumb-link {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .page-title .breadcrumb-text {
+    display: none;
+  }
+
+  .page-title .breadcrumb-current-text {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
 }
 
 @media only screen and (max-width: 499px){
+  .page-title .breadcrumb-container {
+    padding: 10px 12px;
+    margin: 0 5px;
+  }
 
+  .page-title .breadcrumb-link {
+    padding: 5px 7px;
+  }
 
+  .page-title .breadcrumb-current-text {
+    font-size: 13px;
+    padding: 5px 10px;
+  }
+
+  .page-title .breadcrumb-item:not(:last-child)::after {
+    border-left-width: 3px;
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    margin: 0 4px;
+  }
 }
 
 

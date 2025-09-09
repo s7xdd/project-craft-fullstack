@@ -115,7 +115,7 @@
                 </div>
 
                 <div class="flex items-center justify-between flex-col md:flex-row">
-                    <ul class="flex flex-wrap gap-6 items-center text-base font-semibold text-black">
+                    <ul class="flex flex-wrap gap-6 items-center text-base font-semibold text-black !pl-0">
                         @if (isset($bottom_footer) && count($bottom_footer) > 0)
                             @foreach ($bottom_footer as $menu)
                                 <li><a href="{{ $menu->link }}"

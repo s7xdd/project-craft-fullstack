@@ -1,4 +1,4 @@
-<div class="cart-item-card">
+<div class="cart-item-card pb-2">
     <div class="cart-item-content">
         <div class="cart-item-image">
             <img src="{{ $prod['product']['image'] }}" alt="{{ $prod['product']['name'] }}"
@@ -27,9 +27,9 @@
                 </div>
             @endif
 
-            <div class="product-brand">
+            <!-- <div class="product-brand">
                 {{ trans('messages.brand') }}: {{ $prod['product']['brand'] }}
-            </div>
+            </div> -->
         </div>
 
         <div class="cart-item-price">
@@ -65,7 +65,7 @@
     </div>
 
     <!-- Mobile Layout -->
-    <div class="cart-item-mobile-actions">
+    <div class="cart-item-mobile-actions d-md-none">
         <div class="cart-item-mobile-price">
             <div class="price-label">{{ trans('messages.price') }}</div>
             <div class="price-value">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['main_price'] }}</div>

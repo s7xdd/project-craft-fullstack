@@ -572,8 +572,8 @@
 .menu-area .mobile-nav-toggler {
   position: relative;
   float: right;
-  font-size: 20px;
-  line-height: 50px;
+  font-size: 30px;
+  line-height: 40px;
   cursor: pointer;
   background: var(--theme-color);
   display: none;
@@ -586,7 +586,7 @@
 .menu-area .mobile-nav-toggler .icon-bar{
   position: relative;
   height: 2px;
-  width: 30px;
+  width: 24px;
   display: block;
   margin-bottom: 5px;
   background-color: #fff;

@@ -3,7 +3,7 @@
     <div
         class="inner-box group relative block px-4 pt-4 pb-0 text-center transition-all duration-500 ease before:absolute before:border-r before:border-dashed before:border-gray-300 before:top-0 before:right-[-8px] before:h-full before:content-[''] ">
         <div class="image-box relative block">
-            <figure class="image relative block max-w-[180px] sm:max-w-[120px] h-[160px] md:h-full w-full mx-auto overflow-hidden">
+            <figure class="image relative block max-w-[180px] sm:max-w-[120px] h-[160px] w-full mx-auto overflow-hidden">
                 <a href="{!! $link !!}">
                     <img class="w-full transition-all duration-500 ease hover:scale-105 object-cover" src="{{ $image }}"
                         alt="{{ $alt }}" />
