@@ -67,11 +67,13 @@
 
     @if ($page->getTranslation('image1', $lang) && is_array(json_decode($page->getTranslation('image1', $lang))))
         <x-frontend.home.highlights>
-            @foreach (json_decode($page->getTranslation('image1', $lang), true) as $sectionData)
-                <x-frontend.home.highlight-item
-                    icon="{{ isset($sectionData['icon'][0]) ? $sectionData['icon'][0]['url'] ?? '' : '' }}"
-                    text="{{ $sectionData['title'] ?? '' }}" />
-            @endforeach
+            <div class="flex justify-center flex-wrap">
+                @foreach (json_decode($page->getTranslation('image1', $lang), true) as $sectionData)
+                    <x-frontend.home.highlight-item
+                        icon="{{ isset($sectionData['icon'][0]) ? $sectionData['icon'][0]['url'] ?? '' : '' }}"
+                        text="{{ $sectionData['title'] ?? '' }}" />
+                @endforeach
+            </div>
         </x-frontend.home.highlights>
     @endif
 
@@ -84,21 +86,21 @@
                 <x-frontend.common.product-section title="{{ $collection['collectiontitle'] }}">
                     <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
                         <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
-                                @foreach ($collection['products'] as $product)
-                                    @php
-                                        $priceData = getProductOfferPrice($product);
-                                        $productUrl = route('product-detail', [
-                                            'slug' => $product->slug,
-                                            'sku' => $product->sku,
-                                        ]);
-                                    @endphp
-                                    <x-frontend.common.product-card image="{{ get_product_image($product->thumbnail_img) }}"
-                                        alt="{{ $product->getTranslation('name', $lang) }}"
-                                        category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
-                                        name="{{ $product->getTranslation('name', $lang) }}"
-                                        originalPrice=" {{ $priceData['original_price'] }}"
-                                        price=" {{ $priceData['discounted_price'] }}" link="{!! $productUrl !!}" />
-                                @endforeach
+                            @foreach ($collection['products'] as $product)
+                                @php
+                                    $priceData = getProductOfferPrice($product);
+                                    $productUrl = route('product-detail', [
+                                        'slug' => $product->slug,
+                                        'sku' => $product->sku,
+                                    ]);
+                                @endphp
+                                <x-frontend.common.product-card image="{{ get_product_image($product->thumbnail_img) }}"
+                                    alt="{{ $product->getTranslation('name', $lang) }}"
+                                    category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
+                                    name="{{ $product->getTranslation('name', $lang) }}"
+                                    originalPrice=" {{ $priceData['original_price'] }}"
+                                    price=" {{ $priceData['discounted_price'] }}" link="{!! $productUrl !!}" />
+                            @endforeach
                         </div>
 
                     </div>
@@ -130,22 +132,21 @@
                 <x-frontend.common.product-section title="{{ $collection['collectiontitle'] }}">
                     <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
                         <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
-                                @foreach ($collection['products'] as $product)
-                                    @php
-                                        $priceData = getProductOfferPrice($product);
-                                        $productUrl = route('product-detail', [
-                                            'slug' => $product->slug,
-                                            'sku' => $product->sku,
-                                        ]);
-                                    @endphp
-                                    <x-frontend.common.product-card
-                                        image="{{ get_product_image($product->thumbnail_img) }}"
-                                        alt="{{ $product->getTranslation('name', $lang) }}"
-                                        category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
-                                        name="{{ $product->getTranslation('name', $lang) }}"
-                                        originalPrice=" {{ $priceData['original_price'] }}"
-                                        price=" {{ $priceData['discounted_price'] }}" link="{!! $productUrl !!}" />
-                                @endforeach
+                            @foreach ($collection['products'] as $product)
+                                @php
+                                    $priceData = getProductOfferPrice($product);
+                                    $productUrl = route('product-detail', [
+                                        'slug' => $product->slug,
+                                        'sku' => $product->sku,
+                                    ]);
+                                @endphp
+                                <x-frontend.common.product-card image="{{ get_product_image($product->thumbnail_img) }}"
+                                    alt="{{ $product->getTranslation('name', $lang) }}"
+                                    category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
+                                    name="{{ $product->getTranslation('name', $lang) }}"
+                                    originalPrice=" {{ $priceData['original_price'] }}"
+                                    price=" {{ $priceData['discounted_price'] }}" link="{!! $productUrl !!}" />
+                            @endforeach
                         </div>
                     </div>
                 </x-frontend.common.product-section>
