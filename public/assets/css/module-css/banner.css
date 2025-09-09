@@ -804,13 +804,15 @@
 
 @media only screen and (max-width: 767px){
   .banner-section .content-box h2{
-    font-size: 50px;
-    line-height: 60px;
+    font-size: 30px;
+    line-height: 36px;
   }
 
   .banner-style-two .slide-item{
     padding-left: 30px;
     padding-right: 30px;
+    max-height: 200px;
+    min-height: auto;
   }
 
   .banner-style-four .content-box-one h2{

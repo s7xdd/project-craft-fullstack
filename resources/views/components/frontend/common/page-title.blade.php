@@ -1,8 +1,17 @@
 <section class="page-title pt_40 pb_30">
     <div class="large-container">
-        <ul class="bread-crumb clearfix">
-            <li><a href="{{ '/' }}">Home</a></li>
-            <li>{{ $title }}</li>
-        </ul>
+        <nav class="breadcrumb-container" aria-label="Breadcrumb">
+            <ol class="breadcrumb-list">
+                <li class="breadcrumb-item">
+                    <a href="{{ '/' }}" class="breadcrumb-link">
+                        <i class="fas fa-home breadcrumb-home-icon"></i>
+                        <span class="breadcrumb-text">Home</span>
+                    </a>
+                </li>
+                <li class="breadcrumb-item breadcrumb-current" aria-current="page">
+                    <span class="breadcrumb-current-text">{{ $title }}</span>
+                </li>
+            </ol>
+        </nav>
     </div>
 </section>

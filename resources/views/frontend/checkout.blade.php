@@ -5,7 +5,6 @@
 
     @include('components.frontend.checkout.checkout')
 
-    <x-frontend.common.whatsapp-subscribe />
 @endsection
 
 @section('script')

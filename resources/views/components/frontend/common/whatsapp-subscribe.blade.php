@@ -2,7 +2,7 @@
     $homePageContent = getHomePageContent();
 @endphp
 
-<section class="subscribe-section ">
+<section class="subscribe-section">
     <div class="bg-color"></div>
     <div class="large-container !max-w-[1400px]">
         <div class="inner-container relative bg-cover bg-center">

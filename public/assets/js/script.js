@@ -387,17 +387,17 @@
 	if ($('.five-item-carousel').length) {
 		$('.five-item-carousel').owlCarousel({
 			loop:true,
-			margin:2,
+			margin:-10,
 			nav:true,
 			smartSpeed: 500,
 			autoplay: 1000,
 			navText: [ '<span class="icon-11"></span>', '<span class="icon-12"></span>' ],
 			responsive:{
 				0:{
-					items:1.3
+					items:2
 				},
 				480:{
-					items:1.3
+					items:2
 				},
 				600:{
 					items:2
@@ -406,10 +406,10 @@
 					items:3
 				},			
 				1200:{
-					items:4
+					items:6
 				},
 				1600:{
-					items:5
+					items:7
 				}
 
 			}

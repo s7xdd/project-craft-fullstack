@@ -212,7 +212,7 @@
 
         @include('frontend.parts.mobile-menu')
 
-        <div style="background-color: {{ get_setting('base_color') }}">
+        <div style="background-color: {{ get_setting('base_color') }}; padding-top: 10px;">
             @yield('content')
         </div>
 
@@ -263,6 +263,52 @@
 
         .pink-button:hover {
             background-color: #c2185b;
+        }
+
+        /* WhatsApp Section Styling */
+        .whatsapp-section {
+            margin: 4rem 0;
+            position: relative;
+        }
+
+        .whatsapp-section .inner-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatsapp-section .bg-cover {
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Ensure proper spacing from footer */
+        .whatsapp-section + footer {
+            margin-top: 0;
+        }
+
+        /* Enhanced button hover effects */
+        .whatsapp-section a:hover {
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .whatsapp-section {
+                margin: 2rem 0;
+                padding: 1rem;
+            }
+
+            .whatsapp-section .inner-container {
+                padding: 1.5rem;
+            }
+
+            .whatsapp-section h3 {
+                font-size: 1.5rem !important;
+            }
+
+            .whatsapp-section p {
+                font-size: 1rem !important;
+            }
         }
     </style>
 

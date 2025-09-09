@@ -44,25 +44,38 @@
 
                     <x-slot name="details">
                         @if ($response['brand'])
-                            <li><strong>Brand :</strong>{{ $response['brand'] }}</li>
+                            <div class="flex items-center gap-2">
+                                <strong class="min-w-[100px]">Brand </strong>
+                                <strong>:</strong>
+                                <span>{{ $response['brand'] }}</span>
+                            </div>
                         @endif
 
-                        <li><strong>Product SKU :</strong>{{ $response['sku'] }}</li>
+                        <div class="flex items-center gap-2">
+                            <strong class="min-w-[100px]">Product SKU </strong>
+                             <strong>:</strong>
+                            <span>{{ $response['sku'] }}</span>
+                        </div>
 
-                        <li><strong>Category :</strong>{{ $response['category']['name'] }}</li>
+                        <div class="flex items-center gap-2">
+                            <strong class="min-w-[100px]">Category </strong>
+                             <strong>:</strong>
+                            <span>{{ $response['category']['name'] }}</span>
+                        </div>
 
-                        <li>
-                            <strong>Availability :</strong>
+                        <div class="flex items-center gap-2">
+                            <strong class="min-w-[100px]">Availability </strong>
+                             <strong>:</strong>
                             @if ($response['quantity'] > 0)
                                 <span class="product-stock">
                                     <img src="assets/images/icons/icon-13.png" alt="" /> In Stock
                                 </span>
                             @else
-                                <span class="" style="color: red">
+                                <span class="text-red-500">
                                     Out of stock
                                 </span>
                             @endif
-                        </li>
+                        </div>
 
                     </x-slot>
 
@@ -126,7 +139,7 @@
                                 </div>
                                 <div class="product__add-to-cart max-w-[300px]">
                                     @if ($response['quantity'] > 0)
-                                        <button class="eighth-button add-to-cart-btn"
+                                        <button class="eighth-button add-to-cart-btn h-full"
                                             data-product-slug="{{ $response['slug'] }}"
                                             data-product-sku="{{ $response['sku'] }}">
                                             {{ trans('messages.add_to_cart') }}
@@ -140,17 +153,7 @@
                         </div>
                     </x-slot>
 
-                    @if ($response['tags'] && !empty($response['tags']))
-                        <x-slot name="tags">
-                            <li>
-                                <strong>Tag :</strong>
-                                @foreach ($response['tags'] as $tag)
-                                    <a href="">{{ $tag }}</a>,
-                                @endforeach
-                            </li>
-                        </x-slot>
-                    @endif
-
+                   
                     <x-slot name="socialLinks">
                         <x-frontend.common.social-share :product="$response" />
                     </x-slot>
@@ -230,8 +233,6 @@
         </x-frontend.common.product-section>
     @endif
 
-
-    <x-frontend.common.whatsapp-subscribe />
 @endsection
 
 

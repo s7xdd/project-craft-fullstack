@@ -15,5 +15,4 @@
         </div>
     </section>
 
-    <x-frontend.common.whatsapp-subscribe />
 @endsection

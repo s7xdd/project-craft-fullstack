@@ -61,7 +61,7 @@
                     </nav>
                 </div>
                 <div class="menu-right-content">
-                    <ul class="option-list">
+                    <ul class="option-list !gap-0 md:!gap-5 !flex !flex-row !items-center !pl-0 md:!pl-[2rem]">
                         <li class="search-icon-mobile">
                             <a href="#" id="mobile-search-trigger" style="display: flex"><i
                                     class="icon-4"></i></a>
@@ -85,7 +85,7 @@
     <div class="sticky-header" style="background-color:{{ get_setting('header_base_color') }};">
         <div class="large-container">
             <div class="outer-box">
-                <div class="search-inner">
+                <div class="search-inner !mt-3">
                     <form action="{{ route('products.index') }}" method="get">
                         <div class="form-group">
                             <input type="search" name="search" placeholder="Search Products"
