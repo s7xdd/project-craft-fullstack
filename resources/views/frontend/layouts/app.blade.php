@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/lineicons-regular.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/icon-font.min.css') }}">
     <link href="{{ asset('assets/css/custom-style.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/svg" href="{{ uploaded_asset(get_setting('site_icon')) }}">
 
     <link href="{{ asset('dist/assets/app-97de3ed1.css') }}" rel="stylesheet">
     <link href="{{ asset('dist/assets/app-afc193cb.css') }}" rel="stylesheet">
@@ -282,7 +283,7 @@
         }
 
         /* Ensure proper spacing from footer */
-        .whatsapp-section + footer {
+        .whatsapp-section+footer {
             margin-top: 0;
         }
 
