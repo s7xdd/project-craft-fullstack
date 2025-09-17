@@ -466,7 +466,13 @@ class CheckoutController
 
     public function success($order_id)
     {
-        return view('frontend.order_success');
+        $order = Order::with(['orderDetails.product', 'orderDetails.product_stock'])->find($order_id);
+        
+        if (!$order) {
+            return redirect()->route('home')->with('error', 'Order not found');
+        }
+        
+        return view('frontend.order_success', compact('order'));
     }
 
 
