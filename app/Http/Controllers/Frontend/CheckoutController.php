@@ -467,11 +467,11 @@ class CheckoutController
     public function success($order_id)
     {
         $order = Order::with(['orderDetails.product', 'orderDetails.product_stock'])->find($order_id);
-        
+
         if (!$order) {
             return redirect()->route('home')->with('error', 'Order not found');
         }
-        
+
         return view('frontend.order_success', compact('order'));
     }
 
@@ -630,7 +630,7 @@ class CheckoutController
 
                     $product_stock = ProductStock::where('product_id', $od->product_id)->first();
                     if ($product_stock) {
-                        $product_stock->qty -= ($od->quantity >= $product_stock->qty) ? 0 : ($product_stock->qty - $od->quantity);
+                        $product_stock->qty = max(0, $product_stock->qty - $od->quantity);
                         $product_stock->save();
                     }
                 }
