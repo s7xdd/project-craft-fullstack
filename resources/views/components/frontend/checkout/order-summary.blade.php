@@ -80,10 +80,6 @@
             <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['total'] }}</h4>
         </div>
 
-        <div class="!mb-10">
-            <x-frontend.cart.coupon :response="$response" />
-        </div>
-
         {{-- <div class="payment-option">
             <h3>Payment Methods</h3>
             <ul class="other-payment !pl-0">
