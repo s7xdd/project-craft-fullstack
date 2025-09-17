@@ -30,7 +30,7 @@ class InvoiceController extends Controller
             'direction' => $direction,
             'text_align' => $text_align,
             'not_text_align' => $not_text_align,
-            'imagePath' => asset('/admin_assets/assets/img/logo.png')
+            'imagePath' => asset('assets/images/Black-logo.png')
         ]);
         
         return $pdf->download('order-' . $order->code . '.pdf');
