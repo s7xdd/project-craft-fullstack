@@ -67,6 +67,10 @@
                                 {{ $response['summary']['total'] }}</div>
                         </div>
 
+                        <div class="!mb-10" style="margin-top: 40px">
+                            <x-frontend.cart.coupon :response="$response" />
+                        </div>
+
                     </x-slot>
 
                     <x-slot name="checkoutButton">
