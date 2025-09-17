@@ -59,7 +59,7 @@ Route::get('/testimonials', [TestimonialController::class, 'index'])->name('test
 Route::get('/testimonials/{id}', [TestimonialController::class, 'show'])->name('testimonials.show');
 
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
-Route::post('checkout.process', [CheckoutController::class, 'placeOrder'])->name('checkout.process');
+Route::post('checkout.process', [CheckoutController::class, 'processOrder'])->name('checkout.process');
 Route::post('checkout.whatsapp', [CheckoutController::class, 'redirectToWhatsApp'])->name('checkout.whatsapp');
 
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLink'])->name('password.sendResetLink');
@@ -70,8 +70,8 @@ Route::post('/password/reset', [ForgotPasswordController::class, 'resetPassword'
 Route::get('/order/success/{order_id}', [CheckoutController::class, 'success'])->name('order.success');
 Route::get('/order/failed', [CheckoutController::class, 'failed'])->name('order.failed');
 
-Route::post('/razorpay-success', [CheckoutController::class, 'razorpaySuccess'])->name('razorpay.success');
-Route::post('/razorpay-failed', [CheckoutController::class, 'razorpayFailed'])->name('razorpay.failed');
+Route::get('/razorpay-success', [CheckoutController::class, 'razorpaySuccess'])->name('razorpay.success');
+Route::get('/razorpay-failed', [CheckoutController::class, 'razorpayFailed'])->name('razorpay.failed');
 
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 

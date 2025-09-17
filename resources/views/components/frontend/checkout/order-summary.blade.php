@@ -64,7 +64,8 @@
             @if ($response['summary']['coupon_applied'] == 1)
                 <li>
                     <h4><span class="!text-[16px]">Coupon Discount</span></h4>
-                    <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['coupon_discount'] }}</h4>
+                    <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }}
+                        {{ $response['summary']['coupon_discount'] }}</h4>
                 </li>
             @endif
 
@@ -79,23 +80,22 @@
             <h4 class="!text-[16px]">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['total'] }}</h4>
         </div>
 
-        {{-- <div class="!mb-10">
+        <div class="!mb-10">
             <x-frontend.cart.coupon :response="$response" />
-        </div> --}}
-
+        </div>
 
         {{-- <div class="payment-option">
-            <h3>Payment Method</h3>
+            <h3>Payment Methods</h3>
             <ul class="other-payment !pl-0">
                 <li>
                     <div class="check-box mb_12">
-                        <input class="check" type="radio" id="payment1" name="payment-method" value="card">
-                        <label for="payment1">Credit/Debit Cards or Paypal</label>
+                        <input class="check" type="radio" id="payment1" name="payment_method" value="card">
+                        <label for="payment1">Credit/Debit Cards</label>
                     </div>
                 </li>
                 <li>
                     <div class="check-box mb_12">
-                        <input class="check" type="radio" id="payment3" name="payment-method" value="cod"
+                        <input class="check" type="radio" id="payment3" name="payment_method" value="cod"
                             checked>
                         <label for="payment3">Cash on Delivery</label>
                     </div>

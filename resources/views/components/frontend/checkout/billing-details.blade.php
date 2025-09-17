@@ -2,7 +2,7 @@
 <div class="billing-content mr_30 !bg-white p-3 rounded-md">
     <h3>Billing Details</h3>
     <div class="form-inner">
-        <form id="checkoutForm" action="{{ route('checkout.whatsapp') }}" method="POST">
+        <form id="checkoutForm" action="{{ route('checkout.process') }}" method="POST">
             @csrf
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 field-column">
@@ -59,14 +59,6 @@
                         @endif
                     </div>
                 </div>
-                {{-- <div class="col-lg-12 col-md-12 col-sm-12 field-column">
-                    <div class="form-group">
-                        <div class="check-box-two">
-                            <input class="check" type="checkbox" id="checkbox2" name="same_as_billing" @if(old('same_as_billing') == 'on') checked @endif>
-                            <label for="checkbox2">Ship to a different address</label>
-                        </div>
-                    </div>
-                </div> --}}
             </div>
             
             <div class="shipping-address-fields" id="shippingAddressFields">
@@ -112,7 +104,8 @@
                 </div>
             </div>
             
-            <input type="hidden" name="payment_method" id="payment_method" value="cod">
+            <input type="hidden" name="payment_method" id="payment_method" value="razorpay">
+            {{-- <input type="hidden" name="payment_method" id="payment_method" value="cod"> --}}
         </form>
     </div>
 </div>

@@ -3,7 +3,7 @@
 @section('content')
     <x-frontend.common.page-title title="Order History" homeLink="/" />
 
-    <div class="!px-10">
+    <div class="!px-10 min-h-[80vh]">
         <x-frontend.account.account-section>
             <x-slot name="orderIdFilter">
                 <x-frontend.account.order-id-filter placeholder="Enter your Email ID" onclick="filterOrders()"
@@ -11,21 +11,66 @@
             </x-slot>
 
             <div id="orderResults">
-                @if (isset($orderList) && count($orderList) > 0)
+                @if (isset($orderList) && $orderList->count() > 0)
                     @foreach ($orderList as $order)
-                        @if ($order->orderDetails && count($order->orderDetails) > 0)
-                            @php
-                                $firstItem = $order->orderDetails->first();
-                                $product = $firstItem->product;
-                            @endphp
-                            <x-frontend.account.history-item orderId="{{ $order->code }}"
-                                image="{{ $product ? get_product_image($product->thumbnail_img, '100') : 'assets/images/resource/history-1.png' }}"
-                                alt="{{ $product->name ?? 'Product' }}"
-                                link="{{ $product ? route('product-detail', ['slug' => $product->slug, 'sku' => $firstItem->product_stock->sku]) : '#' }}"
-                                productName="{{ $product->name ?? 'Product' }}"
-                                price="{{ env('DEFAULT_CURRENCY') }} {{ $order->grand_total }}"
-                                status="{{ ucfirst(str_replace('_', ' ', $order->delivery_status)) }}" />
-                        @endif
+                        <div class="order-summary border p-4 mb-8 rounded-lg shadow-sm">
+                            <h3 class="text-lg font-semibold mb-2">
+                                Order ID: {{ $order->code }} - <span
+                                    class="font-normal">{{ ucfirst(str_replace('_', ' ', $order->delivery_status)) }}</span>
+                            </h3>
+                            <p>Placed on: {{ $order->created_at->format('d M Y, H:i') }}</p>
+                            <p>Payment Type: {{ ucfirst($order->payment_type) }}</p>
+                            <p>Coupon: {{ $order->coupon_code ?? 'None' }}</p>
+
+                            <table class="w-full mt-4 border-collapse border border-gray-300">
+                                <thead>
+                                    <tr class="bg-gray-100">
+                                        <th class="border border-gray-300 p-2 text-left">Product</th>
+                                        <th class="border border-gray-300 p-2 text-left">SKU</th>
+                                        <th class="border border-gray-300 p-2 text-right">Price</th>
+                                        <th class="border border-gray-300 p-2 text-right">Quantity</th>
+                                        <th class="border border-gray-300 p-2 text-right">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $subTotal = 0;
+                                    @endphp
+                                    @foreach ($order->orderDetails as $item)
+                                        @php
+                                            $productName = $item->product ? $item->product->name : 'Product';
+                                            $sku = $item->product_stock ? $item->product_stock->sku : 'N/A';
+                                            $price = $item->offer_price ?? ($item->price ?? 0);
+                                            $quantity = $item->quantity ?? 0;
+                                            $itemTotal = $price * $quantity;
+                                            $subTotal += $itemTotal;
+                                        @endphp
+                                        <tr>
+                                            <td class="border border-gray-300 p-2">{{ $productName }}</td>
+                                            <td class="border border-gray-300 p-2">{{ $sku }}</td>
+                                            <td class="border border-gray-300 p-2 text-right">{{ env('DEFAULT_CURRENCY') }}
+                                                {{ number_format($price, 2) }}</td>
+                                            <td class="border border-gray-300 p-2 text-right">{{ $quantity }}</td>
+                                            <td class="border border-gray-300 p-2 text-right">{{ env('DEFAULT_CURRENCY') }}
+                                                {{ number_format($itemTotal, 2) }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            <div class="mt-4 text-right space-y-1">
+                                <p>Subtotal: {{ env('DEFAULT_CURRENCY') }} {{ number_format($subTotal, 2) }}</p>
+                                <p>Tax: {{ env('DEFAULT_CURRENCY') }} {{ number_format($order->tax ?? 0, 2) }}</p>
+                                <p>Shipping Cost: {{ env('DEFAULT_CURRENCY') }}
+                                    {{ number_format($order->shipping_cost ?? 0, 2) }}</p>
+                                @if ($order->coupon_code)
+                                    <p>Coupon Discount: - {{ env('DEFAULT_CURRENCY') }}
+                                        {{ number_format($order->coupon_discount ?? 0, 2) }}</p>
+                                @endif
+                                <p class="font-semibold">Grand Total: {{ env('DEFAULT_CURRENCY') }}
+                                    {{ number_format($order->grand_total, 2) }}</p>
+                            </div>
+                        </div>
                     @endforeach
                 @elseif(isset($email) && $email != '')
                     <div class="text-center py-10">
@@ -39,7 +84,6 @@
             </div>
         </x-frontend.account.account-section>
     </div>
-
 @endsection
 
 @section('script')

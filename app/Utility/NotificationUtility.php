@@ -34,7 +34,7 @@ class NotificationUtility
 
             if (env('MAIL_ADMIN')) {
                 $array['view'] = 'emails.invoice';
-                $array['subject'] = translate('A new order has been placed') . ' - ' . $order->code;
+                $array['subject'] = ('A new order has been placed') . ' - ' . $order->code;
                 $array['from'] = env('MAIL_FROM_ADDRESS');
                 $array['order'] = $order;
                 Mail::to(env('MAIL_ADMIN'))->queue(new InvoiceEmailManager($array));
@@ -63,11 +63,10 @@ class NotificationUtility
     }
 
     public static function sendFirebaseNotification($req)
-    {        
+    {
         $url = 'https://fcm.googleapis.com/fcm/send';
 
-        $fields = array
-        (
+        $fields = array(
             'to' => $req->device_token,
             'notification' => [
                 'body' => $req->text,
