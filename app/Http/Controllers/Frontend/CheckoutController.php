@@ -653,6 +653,7 @@ class CheckoutController
             // NotificationUtility::sendNotification($order, 'created');
         } else {
             reduceProductQuantity($orderData['product_quantities']);
+            // NotificationUtility::sendOrderPlacedNotification($order);
         }
 
         $user_id = auth()->user() ? auth()->user()->id : null;

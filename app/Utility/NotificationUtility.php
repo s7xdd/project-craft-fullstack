@@ -10,25 +10,24 @@ use Mail;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\OrderNotification;
 use App\Models\FirebaseNotification;
+use Illuminate\Support\Facades\Mail as FacadesMail;
 
 class NotificationUtility
 {
     public static function sendOrderPlacedNotification($order, $request = null)
     {
-        //sends email to customer with the invoice pdf attached
-
         $array['view'] = 'emails.invoice';
-        $array['subject'] = translate('Thank you for your order ') . ' - ' . $order->code;
+        $array['subject'] = 'Thank you for your order ' . ' - ' . $order->code;
         $array['from'] = env('MAIL_FROM_ADDRESS');
         $array['order'] = $order;
 
         try {
             if ($order->user_id !== null) {
-                Mail::to($order->user->email)->queue(new InvoiceEmailManager($array));
+                FacadesMail::to($order->user->email)->queue(new InvoiceEmailManager($array));
             } else {
-                $address = json_decode($order->shipping_address);
-                if (isset($address->email)) {
-                    Mail::to($address->email)->queue(new InvoiceEmailManager($array));
+                $email = $order->email;
+                if (isset($email)) {
+                    FacadesMail::to($email)->queue(new InvoiceEmailManager($array));
                 }
             }
 
@@ -37,7 +36,7 @@ class NotificationUtility
                 $array['subject'] = ('A new order has been placed') . ' - ' . $order->code;
                 $array['from'] = env('MAIL_FROM_ADDRESS');
                 $array['order'] = $order;
-                Mail::to(env('MAIL_ADMIN'))->queue(new InvoiceEmailManager($array));
+                FacadesMail::to(env('MAIL_ADMIN'))->queue(new InvoiceEmailManager($array));
             }
         } catch (\Exception $e) {
         }

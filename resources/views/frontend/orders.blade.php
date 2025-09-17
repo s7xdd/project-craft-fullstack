@@ -11,7 +11,7 @@
             </x-slot>
 
             <div id="orderResults">
-                @if (isset($orderList) && $orderList->count() > 0)
+                @if (isset($orderList) && count($orderList) > 0)
                     @foreach ($orderList as $order)
                         <div class="order-summary border p-4 mb-8 rounded-lg shadow-sm">
                             <h3 class="text-lg font-semibold mb-2">
