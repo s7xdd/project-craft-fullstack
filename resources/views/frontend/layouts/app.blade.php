@@ -361,7 +361,7 @@
                                     <p class="cart-item__details">
                                         <a href="" class="cart-item__title">${product.product.name}</a>
                                         ${attributeHTML}
-                                        <span class="cart-ietm__price">${product.quantity} <i>x</i> AED ${product.main_price}</span>
+                                        <span class="cart-ietm__price">${product.quantity} <i>x</i> INR ${product.main_price}</span>
                                     </p>
                                     <div class="cart-item__quantity">
                                        

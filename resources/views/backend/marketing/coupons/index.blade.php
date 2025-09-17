@@ -78,7 +78,7 @@
                         @endif</td>
                         
                         <td class="text-center">
-                            {{ $coupon->discount }} ({{ ($coupon->discount_type == "percent") ? '%':'AED'}})
+                            {{ $coupon->discount }} ({{ ($coupon->discount_type == "percent") ? '%':'INR'}})
                         </td>
                         <td class="text-center">{{ ($coupon->one_time_use == 1) ? trans('messages.yes') : trans('messages.no') }}</td>
                         <td class="text-center">{{ date('d-m-Y', $coupon->start_date) }}</td>

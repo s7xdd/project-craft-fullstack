@@ -305,7 +305,7 @@ class ProductController extends Controller
                         $offertag = $product->discount . '% OFF';
                     } elseif ($product->discount_type == 'amount') {
                         $discountPrice = $productOrgPrice - $product->discount;
-                        $offertag = 'AED ' . $product->discount . ' OFF';
+                        $offertag =  $product->discount . ' OFF';
                     }
                 }
 
@@ -612,7 +612,7 @@ class ProductController extends Controller
                         $offertag       = $product->discount . '% OFF';
                     } elseif ($product->discount_type == 'amount') {
                         $discountPrice  = $productOrgPrice - $product->discount;
-                        $offertag       = 'AED ' . $product->discount . ' OFF';
+                        $offertag       =  $product->discount . ' OFF';
                     }
                 }
                 $product_stock->price       = $productOrgPrice;
@@ -683,7 +683,7 @@ class ProductController extends Controller
                         $offertag = $product->discount . '% OFF';
                     } elseif ($product->discount_type == 'amount') {
                         $discountPrice = $productOrgPrice - $product->discount;
-                        $offertag = 'AED ' . $product->discount . ' OFF';
+                        $offertag =  $product->discount . ' OFF';
                     }
                 }
 
@@ -1079,7 +1079,7 @@ class ProductController extends Controller
                             $offertag = $proSk->product->discount . '% OFF';
                         } elseif ($proSk->product->discount_type == 'amount') {
                             $discountPrice = $productOrgPrice - $proSk->product->discount;
-                            $offertag = 'AED ' . $proSk->product->discount . ' OFF';
+                            $offertag =  $proSk->product->discount . ' OFF';
                         }
                     }
 

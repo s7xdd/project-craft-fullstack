@@ -508,7 +508,7 @@ function getProductOfferPrice($product)
             $offertag = $product->discount . '% OFF';
         } elseif ($product->discount_type == 'amount') {
             $discountPrice -= $product->discount;
-            $offertag = 'AED ' . $product->discount . ' OFF';
+            $offertag = $product->discount . ' OFF';
         }
     }
 
@@ -540,7 +540,7 @@ function getProductPrice($productStock)
             $offertag = $productStock->product->discount . '% OFF';
         } elseif ($productStock->product->discount_type == 'amount') {
             $discountPrice -= $productStock->product->discount;
-            $offertag = 'AED ' . $productStock->product->discount . ' OFF';
+            $offertag = $productStock->product->discount . ' OFF';
         }
     }
 
