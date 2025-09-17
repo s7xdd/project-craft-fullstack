@@ -7,8 +7,10 @@
             <input type="hidden" name="coupon_action" id="coupon_action"
                 value="@if ($response['summary']['coupon_applied'] == 1) remove @else add @endif" />
             <button type="submit"
-                class="!bg-black text-white px-4 py-2 !rounded transition-colors flex items-center space-x-1">
-                <i class="icon-18"></i>
+                class="!bg-black text-white px-4 py-2 !rounded transition-colors flex items-center space-x-1">\
+                @if ($response['summary']['coupon_applied'] !== 1)
+                    <i class="icon-18"></i>
+                @endif
                 <span>
                     @if ($response['summary']['coupon_applied'] == 1)
                         {{ trans('messages.remove') }}
