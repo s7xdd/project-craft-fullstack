@@ -20,7 +20,7 @@
         <div class="sec-title centred mb_50">
             <h2>Contact <span>Information</span></h2>
         </div>
-        <div class="row clearfix">
+        <div class="row clearfix !text-center">
             @foreach($contacts as $contact)
             <div class="col-xl-4 col-lg-4 col-md-12 info-column">
                 <div class="info-block-one">

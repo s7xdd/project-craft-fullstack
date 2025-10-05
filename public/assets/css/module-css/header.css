@@ -735,7 +735,7 @@
 .mobile-menu-visible .mobile-menu .menu-backdrop{
   opacity: 0.70;
   visibility: visible;
-  right: 100%;
+  left: 100%;
   -webkit-transition: all .8s ease-out 0s;
   -o-transition: all .8s ease-out 0s
 }
@@ -756,7 +756,7 @@
   border-radius: 0px;
   -webkit-transform: translateX(100%);
   -ms-transform: translateX(100%);
-  transform: translateX(100%);
+  transform: translateX(-100%);
   transition: all 900ms ease !important;
 }
 

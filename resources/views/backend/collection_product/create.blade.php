@@ -55,14 +55,20 @@
                         </div>
                     </div>
 
-
                     <div class="form-group row">
+                        <label class="col-lg-3 col-from-label">Title</label>
+                        <div class="col-lg-9">
+                            <textarea class="aiz-text-editor" name="collectiontitle">{{ $collection->collectiontitle ?? old('collectiontitle') }}</textarea>
+                        </div>
+                    </div>
+
+                    {{-- <div class="form-group row">
                         <label class="col-lg-3 col-from-label" for="collectiontitle">Title</label>
                         <div class="col-lg-9">
                             <input type="text" name="collectiontitle" class="form-control"
                                 value="{{ $collection->collectiontitle ?? old('collectiontitle') }}" required>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="form-group row">
                         <label class="col-lg-3 col-from-label" for="collectiondescription">Description</label>

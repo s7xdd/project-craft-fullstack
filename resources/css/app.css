@@ -17,3 +17,84 @@
 color: black !important;
 }
 
+
+*, *::before, *::after {
+  box-sizing: border-box;
+/*   outline: 1px solid green; */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.product-image {
+  display: none;
+}
+
+.image-list li {
+  margin: 0;
+}
+
+.product-image img, .image-list img {
+  width: 100%;
+}
+
+.product-image {
+  display: block;
+}
+.product-image img.active {
+  display: block;
+  margin: 0 0 0.75rem 0;
+}
+
+.image-list {
+  display: flex;
+  overflow: hidden;
+}
+.image-list li {
+  margin: 0 0.75rem 0 0;
+  flex-basis: 100%;
+}
+.image-list li:last-child {
+  margin: 0;
+}
+.image-list img {
+  width: 100%;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+.image-list img:hover {
+  opacity: 0.7;
+}
+
+figure.containerZoom {
+    background-position: 50% 50%;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    cursor: zoom-in;
+    margin: 0
+}
+
+figure.containerZoom img {
+    transition: opacity .5s;
+    display: block;
+    width: 100%
+}
+
+figure.containerZoom.active img {
+    opacity: 0
+}
+
+.product-gallery{
+  margin-bottom: 20px;
+}
+

@@ -83,7 +83,7 @@
     @if ($topCollections->isNotEmpty())
         <div class="!pb-20 !pt-20">
             @foreach ($topCollections as $collectionKey => $collection)
-                <x-frontend.common.product-section title="{{ $collection['collectiontitle'] }}">
+                <x-frontend.common.product-section :title="$collection['collectiontitle']">
                     <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
                         <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
                             @foreach ($collection['products'] as $product)
@@ -129,7 +129,7 @@
     @if ($middleCollections->isNotEmpty())
         <div class="">
             @foreach ($middleCollections as $collectionKey => $collection)
-                <x-frontend.common.product-section title="{{ $collection['collectiontitle'] }}">
+                <x-frontend.common.product-section :title="$collection['collectiontitle']">
                     <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
                         <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
                             @foreach ($collection['products'] as $product)

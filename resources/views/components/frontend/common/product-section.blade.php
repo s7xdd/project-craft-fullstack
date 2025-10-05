@@ -4,7 +4,7 @@
       <div class="title-box flex items-center justify-center mb-[60px]" >
         <div class="sec-title relative block z-[21]">
           <h2 class="relative block text-[28px] leading-[54px] text-center !mb-10">
-            {{ $title ?? "" }}
+            {!! $title ?? "" !!}
           </h2>
         </div>
       </div>

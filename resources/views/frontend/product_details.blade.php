@@ -53,21 +53,21 @@
 
                         <div class="flex items-center gap-2">
                             <strong class="min-w-[100px]">Product SKU </strong>
-                             <strong>:</strong>
+                            <strong>:</strong>
                             <span>{{ $response['sku'] }}</span>
                         </div>
 
                         <div class="flex items-center gap-2">
                             <strong class="min-w-[100px]">Category </strong>
-                             <strong>:</strong>
+                            <strong>:</strong>
                             <span>{{ $response['category']['name'] }}</span>
                         </div>
 
                         <div class="flex items-center gap-2">
                             <strong class="min-w-[100px]">Availability </strong>
-                             <strong>:</strong>
+                            <strong>:</strong>
                             @if ($response['quantity'] > 0)
-                                <span class="product-stock">
+                                <span class="product-stock flex gap-2">
                                     <img src="assets/images/icons/icon-13.png" alt="" /> In Stock
                                 </span>
                             @else
@@ -78,6 +78,22 @@
                         </div>
 
                     </x-slot>
+
+                    @if (isset($response['description']) && $response['description'] . trim('') != '')
+                        <x-slot name="productDescription">
+                            <x-frontend.product-detail.product-description>
+                                <x-slot name="tabs">
+                                    <x-frontend.product-detail.tab-button class="active-btn text-black" tabId="tab-1"
+                                        title="Description" />
+                                </x-slot>
+
+                                <x-frontend.product-detail.description-content>
+                                    {!! $response['description'] !!}
+                                </x-frontend.product-detail.description-content>
+
+                            </x-frontend.product-detail.product-description>
+                        </x-slot>
+                    @endif
 
                     <x-slot name="colorOptions">
                         <div class="product-attributes product__options">
@@ -153,7 +169,7 @@
                         </div>
                     </x-slot>
 
-                   
+
                     <x-slot name="socialLinks">
                         <x-frontend.common.social-share :product="$response" />
                     </x-slot>
@@ -163,7 +179,7 @@
 
         </x-slot>
 
-        @if (isset($response['description']) && $response['description'] . trim('') != '')
+        {{-- @if (isset($response['description']) && $response['description'] . trim('') != '')
             <x-slot name="productDescription">
                 <x-frontend.product-detail.product-description>
                     <x-slot name="tabs">
@@ -177,13 +193,31 @@
 
                 </x-frontend.product-detail.product-description>
             </x-slot>
-        @endif
+        @endif --}}
 
-        {{-- image-slider --}}
+        <div class="container ">
+            <div class="product-gallery">
+                <div
+                    class="product-image min-h-[300px] max-h-[300px] min-w-[300px] max-w-[300px] md:!min-h-[700px] md:!min-w-[700px] md:!max-h-[700px] md:!max-w-[700px]">
+                    @if (!empty($response['photos']))
+                        <img class="active" src="{{ $response['photos'][0] }}" alt="Product Image" id="imageZoom">
+                    @endif
+                </div>
+            </div>
 
-        <div id="product-swiper" data-images='@json($response['photos'] ?? ['default-product.jpg'])'
-            class="w-full md:w-1/2 relative flex flex-col justify-center items-center space-y-2 !min-h-[400px] md:!h-[700px]">
+            <ul class="image-list">
+                @foreach ($response['photos'] as $photo)
+                    <li class="image-item max-h-[100px] max-w-[100px]">
+                        <img src="{{ $photo }}" alt="Product Image">
+                    </li>
+                @endforeach
+            </ul>
         </div>
+
+
+        {{-- <div id="product-swiper" data-images='@json($response['photos'] ?? ['default-product.jpg'])'
+            class="w-full md:w-1/2 relative flex flex-col justify-center items-center space-y-2 !min-h-[400px] md:!h-[1000px]">
+        </div> --}}
 
 
         {{-- <x-frontend.product-detail.product-slider-item image="{{ $images[0] ?? asset('assets/images/product-1.webp') }}"

@@ -1,7 +1,10 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <x-frontend.common.page-title title="{{ capitalizeFirstLetter(request('category', 'Shop')) }}" homeLink="/" />
+    {{-- <x-frontend.common.page-title title="{{ capitalizeFirstLetter(request('category', 'Shop')) }}" homeLink="/" /> --}}
+    <div class="text-center font-bold text-6xl py-5">
+        {{ capitalizeFirstLetter(request('category', 'Shop')) }}
+    </div>
 
     <form action="" class="mt-20" id="productfilters" method="GET">
         <div class="row">

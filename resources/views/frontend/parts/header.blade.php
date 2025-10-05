@@ -19,18 +19,12 @@
     </div>
     <div class="header-lower p_relative" style="background-color:{{ get_setting('header_base_color') }};">
         <div class="large-container">
-            <div class="outer-box" style="padding-top: 16px; padding-bottom: 16px">
-                <div class="search-inner">
-                    <form action="{{ route('products.index') }}" method="get">
-                        <div class="form-group">
-                            <input type="search" name="search" placeholder="Search Products"
-                                value="{{ request()->get('search') }}" required />
-                            <button type="submit">
-                                <i class="icon-4"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
+            <div class="outer-box" >
+
+                <figure class="navbar-logo pt-1 !hidden xl:!flex">
+                    <a href="/"><img src="{{ uploaded_asset(get_setting('site_icon')) }}" alt="" /></a>
+                </figure>
+
                 <div class="menu-area">
                     <div class="mobile-nav-toggler !rounded-md">
                         <i class="icon-bar"></i>
@@ -46,12 +40,6 @@
                     <nav class="main-menu navbar-expand-md navbar-light clearfix">
                         <div class="" id="navbarSupportedContent">
                             <ul class="navigation clearfix">
-                                <li class="logo-box">
-                                    <figure class="navbar-logo">
-                                        <a href="/"><img src="{{ uploaded_asset(get_setting('site_icon')) }}"
-                                                alt="" /></a>
-                                    </figure>
-                                </li>
 
                                 @foreach ($menu_items as $item)
                                     @include('frontend.parts.menu-item', ['item' => $item])
@@ -61,6 +49,19 @@
                     </nav>
                 </div>
                 <div class="menu-right-content">
+
+                    <div class="search-inner">
+                        <form action="{{ route('products.index') }}" method="get" class="pt-3">
+                            <div class="form-group">
+                                <input type="search" name="search" placeholder="Search Products"
+                                    value="{{ request()->get('search') }}" required />
+                                <button type="submit">
+                                    <i class="icon-4"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
                     <ul class="option-list !gap-0 md:!gap-5 !flex !flex-row !items-center !pl-0 md:!pl-[2rem]">
                         <li class="search-icon-mobile">
                             <a href="#" id="mobile-search-trigger" style="display: flex"><i
@@ -85,17 +86,7 @@
     <div class="sticky-header" style="background-color:{{ get_setting('header_base_color') }};">
         <div class="large-container">
             <div class="outer-box">
-                <div class="search-inner !mt-3">
-                    <form action="{{ route('products.index') }}" method="get">
-                        <div class="form-group">
-                            <input type="search" name="search" placeholder="Search Products"
-                                value="{{ request()->get('search') }}" required />
-                            <button type="submit">
-                                <i class="icon-4"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
+
                 <div class="menu-area">
                     <nav class="main-menu clearfix">
                         <ul class="navigation clearfix">
@@ -108,6 +99,18 @@
                     </nav>
                 </div>
                 <div class="menu-right-content">
+                    <div class="search-inner !mt-3">
+                        <form action="{{ route('products.index') }}" method="get">
+                            <div class="form-group">
+                                <input type="search" name="search" placeholder="Search Products"
+                                    value="{{ request()->get('search') }}" required />
+                                <button type="submit">
+                                    <i class="icon-4"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
                     <ul class="option-list">
                         <li class="shop-cart">
                             <button type="button">

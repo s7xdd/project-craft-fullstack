@@ -37,7 +37,7 @@
                     @foreach ($collections as $key => $collection)
                         <tr>
                             <td>{{ $key + 1 + ($collections->currentPage() - 1) * $collections->perPage() }}</td>
-                            <td>{{ $collection->collectiontitle }}</td>
+                            <td>{!! $collection->collectiontitle !!}</td>
                             <td>
                                 @if ($collection->collectionimage1)
                                     <img src="{{ asset('storage/' . $collection->collectionimage1) }}" width="60">

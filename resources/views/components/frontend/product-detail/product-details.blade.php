@@ -8,16 +8,25 @@
         @endif
     </h3>
 
-    <div class="text-box mb_30">
-        {{ $description }}
-    </div>
+    {{-- @if (isset($description) && trim(strip_tags($description)) != '') --}}
+        <div class="text-box mb_30">
+            {!! $description ?? "" !!}
+        </div>
+    {{-- @endif --}}
+
     <ul class="discription-box mb_30 clearfix">
-        {{ $details }}
+        {{ $details ?? '' }}
     </ul>
     {!! $colorOptions !!}
-    {{ $cartOptions ?? '' }}
     <ul class="other-option clearfix !pl-0">
         {{ $tags ?? '' }}
         {{ $socialLinks ?? '' }}
     </ul>
+
+    <div>
+        {{ $productDescription ?? '' }}
+    </div>
+
+    {{ $cartOptions ?? '' }}
+
 </div>
