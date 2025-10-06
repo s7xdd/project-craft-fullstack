@@ -27,7 +27,7 @@
     }
 @endphp
 
-<a href="{{ $href }}">
+<a href="{!! $href !!}">
     <div style="background-color: {{ get_setting('base_hov_color') }};"
         class="w-full max-w-[350px] p-2 md:max-w-md mx-auto h-full border border-gray-200 rounded-xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_2px_-2px_rgba(0,0,0,0.1)] cursor-pointer hover:shadow-lg transition-shadow">
         <div
