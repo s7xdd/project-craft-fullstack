@@ -2,7 +2,7 @@
 
 @section('content')
     {{-- <x-frontend.common.page-title title="{{ capitalizeFirstLetter(request('category', 'Shop')) }}" homeLink="/" /> --}}
-    <div class="text-center font-bold text-6xl py-5">
+    <div class="text-center font-bold text-6xl py-4">
         {{ capitalizeFirstLetter(request('category', 'Shop')) }}
     </div>
 
