@@ -1,33 +1,78 @@
-<div class="shop-block-one"
-    style="background-color: {{ get_setting('base_hov_color') }}; border-radius: 20px; max-width: 280px;">
-    <div
-        class="inner-box group relative block px-4 pt-4 pb-0 text-center transition-all duration-500 ease before:absolute before:border-r before:border-dashed before:border-gray-300 before:top-0 before:right-[-8px] before:h-full before:content-[''] ">
-        <div class="image-box relative block">
-            <figure class="image relative block max-w-[180px] sm:max-w-[120px] h-[160px] w-full mx-auto overflow-hidden">
-                <a href="{!! $link !!}">
-                    <img class="w-full transition-all duration-500 ease hover:scale-105 object-cover" src="{{ $image }}"
-                        alt="{{ $alt }}" />
-                </a>
-            </figure>
-        </div>
+@props([
+    'name' => '',
+    'image' => '',
+    'price' => 0,
+    'oldPrice' => null,
+    'off' => null,
+    'category' => null,
+    'link' => null,
+])
 
+@php
+    $href = $link;
+
+    $priceNum = is_numeric($price) ? (float) $price : 0;
+    $oldPriceNum = is_numeric($oldPrice) ? (float) $oldPrice : null;
+
+    $showOld = !empty($oldPriceNum) && $oldPriceNum > $priceNum;
+
+    $currency = env('DEFAULT_CURRENCY', '₹');
+
+    if ($off !== null && $off !== '') {
+        $offText = (string) $off;
+    } elseif ($showOld && $oldPriceNum > 0) {
+        $offText = number_format((1 - $priceNum / $oldPriceNum) * 100, 0);
+    } else {
+        $offText = null;
+    }
+@endphp
+
+<a href="{{ $href }}">
+    <div style="background-color: {{ get_setting('base_hov_color') }};"
+        class="w-full max-w-[350px] p-2 md:max-w-md mx-auto h-full border border-gray-200 rounded-xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_2px_-2px_rgba(0,0,0,0.1)] cursor-pointer hover:shadow-lg transition-shadow">
         <div
-            class="lower-content relative block bg-transparent !px-0 pt-3 pb-3 transition-all duration-500 ease group-hover:pb-[60px] group-hover:-mt-[50px] h-[125px]">
-            <span class="text relative block text-[8px] leading-4 mb-1 text-gray-500">{{ $category }}</span>
-            <h4 class="block text-xs leading-4 mb-1 !line-clamp-2">
-                <a class="inline-block text-[var(--title-color)] text-[10px] leading-4 h-[30px] overflow-hidden !line-clamp-2"
-                    href="{!! $link !!}">{!! $name !!}</a>
-            </h4>
-            <div class="price relative block text-[12px] leading-5 text-red-600 font-semibold mb-3">
-                @if (!empty($originalPrice) && floatval($originalPrice) > floatval($price))
-                    <del class="text-[10px] leading-4 text-gray-600 font-normal mr-2">
-                        {{ env('DEFAULT_CURRENCY') . ' ' . number_format((float) $originalPrice, 2) }}
-                    </del>
-                @endif
-                <span class="text-[11px] leading-4">
-                    {{ env('DEFAULT_CURRENCY') . ' ' . number_format((float) $price, 2) }}
-                </span>
+            class="flex flex-col items-center w-full h-fit gap-2 overflow-hidden relative text-left p-1 sm:p-2 md:p-3 lg:p-4">
+            <div class="flex items-center justify-center w-full">
+                <img src="{{ $image }}" alt="{{ $name }}" class="w-full h-auto rounded-lg object-cover"
+                    loading="eager" />
+            </div>
+
+            <div class="flex justify-start w-full">
+                <div class="flex flex-col flex-wrap w-full pt-2">
+                    @if ($category)
+                        <span class="text-[10px] sm:text-xs text-gray-500 mb-1">{{ $category }}</span>
+                    @endif
+
+                    <h3
+                        class="text-gray-800 font-medium !text-[14px] sm:!text-sm lg:!text-lg overflow-hidden text-ellipsis line-clamp-2">
+                        {!! $name !!}
+                    </h3>
+
+                    <div class="flex items-baseline gap-1 sm:gap-2 mt-1 mb-2 sm:mb-3 md:mb-5">
+                        <div
+                            class="!text-[14px] sm:!text-base md:!text-lg font-semibold text-gray-800 flex items-center gap-1">
+                            <span class="align-middle">{{ $currency }}</span>
+                            <span>{{ number_format($priceNum, 2) }}</span>
+                        </div>
+
+                        @if ($showOld)
+                            <div class="text-[14px] sm:text-sm text-slate-500 line-through">
+                                <span>{{ $currency }}</span>
+                                <span>{{ number_format($oldPriceNum, 2) }}</span>
+                            </div>
+                        @endif
+
+                        @if ($offText !== null)
+                            <div
+                                class="rounded-md text-emerald-600 font-bold tracking-wide px-1 text-[10px] sm:text-sm">
+                                <span>{{ $offText }}</span>
+                                <span>%OFF</span>
+                            </div>
+                        @endif
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
+</a>
