@@ -44,13 +44,13 @@
                     @endif
 
                     <h3
-                        class="text-gray-800 font-medium !text-[14px] sm:!text-sm lg:!text-lg overflow-hidden text-ellipsis line-clamp-2">
+                        class="text-gray-800 font-medium !text-[14px] sm:!text-sm lg:!text-md overflow-hidden text-ellipsis line-clamp-2 min-h-[50px]">
                         {!! $name !!}
                     </h3>
 
                     <div class="flex items-baseline gap-1 sm:gap-2 mt-1 mb-2 sm:mb-3 md:mb-5">
                         <div
-                            class="!text-[14px] sm:!text-base md:!text-lg font-semibold text-gray-800 flex items-center gap-1">
+                            class="!text-[14px] sm:!text-base md:!text-md font-semibold text-gray-800 flex items-center gap-1">
                             <span class="align-middle">{{ $currency }}</span>
                             <span>{{ number_format($priceNum, 2) }}</span>
                         </div>
