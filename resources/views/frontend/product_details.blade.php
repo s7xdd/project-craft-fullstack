@@ -168,7 +168,7 @@
               </div>
 
               <!-- Zoom Magnifier Window -->
-              <div id="image-zoom-window" class="fixed top-1/2 right-4 transform -translate-y-1/2 w-96 h-96 bg-white border-2 border-gray-300 rounded-lg shadow-lg overflow-hidden z-50 hidden">
+              <div id="image-zoom-window" class="fixed top-1/2 right-4 lg:right-[70px] transform -translate-y-1/2 w-96 h-96 lg:w-[600px] lg:h-[600px] bg-white border-2 border-gray-300 rounded-lg shadow-lg overflow-hidden z-50 hidden">
                   <div id="zoom-lens" class="w-full h-full bg-no-repeat bg-cover" style="background-image: url('');"></div>
               </div>
           </div>
