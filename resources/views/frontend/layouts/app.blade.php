@@ -19,9 +19,10 @@
 
     <link href="{{ asset('dist/assets/app-97de3ed1.css') }}" rel="stylesheet">
     <link href="{{ asset('dist/assets/app-afc193cb.css') }}" rel="stylesheet">
-    <script type="module" src="{{ asset('assets/js/app-f10b86b9.js') }}"></script>
+     <script type="module" src="{{ asset('assets/js/app-f10b86b9.js') }}"></script>
+     <script src="{{ asset('js/hero-carousel.js') }}"></script>
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GJB4R99EX9"></script>
+     <script async src="https://www.googletagmanager.com/gtag/js?id=G-GJB4R99EX9"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -32,6 +33,9 @@
 
         gtag('config', 'G-GJB4R99EX9');
     </script>
+
+    <!-- Embla Carousel CDN -->
+    <script src="https://unpkg.com/embla-carousel@latest/embla-carousel.umd.js"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
@@ -53,7 +57,7 @@
     <link href="{{ asset('assets/css/rtl.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/module-css/header.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/banner.css') }}" rel="stylesheet" />
+
     <link href="{{ asset('assets/css/module-css/shop.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/module-css/featured.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/module-css/category.css') }}" rel="stylesheet" />

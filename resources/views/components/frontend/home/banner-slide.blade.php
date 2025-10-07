@@ -1,21 +1,25 @@
-<a href="{!! $link !!}">
-    <div class="slide-item"
-        style="background-image: url('{{ $image }}'); background-size: cover; background-position: center; border-radius: 25px;">
-        {{-- <div class="bg-color-1" style="border-radius: 25px;" role="presentation" aria-hidden="true"></div> --}}
-        <div class="row align-items-center">
-            <div class="col-lg-6 col-md-12 col-sm-12 content-column !w-[80%]">
-                {{-- <div class="content-box">
-                <h2 style="color: white;">
+<div class="embla__slide flex-[0_0_100%] min-w-0 flex items-center justify-center">
+    <div class="text-center w-full">
+        <!-- <div class="flex items-center justify-center text-center">
+            @if($title)
+                <h1 class="bg-clip-text text-transparent h-auto bg-gradient-to-r from-red-500 to-yellow-400 text-[30px] md:text-[64px] lg:text-[80px] leading-[40px] md:leading-[52px] lg:leading-[60px] tracking-[2px] font-bold pb-7 whitespace-nowrap"
+                    aria-label="{!! $title !!}">
                     {!! $title !!}
-                </h2>
-                @if ($buttonText)
-                    <div class="btn-box">
-                        <a href="{!! $link !!}" class="theme-btn btn-one">{!! $buttonText !!}</a>
-                    </div>
-                @endif
-            </div> --}}
-            </div>
-            <div class="col-lg-6 col-md-12 col-sm-12"></div>
+                </h1>
+            @endif
+        </div> -->
+        <div class="relative text-center">
+            <a href="{!! $link !!}" class="inline" aria-label="{!! $title !!}">
+                <img src="{{ $image }}" alt="{!! $title !!}"
+                     class="w-full h-full object-cover align-middle rounded-[40px]" loading="eager" />
+            </a>
         </div>
+        <!-- @if ($buttonText)
+            <div class="mt-4">
+                <a href="{!! $link !!}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+                    {!! $buttonText !!}
+                </a>
+            </div>
+        @endif -->
     </div>
-</a>
+</div>
