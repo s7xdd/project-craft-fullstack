@@ -44,10 +44,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial setup
     updateThumbnails();
 
-    // Image Zoom Functionality
+    // Image Zoom Functionality (Desktop only)
     const zoomWindow = document.getElementById('image-zoom-window');
     const zoomLens = document.getElementById('zoom-lens');
-    if (zoomWindow && zoomLens) {
+    if (zoomWindow && zoomLens && window.innerWidth >= 768) { // Only enable on desktop (768px+)
         const zoomFactor = 2.5; // Magnification level (adjust as needed)
         let currentImageSrc = ''; // Track current image for zoom
 
