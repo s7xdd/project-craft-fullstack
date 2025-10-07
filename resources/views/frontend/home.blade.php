@@ -66,15 +66,13 @@
 
 
     @if ($page->getTranslation('image1', $lang) && is_array(json_decode($page->getTranslation('image1', $lang))))
-        <x-frontend.home.highlights>
-            <div class="flex justify-center flex-wrap">
-                @foreach (json_decode($page->getTranslation('image1', $lang), true) as $sectionData)
-                    <x-frontend.home.highlight-item
-                        icon="{{ isset($sectionData['icon'][0]) ? $sectionData['icon'][0]['url'] ?? '' : '' }}"
-                        text="{{ $sectionData['title'] ?? '' }}" />
-                @endforeach
-            </div>
-        </x-frontend.home.highlights>
+         <x-frontend.home.highlights>
+             @foreach (json_decode($page->getTranslation('image1', $lang), true) as $sectionData)
+                 <x-frontend.home.highlight-item
+                     icon="{{ isset($sectionData['icon'][0]) ? $sectionData['icon'][0]['url'] ?? '' : '' }}"
+                     text="{{ $sectionData['title'] ?? '' }}" />
+             @endforeach
+         </x-frontend.home.highlights>
     @endif
 
 
