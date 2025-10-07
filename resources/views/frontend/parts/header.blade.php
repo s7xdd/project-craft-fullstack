@@ -19,7 +19,7 @@
     </div>
     <div class="header-lower p_relative" style="background-color:{{ get_setting('header_base_color') }};">
         <div class="large-container">
-            <div class="outer-box" >
+            <div class="outer-box">
 
                 <figure class="navbar-logo pt-1 !hidden xl:!flex">
                     <a href="/"><img src="{{ uploaded_asset(get_setting('site_icon')) }}" alt="" /></a>
@@ -62,6 +62,18 @@
                         </form>
                     </div>
 
+                    @php
+                        $user = getUser();
+                        $cartCount = 0;
+
+                        if ($user['users_id'] == null) {
+                            $cartCount = 0;
+                        } else {
+                            $cartCount = cartCount();
+                        }
+
+                    @endphp
+
                     <ul class="option-list !gap-0 md:!gap-5 !flex !flex-row !items-center !pl-0 md:!pl-[2rem]">
                         <li class="search-icon-mobile">
                             <a href="#" id="mobile-search-trigger" style="display: flex"><i
@@ -71,7 +83,7 @@
                             <button type="button">
                                 <a href="{{ route('cart.items') }}">
                                     <i class="fas fa-cart-shopping"></i><span class="bg-red-500"
-                                        id="cart-count-header">{{ cartCount() }}</span>
+                                        id="cart-count-header">{{ $cartCount }}</span>
                                 </a>
                             </button>
                         </li>
