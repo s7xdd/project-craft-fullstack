@@ -3,7 +3,7 @@
         style="background-image: url('{{ $image }}'); background-size: cover; background-position: center; border-radius: 25px;">
         {{-- <div class="bg-color-1" style="border-radius: 25px;" role="presentation" aria-hidden="true"></div> --}}
         <div class="row align-items-center">
-            <div class="col-lg-6 col-md-12 col-sm-12 content-column !w-[80%]">
+            <div class="col-lg-6 col-md-12 col-sm-12 content-column !w-[80%] min-h-[600px]">
                 {{-- <div class="content-box">
                 <h2 style="color: white;">
                     {!! $title !!}
