@@ -95,6 +95,35 @@ figure.containerZoom.active img {
 }
 
 .product-gallery{
-  margin-bottom: 20px;
+   margin-bottom: 20px;
+ }
+
+/* Image Zoom Magnifier Styles */
+#image-zoom-window {
+    pointer-events: none; /* Prevent interference with page interactions */
+    transition: opacity 0.3s ease-in-out; /* Smooth fade-in/out */
+}
+
+#image-zoom-window.show {
+    display: block; /* Override 'hidden' when active */
+}
+
+#zoom-lens {
+    transform-origin: center; /* For scaling effects if needed */
+}
+
+/* Ensure zoom window doesn't overflow on smaller screens */
+@media (max-width: 1024px) {
+    #image-zoom-window {
+        width: 300px;
+        height: 300px;
+        right: 2px; /* Closer to edge on mobile */
+    }
+}
+
+@media (max-width: 768px) {
+    #image-zoom-window {
+        display: none; /* Disable on very small screens for usability */
+    }
 }
 

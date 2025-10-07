@@ -43,4 +43,69 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initial setup
     updateThumbnails();
+
+    // Image Zoom Functionality
+    const zoomWindow = document.getElementById('image-zoom-window');
+    const zoomLens = document.getElementById('zoom-lens');
+    if (zoomWindow && zoomLens) {
+        const zoomFactor = 2.5; // Magnification level (adjust as needed)
+        let currentImageSrc = ''; // Track current image for zoom
+
+        // Function to update zoom window background and position
+        function updateZoom(e) {
+            const img = e.target;
+            if (!img || img.tagName !== 'IMG') return;
+
+            const rect = img.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Check if mouse is over the image
+            if (x < 0 || x > rect.width || y < 0 || y > rect.height) {
+                hideZoom();
+                return;
+            }
+
+            // Show zoom window if hidden
+            if (zoomWindow.classList.contains('hidden')) {
+                zoomWindow.classList.remove('hidden');
+                zoomWindow.classList.add('show');
+            }
+
+            // Update background image if changed
+            if (currentImageSrc !== img.src) {
+                currentImageSrc = img.src;
+                zoomLens.style.backgroundImage = `url('${img.src}')`;
+            }
+
+            // Calculate background position for magnification
+            const bgX = (x / rect.width) * 100;
+            const bgY = (y / rect.height) * 100;
+            zoomLens.style.backgroundPosition = `${bgX}% ${bgY}%`;
+            zoomLens.style.backgroundSize = `${zoomFactor * 100}% ${zoomFactor * 100}%`;
+        }
+
+        // Function to hide zoom window
+        function hideZoom() {
+            zoomWindow.classList.add('hidden');
+            zoomWindow.classList.remove('show');
+        }
+
+        // Add event listeners to all large images in the carousel
+        function attachZoomListeners() {
+            const slides = document.querySelectorAll('.embla__slide img');
+            slides.forEach(img => {
+                img.addEventListener('mousemove', updateZoom);
+                img.addEventListener('mouseleave', hideZoom);
+            });
+        }
+
+        // Re-attach listeners after slide change (Embla 'select' event)
+        emblaApi.on('select', () => {
+            attachZoomListeners(); // Re-bind for new active slide
+        });
+
+        // Initial attachment
+        attachZoomListeners();
+    }
 });

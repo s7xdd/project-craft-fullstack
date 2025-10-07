@@ -164,9 +164,14 @@
                                         <span class="status__value ">{{ trans('messages.out_of_stock') }}</span>
                                     @endif
 
-                                </div>
-                            </div>
-                        </div>
+                  </div>
+              </div>
+
+              <!-- Zoom Magnifier Window -->
+              <div id="image-zoom-window" class="fixed top-1/2 right-4 transform -translate-y-1/2 w-96 h-96 bg-white border-2 border-gray-300 rounded-lg shadow-lg overflow-hidden z-50 hidden">
+                  <div id="zoom-lens" class="w-full h-full bg-no-repeat bg-cover" style="background-image: url('');"></div>
+              </div>
+          </div>
                     </x-slot>
 
 
