@@ -21,6 +21,7 @@
     <link href="{{ asset('dist/assets/app-afc193cb.css') }}" rel="stylesheet">
      <script type="module" src="{{ asset('assets/js/app-f10b86b9.js') }}"></script>
      <script src="{{ asset('js/hero-carousel.js') }}"></script>
+     <script src="{{ asset('js/product-slider.js') }}"></script>
 
      <script async src="https://www.googletagmanager.com/gtag/js?id=G-GJB4R99EX9"></script>
     <script>

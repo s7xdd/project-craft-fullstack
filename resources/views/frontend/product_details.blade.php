@@ -195,24 +195,29 @@
             </x-slot>
         @endif --}}
 
-        <div class="container ">
-            <div class="product-gallery">
-                <div
-                    class="product-image min-h-[300px] max-h-[300px] min-w-[300px] max-w-[300px] md:!min-h-[700px] md:!min-w-[700px] md:!max-h-[700px] md:!max-w-[700px]">
-                    @if (!empty($response['photos']))
-                        <img class="active" src="{{ $response['photos'][0] }}" alt="Product Image" id="imageZoom">
-                    @endif
-                </div>
-            </div>
+         <div class="">
+             <div class="product-gallery flex flex-col items-center">
+                 <!-- Main Image Slider -->
+                 <div class="embla overflow-hidden w-full max-w-4xl" id="product-image-carousel">
+                     <div class="embla__container flex">
+                         @foreach ($response['photos'] as $index => $photo)
+                             <div class="embla__slide flex-[0_0_100%] min-w-0 flex items-center justify-center">
+                                 <img src="{{ $photo }}" alt="Product Image {{ $index + 1 }}" class="w-full h-auto object-cover rounded-lg max-h-[300px] md:max-h-[700px]" loading="lazy">
+                             </div>
+                         @endforeach
+                     </div>
+                 </div>
 
-            <ul class="image-list">
-                @foreach ($response['photos'] as $photo)
-                    <li class="image-item max-h-[100px] max-w-[100px]">
-                        <img src="{{ $photo }}" alt="Product Image">
-                    </li>
-                @endforeach
-            </ul>
-        </div>
+                 <!-- Thumbnail Navigation -->
+                 <div class="flex justify-center space-x-2 mt-4" id="product-thumbnails">
+                     @foreach ($response['photos'] as $index => $photo)
+                         <button class="thumbnail-btn w-12 h-12 sm:w-16 sm:h-16 rounded border-2 border-gray-300 overflow-hidden transition-all duration-200 hover:border-blue-500" data-index="{{ $index }}" aria-label="View image {{ $index + 1 }}">
+                             <img src="{{ $photo }}" alt="Thumbnail {{ $index + 1 }}" class="w-full h-full object-cover">
+                         </button>
+                     @endforeach
+                 </div>
+             </div>
+         </div>
 
 
         {{-- <div id="product-swiper" data-images='@json($response['photos'] ?? ['default-product.jpg'])'
