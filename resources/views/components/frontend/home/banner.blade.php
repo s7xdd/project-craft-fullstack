@@ -1,6 +1,6 @@
 <section class="relative z-[100] pt-1">
     <div class="relative z-[1] overflow-x-hidden touch-pan-y">
-        <div class="max-w-[1280px] mx-auto">
+         <div class="max-w-[1280px] mx-auto px-4 md:px-0">
             <div class="embla overflow-hidden touch-pan-y" id="hero-carousel">
                 <div class="embla__container flex">
                     {{ $slot }}
