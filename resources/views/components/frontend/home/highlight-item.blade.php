@@ -1,8 +1,7 @@
-<li>
-    <div class="single-item !mb-5 xl:!mb-0">
-        <div class="icon-box" style="display: flex;align-content: center;align-items: center;justify-content: center;">
-            <img src="{{ $icon }}" alt="" style="height: 43px;" />
+
+    <div class="flex flex-col sm:flex-row items-center gap-4 mb-5 xl:mb-0">
+        <div class="inline-block w-15 h-15 leading-15 text-center bg-white rounded-full border border-gray-300 flex items-center justify-center">
+            <img src="{{ $icon }}" alt="" class="h-11" />
         </div>
-        <h5 class="!text-[12px] !leading-5 md:!text-lg">{{ $text }}</h5>
+        <h5 class="text-lg leading-6 text-center sm:text-left">{{ $text }}</h5>
     </div>
-</li>
