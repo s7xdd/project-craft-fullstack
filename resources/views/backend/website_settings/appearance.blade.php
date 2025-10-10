@@ -43,6 +43,22 @@
                                         class="selected-files">
                                 </div>
                                 <div class="file-preview box"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-3 col-from-label">Fav Icon</label>
+                            <div class="col-md-8">
+                                <div class="input-group" data-toggle="aizuploader" data-type="image">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text bg-soft-secondary">Browse</div>
+                                    </div>
+                                    <div class="form-control file-amount">Choose File</div>
+                                    <input type="hidden" name="types[]" value="site_fav_icon">
+                                    <input type="hidden" name="site_fav_icon" value="{{ get_setting('site_fav_icon') }}"
+                                        class="selected-files">
+                                </div>
+                                <div class="file-preview box"></div>
                                 <small class="text-muted">Website favicon. 32x32 .png</small>
                             </div>
                         </div>
