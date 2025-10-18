@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\Cart;
 use App\Models\Address;
+use App\Models\AdminTaskLog;
 use App\Models\Product;
 use App\Models\ProductStock;
 use App\Models\OrderDetail;
@@ -100,18 +101,19 @@ class OrderController extends Controller
         return view('backend.sales.all_orders.show', compact('order', 'delivery_boys'));
     }
 
-    public function allCancelRequests(Request $request){
+    public function allCancelRequests(Request $request)
+    {
         $request->session()->put('last_url', url()->full());
         $search         = ($request->has('search')) ? $request->search : '';
         $ca_search      = ($request->has('ca_search')) ? $request->ca_search : '';
         $date           = ($request->has('date')) ? $request->date : ''; //
         $refund_search  = ($request->has('refund_search')) ? $request->refund_search : '';
 
-        $orders = Order::where('cancel_request',1)->orderBy('cancel_request_date','DESC');
-        if($search){
+        $orders = Order::where('cancel_request', 1)->orderBy('cancel_request_date', 'DESC');
+        if ($search) {
             $orders = $orders->where('code', 'like', '%' . $search . '%');
         }
-        if($ca_search){
+        if ($ca_search) {
             $ca_search = ($ca_search == 10) ? 0 : $ca_search;
             $orders = $orders->where('cancel_approval', $ca_search);
         }
@@ -127,21 +129,22 @@ class OrderController extends Controller
         // echo '<pre>';
         // print_r($orders);
         // die;
-        return view("backend.sales.cancel_requests",compact('orders', 'search', 'ca_search', 'date', 'refund_search'));
+        return view("backend.sales.cancel_requests", compact('orders', 'search', 'ca_search', 'date', 'refund_search'));
     }
 
-    public function allReturnRequests(Request $request){
+    public function allReturnRequests(Request $request)
+    {
         $request->session()->put('return_last_url', url()->full());
         $search         = ($request->has('search')) ? $request->search : '';
         $ca_search      = ($request->has('ca_search')) ? $request->ca_search : '';
         $date           = ($request->has('date')) ? $request->date : ''; //
         $refund_search  = ($request->has('refund_search')) ? $request->refund_search : '';
 
-        $orders = Order::where('return_request',1)->orderBy('return_request_date','DESC');
-        if($search){
+        $orders = Order::where('return_request', 1)->orderBy('return_request_date', 'DESC');
+        if ($search) {
             $orders = $orders->where('code', 'like', '%' . $search . '%');
         }
-        if($ca_search){
+        if ($ca_search) {
             $ca_search = ($ca_search == 10) ? 0 : $ca_search;
             $orders = $orders->where('return_approval', $ca_search);
         }
@@ -157,65 +160,67 @@ class OrderController extends Controller
         // echo '<pre>';
         // print_r($orders);
         // die;
-        return view("backend.sales.return_requests",compact('orders', 'search', 'ca_search', 'date', 'refund_search'));
+        return view("backend.sales.return_requests", compact('orders', 'search', 'ca_search', 'date', 'refund_search'));
     }
 
-    public function returnRequestStatus(Request $request){
+    public function returnRequestStatus(Request $request)
+    {
         $id = $request->id;
         $status = $request->status;
-        
+
         $return_request = Order::findOrFail($id);
-        if($return_request->return_request == 1 ){
+        if ($return_request->return_request == 1) {
             $return_request->return_approval = $status;
-            
+
             $return_request->return_approval_date = date('Y-m-d H:i:s');
-            $return_request->save(); 
-            
+            $return_request->save();
+
             echo 1;
-        }else{
+        } else {
             echo 0;
         }
-     }
+    }
 
-     public function return_orders_show($id)
-     {
-         $order = Order::findOrFail(decrypt($id));
-         return view('backend.sales.return_orders_show', compact('order'));
-     }
- 
+    public function return_orders_show($id)
+    {
+        $order = Order::findOrFail(decrypt($id));
+        return view('backend.sales.return_orders_show', compact('order'));
+    }
 
-    public function cancelRequestStatus(Request $request){
+
+    public function cancelRequestStatus(Request $request)
+    {
         $id = $request->id;
         $status = $request->status;
-        
+
         $cancel_request = Order::findOrFail($id);
-        if($cancel_request->cancel_request == 1 ){
+        if ($cancel_request->cancel_request == 1) {
 
             // $message = getOrderStatusMessageTest($cancel_request->user->name, $cancel_request->code);
             // $userPhone = $cancel_request->user->phone ?? '';
 
             $cancel_request->cancel_approval = $status;
-            if($status == 1){
+            if ($status == 1) {
                 $cancel_request->delivery_status = 'cancelled';
-                
+
                 // if($userPhone != '' && isset($message['cancelled']) && $message['cancelled'] != ''){
                 //     SendSMSUtility::sendSMS($userPhone, $message['cancelled']);
                 // }
-            }else{
+            } else {
                 // if($userPhone != '' && isset($message['cancel_reject']) && $message['cancel_reject'] != ''){
                 //     SendSMSUtility::sendSMS($userPhone, $message['cancel_reject']);
                 // }
             }
             $cancel_request->cancel_approval_date = date('Y-m-d H:i:s');
-            $cancel_request->save(); 
-            
+            $cancel_request->save();
+
             echo 1;
-        }else{
+        } else {
             echo 0;
         }
-     }
+    }
 
-     public function cancel_orders_show($id)
+    public function cancel_orders_show($id)
     {
         $order = Order::findOrFail(decrypt($id));
         return view('backend.sales.cancel_orders_show', compact('order'));
@@ -239,14 +244,21 @@ class OrderController extends Controller
                         $product_stock->qty += $orderDetail->quantity;
                         $product_stock->save();
                     }
-
                 } catch (\Exception $e) {
-
                 }
 
                 $orderDetail->delete();
             }
             $order->delete();
+
+            $logData = [
+                'user_id' => Auth::id(),
+                'data' => json_encode($order),
+                'action' => "order-delete",
+            ];
+
+            AdminTaskLog::create($logData);
+
             flash(translate('Order has been deleted successfully'))->success();
         } else {
             flash(translate('Something went wrong'))->error();
@@ -310,7 +322,7 @@ class OrderController extends Controller
                 $orderDetail->save();
 
                 $product_stock = ProductStock::where('id', $orderDetail->product_stock_id)
-                ->first();
+                    ->first();
 
                 if ($request->status == 'cancelled') {
                     if ($product_stock != null) {
@@ -318,44 +330,67 @@ class OrderController extends Controller
                         $product_stock->save();
                     }
                 }
-
             }
         }
-       
-        
+
+
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "order-delivery-update",
+        ];
+
+        AdminTaskLog::create($logData);
 
         return 1;
     }
-   public function update_tracking_code(Request $request) {
+    public function update_tracking_code(Request $request)
+    {
         $order = Order::findOrFail($request->order_id);
         $order->tracking_code = $request->tracking_code;
         $order->save();
 
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "order-tracking-code-update",
+        ];
+
+        AdminTaskLog::create($logData);
+
         return 1;
-   }
+    }
 
-   public function update_payment_status(Request $request)
-   {
-       $order = Order::findOrFail($request->order_id);
-       
+    public function update_payment_status(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
 
-       foreach ($order->orderDetails as $key => $orderDetail) {
+
+        foreach ($order->orderDetails as $key => $orderDetail) {
             $orderDetail->payment_status = $request->status;
             $orderDetail->save();
         }
-       
-       $order->payment_status = $request->status;
-       $order->save();
 
-       return 1;
-   }
-   public function orderView($id)
-   {
-    $orderdetails= OrderDetail::find($id);
-    $products = $orderdetails->product;
-    $order = $orderdetails->order;
-    $photos = explode(',', $products->photos);
-    return view('frontend.vendor.order.view',compact('orderdetails','products','order','photos'));
-   }
+        $order->payment_status = $request->status;
+        $order->save();
 
+
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "order-payment-update",
+        ];
+
+        AdminTaskLog::create($logData);
+
+        return 1;
+    }
+    public function orderView($id)
+    {
+        $orderdetails = OrderDetail::find($id);
+        $products = $orderdetails->product;
+        $order = $orderdetails->order;
+        $photos = explode(',', $products->photos);
+        return view('frontend.vendor.order.view', compact('orderdetails', 'products', 'order', 'photos'));
+    }
 }
