@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\AdminTaskLog;
 use Illuminate\Http\Request;
 use App\Models\Attribute;
 use App\Models\Color;
 use App\Models\AttributeTranslation;
 use App\Models\AttributeValue;
 use App\Models\AttributeValueTranslation;
+use Illuminate\Support\Facades\Auth;
 // use CoreComponentRepository;
 use Str;
 
@@ -31,9 +32,7 @@ class AttributeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -51,7 +50,16 @@ class AttributeController extends Controller
         $attribute_translation->name = $request->name;
         $attribute_translation->save();
 
-        flash(trans('messages.attribute').' '.trans('messages.created_msg'))->success();
+
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "attribute-add",
+        ];
+
+        AdminTaskLog::create($logData);
+
+        flash(trans('messages.attribute') . ' ' . trans('messages.created_msg'))->success();
         return redirect()->route('attributes.index');
     }
 
@@ -78,7 +86,7 @@ class AttributeController extends Controller
     {
         $lang      = $request->lang;
         $attribute = Attribute::findOrFail($id);
-        return view('backend.attribute.edit', compact('attribute','lang'));
+        return view('backend.attribute.edit', compact('attribute', 'lang'));
     }
 
     /**
@@ -91,8 +99,8 @@ class AttributeController extends Controller
     public function update(Request $request, $id)
     {
         $attribute = Attribute::findOrFail($id);
-        if($request->lang == env("DEFAULT_LANGUAGE")){
-          $attribute->name = $request->name;
+        if ($request->lang == env("DEFAULT_LANGUAGE")) {
+            $attribute->name = $request->name;
         }
         $attribute->save();
 
@@ -100,7 +108,15 @@ class AttributeController extends Controller
         $attribute_translation->name = $request->name;
         $attribute_translation->save();
 
-        flash(trans('messages.attribute').' '.trans('messages.updated_msg'))->success();
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "attribute-update",
+        ];
+
+        AdminTaskLog::create($logData);
+
+        flash(trans('messages.attribute') . ' ' . trans('messages.updated_msg'))->success();
         return back();
     }
 
@@ -119,9 +135,17 @@ class AttributeController extends Controller
         }
 
         Attribute::destroy($id);
-        flash(trans('messages.attribute').' '.trans('messages.deleted_msg'))->success();
-        return redirect()->route('attributes.index');
 
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($attribute),
+            'action' => "attribute-delete",
+        ];
+
+        AdminTaskLog::create($logData);
+        
+        flash(trans('messages.attribute') . ' ' . trans('messages.deleted_msg'))->success();
+        return redirect()->route('attributes.index');
     }
 
     public function store_attribute_value(Request $request)
@@ -135,7 +159,7 @@ class AttributeController extends Controller
         $attribute_value_translation->value = $request->value;
         $attribute_value_translation->save();
 
-        flash(trans('messages.attribute').' '.trans('messages.value').' '.trans('messages.created_msg'))->success();
+        flash(trans('messages.attribute') . ' ' . trans('messages.value') . ' ' . trans('messages.created_msg'))->success();
         return redirect()->route('attributes.show', $request->attribute_id);
     }
 
@@ -143,19 +167,19 @@ class AttributeController extends Controller
     {
         $lang      = $request->lang;
         $attribute_value = AttributeValue::findOrFail($id);
-        return view("backend.attribute.attribute_value.edit", compact('attribute_value','lang'));
+        return view("backend.attribute.attribute_value.edit", compact('attribute_value', 'lang'));
     }
 
     public function update_attribute_value(Request $request, $id)
     {
         $attribute_value = AttributeValue::findOrFail($id);
-       
+
 
         $attribute_value_translation = AttributeValueTranslation::firstOrNew(['lang' => $request->lang, 'attribute_value_id' => $attribute_value->id]);
         $attribute_value_translation->value = $request->value;
         $attribute_value_translation->save();
 
-        flash(trans('messages.attribute').' '.trans('messages.value').' '.trans('messages.updated_msg'))->success();
+        flash(trans('messages.attribute') . ' ' . trans('messages.value') . ' ' . trans('messages.updated_msg'))->success();
         return back();
     }
 
@@ -163,18 +187,17 @@ class AttributeController extends Controller
     {
         $attribute_values = AttributeValue::findOrFail($id);
         AttributeValue::destroy($id);
-        
-        flash(trans('messages.attribute').' '.trans('messages.value').' '.trans('messages.deleted_msg'))->success();
-        return redirect()->route('attributes.show', $attribute_values->attribute_id);
 
+        flash(trans('messages.attribute') . ' ' . trans('messages.value') . ' ' . trans('messages.deleted_msg'))->success();
+        return redirect()->route('attributes.show', $attribute_values->attribute_id);
     }
-   
+
     public function updateAttributeStatus(Request $request)
     {
         $attribute = Attribute::findOrFail($request->id);
         $attribute->is_active = $request->status;
         $attribute->save();
-        
+
         return 1;
     }
 
@@ -183,8 +206,7 @@ class AttributeController extends Controller
         $attribute = AttributeValue::findOrFail($request->id);
         $attribute->is_active = $request->status;
         $attribute->save();
-        
+
         return 1;
     }
-    
 }

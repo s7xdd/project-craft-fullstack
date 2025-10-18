@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminTaskLog;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
@@ -113,6 +114,14 @@ class CategoryController extends Controller
         $category_translation->twitter_description  = $request->twitter_description;
         $category_translation->save();
 
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "category-add",
+        ];
+
+        AdminTaskLog::create($logData);
+
         flash(trans('messages.category') . ' ' . trans('messages.created_msg'))->success();
         return redirect()->route('categories.index');
     }
@@ -214,6 +223,14 @@ class CategoryController extends Controller
         $category_translation->twitter_description  = $request->twitter_description;
         $category_translation->save();
 
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "category-update",
+        ];
+
+        AdminTaskLog::create($logData);
+
         Cache::forget('featured_categories');
         flash(trans('messages.category') . ' ' . trans('messages.updated_msg'))->success();
         return back();
@@ -242,6 +259,15 @@ class CategoryController extends Controller
 
         CategoryUtility::delete_category($id);
         Cache::forget('featured_categories');
+
+
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($category),
+            'action' => "category-delete",
+        ];
+
+        AdminTaskLog::create($logData);
 
         flash(translate('Category has been deleted successfully'))->success();
         return redirect()->route('categories.index');

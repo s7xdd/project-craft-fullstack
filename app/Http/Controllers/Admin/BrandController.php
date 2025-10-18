@@ -3,20 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminTaskLog;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use App\Models\BrandTranslation;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 class BrandController extends Controller
 {
     function __construct()
     {
         $this->middleware('auth');
-       
-        $this->middleware('permission:manage_brands', ['only' => ['index','create','store','edit','update','destroy']]);
+
+        $this->middleware('permission:manage_brands', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
     }
 
     /**
@@ -54,12 +56,12 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
             'name' => 'required',
             'slug' => 'required',
         ]);
-       
+
         $brand               = new Brand;
         $brand->name         = $request->name ?? NULL;
         $brand->is_active    = $request->status;
@@ -84,7 +86,16 @@ class BrandController extends Controller
         $brand_translation->twitter_description  = $request->twitter_description;
         $brand_translation->save();
 
-        flash(trans('messages.brand').trans('messages.created_msg'))->success();
+
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "brand-create",
+        ];
+
+        AdminTaskLog::create($logData);
+
+        flash(trans('messages.brand') . trans('messages.created_msg'))->success();
         return redirect()->route('brands.index');
     }
 
@@ -155,7 +166,15 @@ class BrandController extends Controller
         $brand_translation->twitter_description  = $request->twitter_description;
         $brand_translation->save();
 
-        flash(trans('messages.brand').trans('messages.updated_msg'))->success();
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "brand-update",
+        ];
+
+        AdminTaskLog::create($logData);
+
+        flash(trans('messages.brand') . trans('messages.updated_msg'))->success();
         return back();
     }
 
@@ -174,17 +193,25 @@ class BrandController extends Controller
         }
         Brand::destroy($id);
 
-        flash(trans('messages.brand').trans('messages.deleted_msg'))->success();
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($brand),
+            'action' => "brand-delete",
+        ];
+
+        AdminTaskLog::create($logData);
+
+        flash(trans('messages.brand') . trans('messages.deleted_msg'))->success();
         return redirect()->route('brands.index');
     }
 
     public function updateStatus(Request $request)
     {
         $brand = Brand::findOrFail($request->id);
-        
+
         $brand->is_active = $request->status;
         $brand->save();
-       
+
         return 1;
     }
 }

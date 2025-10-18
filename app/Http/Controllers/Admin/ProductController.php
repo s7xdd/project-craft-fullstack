@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminTaskLog;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductTranslation;
@@ -337,6 +338,14 @@ class ProductController extends Controller
                 ProductAttributes::insert($product_attributes);
             }
         }
+
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "product-create",
+        ];
+
+        AdminTaskLog::create($logData);
 
         flash(trans('messages.product') . ' ' . trans('messages.created_msg'))->success();
 
@@ -713,6 +722,14 @@ class ProductController extends Controller
                 ProductAttributes::insert($product_attributes);
             }
         }
+
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "product-update",
+        ];
+
+        AdminTaskLog::create($logData);
 
         flash(trans('messages.product') . ' ' . trans('messages.updated_msg'))->success();
 

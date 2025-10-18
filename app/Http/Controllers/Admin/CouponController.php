@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminTaskLog;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\User;
 use Auth;
-
 
 class CouponController extends Controller
 {
@@ -19,7 +19,7 @@ class CouponController extends Controller
         $sort_search = null;
         $coupon_type = $use_type = null;
         $coupons = Coupon::orderBy('id', 'desc');
-        
+
         if ($request->has('search')) {
             $sort_search = $request->search;
             $coupons = $coupons->where('code', 'like', '%' . $sort_search . '%');
@@ -36,7 +36,7 @@ class CouponController extends Controller
         }
 
         $coupons = $coupons->paginate(15);
-        return view('backend.marketing.coupons.index', compact('coupons','sort_search','coupon_type','use_type'));
+        return view('backend.marketing.coupons.index', compact('coupons', 'sort_search', 'coupon_type', 'use_type'));
     }
     public function create()
     {
@@ -55,7 +55,15 @@ class CouponController extends Controller
         $coupon = $this->setCouponData($request, $coupon);
         $coupon->save();
 
-        flash(trans('messages.coupon').' '.trans('messages.created_msg'))->success();
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "coupon-add",
+        ];
+
+        AdminTaskLog::create($logData);
+
+        flash(trans('messages.coupon') . ' ' . trans('messages.created_msg'))->success();
         return redirect()->route('coupon.index');
     }
 
@@ -76,14 +84,34 @@ class CouponController extends Controller
         $this->setCouponData($request, $coupon);
         $coupon->save();
 
-        flash(trans('messages.coupon').' '.trans('messages.updated_msg'))->success();
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($request->all()),
+            'action' => "coupon-update",
+        ];
+
+        AdminTaskLog::create($logData);
+
+        flash(trans('messages.coupon') . ' ' . trans('messages.updated_msg'))->success();
         return redirect()->route('coupon.index');
     }
 
     public function destroy($id)
     {
+
+        $coupon = Coupon::where('id', $id)->get();
+
+        $logData = [
+            'user_id' => Auth::id(),
+            'data' => json_encode($coupon),
+            'action' => "coupon-delete",
+        ];
+
+        AdminTaskLog::create($logData);
+
         Coupon::destroy($id);
-        flash(trans('messages.coupon').' '.trans('messages.deleted_msg'))->success();
+
+        flash(trans('messages.coupon') . ' ' . trans('messages.deleted_msg'))->success();
         return redirect()->route('coupon.index');
     }
 
