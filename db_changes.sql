@@ -18,12 +18,12 @@
 
 -- alter table orders add column razorpay_payment_id text after payment_status;
 
-CREATE TABLE `admin_task_logs` (
-    `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    `user_id` BIGINT UNSIGNED NOT NULL,
-    `action` VARCHAR(255) NOT NULL,
-    `data` TEXT NULL,
-    `created_at` TIMESTAMP NULL DEFAULT NULL,
-    `updated_at` TIMESTAMP NULL DEFAULT NULL,
-    INDEX `admin_task_logs_user_id_index` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+-- CREATE TABLE `admin_task_logs` (
+--     `id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+--     `user_id` BIGINT UNSIGNED NOT NULL,
+--     `action` VARCHAR(255) NOT NULL,
+--     `data` TEXT NULL,
+--     `created_at` TIMESTAMP NULL DEFAULT NULL,
+--     `updated_at` TIMESTAMP NULL DEFAULT NULL,
+--     INDEX `admin_task_logs_user_id_index` (`user_id`)
+-- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
