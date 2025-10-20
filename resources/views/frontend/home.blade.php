@@ -21,26 +21,12 @@
                 $imageData = $testimonial->image ? json_decode($testimonial->image) : [];
                 $image = isset($imageData[0]->url) ? $imageData[0]->url : '';
 
-                // Get video from assets/Videos directory based on testimonial ID or use default
-                $videoFiles = [
-                    'VN20250904_035052.mp4',
-                    'VN20250904_035542.mp4',
-                    'VN20250904_124113.mp4',
-                    'VN20250904_124131.mp4',
-                    'VN20250904_124156.mp4',
-                    'VN20250904_124335.mp4',
-                    'VN20250904_124350.mp4',
-                    'VN20250904_124402.mp4',
-                    'VN20250904_124432.mp4',
-                    'VN20250904_124444.mp4',
-                ];
-
-                // Use testimonial ID to select video, fallback to first video
-                $videoIndex = ($testimonial->id - 1) % count($videoFiles);
-                $video = asset('assets/Videos/' . $videoFiles[$videoIndex]);
+                // Get video from testimonial if available, otherwise use default placeholder
+                $video = $testimonial->video ? asset('storage/' . $testimonial->video) : '';
 
                 return [
                     'name' => $testimonial->name,
+                    'title' => $testimonial->title,
                     'text' => $testimonial->comment,
                     'image' => $image,
                     'video' => $video,
@@ -66,13 +52,13 @@
 
 
     @if ($page->getTranslation('image1', $lang) && is_array(json_decode($page->getTranslation('image1', $lang))))
-         <x-frontend.home.highlights>
-             @foreach (json_decode($page->getTranslation('image1', $lang), true) as $sectionData)
-                 <x-frontend.home.highlight-item
-                     icon="{{ isset($sectionData['icon'][0]) ? $sectionData['icon'][0]['url'] ?? '' : '' }}"
-                     text="{{ $sectionData['title'] ?? '' }}" />
-             @endforeach
-         </x-frontend.home.highlights>
+        <x-frontend.home.highlights>
+            @foreach (json_decode($page->getTranslation('image1', $lang), true) as $sectionData)
+                <x-frontend.home.highlight-item
+                    icon="{{ isset($sectionData['icon'][0]) ? $sectionData['icon'][0]['url'] ?? '' : '' }}"
+                    text="{{ $sectionData['title'] ?? '' }}" />
+            @endforeach
+        </x-frontend.home.highlights>
     @endif
 
 
@@ -153,10 +139,10 @@
     @endif
 
     @if ($testimonials->count() > 0)
-        <x-frontend.home.testimonial-feed>
+        <x-frontend.home.testimonial-feed title="{{ $data['testimonialsPageData']->getTranslation('title') }}" description="{!! $data['testimonialsPageData']->getTranslation('content1') !!}">
             @foreach ($testimonials as $t)
                 <x-frontend.home.testimonial-item video="{{ $t['video'] }}" name="{{ $t['name'] }}"
-                    text="{{ $t['text'] }}" />
+                    title="{{ $t['title'] }}" text="{{ $t['text'] }}" />
             @endforeach
         </x-frontend.home.testimonial-feed>
     @endif

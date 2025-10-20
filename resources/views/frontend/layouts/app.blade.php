@@ -19,7 +19,6 @@
 
     <link href="{{ asset('dist/assets/app-97de3ed1.css') }}" rel="stylesheet">
     <link href="{{ asset('dist/assets/app-afc193cb.css') }}" rel="stylesheet">
-    <script type="module" src="{{ asset('assets/js/app-f10b86b9.js') }}"></script>
     <script src="{{ asset('js/hero-carousel.js') }}"></script>
     <script src="{{ asset('js/product-slider.js') }}"></script>
 
@@ -323,7 +322,7 @@
             toastr.options = {
                 "closeButton": true,
                 "progressBar": true,
-                "positionClass": "toast-top-right",
+                "positionClass": "toast-bottom-right",
             };
             toastr["{{ session('alert-type', 'info') }}"]("{{ session('message') }}");
         @endif

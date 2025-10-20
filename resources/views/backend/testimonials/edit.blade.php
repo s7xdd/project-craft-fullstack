@@ -13,9 +13,7 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <form method="POST"
-                            action="{{ route('testimonials.update', [
-                                'testimonial' => $testimonial,
-                            ]) }}"
+                            action="{{ route('testimonials.update', $testimonial) }}"
                             enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
@@ -49,6 +47,30 @@
                                 <input type="number" name="sort_order" class="form-control"
                                     value="{{ old('sort_order', $testimonial->sort_order) }}">
                                     @error('sort_order')
+                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
+                                <label for="video">Current Video</label>
+                                @if($testimonial->video)
+                                    <div class="mb-2">
+                                        <video width="200" height="150" controls>
+                                            <source src="{{ asset('storage/' . $testimonial->video) }}" >
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        <p class="mt-1">Current video file: {{ basename($testimonial->video) }}</p>
+                                    </div>
+                                @else
+                                    <p>No video uploaded</p>
+                                @endif
+                            </div>
+
+                            <div class="form-group">
+                                <label for="video">Upload New Video</label>
+                                <input type="file" name="video" class="form-control" accept="video/*">
+                                <small class="form-text text-muted">Leave blank to keep current video</small>
+                                @error('video')
                                     <div class="alert alert-danger mt-1">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -92,6 +114,13 @@
                 $('#imgname').text(this.files[0].name)
             } else {
                 $('#imgname').text('Choose file')
+            }
+        });
+
+        $('input[type="file"][name="video"]').on('change', function() {
+            if (this.files[0]) {
+                // You can add custom handling for video file selection here
+                console.log('Selected video: ' + this.files[0].name);
             }
         });
 

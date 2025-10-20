@@ -227,12 +227,12 @@
                                         <span class="aiz-side-nav-text">Testimonials</span>
                                     </a>
                                 </li>
-                                <li class="aiz-side-nav-item">
+                                {{-- <li class="aiz-side-nav-item">
                                     <a href="{{ route('banners.index') }}"
                                         class="aiz-side-nav-link {{ areActiveRoutes(['banners.index', 'banners.create', 'banners.edit']) }}">
                                         <span class="aiz-side-nav-text">Banners</span>
                                     </a>
-                                </li>
+                                </li> --}}
 
                             </ul>
                         </li>

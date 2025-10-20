@@ -47,6 +47,14 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="video">Video</label>
+                                <input type="file" name="video" class="form-control" accept="video/*">
+                                @error('video')
+                                    <div class="alert alert-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group">
                                 <label for="exampleInputEmail1">Status</label>
                                 <select name="status" class="form-control select2-single mb-3">
                                     <option {{ old('status') == '1' ? 'selected' : '' }} value="1">
@@ -85,6 +93,13 @@
                 $('#imgname').text(this.files[0].name)
             } else {
                 $('#imgname').text('Choose file')
+            }
+        });
+
+        $('input[type="file"][name="video"]').on('change', function() {
+            if (this.files[0]) {
+                // You can add custom handling for video file selection here
+                console.log('Selected video: ' + this.files[0].name);
             }
         });
     </script>

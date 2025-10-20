@@ -187,9 +187,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/blog/delete/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
 
     // Manage testimonials
-    Route::resource('testimonials', TestimonialController::class)->except('show');
-    Route::post('/testimonials/update/{id}', [TestimonialController::class, 'update'])->name('testimonials.update');
-    Route::get('/testimonials/delete/{id}', [TestimonialController::class, 'destroy'])->name('testimonials.delete');
+    Route::resource('testimonials', TestimonialController::class)->except(['show', 'destroy']);
+    Route::delete('/testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name('testimonials.destroy');
     Route::post('/testimonials/update-status', [TestimonialController::class, 'updateStatus'])->name('testimonials.update-status');
 
     //Manage faq categories

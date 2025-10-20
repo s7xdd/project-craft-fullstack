@@ -1,5 +1,5 @@
-<section class="page-title pt_40 pb_30">
-    <div class="large-container">
+<section class="page-title pt_20 pb_30">
+    {{-- <div class="large-container">
         <nav class="breadcrumb-container" aria-label="Breadcrumb">
             <ol class="breadcrumb-list">
                 <li class="breadcrumb-item">
@@ -13,5 +13,5 @@
                 </li>
             </ol>
         </nav>
-    </div>
+    </div> --}}
 </section>

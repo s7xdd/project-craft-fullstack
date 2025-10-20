@@ -53,7 +53,7 @@
                                         <td class="text-center">
                                             <a href="{{ route('testimonials.edit', $test) }}" class="btn btn-soft-primary btn-icon btn-circle"><i class="las la-edit"></i></a>
 
-                                            <a href="#" class="btn btn-soft-danger btn-icon btn-circle confirm-delete" data-href="{{ route('testimonials.delete', $test->id) }}" title="Delete">
+                                            <a href="#" class="btn btn-soft-danger btn-icon btn-circle confirm-delete" data-href="{{ route('testimonials.destroy', $test->id) }}" title="Delete">
                                                 <i class="las la-trash"></i>
                                             </a>
                                         </td>

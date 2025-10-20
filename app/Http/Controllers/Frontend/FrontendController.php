@@ -158,6 +158,8 @@ class FrontendController extends Controller
 
         $data['testimonials'] = Testimonials::where('status', 1)->orderBy('sort_order', 'asc')->get();
 
+        $data['testimonialsPageData'] = Page::where('type', 'testimonials')->first();
+
         return view('frontend.home', compact('page', 'data', 'lang'));
     }
 

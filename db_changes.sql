@@ -27,3 +27,7 @@
 --     `updated_at` TIMESTAMP NULL DEFAULT NULL,
 --     INDEX `admin_task_logs_user_id_index` (`user_id`)
 -- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+alter table testimonials add column video text after image;
+
+INSERT INTO `pages` (`id`, `type`, `slug`, `image`, `image1`, `image2`, `image3`, `image4`, `video`, `status`, `created_at`, `updated_at`) VALUES (NULL, 'testimonials', 'Testimonials', NULL, NULL, NULL, NULL, NULL, NULL, '1', '2025-09-04 16:33:36', '2025-09-04 16:33:36'); 
