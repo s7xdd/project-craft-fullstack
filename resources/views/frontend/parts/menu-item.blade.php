@@ -1,6 +1,6 @@
 @php
     $hasChildren = isset($item->child) && count($item->child);
-    $isMegamenu = $hasChildren && isset($item->child[0]->child) && count($item->child[0]->child) > 0;
+    $isMegamenu = $hasChildren ;
 @endphp
 
 @if ($isMegamenu)
@@ -12,7 +12,7 @@
                     <div class="col-xl-3 column">
                         <ul style="display: flex;flex-direction: column;">
                             <li>
-                                <h5>{{ $group->label }}</h5>
+                                <a href="{{ $group->link }}">{{ $group->label }}</a>
                             </li>
                             @if (isset($group->child) && count($group->child))
                                 @foreach ($group->child as $sub)
