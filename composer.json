@@ -12,6 +12,7 @@
         "efectn/laravel-menu-builder": "^1.5",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "2.7.2",
+        "kenangundogan/htmlmin": "^1.0",
         "laracasts/flash": "^3.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
