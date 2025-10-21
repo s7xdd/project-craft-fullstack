@@ -35,8 +35,12 @@
         gtag('config', 'G-GJB4R99EX9');
     </script>
 
-    <!-- Embla Carousel CDN -->
-    <script src="https://unpkg.com/embla-carousel@latest/embla-carousel.umd.js"></script>
+     <!-- Embla Carousel CDN -->
+     <script src="https://unpkg.com/embla-carousel@latest/embla-carousel.umd.js"></script>
+
+     <!-- Swiper Carousel CDN -->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
@@ -48,7 +52,7 @@
 
 
     <link href="{{ asset('assets/css/flaticon.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/owl.css') }}" rel="stylesheet" />
+
     <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/jquery.fancybox.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet" />
@@ -573,7 +577,7 @@
     @yield('script')
 
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/owl.js') }}"></script>
+
     <script src="{{ asset('assets/js/wow.js') }}"></script>
     <script src="{{ asset('assets/js/validation.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.fancybox.js') }}"></script>

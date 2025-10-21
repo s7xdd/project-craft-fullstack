@@ -259,27 +259,33 @@
                 $chunks = collect($relatedProducts)->chunk(5);
             @endphp
 
-            @foreach ($chunks as $chunkIndex => $chunk)
-                <div class="p-tab active-tab" id="tab-{{ $chunkIndex + 1 }}">
-                    <div class="five-item-carousel owl-carousel owl-theme owl-dots-none nav-style-one">
+             @foreach ($chunks as $chunkIndex => $chunk)
+                 <div class="p-tab active-tab" id="tab-{{ $chunkIndex + 1 }}">
+                     <div class="swiper relatedProductsSwiper w-full max-w-7xl mx-auto">
+                         <div class="swiper-wrapper">
 
-                        @foreach ($chunk as $relProd)
-                            @php
-                                $imageRel = $relProd->thumbnail_img ?? app('url')->asset('assets/img/placeholder.jpg');
-                                $priceDataRel = getProductOfferPrice($relProd);
-                            @endphp
+                             @foreach ($chunk as $relProd)
+                                 @php
+                                     $imageRel = $relProd->thumbnail_img ?? app('url')->asset('assets/img/placeholder.jpg');
+                                     $priceDataRel = getProductOfferPrice($relProd);
+                                 @endphp
 
-                            <x-frontend.common.product-card image="{{ $imageRel }}"
-                                alt="{{ $relProd->name ?? 'Product Image' }}"
-                                category="{{ $relProd->category->name ?? 'Category' }}" name="{{ $relProd->name }}"
-                                originalPrice="{{ $priceDataRel['original_price'] }}"
-                                price="{{ $priceDataRel['discounted_price'] }}"
-                                link="{{ route('product-detail', ['slug' => $relProd->slug, 'sku' => $relProd->sku]) }}" />
-                        @endforeach
+                                 <div class="swiper-slide">
+                                     <x-frontend.common.product-card image="{{ $imageRel }}"
+                                         alt="{{ $relProd->name ?? 'Product Image' }}"
+                                         category="{{ $relProd->category->name ?? 'Category' }}" name="{{ $relProd->name }}"
+                                         originalPrice="{{ $priceDataRel['original_price'] }}"
+                                         price="{{ $priceDataRel['discounted_price'] }}"
+                                         link="{{ route('product-detail', ['slug' => $relProd->slug, 'sku' => $relProd->sku]) }}" />
+                                 </div>
+                             @endforeach
 
-                    </div>
-                </div>
-            @endforeach
+                         </div>
+                         <div class="swiper-button-next !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg"></div>
+                         <div class="swiper-button-prev !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg"></div>
+                     </div>
+                 </div>
+             @endforeach
         </x-frontend.common.product-section>
     @endif
 
@@ -287,14 +293,38 @@
 
 
 @section('script')
-    <script>
-        const currentAttribute = @json($response['current_attribute']);
-        const productAttributes = @json($response['product_attributes']);
-        const variantProducts = @json($response['varient_products']);
+     <script>
+         // Initialize Swiper for Related Products
+         document.addEventListener('DOMContentLoaded', function () {
+             new Swiper('.relatedProductsSwiper', {
+                 slidesPerView: 2,
+                 spaceBetween: 10,
+                 navigation: {
+                     nextEl: '.swiper-button-next',
+                     prevEl: '.swiper-button-prev',
+                 },
+                 autoplay: {
+                     delay: 3000,
+                     disableOnInteraction: false,
+                 },
+                 loop: true,
+                 breakpoints: {
+                     480: { slidesPerView: 2 },
+                     768: { slidesPerView: 3 },
+                     1024: { slidesPerView: 4 },
+                     1280: { slidesPerView: 5 },
+                     1536: { slidesPerView: 6 },
+                 },
+             });
+         });
+
+         const currentAttribute = @json($response['current_attribute']);
+         const productAttributes = @json($response['product_attributes']);
+         const variantProducts = @json($response['varient_products']);
 
 
-        var slug = '{{ $response['slug'] }}';
-        $(document).ready(function() {
+         var slug = '{{ $response['slug'] }}';
+         $(document).ready(function() {
 
             let selectedAttributes = {};
             const firstAttributeId = productAttributes[0].id;
