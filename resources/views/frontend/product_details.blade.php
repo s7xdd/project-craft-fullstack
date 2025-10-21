@@ -143,7 +143,7 @@
                     </x-slot>
 
                     <x-slot name="cartOptions">
-                        <div class="product__action js-product-action" style="margin-bottom: 20px">
+                        <div class="product__action js-product-action mb-5">
                             <div class="product__quantity-and-add-to-cart d-flex">
                                 <div class="product__quantity">
                                     <div class="product-quantity__minus js-quantity-down"><a href="#"><i

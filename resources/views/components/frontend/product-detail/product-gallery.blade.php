@@ -1,17 +1,17 @@
-<section class="shop-details pt_70 pb_120">
-    <div class="large-container">
-        <div class="product-details-content mb_80">
-            <div class="row clearfix">
-                <div class="col-lg-6 col-md-12 col-sm-12 image-column">
-                    <div class="bxslider">
-                        {{ $slot }}
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-12 col-sm-12 content-column">
-                    {{ $productDetails }}
-                </div>
-            </div>
-        </div>
-        {{ $productDescription ?? "" }}
-    </div>
-</section>
+ <section class="shop-details relative pt-[70px] pb-[120px]">
+     <div class="max-w-7xl mx-auto px-4">
+         <div class="product-details-content relative block mb-20">
+             <div class="bg-blue-300 flex flex-wrap">
+                 <div class="lg:w-1/2 w-full image-column">
+                     <div class="bxslider">
+                         {{ $slot }}
+                     </div>
+                 </div>
+                 <div class="lg:w-1/2 w-full content-column">
+                     {{ $productDetails }}
+                 </div>
+             </div>
+         </div>
+         {{ $productDescription ?? "" }}
+     </div>
+ </section>
