@@ -95,7 +95,7 @@
 
 
     @if ($middleCollections->isNotEmpty())
-        <div class="!pb-20">
+        <div class="!pb-20 h-[400px] lg:h-[500px]">
             @foreach ($middleCollections as $collectionKey => $collection)
                 <x-frontend.common.product-section title="{{ $collection['collectiontitle'] }}">
                      <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
@@ -127,6 +127,8 @@
             @endforeach
         </div>
      @endif
+
+     <div class="h-[100px] w-full "></div>
 
 @section('script')
      <script>
