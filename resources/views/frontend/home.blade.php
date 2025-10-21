@@ -42,12 +42,18 @@
         }
     </style>
 
-    <x-frontend.home.banner>
+<div class="px-3">
+    
+ <x-frontend.home.banner>
         @foreach ($data['slider'] as $slide)
             <x-frontend.home.banner-slide image="{{ uploaded_asset($slide['image']) }}" title="{{ $slide['name'] ?? '' }}"
                 link="{{ $slide['link'] ?? '' }}" buttonText="{{ $slide['btn_text'] ?? '' }}" />
         @endforeach
     </x-frontend.home.banner>
+
+</div>
+
+   
 
 
 
