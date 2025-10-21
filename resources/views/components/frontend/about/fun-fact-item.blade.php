@@ -1,8 +1,6 @@
-<div class="col-lg-4 col-md-6 col-sm-12 funfact-block">
-    <div class="funfact-block-one">
-        <div class="count-outer">
-            <span class="odometer" data-count="{{ $count }}">00</span><span class="symble">+</span>
-        </div>
-        <p>{{ $text }}</p>
+<div class="p-6 text-center">
+    <div class="text-3xl font-bold text-white mb-2">
+        <span class="odometer" data-count="{{ $count }}">00</span>
     </div>
+    <p class="text-white">{{ $text }}</p>
 </div>

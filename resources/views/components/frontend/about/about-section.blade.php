@@ -1,16 +1,14 @@
-<section class="about-section pb_20">
-    <div class="large-container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 col-md-12 col-sm-12 image-column">
-                <div class="image-box" style="width:780px; height:650px; overflow:hidden;">
-                    <figure>
-                        <img src="{{ $image }}" alt="{{ $alt }}" style="width:100%; object-fit:cover;">
-                    </figure>
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+            <div class="w-full lg:w-1/2">
+                <div class="relative w-full h-96 lg:h-[650px] overflow-hidden rounded-lg">
+                    <img src="{{ $image }}" alt="{{ $alt }}" class="w-full h-full object-cover">
                 </div>
             </div>
-            <div class="col-lg-6 col-md-12 col-sm-12 content-column">
-                <div class="content-box">
-                    <div class="text-box mb_35">
+            <div class="w-full lg:w-1/2">
+                <div class="prose prose-lg max-w-none">
+                    <div class="mb-8">
                         {{ $content ?? "" }}
                     </div>
                     {{ $funFacts ?? "" }}
