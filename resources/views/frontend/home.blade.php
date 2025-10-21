@@ -151,31 +151,66 @@
      @endif
 
 @section('script')
-     <script>
-         // Initialize Swiper for Homepage Carousels
-         document.addEventListener('DOMContentLoaded', function () {
-             new Swiper('.homepageSwiper', {
-                 slidesPerView: 2,
-                 spaceBetween: 10,
-                 navigation: {
-                     nextEl: '.swiper-button-next',
-                     prevEl: '.swiper-button-prev',
-                 },
-                 autoplay: {
-                     delay: 3000,
-                     disableOnInteraction: false,
-                 },
-                 loop: true,
-                 breakpoints: {
-                     480: { slidesPerView: 2 },
-                     768: { slidesPerView: 3 },
-                     1024: { slidesPerView: 4 },
-                     1280: { slidesPerView: 5 },
-                     1536: { slidesPerView: 6 },
-                 },
-             });
-         });
-     </script>
+      <script>
+          // Initialize Swiper for Homepage Carousels
+          document.addEventListener('DOMContentLoaded', function () {
+              new Swiper('.homepageSwiper', {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
+                  navigation: {
+                      nextEl: '.swiper-button-next',
+                      prevEl: '.swiper-button-prev',
+                  },
+                  autoplay: {
+                      delay: 3000,
+                      disableOnInteraction: false,
+                  },
+                  loop: true,
+                  breakpoints: {
+                      480: { slidesPerView: 2 },
+                      768: { slidesPerView: 3 },
+                      1024: { slidesPerView: 4 },
+                      1280: { slidesPerView: 5 },
+                      1536: { slidesPerView: 6 },
+                  },
+              });
+          });
+      </script>
+      <script>
+          // Initialize Embla Carousel for Hero Banner
+          document.addEventListener('DOMContentLoaded', function () {
+              const emblaNode = document.getElementById('hero-embla');
+              const dotsNode = document.getElementById('hero-dots');
+              if (!emblaNode || !dotsNode) return;
+
+              const emblaApi = EmblaCarousel(emblaNode, {
+                  loop: true,
+                  autoplay: { delay: 3000, stopOnInteraction: false }
+              });
+
+              let selectedIndex = 0;
+
+              const updateDots = () => {
+                  dotsNode.innerHTML = '';
+                  const slideCount = emblaNode.querySelectorAll('.embla__slide').length;
+                  for (let i = 0; i < slideCount; i++) {
+                      const button = document.createElement('button');
+                      button.className = 'inline-block mx-1 h-2 rounded-full bg-neutral-500/50 transition-opacity ' +
+                          (selectedIndex === i ? 'w-7 opacity-100' : 'w-2 opacity-20');
+                      button.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                      button.addEventListener('click', () => emblaApi.scrollTo(i));
+                      dotsNode.appendChild(button);
+                  }
+              };
+
+              emblaApi.on('select', () => {
+                  selectedIndex = emblaApi.selectedScrollSnap();
+                  updateDots();
+              });
+
+              updateDots();
+          });
+      </script>
 @endsection
 
      @if ($testimonials->count() > 0)
