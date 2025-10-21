@@ -35,11 +35,10 @@
     </x-frontend.about.about-section>
 
 
-
-    @if (
+     @if (
         $homePageContents->getTranslation('image1', $lang) &&
             is_array(json_decode($homePageContents->getTranslation('image1', $lang))))
-        <div class="py-10 pb_40">
+         <div class="h-[200px] flex flex-col justify-center">
             <x-frontend.home.highlights>
                 @foreach (json_decode($homePageContents->getTranslation('image1', $lang), true) as $sectionData)
                     <x-frontend.home.highlight-item
@@ -49,5 +48,7 @@
             </x-frontend.home.highlights>
         </div>
     @endif
+
+   
 
 @endsection
