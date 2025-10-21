@@ -383,28 +383,7 @@
 	}
 
 
-	// five-item-carousel
-	if ($('.five-item-carousel').length) {
-		const $fiveItemCarousel = $('.five-item-carousel');
-		const fiveItemCount = $fiveItemCarousel.find('.item').length; // change selector if needed
 
-		$fiveItemCarousel.owlCarousel({
-			loop: fiveItemCount > 1,
-			margin: -10,
-			nav: true,
-			smartSpeed: 500,
-			autoplay: fiveItemCount > 1 ? 1000 : false,
-			navText: ['<span class="icon-11"></span>', '<span class="icon-12"></span>'],
-			responsive: {
-				0: { items: 2 },
-				480: { items: 2 },
-				600: { items: 2 },
-				800: { items: 3 },
-				1200: { items: 6 },
-				1600: { items: 7 }
-			}
-		});
-	}
 
 	// popular-carousel
 	if ($('.popular-carousel').length) {
