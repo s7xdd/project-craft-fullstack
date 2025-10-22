@@ -77,11 +77,39 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-});
+ });
 
+ document.addEventListener("DOMContentLoaded", () => {
+     const testimonialCarousel = document.querySelector('.testimonial-carousel');
+     if (!testimonialCarousel) return;
 
+     const items = parseInt(testimonialCarousel.dataset.items) || 4;
+     const tabletItems = parseInt(testimonialCarousel.dataset.tabletItems) || 3;
+     const mobileItems = parseInt(testimonialCarousel.dataset.mobileItems) || 2;
+     const margin = parseInt(testimonialCarousel.dataset.margin) || 15;
+     const autoplay = testimonialCarousel.dataset.autoplay === 'true';
+     const loop = testimonialCarousel.dataset.loop === 'true';
 
-"use strict";
+     new Swiper(testimonialCarousel, {
+         slidesPerView: items,
+         spaceBetween: margin,
+         loop: loop,
+         autoplay: autoplay ? {
+             delay: 3000,
+             disableOnInteraction: false,
+         } : false,
+         breakpoints: {
+             768: {
+                 slidesPerView: tabletItems,
+             },
+             0: {
+                 slidesPerView: mobileItems,
+             }
+         }
+     });
+ });
+
+ "use strict";
 
 (function ($) {
     function ReplaceWithPolyfill() {

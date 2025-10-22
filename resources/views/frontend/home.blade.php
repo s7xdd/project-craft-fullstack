@@ -220,12 +220,7 @@
 @endsection
 
      @if ($testimonials->count() > 0)
-        <x-frontend.home.testimonial-feed title="{{ $data['testimonialsPageData']?->getTranslation('title') }}" description="{!! $data['testimonialsPageData']?->getTranslation('content1') !!}">
-            @foreach ($testimonials as $t)
-                <x-frontend.home.testimonial-item video="{{ $t['video'] }}" name="{{ $t['name'] }}"
-                    title="{{ $t['title'] }}" text="{{ $t['text'] }}" />
-            @endforeach
-        </x-frontend.home.testimonial-feed>
+         <x-frontend.home.testimonial-feed :testimonials="$testimonials" title="{{ $data['testimonialsPageData']?->getTranslation('title') }}" description="{!! $data['testimonialsPageData']?->getTranslation('content1') !!}" />
     @endif
 
     <!-- WhatsApp Section -->
