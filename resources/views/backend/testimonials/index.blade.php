@@ -3,12 +3,12 @@
     <div class="aiz-titlebar text-left mt-2 mb-3">
         <div class="row align-items-center">
             <div class="col-md-6">
-                <h5 class="h4">{{ trans('messages.all').' Testimonials' }}</h5>
+                <h5 class="h4">{{ trans('messages.all') . ' Testimonials' }}</h5>
             </div>
 
             <div class="col-md-6 text-md-right">
                 <a href="{{ route('testimonials.create') }}" class="btn btn-primary">
-                    <span>{{ trans('messages.add_new').' Testimonial' }}</span>
+                    <span>{{ trans('messages.add_new') . ' Testimonial' }}</span>
                 </a>
             </div>
         </div>
@@ -32,9 +32,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($testimonials as $key=>$test)
+                                @foreach ($testimonials as $key => $test)
                                     <tr>
-                                        <td class="text-center">{{ $key + 1 + ($testimonials->currentPage() - 1) * $testimonials->perPage() }}</td>
+                                        <td class="text-center">
+                                            {{ $key + 1 + ($testimonials->currentPage() - 1) * $testimonials->perPage() }}
+                                        </td>
                                         <td>
                                             {{ $test->name }}
                                         </td>
@@ -51,11 +53,20 @@
                                             </label>
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('testimonials.edit', $test) }}" class="btn btn-soft-primary btn-icon btn-circle"><i class="las la-edit"></i></a>
+                                            <a href="{{ route('testimonials.edit', $test) }}"
+                                                class="btn btn-soft-primary btn-icon btn-circle"><i
+                                                    class="las la-edit"></i></a>
 
-                                            <a href="#" class="btn btn-soft-danger btn-icon btn-circle confirm-delete" data-href="{{ route('testimonials.destroy', $test->id) }}" title="Delete">
-                                                <i class="las la-trash"></i>
-                                            </a>
+                                            <form action="{{ route('testimonials.destroy', $test->id) }}" method="POST"
+                                                class="d-inline-block"
+                                                onsubmit="return confirm('Are you sure you want to delete this testimonial?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-soft-danger btn-icon btn-circle"
+                                                    title="Delete">
+                                                    <i class="las la-trash"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
