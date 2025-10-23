@@ -238,7 +238,7 @@
 
 
      @if (!empty($relatedProducts[0]))
-         <section class="py-16 bg-white">
+         <section class="py-16">
              <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                  <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Related Products</h2>
                  @php
