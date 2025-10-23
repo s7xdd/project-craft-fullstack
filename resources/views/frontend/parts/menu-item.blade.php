@@ -25,9 +25,6 @@
                     </div>
                 @endforeach
             </div>
-            <div class="advice-box">
-                <img class="h-full w-full object-fill" src="{{ uploaded_asset(get_setting('menu_image')) }}" />
-            </div>
         </div>
     </li>
 @elseif($hasChildren)
