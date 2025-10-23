@@ -7,11 +7,11 @@
     <li class="dropdown">
         <a href="{{ $item->link }}">{{ $item->label }}</a>
         <div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>
-        <div class="megamenu" style="display: none;">
+        <div class="megamenu megamenu-mobile-hidden">
             <div class="row clearfix">
                 @foreach ($item->child as $group)
                     <div class="col-xl-3 column">
-                        <ul style="display: flex;flex-direction: column;">
+                        <ul class="megamenu-column">
                             <li>
                                 <h5>{{ $group->label }}</h5>
                             </li>
@@ -35,7 +35,7 @@
     <li class="dropdown">
         <a href="{{ $item->link }}">{{ $item->label }}</a>
         <div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>
-        <ul class="submenu" style="display: none;">
+        <ul class="submenu submenu-mobile-hidden">
             @foreach ($item->child as $child)
                 @include('frontend.parts.menu-item-mobile', ['item' => $child])
             @endforeach

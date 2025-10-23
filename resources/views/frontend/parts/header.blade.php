@@ -713,6 +713,19 @@
   margin-bottom: 15px;
 }
 
+.megamenu-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.megamenu-mobile-hidden {
+  display: none;
+}
+
+.submenu-mobile-hidden {
+  display: none;
+}
+
 
 /** mobile-menu **/
 

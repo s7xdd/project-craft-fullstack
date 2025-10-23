@@ -10,7 +10,7 @@
             <div class="row clearfix">
                 @foreach ($item->child as $group)
                     <div class="col-xl-3 column">
-                        <ul style="display: flex;flex-direction: column;">
+                        <ul class="megamenu-column">
                             <li>
                                 <a href="{{ $group->link }}">{{ $group->label }}</a>
                             </li>
