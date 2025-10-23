@@ -199,13 +199,13 @@
 
     <div id="main">
 
-        @include('frontend.parts.header')
+         @include('frontend.parts.header')
 
-        @include('frontend.parts.mobile-menu')
+         @include('frontend.parts.mobile-menu')
 
-        <div style="background-color: {{ get_setting('base_color') }}; padding-top: 10px;">
-            @yield('content')
-        </div>
+         <div style="background-color: {{ get_setting('base_color') }}; padding-top: 10px; margin-top: 120px;">
+             @yield('content')
+         </div>
 
 
         @include('frontend.parts.footer')
@@ -406,7 +406,6 @@
                     success: function(response) {
                         $('.cart_count').text(response.cart_count);
                         $('#cart-count-header').text(response.cart_count);
-                        $('#cart-count-sticky').text(response.cart_count);
                         if (response.status == true) {
                             toastr.success(response.message,
                                 "{{ trans('messages.success') }}");

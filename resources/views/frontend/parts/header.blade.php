@@ -95,51 +95,7 @@
             </div>
         </div>
     </div>
-    <div class="sticky-header" style="background-color:{{ get_setting('header_base_color') }};">
-        <div class="large-container">
-            <div class="outer-box">
 
-                <div class="menu-area">
-                    <nav class="main-menu clearfix">
-                        <ul class="navigation clearfix">
-
-
-                            @foreach ($menu_items as $item)
-                                @include('frontend.parts.menu-item', ['item' => $item])
-                            @endforeach
-                        </ul>
-                    </nav>
-                </div>
-                <div class="menu-right-content">
-                    <div class="search-inner !mt-3">
-                        <form action="{{ route('products.index') }}" method="get">
-                            <div class="form-group">
-                                <input type="search" name="search" placeholder="Search Products"
-                                    value="{{ request()->get('search') }}" required />
-                                <button type="submit">
-                                    <i class="icon-4"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <ul class="option-list">
-                        <li class="shop-cart">
-                            <button type="button">
-                                <a href="{{ route('cart.items') }}">
-                                    <i class="fas fa-cart-shopping"></i><span class="bg-red-500"
-                                        id="cart-count-sticky">{{ cartCount() }}</span>
-                                </a>
-                            </button>
-                        </li>
-                        <li>
-                            <a href="{{ route('orders.index') }}"><i class="far fa-user"></i></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Mobile Search Popup -->
     <div class="mobile-search-popup" id="mobile-search-popup" style="display: none;">

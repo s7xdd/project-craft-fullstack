@@ -17,15 +17,12 @@
 
 	//Update Header Style and Scroll to Top
 	function headerStyle() {
-		if ($('.main-header').length) {
+		if ($('.scroll-top').length) {
 			var windowpos = $(window).scrollTop();
-			var siteHeader = $('.main-header');
 			var scrollLink = $('.scroll-top');
 			if (windowpos >= 150) {
-				siteHeader.addClass('fixed-header');
 				scrollLink.addClass('open');
 			} else {
-				siteHeader.removeClass('fixed-header');
 				scrollLink.removeClass('open');
 			}
 		}
