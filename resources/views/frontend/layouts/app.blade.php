@@ -61,7 +61,6 @@
     <link href="{{ asset('assets/css/color.css" id="jssDefault') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/rtl.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/header.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/module-css/banner.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/module-css/shop.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/module-css/featured.css') }}" rel="stylesheet" />
