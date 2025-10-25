@@ -92,7 +92,7 @@
 
     <link href="{{ asset('assets/css/module-css/account.css') }}" rel="stylesheet" />
 
-    <link href="{{ asset('assets/css/module-css/contact.css') }}" rel="stylesheet">
+
     <link href="{{ asset('assets/css/module-css/about.css') }}" rel="stylesheet"> -->
 
 
