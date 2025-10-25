@@ -196,13 +196,11 @@
 <body>
 
 
-    <div id="main">
+     <div id="main">
 
-         @include('frontend.parts.header')
+          @include('frontend.parts.navbar')
 
-         @include('frontend.parts.mobile-menu')
-
-         <div style="background-color: {{ get_setting('base_color') }}; padding-top: 10px; margin-top: 120px;">
+          <div style="background-color: {{ get_setting('base_color') }}; padding-top: 10px; margin-top: 120px;">
              @yield('content')
          </div>
 
