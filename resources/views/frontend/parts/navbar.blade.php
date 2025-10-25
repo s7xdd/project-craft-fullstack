@@ -1444,7 +1444,103 @@ div#mCSB_1_container{
   cursor: pointer;
 }
 
-</style>
+    </style>
+
+@php
+function renderDesktopMenuItem($item) {
+    $hasChildren = isset($item->child) && count($item->child);
+    $isMegamenu = $hasChildren;
+
+    if ($isMegamenu) {
+        echo '<li class="dropdown">';
+        echo '<a href="' . $item->link . '">' . $item->label . ' <i class="fas fa-chevron-down menu-arrow"></i></a>';
+        echo '<div class="megamenu">';
+        echo '<div class="row clearfix">';
+        foreach ($item->child as $group) {
+            echo '<div class="col-xl-3 column">';
+            echo '<ul class="megamenu-column">';
+            echo '<li>';
+            echo '<a href="' . $group->link . '">' . $group->label . '</a>';
+            echo '</li>';
+            if (isset($group->child) && count($group->child)) {
+                foreach ($group->child as $sub) {
+                    echo '<li>';
+                    echo '<a href="' . $sub->link . '">' . $sub->label . '</a>';
+                    echo '</li>';
+                }
+            }
+            echo '</ul>';
+            echo '</div>';
+        }
+        echo '</div>';
+        echo '</div>';
+        echo '</li>';
+    } elseif ($hasChildren) {
+        echo '<li class="dropdown">';
+        echo '<a href="' . $item->link . '">' . $item->label . ' <i class="fas fa-chevron-down menu-arrow"></i></a>';
+        echo '<ul class="submenu">';
+        foreach ($item->child as $child) {
+            renderDesktopMenuItem($child);
+        }
+        echo '</ul>';
+        echo '</li>';
+    } else {
+        echo '<li>';
+        echo '<a href="' . $item->link . '">' . $item->label . '</a>';
+        echo '</li>';
+    }
+}
+
+function renderMobileMenuItem($item) {
+    $hasChildren = isset($item->child) && count($item->child);
+    $isMegamenu = $hasChildren && isset($item->child[0]->child) && count($item->child[0]->child) > 0;
+
+    if ($isMegamenu) {
+        echo '<li class="dropdown">';
+        echo '<a href="' . $item->link . '">' . $item->label . '</a>';
+        echo '<div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>';
+        echo '<div class="megamenu megamenu-mobile-hidden">';
+        echo '<div class="row clearfix">';
+        foreach ($item->child as $group) {
+            echo '<div class="col-xl-3 column">';
+            echo '<ul class="megamenu-column">';
+            echo '<li>';
+            echo '<h5>' . $group->label . '</h5>';
+            echo '</li>';
+            if (isset($group->child) && count($group->child)) {
+                foreach ($group->child as $sub) {
+                    echo '<li>';
+                    echo '<a href="' . $sub->link . '">' . $sub->label . '</a>';
+                    echo '</li>';
+                }
+            }
+            echo '</ul>';
+            echo '</div>';
+        }
+        echo '</div>';
+        echo '<div class="advice-box">';
+        echo '<img class="h-full w-full object-fill" src="' . asset('assets/images/product-1.webp') . '" />';
+        echo '</div>';
+        echo '</div>';
+        echo '</li>';
+    } elseif ($hasChildren) {
+        echo '<li class="dropdown">';
+        echo '<a href="' . $item->link . '">' . $item->label . '</a>';
+        echo '<div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>';
+        echo '<ul class="submenu submenu-mobile-hidden">';
+        foreach ($item->child as $child) {
+            renderMobileMenuItem($child);
+        }
+        echo '</ul>';
+        echo '</li>';
+    } else {
+        echo '<li>';
+        echo '<a href="' . $item->link . '">' . $item->label . '</a>';
+        echo '</li>';
+    }
+}
+@endphp
+
 <header class="main-header header-style-two">
     <div class="header-top" style="background-color: {{ get_setting('top_bar_base_color') }};">
         <div class="large-container">
@@ -1468,33 +1564,52 @@ div#mCSB_1_container{
         <div class="large-container">
             <div class="outer-box">
 
+
+<!-- Image logo in PC -->
                 <figure class="navbar-logo pt-1 !hidden xl:!flex">
                     <a href="/"><img src="{{ uploaded_asset(get_setting('site_icon')) }}" alt="" /></a>
                 </figure>
 
+
+<!-- Nav items pc -->
                 <div class="menu-area">
+
+
+                <!-- Ham menu in mobile -->
                     <div class="mobile-nav-toggler !rounded-md" id="mobile-nav-toggler">
                         <i class="icon-bar"></i>
                         <i class="icon-bar"></i>
                         <i class="icon-bar"></i>
                     </div>
+
+                    <!-- Image logo in Mobile -->
                     <div class="mobile-logo-box !bg-white">
                         <figure class="navbar-logo !mb-0">
                             <a href="/"><img src="{{ uploaded_asset(get_setting('site_icon')) }}"
                                     alt="" /></a>
                         </figure>
                     </div>
+
+
                     <nav class="main-menu navbar-expand-md navbar-light clearfix">
                         <div class="" id="navbarSupportedContent">
                             <ul class="navigation clearfix">
 
                                 @foreach ($menu_items as $item)
-                                    @include('frontend.parts.menu-item', ['item' => $item])
+                                    @php renderDesktopMenuItem($item) @endphp
                                 @endforeach
                             </ul>
                         </div>
                     </nav>
-                </div>
+                
+                
+                  </div>
+
+                
+                
+                
+                
+                
                 <div class="menu-right-content">
 
                     <div class="search-inner">
@@ -1557,7 +1672,7 @@ div#mCSB_1_container{
             <div class="menu-outer">
                 <ul class="navigation clearfix">
                     @foreach ($menu_items as $item)
-                        @include('frontend.parts.menu-item-mobile', ['item' => $item])
+                        @php renderMobileMenuItem($item) @endphp
                     @endforeach
                 </ul>
             </div>
