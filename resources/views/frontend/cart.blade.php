@@ -15,12 +15,10 @@
     @if ($response['products'] && !empty($response['products']))
         <x-frontend.cart.cart-section>
             <x-slot name="cartItems">
-                <div class="cart-items-container mb_30">
-                    <div class="cart-items-list">
-                        @foreach ($response['products'] as $prod)
-                            <x-frontend.cart.cart-item :prod="$prod" />
-                        @endforeach
-                    </div>
+                <div class="space-y-4">
+                    @foreach ($response['products'] as $prod)
+                        <x-frontend.cart.cart-item :prod="$prod" />
+                    @endforeach
                 </div>
             </x-slot>
 
@@ -81,13 +79,11 @@
             </x-slot>
         </x-frontend.cart.cart-section>
     @else
-        <div class="empty-cart-container" style="text-align: center; padding: 50px 20px;">
-            <h2 style="margin-bottom: 20px;">{{ trans('messages.no_products_cart') }}</h2>
-            <p style="margin-bottom: 30px; font-size: 18px; color: #666;">Your cart is currently empty. Browse our products
-                and add items to your cart.</p>
-            <a href="{{ route('products.index') }}" class="theme-btn btn-one"
-                style="display: inline-block; padding: 12px 30px; background-color: #000; color: #fff; text-decoration: none; border-radius: 4px; transition: all 0.3s ease; font-weight: 600; border: 2px solid #000;">
-                <span>Continue Shopping</span>
+        <div class="text-center py-16 px-4">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">{{ trans('messages.no_products_cart') }}</h2>
+            <p class="text-lg text-gray-600 mb-8">Your cart is currently empty. Browse our products and add items to your cart.</p>
+            <a href="{{ route('products.index') }}" class="inline-block bg-black text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors border-2 border-black">
+                Continue Shopping
             </a>
         </div>
     @endif
@@ -160,21 +156,4 @@
 
  @endsection
 
-<style>
-    .theme-btn {
-        display: inline-block;
-        padding: 12px 30px;
-        background-color: #000;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 4px;
-        transition: all 0.3s ease;
-        font-weight: 600;
-        border: 2px solid #000;
-    }
 
-    .theme-btn:hover {
-        background-color: #fff;
-        color: #000;
-    }
-</style>

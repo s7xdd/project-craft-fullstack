@@ -87,7 +87,7 @@
     <link href="{{ asset('assets/css/module-css/shop-details.css') }}" rel="stylesheet" />
 
 
-    <link href="{{ asset('assets/css/module-css/cart.css') }}" rel="stylesheet" />
+
     <link href="{{ asset('assets/css/module-css/checkout.css') }}" rel="stylesheet" />
 
     <link href="{{ asset('assets/css/module-css/account.css') }}" rel="stylesheet" />

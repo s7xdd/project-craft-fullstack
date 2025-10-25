@@ -1,14 +1,15 @@
-<div class="cart-item-card pb-2">
-    <div class="cart-item-content">
-        <div class="cart-item-image">
+<div class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
+    <!-- Desktop Layout -->
+    <div class="hidden md:grid grid-cols-[100px_1fr_auto_auto_auto_auto] gap-5 items-center p-5">
+        <div class="flex-shrink-0">
             <img src="{{ $prod['product']['image'] }}" alt="{{ $prod['product']['name'] }}"
-                class="product-image" />
+                class="w-20 h-20 object-cover rounded-lg border border-gray-200" />
         </div>
 
-        <div class="cart-item-details">
-            <h4 class="product-title">
+        <div class="min-w-0 flex-1">
+            <h4 class="text-lg font-semibold mb-2">
                 <a href="{{ route('product-detail', ['slug' => $prod['product']['slug'], 'sku' => $prod['product']['sku']]) }}"
-                    class="product-link">
+                    class="text-gray-900 hover:text-blue-600 no-underline transition-colors">
                     {{ $prod['product']['name'] }}
                 </a>
             </h4>
@@ -22,79 +23,96 @@
             @endphp
 
             @if ($attributeValue != '')
-                <div class="product-variants">
+                <div class="text-sm text-gray-600 mb-1">
                     {!! $attributeValue !!}
                 </div>
             @endif
-
-            <!-- <div class="product-brand">
-                {{ trans('messages.brand') }}: {{ $prod['product']['brand'] }}
-            </div> -->
         </div>
 
-        <div class="cart-item-price">
-            <div class="price-label">{{ trans('messages.price') }}</div>
-            <div class="price-value">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['main_price'] }}</div>
+        <div class="text-center min-w-[100px]">
+            <div class="text-xs uppercase font-semibold text-gray-600 mb-1">{{ trans('messages.price') }}</div>
+            <div class="text-lg font-bold text-gray-900">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['main_price'] }}</div>
         </div>
 
-        <div class="cart-item-quantity">
-            <div class="quantity-controls">
-                <button class="quantity-btn quantity-minus change_quantity" data-action="minus"
+        <div class="flex items-center justify-center min-w-[120px]">
+            <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                <button class="bg-gray-50 border-none w-8 h-8 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors text-gray-600 hover:text-gray-800 change_quantity" data-action="minus"
                     data-id="{{ $prod['id'] }}">
-                    <i class="fas fa-minus"></i>
+                    <i class="fas fa-minus text-xs"></i>
                 </button>
-                <input type="text" value="{{ $prod['quantity'] }}" class="quantity-input"
+                <input type="text" value="{{ $prod['quantity'] }}" class="w-12 h-8 border-none text-center text-sm font-semibold text-gray-900 bg-white border-l border-r border-gray-300"
                     id="quantity-field_{{ $prod['id'] }}" readonly />
-                <button class="quantity-btn quantity-plus change_quantity" data-action="plus"
+                <button class="bg-gray-50 border-none w-8 h-8 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors text-gray-600 hover:text-gray-800 change_quantity" data-action="plus"
                     data-id="{{ $prod['id'] }}">
-                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-plus text-xs"></i>
                 </button>
             </div>
         </div>
 
-        <div class="cart-item-total">
-            <div class="total-label">{{ trans('messages.total') }}</div>
-            <div class="total-value">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['total'] }}</div>
+        <div class="text-center min-w-[100px]">
+            <div class="text-xs uppercase font-semibold text-gray-600 mb-1">{{ trans('messages.total') }}</div>
+            <div class="text-lg font-bold text-gray-900">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['total'] }}</div>
         </div>
 
-        <div class="cart-item-actions">
-            <button data-id="{{ $prod['id'] }}" class="remove-btn remove-cart-item">
-                <i class="fas fa-trash-alt"></i>
+        <div class="flex items-center justify-center min-w-[50px]">
+            <button data-id="{{ $prod['id'] }}" class="bg-transparent border-none w-9 h-9 rounded-md flex items-center justify-center cursor-pointer transition-colors text-gray-600 hover:bg-red-50 hover:text-red-600 remove-cart-item">
+                <i class="fas fa-trash-alt text-sm"></i>
             </button>
         </div>
     </div>
 
     <!-- Mobile Layout -->
-    <div class="cart-item-mobile-actions d-md-none">
-        <div class="cart-item-mobile-price">
-            <div class="price-label">{{ trans('messages.price') }}</div>
-            <div class="price-value">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['main_price'] }}</div>
-        </div>
+    <div class="md:hidden p-4">
+        <div class="flex gap-4 mb-4">
+            <img src="{{ $prod['product']['image'] }}" alt="{{ $prod['product']['name'] }}"
+                class="w-16 h-16 object-cover rounded-lg border border-gray-200 flex-shrink-0" />
+            <div class="flex-1 min-w-0">
+                <h4 class="text-base font-semibold mb-1">
+                    <a href="{{ route('product-detail', ['slug' => $prod['product']['slug'], 'sku' => $prod['product']['sku']]) }}"
+                        class="text-gray-900 hover:text-blue-600 no-underline transition-colors">
+                        {{ $prod['product']['name'] }}
+                    </a>
+                </h4>
 
-        <div class="cart-item-mobile-quantity">
-            <div class="quantity-controls">
-                <button class="quantity-btn quantity-minus change_quantity" data-action="minus"
-                    data-id="{{ $prod['id'] }}">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <input type="text" value="{{ $prod['quantity'] }}" class="quantity-input"
-                    id="quantity-field-mobile_{{ $prod['id'] }}" readonly />
-                <button class="quantity-btn quantity-plus change_quantity" data-action="plus"
-                    data-id="{{ $prod['id'] }}">
-                    <i class="fas fa-plus"></i>
-                </button>
+                @if ($attributeValue != '')
+                    <div class="text-sm text-gray-600">
+                        {!! $attributeValue !!}
+                    </div>
+                @endif
             </div>
         </div>
 
-        <div class="cart-item-mobile-total">
-            <div class="total-label">{{ trans('messages.total') }}</div>
-            <div class="total-value">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['total'] }}</div>
-        </div>
+        <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+            <div class="text-center flex-1">
+                <div class="text-xs uppercase font-semibold text-gray-600 mb-1">{{ trans('messages.price') }}</div>
+                <div class="text-base font-bold text-gray-900">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['main_price'] }}</div>
+            </div>
 
-        <div class="cart-item-mobile-remove">
-            <button data-id="{{ $prod['id'] }}" class="remove-btn remove-cart-item">
-                <i class="fas fa-trash-alt"></i>
-            </button>
+            <div class="flex items-center justify-center flex-1">
+                <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                    <button class="bg-gray-50 border-none w-7 h-7 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors text-gray-600 hover:text-gray-800 change_quantity" data-action="minus"
+                        data-id="{{ $prod['id'] }}">
+                        <i class="fas fa-minus text-xs"></i>
+                    </button>
+                    <input type="text" value="{{ $prod['quantity'] }}" class="w-10 h-7 border-none text-center text-sm font-semibold text-gray-900 bg-white border-l border-r border-gray-300"
+                        id="quantity-field-mobile_{{ $prod['id'] }}" readonly />
+                    <button class="bg-gray-50 border-none w-7 h-7 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors text-gray-600 hover:text-gray-800 change_quantity" data-action="plus"
+                        data-id="{{ $prod['id'] }}">
+                        <i class="fas fa-plus text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-center flex-1">
+                <div class="text-xs uppercase font-semibold text-gray-600 mb-1">{{ trans('messages.total') }}</div>
+                <div class="text-base font-bold text-gray-900">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['total'] }}</div>
+            </div>
+
+            <div class="flex-shrink-0">
+                <button data-id="{{ $prod['id'] }}" class="bg-transparent border-none w-8 h-8 rounded-md flex items-center justify-center cursor-pointer transition-colors text-gray-600 hover:bg-red-50 hover:text-red-600 remove-cart-item">
+                    <i class="fas fa-trash-alt text-sm"></i>
+                </button>
+            </div>
         </div>
     </div>
 </div>

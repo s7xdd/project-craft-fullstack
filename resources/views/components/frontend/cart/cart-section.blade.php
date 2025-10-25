@@ -1,13 +1,13 @@
-<section class="cart-section pb_150">
-    <div class="large-container">
-        <div class="sec-title centred pb_30">
-            <h2>Your <span>Cart</span></h2>
+<section class="py-16">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-900">Your <span class="text-blue-600">Cart</span></h2>
         </div>
-        <div class="row clearfix">
-            <div class="col-lg-9 col-md-12 col-sm-12 content-side">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="lg:col-span-2">
                 {{ $cartItems }}
             </div>
-            <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
+            <div class="lg:col-span-1">
                 {{ $cartTotals }}
             </div>
         </div>
