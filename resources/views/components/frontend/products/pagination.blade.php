@@ -1,5 +1,5 @@
-<div class="pagination-wrapper centred pt_20">
-    <ul class="pagination clearfix">
+<div class="flex justify-center items-center space-x-2 mt-8">
+    <ul class="flex space-x-1">
         {{ $slot }}
     </ul>
 </div>

@@ -1,24 +1,15 @@
-<section class="shop-page-section pt_20 pb_120">
-    <div class="large-container">
-        <div class="row clearfix">
-            <div class="col-lg-3 col-md-12 col-sm-12 sidebar-side">
+<section class="py-8">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div class="lg:col-span-1">
                 {{ $sidebar ?? '' }}
             </div>
-
-            <div class="col-lg-9 col-md-12 col-sm-12 content-side">
-                <div class="our-shop">
+            <div class="lg:col-span-3">
+                <div class="shop-content">
                     {{ $sorting ?? '' }}
-                    
-                    <!-- card-content start -->
-                    <div class="wrapper grid ">
-                        <div class="shop-grid-content">
-                            <div class="clearfix product-list">
-                                {{ $slot }}
-                            </div>
-                        </div>
-                        <!-- card-content end-->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {{ $slot }}
                     </div>
-
                     {{ $pagination ?? '' }}
                 </div>
             </div>
