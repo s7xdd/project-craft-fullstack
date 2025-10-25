@@ -4,29 +4,30 @@
 @endphp
 
 @if ($isMegamenu)
-    <li class="dropdown">
-        <a href="{{ $item->link }}">{{ $item->label }} <i class="fas fa-chevron-down menu-arrow"></i></a>
-        <div class="megamenu">
-            <div class="row clearfix">
-                @foreach ($item->child as $group)
-                    <div class="col-xl-3 column">
-                        <ul class="megamenu-column">
-                            <li>
-                                <a href="{{ $group->link }}">{{ $group->label }}</a>
-                            </li>
-                            @if (isset($group->child) && count($group->child))
-                                @foreach ($group->child as $sub)
-                                    <li>
-                                        <a href="{{ $sub->link }}">{{ $sub->label }}</a>
-                                    </li>
-                                @endforeach
-                            @endif
-                        </ul>
-                    </div>
+    <li class="dropdown relative group">
+    <a href="{{ $item->link }}">{{ $item->label }} <i class="fas fa-chevron-down menu-arrow"></i></a>
+    <div class="megamenu absolute left-0 top-6 w-full bg-white shadow-lg p-4 z-50 lg:hidden group-hover:lg:block">
+        <div class="row clearfix">
+        @foreach ($item->child as $group)
+            <div class="col-xl-3 column">
+            <ul class="megamenu-column">
+                <li>
+                <a href="{{ $group->link }}">{{ $group->label }}</a>
+                </li>
+                @if (isset($group->child) && count($group->child))
+                @foreach ($group->child as $sub)
+                    <li>
+                    <a href="{{ $sub->link }}">{{ $sub->label }}</a>
+                    </li>
                 @endforeach
+                @endif
+            </ul>
             </div>
+        @endforeach
         </div>
-    </li>
+    </div>
+</li>
+
 @elseif($hasChildren)
     <li class="dropdown">
         <a href="{{ $item->link }}">{{ $item->label }} <i class="fas fa-chevron-down menu-arrow"></i></a>
