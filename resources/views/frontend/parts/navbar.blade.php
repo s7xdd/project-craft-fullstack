@@ -1,4 +1,4 @@
-<header class="w-full shadow-sm">
+<header class="w-full shadow-sm relative z-[150]">
     <!-- Top Bar -->
     <div class="w-full py-2 px-4" style="background-color: {{ get_setting('top_bar_base_color') }};">
         <div class="max-w-7xl mx-auto">
@@ -111,7 +111,7 @@
                     <!-- Mobile Menu Toggle -->
                     <button 
                         id="mobile-nav-toggler"
-                        class="xl:hidden flex flex-col justify-center items-center space-y-1 p-2 hover:bg-gray-100 rounded-md transition-colors ml-2"
+                        class="lg:hidden flex flex-col justify-center items-center space-y-1 p-2 hover:bg-gray-100 rounded-md transition-colors ml-2"
                     >
                         <span class="block w-6 h-0.5 bg-gray-800"></span>
                         <span class="block w-6 h-0.5 bg-gray-800"></span>
