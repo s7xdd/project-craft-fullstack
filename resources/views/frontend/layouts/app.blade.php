@@ -202,7 +202,7 @@
 
           @include('frontend.parts.navbar')
 
-          <div style="background-color: {{ get_setting('base_color') }}; padding-top: 10px; margin-top: 120px;">
+          <div style="background-color: {{ get_setting('base_color') }}; padding-top: 20px">
              @yield('content')
          </div>
 
