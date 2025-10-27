@@ -6,7 +6,7 @@
 @if ($isMegamenu)
     <li class="dropdown relative group">
     <a href="{{ $item->link }}">{{ $item->label }} <i class="fas fa-chevron-down menu-arrow"></i></a>
-    <div class="megamenu absolute left-1/2 -translate-x-1/2 top-6 w-[450px] rounded-lg bg-gray-50 shadow-lg p-4 z-50 lg:hidden group-hover:lg:flex lg:justify-center lg:items-start hidden">
+    <div class="megamenu absolute left-0 top-6 w-[450px] rounded-lg bg-gray-50 border border-gray-200 shadow-lg p-4 z-50 lg:hidden group-hover:lg:flex lg:justify-center lg:items-start hidden">
         <div class="grid grid-cols-3 gap-4">
         @foreach ($item->child as $group)
             <div class="bg-white p-2 rounded-lg shadow-lg border-1 border-gray-100 flex items-center justify-center hover:shadow-xl hover:bg-green-50 hover:scale-105 transition-all duration-300">
