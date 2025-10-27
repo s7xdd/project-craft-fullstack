@@ -32,11 +32,11 @@
                 </figure>
 
                 <!-- Desktop Navigation with Mega Menu -->
-                <nav class="bg-green-300 hidden lg:block">
+                <nav class=" hidden lg:block">
                         <div class="" id="navbarSupportedContent">
-                           <div class="flex space-x-1 bg-blue-200">
+                           <div class="flex space-x-10 ">
                              @foreach ($menu_items as $item) 
-                             <ul class="bg-red-200">
+                             <ul class="">
                                     @include('frontend.parts.menu-item', ['item' => $item]) 
                                 </ul>
                                 @endforeach
