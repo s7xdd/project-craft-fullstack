@@ -7,11 +7,11 @@
                 <div class="flex flex-wrap -mx-4">
                     <!-- Logo Section -->
                     <div class="w-full px-4 mb-4">
-                        <div class="flex flex-col">
+                        <div class="flex justify-start">
                             <figure class="m-0">
                                 <a href="/" aria-label="Home">
                                     <img src="{{ uploaded_asset(get_setting('site_icon_light')) }}" alt="Site Logo"
-                                        class="max-w-full h-auto" />
+                                        class="w-32 h-auto object-contain" />
                                 </a>
                             </figure>
                         </div>
@@ -114,7 +114,7 @@
                     <figure class="!mb-0 m-0">
                         <a href="/" aria-label="Home">
                             <img src="{{ uploaded_asset(get_setting('site_icon_light')) }}" alt="Site Logo"
-                                class="max-w-full h-auto" />
+                                class="w-40 h-auto object-contain" />
                         </a>
                     </figure>
                 </div>
