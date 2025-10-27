@@ -84,7 +84,7 @@
 
 
     <link href="{{ asset('assets/css/jquery-ui.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/shop-details.css') }}" rel="stylesheet" />
+
 
 
 

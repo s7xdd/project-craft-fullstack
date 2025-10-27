@@ -193,7 +193,7 @@
                         @foreach ($response['photos'] as $index => $photo)
                             <div class="embla__slide flex-[0_0_100%] min-w-0 flex items-center justify-center">
                                 <img src="{{ $photo }}" alt="Product Image {{ $index + 1 }}"
-                                    class="w-full h-auto object-cover rounded-lg max-h-[300px] md:max-h-[700px]"
+                                    class="w-full h-auto object-cover rounded-lg max-h-[500px] md:max-h-[700px]"
                                     loading="lazy">
                             </div>
                         @endforeach
