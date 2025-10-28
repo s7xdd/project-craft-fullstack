@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    <div class="text-center font-bold text-6xl py-4">
+    <div class="text-center font-bold text-5xl py-1">
         {{ capitalizeFirstLetter(request('category', 'Shop')) }}
     </div>
 
@@ -15,12 +15,12 @@
             </x-slot>
 
             <x-slot name="sorting">
-                <div class="flex justify-between items-center mb-6">
-                    <div class="text-gray-600">
+                <div class="flex justify-between items-center mb-3">
+                    <div class="text-xs md:text-sm text-gray-600">
                         Showing <span class="font-semibold">{{ $products->firstItem() ?? '0' }}–{{ $products->lastItem() ?? '0' }}</span> of <span class="font-semibold">{{ $products->total() ?? '0' }}</span> results
                     </div>
                     <div class="flex items-center space-x-2">
-                        <label for="sort-by" class="text-sm font-medium">Sort By</label>
+                        <label for="sort-by" class="text-xs md:text-sm font-medium">Sort By</label>
                         <select id="sort-by" class="border border-gray-300 rounded-md px-3 py-2 text-sm">
                             <option value="name_asc" @if ($sort_by == 'name_asc') selected @endif>
                                 {{ trans('messages.a_z') }}</option>
