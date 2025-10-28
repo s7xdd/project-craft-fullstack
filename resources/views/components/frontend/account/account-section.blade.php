@@ -1,12 +1,9 @@
-<section class="account-section pb_120">
-    <div class="large-container">
-        <div class="sec-title centred mb_60">
-            <h2>Order <span>History</span></h2>
-        </div>
+<section class="py-16 md:py-20 lg:py-32">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {{ $orderIdFilter ?? '' }}
         
-        <div class="history-box pt_100" id="orderHistoryList">
+        <div class="pt-16 md:pt-20 lg:pt-24" id="orderHistoryList">
             {{ $slot }}
         </div>
     </div>
