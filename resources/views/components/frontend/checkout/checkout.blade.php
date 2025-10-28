@@ -1,13 +1,13 @@
-<section class="checkout-section pb_150">
-    <div class="large-container">
-        <div class="sec-title centred pb_30">
-            <h2>The <span>Checkout</span></h2>
+<section class="pb-[150px]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center pb-8">
+            <h2 class="text-3xl font-bold">The <span class="text-blue-600">Checkout</span></h2>
         </div>
-        <div class="row clearfix">
-            <div class="col-lg-8 col-md-12 col-sm-12 billing-column ">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <div class="w-full lg:w-2/3">
                 @include('components.frontend.checkout.billing-details')
             </div>
-            <div class="col-lg-4 col-md-12 col-sm-12 order-column">
+            <div class="w-full lg:w-1/3">
                 @include('components.frontend.checkout.order-summary')
             </div>
         </div>
