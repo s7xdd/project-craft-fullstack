@@ -1,4 +1,4 @@
-<header class="w-full shadow-sm relative z-[150]">
+<header class="w-full shadow-sm fixed top-0 left-0 right-0 z-[150]">
     <!-- Top Bar -->
     <div class="w-full py-2 px-4" style="background-color: {{ get_setting('top_bar_base_color') }};">
         <div class="max-w-7xl mx-auto">
@@ -86,7 +86,7 @@
                     <!-- Action Icons -->
                     <ul class="flex items-center space-x-2 md:space-x-4 m-0 p-0 list-none">
                         <!-- Mobile Search Icon -->
-                        <li class="xl:hidden">
+                        <li class="lg:hidden">
                             <a href="#" id="mobile-search-trigger" class="flex items-center justify-center p-2 hover:bg-gray-100 rounded-lg transition-colors">
                                 <i class="icon-4 text-lg"></i>
                             </a>
@@ -221,7 +221,7 @@
         <div id="search-popup-overlay" class="fixed inset-0 bg-black bg-opacity-50"></div>
         
         <!-- Popup Content -->
-        <div class="fixed inset-x-0 top-20 mx-4 bg-white rounded-lg shadow-2xl p-6 max-w-lg mx-auto transform transition-all">
+        <div class="fixed inset-x-0 top-28 mx-4 bg-white rounded-lg shadow-2xl p-6 max-w-lg mx-auto transform transition-all">
             <!-- Header -->
             <div class="flex items-center justify-between mb-4">
                 <h4 class="text-lg font-semibold text-gray-900">Search Products</h4>
