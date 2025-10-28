@@ -1,26 +1,30 @@
-<div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-all duration-300">
-    <a href="{!! $link !!}" class="relative block">
-        <img src="{{ $image }}" alt="{{ $alt }}" class="w-full h-48 object-cover">
+<div class="bg-gray-50 max-w-[200px] rounded-lg shadow-md border-1 border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300">
+
+    <div class="relative p-1 " style="height: 150px; overflow: hidden;">
+        <a href="{!! $link !!}" class="block" style="height: 100%; width: 100%;">
+            <img src="{{ $image }}" alt="{{ $alt }}" style="width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0.5rem;">
+        </a>
         @if ($currentPrice < $originalPrice)
             @php
                 $discountPercentage = (($originalPrice - $currentPrice) / $originalPrice) * 100;
                 $discount = number_format($discountPercentage, 0);
             @endphp
-            <span class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-sm font-semibold">{{ $discount }}% OFF</span>
+            <span class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-sm font-semibold shadow-md" style="z-index: 10;">{{ $discount }}% OFF</span>
         @endif
-    </a>
-    <div class="p-4">
-        <a href="{!! $link !!}">
-            <span class="text-xs text-gray-500">{{ $category ?? "" }}</span>
-            <h5 class="text-lg font-semibold mt-1 line-clamp-2">{{ $title ?? "" }}</h5>
+    </div>
+    
+    <div class="px-2 pb-1">
+        <a href="{!! $link !!}" class="block h-[65px] md:h-[80px] hover:text-blue-600 transition-colors">
+            <span class="text-[8px] md:text-xs text-gray-500 uppercase tracking-wide">{{ $category ?? "" }}</span>
+            <div class="text-xs md:text-sm mt-1 line-clamp-2 text-gray-800">{{ $title ?? "" }}</div>
         </a>
-        <div class="mt-2">
-            <span class="text-lg font-bold text-green-600">{{ env('DEFAULT_CURRENCY') . ' ' . $currentPrice }}</span>
+        <div class="mt-1 flex items-center gap-2">
+            <span class="text-xs md:text-sm text-gray-500">{{ env('DEFAULT_CURRENCY') . ' ' . $currentPrice }}</span>
             @if ($currentPrice < $originalPrice)
-                <span class="text-sm text-gray-500 line-through ml-2">{{ env('DEFAULT_CURRENCY') . ' ' . $originalPrice }}</span>
+                <span class="text-[8px] md:text-xs text-gray-500 line-through">{{ env('DEFAULT_CURRENCY') . ' ' . $originalPrice }}</span>
             @endif
         </div>
-        <a href="#" class="add-to-cart-btn mt-3 block bg-blue-500 text-white text-center py-2 rounded hover:bg-blue-600 transition-colors"
+        <a href="#" class="add-to-cart-btn mt-1 block bg-black text-xs md:text-sm text-white text-center py-1 rounded-lg hover:bg-green-500 transition-colors font-medium shadow-sm hover:shadow-md"
            data-product-slug="{{ $slug }}" data-product-sku="{{ $sku }}">
             {{ trans('messages.add_to_cart') }}
         </a>
