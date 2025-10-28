@@ -16,7 +16,7 @@
 
             <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 p-4 sm:p-6 md:p-8 lg:p-12">
                 <!-- Content Section -->
-                <div class="text-center lg:text-left flex-1 w-full lg:w-auto">
+                <div class="text-center flex-1 w-full lg:w-auto">
                     <div class="inline-flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                         <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
                             <svg class="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -26,12 +26,12 @@
                         <h3 class="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-gray-800">Order Now</h3>
                     </div>
                     
-                    <p class="text-gray-600 text-sm sm:text-base md:text-lg mb-4 sm:mb-6 max-w-full sm:max-w-md mx-auto lg:mx-0 leading-relaxed">
+                    <p class="text-gray-600 text-sm sm:text-base md:text-lg mb-4 sm:mb-6 max-w-full sm:max-w-md mx-auto leading-relaxed">
                         {{ $homePageContent->getTranslation('heading2', getActiveLanguage()) }}
                     </p>
 
                     <!-- WhatsApp Button Section - Moved inside content section -->
-                    <div class="w-full text-center lg:text-left mt-4 sm:mt-6">
+                    <div class="w-full text-center mt-4 sm:mt-6">
                         <a href="{{ $homePageContent->getTranslation('heading4', getActiveLanguage()) }}"
                            target="_blank"
                            rel="noopener noreferrer"
