@@ -153,10 +153,10 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 z-50 hidden">
         <!-- Backdrop -->
-        <div class="fixed inset-0 bg-black/50 transition-opacity"></div>
+        <div id="mobile-menu-backdrop" class="fixed inset-0 bg-black/50 transition-opacity duration-300 opacity-0"></div>
         
         <!-- Menu Panel -->
-        <div class="fixed inset-y-0 right-0 max-w-xs w-full bg-black shadow-xl overflow-y-auto">
+        <div id="mobile-menu-panel" class="fixed inset-y-0 right-0 max-w-xs w-full bg-black shadow-xl overflow-y-auto transform translate-x-full transition-transform duration-300 ease-in-out">
             <!-- Close Button -->
             <button
                 id="close-mobile-menu"
@@ -297,7 +297,9 @@ nav li > div {
 document.addEventListener('DOMContentLoaded', function() {
     const mobileNavToggler = document.getElementById('mobile-nav-toggler');
     const mobileMenu = document.getElementById('mobile-menu');
-    const closeMobileMenu = document.getElementById('close-mobile-menu');
+    const closeMobileMenuBtn = document.getElementById('close-mobile-menu');
+    const mobileMenuBackdrop = document.getElementById('mobile-menu-backdrop');
+    const mobileMenuPanel = document.getElementById('mobile-menu-panel');
     const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
     const hangingSearchbar = document.getElementById('hanging-searchbar');
     const closeHangingSearch = document.getElementById('close-hanging-search');
@@ -345,29 +347,48 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Toggle mobile menu
-    if (mobileNavToggler) {
-        mobileNavToggler.addEventListener('click', function() {
-            mobileMenu.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+    // Open mobile menu with animation
+    function openMobileMenu() {
+        mobileMenu.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        
+        // Trigger animation after brief delay
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                mobileMenuBackdrop.classList.remove('opacity-0');
+                mobileMenuBackdrop.classList.add('opacity-100');
+                mobileMenuPanel.classList.remove('translate-x-full');
+                mobileMenuPanel.classList.add('translate-x-0');
+            });
         });
     }
 
-    if (closeMobileMenu) {
-        closeMobileMenu.addEventListener('click', function() {
+    // Close mobile menu with animation
+    function closeMobileMenu() {
+        mobileMenuBackdrop.classList.remove('opacity-100');
+        mobileMenuBackdrop.classList.add('opacity-0');
+        mobileMenuPanel.classList.remove('translate-x-0');
+        mobileMenuPanel.classList.add('translate-x-full');
+        
+        // Wait for animation to complete before hiding
+        setTimeout(() => {
             mobileMenu.classList.add('hidden');
             document.body.style.overflow = '';
-        });
+        }, 300);
+    }
+
+    // Toggle mobile menu
+    if (mobileNavToggler) {
+        mobileNavToggler.addEventListener('click', openMobileMenu);
+    }
+
+    if (closeMobileMenuBtn) {
+        closeMobileMenuBtn.addEventListener('click', closeMobileMenu);
     }
 
     // Close menu when clicking backdrop
-    if (mobileMenu) {
-        mobileMenu.addEventListener('click', function(e) {
-            if (e.target === mobileMenu || e.target.classList.contains('bg-opacity-50')) {
-                mobileMenu.classList.add('hidden');
-                document.body.style.overflow = '';
-            }
-        });
+    if (mobileMenuBackdrop) {
+        mobileMenuBackdrop.addEventListener('click', closeMobileMenu);
     }
 
     // Close search on ESC key
@@ -377,8 +398,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 closeSearch();
             }
             if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.add('hidden');
-                document.body.style.overflow = '';
+                closeMobileMenu();
             }
         }
     });
