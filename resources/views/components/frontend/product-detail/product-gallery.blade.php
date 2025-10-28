@@ -1,5 +1,5 @@
-  <section class="py-16 lg:pb-24">
-      <div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section class="pb-16 lg:pb-24">
+      <div class="max-w-8xl mx-auto px-4 lg:px-8">
           <div class="mb-16">
               <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                   <div class="order-1 lg:order-1">
