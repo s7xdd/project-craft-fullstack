@@ -153,7 +153,7 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="fixed inset-0 z-50 hidden">
         <!-- Backdrop -->
-        <div class="fixed inset-0 bg-black bg-opacity-50 transition-opacity"></div>
+        <div class="fixed inset-0 bg-black/50 transition-opacity"></div>
         
         <!-- Menu Panel -->
         <div class="fixed inset-y-0 right-0 max-w-xs w-full bg-white shadow-xl overflow-y-auto">

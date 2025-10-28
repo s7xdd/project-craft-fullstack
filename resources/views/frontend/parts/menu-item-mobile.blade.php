@@ -3,46 +3,25 @@
     $isMegamenu = $hasChildren && isset($item->child[0]->child) && count($item->child[0]->child) > 0;
 @endphp
 
-@if ($isMegamenu)
-    <li class="dropdown">
-        <a href="{{ $item->link }}">{{ $item->label }}</a>
-        <div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>
-        <div class="megamenu megamenu-mobile-hidden">
-            <div class="row clearfix">
-                @foreach ($item->child as $group)
-                    <div class="col-xl-3 column">
-                        <ul class="megamenu-column">
-                            <li>
-                                <h5>{{ $group->label }}</h5>
-                            </li>
-                            @if (isset($group->child) && count($group->child))
-                                @foreach ($group->child as $sub)
-                                    <li>
-                                        <a href="{{ $sub->link }}">{{ $sub->label }}</a>
-                                    </li>
-                                @endforeach
-                            @endif
-                        </ul>
-                    </div>
-                @endforeach
-            </div>
-            <div class="advice-box">
-                <img class="h-full w-full object-fill" src="{{ asset('assets/images/product-1.webp') }}" />
-            </div>
+@if($hasChildren)
+    <li class="relative group">
+        <div class="font-bold flex items-center justify-between">
+            <a href="{{ $item->link }}" class="flex-1">{{ $item->label }}</a>
+            <svg class="w-4 h-4 ml-2 transition-transform group-hover:rotate-180" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
         </div>
-    </li>
-@elseif($hasChildren)
-    <li class="dropdown">
-        <a href="{{ $item->link }}">{{ $item->label }}</a>
-        <div class="dropdown-btn"><span class="fas fa-angle-down"></span></div>
-        <ul class="submenu submenu-mobile-hidden">
+        <ul class="mt-2 min-w-[200px] px-4 bg-white shadow-lg rounded-lg py-2">
             @foreach ($item->child as $child)
+            <div class="border-b border-gray-200">
                 @include('frontend.parts.menu-item-mobile', ['item' => $child])
+            </div>
+                
             @endforeach
         </ul>
     </li>
 @else
-    <li>
-        <a href="{{ $item->link }}">{{ $item->label }}</a>
+    <li class="py-2">
+        <a href="{{ $item->link }}" class="block hover:text-blue-600 transition-colors">{{ $item->label }}</a>
     </li>
 @endif
