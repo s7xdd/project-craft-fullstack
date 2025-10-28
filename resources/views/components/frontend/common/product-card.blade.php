@@ -29,11 +29,11 @@
 
 <a href="{!! $href !!}">
     <div style="background-color: {{ get_setting('base_hov_color') }};"
-        class="w-full max-w-[350px] p-2 md:max-w-md mx-auto  border border-gray-200 rounded-xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_2px_-2px_rgba(0,0,0,0.1)] cursor-pointer hover:shadow-lg transition-shadow">
+        class="w-full max-w-[350px] p-1 md:max-w-md mx-auto  border border-gray-200 rounded-xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_2px_-2px_rgba(0,0,0,0.1)] cursor-pointer hover:shadow-lg transition-shadow">
         <div
-            class="flex flex-col items-center w-full h-fit gap-2 overflow-hidden relative text-left p-1 sm:p-2 md:p-3 lg:p-4">
+            class="flex flex-col items-center w-full h-fit gap-2 overflow-hidden relative text-left p-1 sm:p-2 ">
             <div class="flex items-center justify-center w-full">
-                <img src="{{ $image }}" alt="{{ $name }}" class="w-full h-auto min-h-[150px] md:min-h-[230px] rounded-lg object-cover"
+                <img src="{{ $image }}" alt="{{ $name }}" class="w-full h-auto min-h-[180px] md:min-h-[230px] rounded-lg object-cover"
                     loading="eager" />
             </div>
 
@@ -44,7 +44,7 @@
                     @endif
 
                     <h3
-                        class="text-gray-800 font-medium !text-[14px] sm:!text-sm lg:!text-md overflow-hidden text-ellipsis line-clamp-2 min-h-[50px]">
+                        class="text-gray-800 font-medium !text-[14px] sm:!text-sm lg:!text-md overflow-hidden text-ellipsis line-clamp-2 min-h-[45px]">
                         {!! $name !!}
                     </h3>
 
