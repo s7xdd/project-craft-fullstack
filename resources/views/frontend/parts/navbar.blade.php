@@ -156,11 +156,11 @@
         <div class="fixed inset-0 bg-black/50 transition-opacity"></div>
         
         <!-- Menu Panel -->
-        <div class="fixed inset-y-0 right-0 max-w-xs w-full bg-white shadow-xl overflow-y-auto">
+        <div class="fixed inset-y-0 right-0 max-w-xs w-full bg-black shadow-xl overflow-y-auto">
             <!-- Close Button -->
-            <button 
+            <button
                 id="close-mobile-menu"
-                class="absolute top-4 right-4 p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors z-10"
+                class="absolute top-4 right-4 p-2 text-white hover:text-gray-300 hover:bg-gray-700 rounded-full transition-colors z-10"
             >
                 <i class="fas fa-times text-xl"></i>
             </button>
@@ -184,22 +184,22 @@
                 </div>
 
                 <!-- Contact Info -->
-                <div class="pt-6 border-t">
-                    <h4 class="text-lg font-semibold mb-4 text-gray-900">Contact Info</h4>
-                    <ul class="space-y-3 m-0 p-0 list-none text-sm text-gray-600">
+                <div class="pt-6 border-t border-gray-700">
+                    <h4 class="text-lg font-semibold mb-4 text-white">Contact Info</h4>
+                    <ul class="space-y-3 m-0 p-0 list-none text-sm text-gray-300">
                         <li class="flex items-start">
-                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-gray-400"></i>
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-gray-500"></i>
                             <span>{{ get_setting('address') }}</span>
                         </li>
                         <li>
-                            <a href="tel:{{ get_setting('helpline_number') }}" class="flex items-center hover:text-blue-600 transition-colors">
-                                <i class="fas fa-phone mt-1 mr-3 text-gray-400"></i>
+                            <a href="tel:{{ get_setting('helpline_number') }}" class="flex items-center hover:text-blue-400 transition-colors">
+                                <i class="fas fa-phone mt-1 mr-3 text-gray-500"></i>
                                 <span>{{ get_setting('helpline_number') }}</span>
                             </a>
                         </li>
                         <li>
-                            <a href="mailto:{{ get_setting('email') }}" class="flex items-center hover:text-blue-600 transition-colors">
-                                <i class="fas fa-envelope mt-1 mr-3 text-gray-400"></i>
+                            <a href="mailto:{{ get_setting('email') }}" class="flex items-center hover:text-blue-400 transition-colors">
+                                <i class="fas fa-envelope mt-1 mr-3 text-gray-500"></i>
                                 <span>{{ get_setting('email') }}</span>
                             </a>
                         </li>
@@ -207,32 +207,32 @@
                 </div>
 
                 <!-- Social Links -->
-                <div class="pt-6 border-t mt-6">
+                <div class="pt-6 border-t border-gray-700 mt-6">
                     <ul class="flex items-center space-x-4 m-0 p-0 list-none">
                         @if(get_setting('facebook_link'))
                         <li>
-                            <a href="{{ get_setting('facebook_link') }}" target="_blank" class="flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-blue-600 hover:text-white rounded-full transition-all">
+                            <a href="{{ get_setting('facebook_link') }}" target="_blank" class="flex items-center justify-center w-10 h-10 bg-gray-700 hover:bg-blue-600 text-white rounded-full transition-all">
                                 <span class="fab fa-facebook-f"></span>
                             </a>
                         </li>
                         @endif
                         @if(get_setting('twitter_link'))
                         <li>
-                            <a href="{{ get_setting('twitter_link') }}" target="_blank" class="flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-blue-400 hover:text-white rounded-full transition-all">
+                            <a href="{{ get_setting('twitter_link') }}" target="_blank" class="flex items-center justify-center w-10 h-10 bg-gray-700 hover:bg-blue-400 text-white rounded-full transition-all">
                                 <span class="fab fa-twitter"></span>
                             </a>
                         </li>
                         @endif
                         @if(get_setting('instagram_link'))
                         <li>
-                            <a href="{{ get_setting('instagram_link') }}" target="_blank" class="flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-pink-600 hover:text-white rounded-full transition-all">
+                            <a href="{{ get_setting('instagram_link') }}" target="_blank" class="flex items-center justify-center w-10 h-10 bg-gray-700 hover:bg-pink-600 text-white rounded-full transition-all">
                                 <span class="fab fa-instagram"></span>
                             </a>
                         </li>
                         @endif
                         @if(get_setting('youtube_link'))
                         <li>
-                            <a href="{{ get_setting('youtube_link') }}" target="_blank" class="flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-red-600 hover:text-white rounded-full transition-all">
+                            <a href="{{ get_setting('youtube_link') }}" target="_blank" class="flex items-center justify-center w-10 h-10 bg-gray-700 hover:bg-red-600 text-white rounded-full transition-all">
                                 <span class="fab fa-youtube"></span>
                             </a>
                         </li>
