@@ -82,10 +82,10 @@
             </div>
         </div>
 
-        <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+        <div class="flex items-center justify-between gap-1 pt-4 border-t border-gray-200">
             <div class="text-center flex-1">
                 <div class="text-xs uppercase font-semibold text-gray-600 mb-1">{{ trans('messages.price') }}</div>
-                <div class="text-base font-bold text-gray-900">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['main_price'] }}</div>
+                <div class="text-sm md:text-md font-bold text-gray-900">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['main_price'] }}</div>
             </div>
 
             <div class="flex items-center justify-center flex-1">
@@ -105,7 +105,7 @@
 
             <div class="text-center flex-1">
                 <div class="text-xs uppercase font-semibold text-gray-600 mb-1">{{ trans('messages.total') }}</div>
-                <div class="text-base font-bold text-gray-900">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['total'] }}</div>
+                <div class="text-sm md:text-md font-bold text-gray-900">{{ env('DEFAULT_CURRENCY') . ' ' . $prod['total'] }}</div>
             </div>
 
             <div class="flex-shrink-0">
