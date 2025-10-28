@@ -24,52 +24,54 @@
 
             <x-slot name="cartTotals">
                 <x-frontend.cart.cart-totals>
-                    <x-slot name="slot">
-                        <div class="order-summary__subtotal">
-                            <div class="summary-subtotal__title">{{ trans('messages.subtotal') }}</div>
-                            <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                                {{ $response['summary']['sub_total'] }}</div>
-                        </div>
+                     <x-slot name="slot">
+                         <div class="space-y-3">
+                             <div class="flex justify-between items-center py-2">
+                                 <span class="text-gray-700 font-medium">{{ trans('messages.subtotal') }}</span>
+                                 <span class="text-gray-900 font-semibold">{{ env('DEFAULT_CURRENCY') }}
+                                     {{ $response['summary']['sub_total'] }}</span>
+                             </div>
 
-                        <div class="order-summary__subtotal">
-                            <div class="summary-subtotal__title">{{ trans('messages.tax') }}</div>
-                            <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                                {{ $response['summary']['vat_amount'] }}</div>
-                        </div>
+                             <div class="flex justify-between items-center py-2">
+                                 <span class="text-gray-700 font-medium">{{ trans('messages.tax') }}</span>
+                                 <span class="text-gray-900 font-semibold">{{ env('DEFAULT_CURRENCY') }}
+                                     {{ $response['summary']['vat_amount'] }}</span>
+                             </div>
 
-                        <div class="order-summary__subtotal">
-                            <div class="summary-subtotal__title">{{ trans('messages.discount') }}</div>
-                            <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                                {{ $response['summary']['discount'] }}</div>
-                        </div>
+                             <div class="flex justify-between items-center py-2">
+                                 <span class="text-gray-700 font-medium">{{ trans('messages.discount') }}</span>
+                                 <span class="text-gray-900 font-semibold">{{ env('DEFAULT_CURRENCY') }}
+                                     {{ $response['summary']['discount'] }}</span>
+                             </div>
 
-                        @if ($response['summary']['coupon_applied'] == 1)
-                            <div class="order-summary__subtotal">
-                                <div class="summary-subtotal__title">
-                                    {{ trans('messages.coupon') . ' ' . trans('messages.discount') }}</div>
-                                <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                                    {{ $response['summary']['coupon_discount'] }}</div>
-                            </div>
-                        @endif
+                             @if ($response['summary']['coupon_applied'] == 1)
+                                 <div class="flex justify-between items-center py-2 text-green-600">
+                                     <span class="font-medium">{{ trans('messages.coupon') . ' ' . trans('messages.discount') }}</span>
+                                     <span class="font-semibold">-{{ env('DEFAULT_CURRENCY') }}
+                                         {{ $response['summary']['coupon_discount'] }}</span>
+                                 </div>
+                             @endif
 
+                             <div class="flex justify-between items-center py-2">
+                                 <span class="text-gray-700 font-medium">{{ trans('messages.shipping_charge') }}</span>
+                                 <span class="text-gray-900 font-semibold">{{ env('DEFAULT_CURRENCY') }}
+                                     {{ $response['summary']['shipping'] }}</span>
+                             </div>
 
-                        <div class="order-summary__subtotal">
-                            <div class="summary-subtotal__title">{{ trans('messages.shipping_charge') }}</div>
-                            <div class="summary-subtotal__price">{{ env('DEFAULT_CURRENCY') }}
-                                {{ $response['summary']['shipping'] }}</div>
-                        </div>
+                             <div class="border-t border-gray-300 pt-3 mt-4">
+                                 <div class="flex justify-between items-center">
+                                     <span class="text-lg font-bold text-gray-900">{{ trans('messages.total') }}</span>
+                                     <span class="text-lg font-bold text-gray-900">{{ env('DEFAULT_CURRENCY') }}
+                                         {{ $response['summary']['total'] }}</span>
+                                 </div>
+                             </div>
+                         </div>
 
-                        <div class="order-summary__total">
-                            <div class="summary-total__title">{{ trans('messages.total') }}</div>
-                            <div class="summary-total__price">{{ env('DEFAULT_CURRENCY') }}
-                                {{ $response['summary']['total'] }}</div>
-                        </div>
+                         <div class="mt-6">
+                             <x-frontend.cart.coupon :response="$response" />
+                         </div>
 
-                        <div class="!mb-10" style="margin-top: 40px">
-                            <x-frontend.cart.coupon :response="$response" />
-                        </div>
-
-                    </x-slot>
+                     </x-slot>
 
                     <x-slot name="checkoutButton">
                         <x-frontend.cart.checkout-button link="{{ route('checkout') }}" text="Proceed to Checkout" />
