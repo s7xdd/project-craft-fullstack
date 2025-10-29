@@ -189,18 +189,18 @@
                     <ul class="space-y-3 m-0 p-0 list-none text-sm text-gray-300">
                         <li class="flex items-start">
                             <i class="fas fa-map-marker-alt mt-1 mr-3 text-gray-500"></i>
-                            <span>{{ get_setting('address') }}</span>
+                            <span>{{ get_setting('footer_address') }}</span>
                         </li>
                         <li>
                             <a href="tel:{{ get_setting('helpline_number') }}" class="flex items-center hover:text-blue-400 transition-colors">
                                 <i class="fas fa-phone mt-1 mr-3 text-gray-500"></i>
-                                <span>{{ get_setting('helpline_number') }}</span>
+                                <span>{{ get_setting('footer_phone') }}</span>
                             </a>
                         </li>
                         <li>
                             <a href="mailto:{{ get_setting('email') }}" class="flex items-center hover:text-blue-400 transition-colors">
                                 <i class="fas fa-envelope mt-1 mr-3 text-gray-500"></i>
-                                <span>{{ get_setting('email') }}</span>
+                                <span>{{ get_setting('footer_email') }}</span>
                             </a>
                         </li>
                     </ul>

@@ -96,7 +96,7 @@
                     @endif
 
                      <x-slot name="colorOptions">
-                         <div class="space-y-4">
+                         <div class="space-y-4 product-attributes product__options">
                              @if ($response['product_type'] == 1 && !empty($response['product_attributes'][0]))
                                  @php
                                      $flattened_products = call_user_func_array(
@@ -105,7 +105,7 @@
                                      );
                                  @endphp
                                  @foreach ($response['product_attributes'] as $akey => $attribute)
-                                     <div class="space-y-3">
+                                     <div class="space-y-3 attribute product__sizes-2">
                                          <div class="flex items-center justify-between">
                                              <span class="text-sm font-medium text-gray-700">{{ $attribute['name'] }}</span>
                                              <span class="text-sm text-gray-500">{{ $selectedValue ?? '' }}</span>
@@ -117,7 +117,7 @@
                                                          isset($flattened_products[$response['sku']]) &&
                                                          in_array($value['id'], $flattened_products[$response['sku']]);
                                                  @endphp
-                                                 <button class="px-4 py-2 text-sm border border-gray-300 rounded-md hover:border-gray-400 hover:bg-gray-50 transition-colors {{ isset($response['current_attribute'][$attribute['id']]) && $response['current_attribute'][$attribute['id']] == $value['id'] ? 'border-blue-500 bg-blue-50 text-blue-700' : 'text-gray-700' }} {{ (!$is_present && $akey != 0) ? 'opacity-50 cursor-not-allowed' : '' }}"
+                                                 <button class="px-4 py-2 text-sm border border-gray-300 rounded-md hover:border-gray-400 hover:bg-gray-50 transition-colors attribute-item firstItem_{{ $akey }} firstvalue_{{ $vkey }} {{ isset($response['current_attribute'][$attribute['id']]) && $response['current_attribute'][$attribute['id']] == $value['id'] ? 'border-blue-500 bg-blue-50 text-blue-700' : 'text-gray-700' }} {{ (!$is_present && $akey != 0) ? 'opacity-50 cursor-not-allowed' : '' }}"
                                                          data-value-id="{{ $value['id'] }}"
                                                          {{ (!$is_present && $akey != 0) ? 'disabled' : '' }}>
                                                      {{ $value['name'] }}
@@ -310,7 +310,7 @@
                      768: { slidesPerView: 3 },
                      1024: { slidesPerView: 4 },
                      1280: { slidesPerView: 5 },
-                     1536: { slidesPerView: 6 },
+                     1536: { slidesPerView: 5 },
                  },
              });
          });

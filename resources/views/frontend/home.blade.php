@@ -42,18 +42,18 @@
         }
     </style>
 
-<div class="px-3">
-    
- <x-frontend.home.banner>
-        @foreach ($data['slider'] as $slide)
-            <x-frontend.home.banner-slide image="{{ uploaded_asset($slide['image']) }}" title="{{ $slide['name'] ?? '' }}"
-                link="{{ $slide['link'] ?? '' }}" buttonText="{{ $slide['btn_text'] ?? '' }}" />
-        @endforeach
-    </x-frontend.home.banner>
+    <div class="px-3">
 
-</div>
+        <x-frontend.home.banner>
+            @foreach ($data['slider'] as $slide)
+                <x-frontend.home.banner-slide image="{{ uploaded_asset($slide['image']) }}" title="{{ $slide['name'] ?? '' }}"
+                    link="{{ $slide['link'] ?? '' }}" buttonText="{{ $slide['btn_text'] ?? '' }}" />
+            @endforeach
+        </x-frontend.home.banner>
 
-   
+    </div>
+
+
 
 
 
@@ -74,32 +74,35 @@
         <div class="!pb-20 !pt-20">
             @foreach ($topCollections as $collectionKey => $collection)
                 <x-frontend.common.product-section :title="$collection['collectiontitle']">
-                     <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
-                         <div class="swiper homepageSwiper w-full max-w-7xl mx-auto">
-                             <div class="swiper-wrapper">
-                                 @foreach ($collection['products'] as $product)
-                                     @php
-                                         $priceData = getProductOfferPrice($product);
-                                         $productUrl = route('product-detail', [
-                                             'slug' => $product->slug,
-                                             'sku' => $product->sku,
-                                         ]);
-                                     @endphp
-                                     <div class="swiper-slide">
-                                         <x-frontend.common.product-card image="{{ get_product_image($product->thumbnail_img) }}"
-                                             alt="{{ $product->getTranslation('name', $lang) }}"
-                                             category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
-                                             name="{{ $product->getTranslation('name', $lang) }}"
-                                             originalPrice=" {{ $priceData['original_price'] }}"
-                                             price=" {{ $priceData['discounted_price'] }}" link="{!! $productUrl !!}" />
-                                     </div>
-                                 @endforeach
-                             </div>
-                             <div class="swiper-button-next !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg"></div>
-                             <div class="swiper-button-prev !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg"></div>
-                         </div>
+                    <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
+                        <div class="swiper homepageSwiper w-full max-w-7xl mx-auto">
+                            <div class="swiper-wrapper">
+                                @foreach ($collection['products'] as $product)
+                                    @php
+                                        $priceData = getProductOfferPrice($product);
+                                        $productUrl = route('product-detail', [
+                                            'slug' => $product->slug,
+                                            'sku' => $product->sku,
+                                        ]);
+                                    @endphp
+                                    <div class="swiper-slide">
+                                        <x-frontend.common.product-card
+                                            image="{{ get_product_image($product->thumbnail_img) }}"
+                                            alt="{{ $product->getTranslation('name', $lang) }}"
+                                            category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
+                                            name="{{ $product->getTranslation('name', $lang) }}"
+                                            originalPrice=" {{ $priceData['original_price'] }}"
+                                            price=" {{ $priceData['discounted_price'] }}" link="{!! $productUrl !!}" />
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="swiper-button-next !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg">
+                            </div>
+                            <div class="swiper-button-prev !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg">
+                            </div>
+                        </div>
 
-                     </div>
+                    </div>
                 </x-frontend.common.product-section>
             @endforeach
         </div>
@@ -126,114 +129,132 @@
         <div class="">
             @foreach ($middleCollections as $collectionKey => $collection)
                 <x-frontend.common.product-section :title="$collection['collectiontitle']">
-                     <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
-                         <div class="swiper homepageSwiper w-full max-w-7xl mx-auto">
-                             <div class="swiper-wrapper">
-                                 @foreach ($collection['products'] as $product)
-                                     @php
-                                         $priceData = getProductOfferPrice($product);
-                                         $productUrl = route('product-detail', [
-                                             'slug' => $product->slug,
-                                             'sku' => $product->sku,
-                                         ]);
-                                     @endphp
-                                     <div class="swiper-slide">
-                                         <x-frontend.common.product-card image="{{ get_product_image($product->thumbnail_img) }}"
-                                             alt="{{ $product->getTranslation('name', $lang) }}"
-                                             category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
-                                             name="{{ $product->getTranslation('name', $lang) }}"
-                                             originalPrice=" {{ $priceData['original_price'] }}"
-                                             price=" {{ $priceData['discounted_price'] }}" link="{!! $productUrl !!}" />
-                                     </div>
-                                 @endforeach
-                             </div>
-                             <div class="swiper-button-next !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg"></div>
-                             <div class="swiper-button-prev !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg"></div>
-                         </div>
-                     </div>
+                    <div class="p-tab active-tab" id="tab-{{ $loop->index + 1 }}">
+                        <div class="swiper homepageSwiper w-full max-w-7xl mx-auto">
+                            <div class="swiper-wrapper">
+                                @foreach ($collection['products'] as $product)
+                                    @php
+                                        $priceData = getProductOfferPrice($product);
+                                        $productUrl = route('product-detail', [
+                                            'slug' => $product->slug,
+                                            'sku' => $product->sku,
+                                        ]);
+                                    @endphp
+                                    <div class="swiper-slide">
+                                        <x-frontend.common.product-card
+                                            image="{{ get_product_image($product->thumbnail_img) }}"
+                                            alt="{{ $product->getTranslation('name', $lang) }}"
+                                            category="{{ $product->category->getTranslation('name', $lang) ?? 'Product' }}"
+                                            name="{{ $product->getTranslation('name', $lang) }}"
+                                            originalPrice=" {{ $priceData['original_price'] }}"
+                                            price=" {{ $priceData['discounted_price'] }}" link="{!! $productUrl !!}" />
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="swiper-button-next !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg">
+                            </div>
+                            <div class="swiper-button-prev !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg">
+                            </div>
+                        </div>
+                    </div>
                 </x-frontend.common.product-section>
             @endforeach
         </div>
-     @endif
-
-@section('script')
-      <script>
-          // Initialize Swiper for Homepage Carousels
-          document.addEventListener('DOMContentLoaded', function () {
-              new Swiper('.homepageSwiper', {
-                  slidesPerView: 2,
-                  spaceBetween: 10,
-                  navigation: {
-                      nextEl: '.swiper-button-next',
-                      prevEl: '.swiper-button-prev',
-                  },
-                  autoplay: {
-                      delay: 3000,
-                      disableOnInteraction: false,
-                  },
-                  loop: true,
-                  breakpoints: {
-                      480: { slidesPerView: 2 },
-                      768: { slidesPerView: 3 },
-                      1024: { slidesPerView: 4 },
-                      1280: { slidesPerView: 5 },
-                      1536: { slidesPerView: 6 },
-                  },
-              });
-          });
-      </script>
-      <script>
-          // Initialize Embla Carousel for Hero Banner
-          document.addEventListener('DOMContentLoaded', function () {
-              const emblaNode = document.getElementById('hero-embla');
-              const dotsNode = document.getElementById('hero-dots');
-              if (!emblaNode || !dotsNode) return;
-
-              const emblaApi = EmblaCarousel(emblaNode, {
-                  loop: true,
-                  autoplay: { delay: 3000, stopOnInteraction: false }
-              });
-
-              let selectedIndex = 0;
-
-              const updateDots = () => {
-                  dotsNode.innerHTML = '';
-                  const slideCount = emblaNode.querySelectorAll('.embla__slide').length;
-                  for (let i = 0; i < slideCount; i++) {
-                      const button = document.createElement('button');
-                      button.className = 'inline-block mx-1 h-2 rounded-full bg-neutral-500/50 transition-opacity ' +
-                          (selectedIndex === i ? 'w-7 opacity-100' : 'w-2 opacity-20');
-                      button.setAttribute('aria-label', `Go to slide ${i + 1}`);
-                      button.addEventListener('click', () => emblaApi.scrollTo(i));
-                      dotsNode.appendChild(button);
-                  }
-              };
-
-              emblaApi.on('select', () => {
-                  selectedIndex = emblaApi.selectedScrollSnap();
-                  updateDots();
-              });
-
-              updateDots();
-          });
-      </script>
-@endsection
-
-     @if ($testimonials->count() > 0)
-         <x-frontend.home.testimonial-feed :testimonials="$testimonials" title="{{ $data['testimonialsPageData']?->getTranslation('title') }}" description="{!! $data['testimonialsPageData']?->getTranslation('content1') !!}" />
     @endif
-
-    <!-- WhatsApp Section -->
-    <div class="!pb-10">
-        <x-frontend.common.whatsapp-section />
-    </div>
-
-@endsection
 
 @section('script')
     <script>
+        // Initialize Swiper for Homepage Carousels
         document.addEventListener('DOMContentLoaded', function() {
-            var loaderText = document.querySelector('#page-loader .loader-text');
+            new Swiper('.homepageSwiper', {
+                slidesPerView: 2,
+                spaceBetween: 10,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                loop: true,
+                breakpoints: {
+                    480: {
+                        slidesPerView: 2
+                    },
+                    768: {
+                        slidesPerView: 3
+                    },
+                    1024: {
+                        slidesPerView: 4
+                    },
+                    1280: {
+                        slidesPerView: 5
+                    },
+                    1536: {
+                        slidesPerView: 5
+                    },
+                },
+            });
         });
     </script>
+    <script>
+        // Initialize Embla Carousel for Hero Banner
+        document.addEventListener('DOMContentLoaded', function() {
+            const emblaNode = document.getElementById('hero-embla');
+            const dotsNode = document.getElementById('hero-dots');
+            if (!emblaNode || !dotsNode) return;
+
+            const emblaApi = EmblaCarousel(emblaNode, {
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    stopOnInteraction: false
+                }
+            });
+
+            let selectedIndex = 0;
+
+            const updateDots = () => {
+                dotsNode.innerHTML = '';
+                const slideCount = emblaNode.querySelectorAll('.embla__slide').length;
+                for (let i = 0; i < slideCount; i++) {
+                    const button = document.createElement('button');
+                    button.className =
+                        'inline-block mx-1 h-2 rounded-full bg-neutral-500/50 transition-opacity ' +
+                        (selectedIndex === i ? 'w-7 opacity-100' : 'w-2 opacity-20');
+                    button.setAttribute('aria-label', `Go to slide ${i + 1}`);
+                    button.addEventListener('click', () => emblaApi.scrollTo(i));
+                    dotsNode.appendChild(button);
+                }
+            };
+
+            emblaApi.on('select', () => {
+                selectedIndex = emblaApi.selectedScrollSnap();
+                updateDots();
+            });
+
+            updateDots();
+        });
+    </script>
+@endsection
+
+@if ($testimonials->count() > 0)
+    <x-frontend.home.testimonial-feed :testimonials="$testimonials"
+        title="{{ $data['testimonialsPageData']?->getTranslation('title') }}" description="{!! $data['testimonialsPageData']?->getTranslation('content1') !!}" />
+@endif
+
+<!-- WhatsApp Section -->
+<div class="!pb-10">
+    <x-frontend.common.whatsapp-section />
+</div>
+
+@endsection
+
+@section('script')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var loaderText = document.querySelector('#page-loader .loader-text');
+    });
+</script>
 @endsection
