@@ -8,16 +8,16 @@
         <div class="space-y-4">
             @if (!empty($response['products']))
                 @foreach ($response['products'] as $prod)
-                    <div class="flex items-center justify-between border-b border-gray-200 pb-4 mb-4 last:border-b-0 last:pb-0 last:mb-0">
-                        <div class="flex items-start space-x-4 flex-1">
+                    <div class="flex items-center justify-between border-b border-gray-200 pb-4 mb-4 last:border-b-0 last:pb-0 last:mb-0 gap-4">
+                        <div class="flex items-start space-x-4 flex-1 min-w-0">
                             <figure class="w-16 h-16 flex-shrink-0">
                                 <img src="{{ $prod['product']['image'] }}" alt="{{ $prod['product']['name'] }}"
                                     class="w-full h-full object-cover rounded-md" />
                             </figure>
                             <div class="flex flex-col min-w-0 flex-1">
-                                <h6 class="text-base font-semibold text-gray-900 mb-1 truncate">
+                                <h6 class="text-base font-semibold text-gray-900 mb-1">
                                     <a href="{{ route('product-detail', ['slug' => $prod['product']['slug'], 'sku' => $prod['product']['sku']]) }}"
-                                        class="hover:text-blue-600 transition-colors">
+                                        class="hover:text-blue-600 transition-colors line-clamp-2">
                                         {{ $prod['product']['name'] }}
                                     </a>
                                 </h6>
@@ -31,14 +31,14 @@
                                 @endphp
 
                                 @if ($attributeValue != '')
-                                    <div class="text-sm text-gray-600">
+                                    <div class="text-sm text-gray-600 line-clamp-2">
                                         {!! $attributeValue !!}
                                     </div>
                                 @endif
                             </div>
                         </div>
 
-                        <div class="text-sm font-semibold text-gray-900 ml-4">
+                        <div class="text-sm font-semibold text-gray-900 whitespace-nowrap flex-shrink-0">
                             {{ $prod['quantity'] }} &times; {{ env('DEFAULT_CURRENCY') }} {{ $prod['main_price'] }}
                         </div>
                     </div>
@@ -46,8 +46,7 @@
             @endif
         </div>
 
-
-        <div class="space-y-2 mb-4">
+        <div class="space-y-2 mb-4 pt-4 border-t border-gray-200">
             <div class="flex justify-between items-center">
                 <span class="text-sm font-medium text-gray-700">Subtotal</span>
                 <span class="text-sm font-semibold text-gray-900">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['sub_total'] }}</span>
@@ -80,25 +79,6 @@
                 <span class="text-lg font-bold text-gray-900">{{ env('DEFAULT_CURRENCY') }} {{ $response['summary']['total'] }}</span>
             </div>
         </div>
-
-        {{-- <div class="payment-option">
-            <h3>Payment Methods</h3>
-            <ul class="other-payment !pl-0">
-                <li>
-                    <div class="check-box mb_12">
-                        <input class="check" type="radio" id="payment1" name="payment_method" value="card">
-                        <label for="payment1">Credit/Debit Cards</label>
-                    </div>
-                </li>
-                <li>
-                    <div class="check-box mb_12">
-                        <input class="check" type="radio" id="payment3" name="payment_method" value="cod"
-                            checked>
-                        <label for="payment3">Cash on Delivery</label>
-                    </div>
-                </li>
-            </ul>
-        </div> --}}
 
         <div class="pt-8">
             <button class="w-full bg-pink-500 text-white py-3 px-6 rounded-md font-semibold hover:bg-pink-600 transition-colors" type="button" id="submitCheckout">

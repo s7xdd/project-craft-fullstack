@@ -8,18 +8,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {!! SEO::generate() !!}
     <link rel="canonical" href="{{ url()->current() }}" />
-    <!-- <link href="{{ asset('assets/css/theme.css?v=4') }}" rel="stylesheet" type="text/css" /> -->
     <script src="{{ asset('assets/js/vendor.js') }}" defer></script>
     <script src="{{ asset('assets/js/theme.js') }}" defer></script>
-    <!-- <link rel="stylesheet" href="{{ asset('assets/css/lineicons-regular.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/icon-font.min.css') }}">
-    <link href="{{ asset('assets/css/custom-style.css') }}" rel="stylesheet" type="text/css" /> -->
     <link rel="icon" type="image/svg" href="{{ uploaded_asset(get_setting('site_fav_icon')) }}">
 
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
 
-    <!-- <link href="{{ asset('dist/assets/app-97de3ed1.css') }}" rel="stylesheet">
-    <link href="{{ asset('dist/assets/app-afc193cb.css') }}" rel="stylesheet"> -->
     <script src="{{ asset('js/hero-carousel.js') }}"></script>
     <script src="{{ asset('js/product-slider.js') }}"></script>
 
@@ -35,66 +29,21 @@
         gtag('config', 'G-GJB4R99EX9');
     </script>
 
-     <!-- Embla Carousel CDN -->
-     <script src="https://unpkg.com/embla-carousel@latest/embla-carousel.umd.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" />
 
-     <!-- Swiper Carousel CDN -->
-     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"> -->
-     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css" rel="stylesheet"> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
 
 
-    <!-- <link rel="stylesheet" href="https://cdn.form.io/formiojs/formio.full.min.css"> -->
+    <script src="https://unpkg.com/embla-carousel@latest/embla-carousel.umd.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+
     <script src="https://cdn.form.io/formiojs/formio.full.min.js"></script>
 
-
-<!-- Important Styles -->
     <link href="{{ asset('assets/css/flaticon.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/css/font-awesome-all.css') }}" rel="stylesheet" />
-
-
-    <!-- <link href="{{ asset('assets/css/bootstrap.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/jquery.fancybox.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/nice-select.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/elpath.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/color.css" id="jssDefault') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/rtl.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/banner.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/shop.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/featured.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/category.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/ads.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/popular-product.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/highlights.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/collection.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/fluid.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/deals.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/news.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/subscribe.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/footer.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet" />
-
-    <link href="{{ asset('assets/css/module-css/page-title.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/shop-sidebar.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/css/module-css/shop-page.css') }}" rel="stylesheet" />
-
-
-    <link href="{{ asset('assets/css/jquery-ui.css') }}" rel="stylesheet" />
-
-
-
-
-    <link href="{{ asset('assets/css/module-css/checkout.css') }}" rel="stylesheet" />
-
-    <link href="{{ asset('assets/css/module-css/account.css') }}" rel="stylesheet" />
-
-
-    <link href="{{ asset('assets/css/module-css/about.css') }}" rel="stylesheet"> -->
-
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -198,13 +147,13 @@
 <body>
 
 
-     <div id="main">
+    <div id="main">
 
-          @include('frontend.parts.navbar')
+        @include('frontend.parts.navbar')
 
-          <div style="background-color: {{ get_setting('base_color') }}; padding-top: 140px">
-              @yield('content')
-          </div>
+        <div style="background-color: {{ get_setting('base_color') }}; padding-top: 140px">
+            @yield('content')
+        </div>
 
 
         @include('frontend.parts.footer')
@@ -591,13 +540,10 @@
 
     <script src="{{ asset('assets/js/bxslider.js') }}"></script>
 
-    <!-- main-js -->
     <script src="{{ asset('assets/js/script.js') }}"></script>
 
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <script src="{{ asset('assets/js/mobile-search.js') }}"></script>
 
-    <!-- Loader Script -->
     <script>
         window.addEventListener('load', function() {
             document.body.classList.add('page-loaded');

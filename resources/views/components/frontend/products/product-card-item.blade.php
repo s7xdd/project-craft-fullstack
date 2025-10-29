@@ -1,4 +1,4 @@
-<div class="bg-gray-50 max-w-[190px] md:max-w-[200px] lg:max-w-[300px] rounded-lg shadow-md border-1 border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300">
+<div class="bg-gray-50 p-1 max-w-[190px] md:max-w-[200px] lg:max-w-[300px] rounded-lg shadow-md border-1 border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300">
 
     <div class="relative p-1 lg:hidden" style="height: 180px; overflow: hidden;">
         <a href="{!! $link !!}" class="block" style="height: 100%; width: 100%;">
