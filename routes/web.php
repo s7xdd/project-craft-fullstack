@@ -16,6 +16,7 @@ use App\Http\Controllers\Frontend\ForgotPasswordController;
 use App\Http\Controllers\Frontend\VendorController;
 use App\Http\Controllers\Frontend\SearchController;
 use App\Http\Controllers\Frontend\TestimonialController;
+use App\Http\Controllers\SitemapController;
 use HTMLMin\HTMLMin\Http\Middleware\MinifyMiddleware;
 use Laravel\Prompts\FormBuilder;
 
@@ -111,4 +112,13 @@ Route::middleware([MinifyMiddleware::class])->group(function () {
         Route::get('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'showURL'])->name('url-file-download');
         Route::delete('storage/url', [\App\Http\Controllers\DynamicFormsStorageController::class, 'deleteURL']);
     });
+
+    // Sitemap routes
+    Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap.index');
+    Route::get('/sitemap-static.xml', [SitemapController::class, 'staticPages'])->name('sitemap.static');
+    Route::get('/sitemap-categories.xml', [SitemapController::class, 'categories'])->name('sitemap.categories');
+    Route::get('/sitemap-products.xml', [SitemapController::class, 'products'])->name('sitemap.products');
+    Route::get('/sitemap-dynamic.xml', [SitemapController::class, 'dynamicRoutes'])->name('sitemap.dynamic');
+    Route::get('/sitemap-products-{chunk}.xml', [SitemapController::class, 'productsChunk'])->name('sitemap.products.chunk');
+    Route::get('/sitemap-categories-{chunk}.xml', [SitemapController::class, 'categoriesChunk'])->name('sitemap.categories.chunk');
 });

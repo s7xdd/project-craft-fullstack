@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
+use App\Models\Page;
+use App\Models\Product;
+use App\Observers\SitemapObserver;
 use Efectn\Menu\Models\Menus;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Blade;
@@ -39,11 +43,16 @@ class AppServiceProvider extends ServiceProvider
         View::composer('frontend.parts.footer', function ($view) {
             $menu = Menus::where('name', 'footer')->with('items.child')->first();
             $bottom_footer = Menus::where('name', 'bottom footer')->with('items')->first();
-            
+
             $view->with([
                 'menu_items' => $menu ? $menu->items : collect(),
                 'bottom_footer' => $bottom_footer ? $bottom_footer->items : collect(),
             ]);
         });
+
+        // Register sitemap observers for auto-updates
+        Product::observe(SitemapObserver::class);
+        Category::observe(SitemapObserver::class);
+        Page::observe(SitemapObserver::class);
     }
 }
