@@ -1,6 +1,20 @@
 @extends('frontend.layouts.app')
 
 @section('content')
+    <style>
+        .swiper-button-next::before,
+        .swiper-button-prev::before,
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            display: none !important;
+            content: none !important;
+        }
+        .swiper-button-next,
+        .swiper-button-prev {
+            background-image: none !important;
+            font-size: 0 !important;
+        }
+    </style>
     @php
         $middleCollections = collect($collectionProducts)->filter(
             fn($collection) => isset($collection['products']) &&
@@ -116,15 +130,23 @@
                                              price=" {{ $priceData['discounted_price'] }}" link="{!! $productUrl !!}" />
                                      </div>
                                  @endforeach
-                             </div>
-                             <div class="swiper-button-next !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg"></div>
-                             <div class="swiper-button-prev !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg"></div>
-                         </div>
-                     </div>
-                </x-frontend.common.product-section>
-            @endforeach
-        </div>
-     @endif
+                              </div>
+                              <div class="swiper-button-next !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg !flex !items-center !justify-center">
+                                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                  </svg>
+                              </div>
+                              <div class="swiper-button-prev !bg-white !text-gray-800 !rounded-full !w-12 !h-12 !shadow-lg !flex !items-center !justify-center">
+                                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                  </svg>
+                              </div>
+                          </div>
+                      </div>
+                 </x-frontend.common.product-section>
+             @endforeach
+         </div>
+      @endif
 
      <div class="h-[100px] w-full "></div>
 
